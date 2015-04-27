@@ -1,0 +1,35 @@
+{
+  "id": "nodebb-plugin-ns-awards",
+  "name": "NodeBB Awards",
+  "description": "System for rewarding forum users. It allows admin to define set of awards that could be granted to users for special accomplishments.",
+  "url": "https://github.com/NicolasSiver/nodebb-plugin-ns-awards",
+  "library": "./plugin.js",
+  "hooks": [
+    {
+      "hook": "filter:admin.header.build",
+      "method": "hooks.filters.menuAdmin"
+    },
+    {
+      "hook": "filter:navigation.available",
+      "method": "hooks.filters.navigation"
+    },
+    {
+      "hook": "filter:user.account",
+      "method": "hooks.filters.account"
+    },
+    {
+      "hook": "filter:controllers.topic.get",
+      "method": "hooks.filters.topic"
+    },
+    {
+      "hook": "static:app.load",
+      "method": "hooks.statics.load"
+    }
+  ],
+  "staticDirs": {
+    "templates": "./public/templates",
+    "css": "./public/css",
+    "js": "./public/js"
+  },
+  "templates": "./public/templates"
+}

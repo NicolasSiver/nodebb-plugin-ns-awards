@@ -1,0 +1,31 @@
+{
+  "name": "nodebb-plugin-ns-awards",
+  "version": "1.0.0",
+  "description": "System for rewarding forum users. It allows admin to define set of awards that could be granted to users for special accomplishments.",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NicolasSiver/nodebb-plugin-ns-awards.git"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "awards",
+    "rewards"
+  ],
+  "author": "Nicolas Siver",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NicolasSiver/nodebb-plugin-ns-awards/issues"
+  },
+  "homepage": "https://github.com/NicolasSiver/nodebb-plugin-ns-awards#readme",
+  "dependencies": {
+    "async": "^0.9.0",
+    "lodash": "^3.7.0",
+    "object-assign": "^2.0.0",
+    "winston": "^1.0.0"
+  }
+}
