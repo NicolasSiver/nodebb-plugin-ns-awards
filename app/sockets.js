@@ -8,7 +8,7 @@
         database  = require('./database'),
         constants = require('./constants'),
 
-        namespace = 'ns-custom-fields';
+        namespace = 'ns-awards';
 
     Module.init = function (callback) {
         sockets[namespace] = {};
