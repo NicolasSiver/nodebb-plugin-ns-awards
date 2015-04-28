@@ -1,6 +1,7 @@
-var React      = require('react'),
+var React          = require('react'),
     AwardsListView = require('./AwardsListView.react'),
-    Settings   = require('./Settings.react');
+    AwardCreator = require('./AwardCreator.react'),
+    Settings       = require('./Settings.react');
 
 var AwardsApp = React.createClass({
     render: function () {
@@ -10,6 +11,7 @@ var AwardsApp = React.createClass({
                     <AwardsListView />
                 </div>
                 <div className="col-md-4">
+                    <AwardCreator />
                     <Settings />
 
                     <div className="alert alert-info" role="alert">Plugin is under development. Don't hesitate to <a

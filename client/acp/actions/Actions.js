@@ -9,6 +9,6 @@ module.exports = {
     },
 
     getSettings: function () {
-        
+
     }
 };
