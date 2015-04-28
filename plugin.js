@@ -1,6 +1,8 @@
 (function (Plugin) {
 
     var controller = require('./app/controller'),
+        sockets    = require('./app/sockets'),
+        filters    = require('./app/filters'),
         settings   = require('./app/settings');
 
     //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
@@ -37,7 +39,10 @@
                 router.get('/awards', middleware.buildHeader, renderClient);
                 router.get('/api/awards', renderClient);
 
-                settings.init(callback);
+                async.series([
+                    async.apply(settings.init),
+                    async.apply(sockets.init)
+                ], callback);
             }
         }
     };
