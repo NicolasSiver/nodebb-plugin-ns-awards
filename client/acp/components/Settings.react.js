@@ -23,24 +23,16 @@ var Settings = React.createClass({
 
     render: function () {
         //Don't show Settings until we will get something from the NodeBB
-        if (Object.keys(this.state).length == 0) {
-            return (
-                <div />
-            );
-        }
+        //if (Object.keys(this.state).length == 0) {
+        //    return (
+        //        <div />
+        //    );
+        //}
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">Settings</div>
                 <div className="panel-body">
-                    < div className="checkbox">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={this.state.filterTopics}
-                                onChange={this._filterDidChange.bind(this, 'filterTopics')}/> Populate Topic View with
-                            custom fields
-                        </label>
-                    </div>
+                    No Settings
                 </div>
             </div>
         );
@@ -48,16 +40,6 @@ var Settings = React.createClass({
 
     settingsDidChange: function () {
         this.setState(getSettingsState());
-    },
-
-    _filterDidChange: function (filter) {
-        var update = {};
-        update[filter] = !this.state[filter];
-        this.setState(update, this._save);
-    },
-
-    _save: function () {
-        Actions.saveSettings(this.state);
     }
 });
 

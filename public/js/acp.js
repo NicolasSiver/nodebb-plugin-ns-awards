@@ -417,24 +417,16 @@ var Settings = React.createClass({displayName: "Settings",
 
     render: function () {
         //Don't show Settings until we will get something from the NodeBB
-        if (Object.keys(this.state).length == 0) {
-            return (
-                React.createElement("div", null)
-            );
-        }
+        //if (Object.keys(this.state).length == 0) {
+        //    return (
+        //        <div />
+        //    );
+        //}
         return (
             React.createElement("div", {className: "panel panel-default"}, 
                 React.createElement("div", {className: "panel-heading"}, "Settings"), 
                 React.createElement("div", {className: "panel-body"}, 
-                    React.createElement("div", {className: "checkbox"}, 
-                        React.createElement("label", null, 
-                            React.createElement("input", {
-                                type: "checkbox", 
-                                checked: this.state.filterTopics, 
-                                onChange: this._filterDidChange.bind(this, 'filterTopics')}), " Populate Topic View with" + ' ' +
-                            "custom fields"
-                        )
-                    )
+                    "No Settings"
                 )
             )
         );
@@ -442,16 +434,6 @@ var Settings = React.createClass({displayName: "Settings",
 
     settingsDidChange: function () {
         this.setState(getSettingsState());
-    },
-
-    _filterDidChange: function (filter) {
-        var update = {};
-        update[filter] = !this.state[filter];
-        this.setState(update, this._save);
-    },
-
-    _save: function () {
-        Actions.saveSettings(this.state);
     }
 });
 
