@@ -83,6 +83,7 @@ var AwardCreator = React.createClass({
 
     _createAward: function () {
         Actions.createAward(this.state.name, this.state.desc, this.state.fileServer.id);
+        this._cancelAwardForm();
     },
 
     _imageDidSelect: function (file, dataUrl) {
