@@ -38,5 +38,19 @@
         ], done);
     };
 
+    Database.getAllAwards = function (done) {
+        async.waterfall([
+            async.apply(db.getSortedSetRange, namespace, 0, -1),
+            function (ids, next) {
+                if (!ids.length) {
+                    return next(null, ids);
+                }
+                db.getObjects(ids.map(function (id) {
+                    return namespace + ':' + id;
+                }), next);
+            }
+        ], done);
+    };
+
 
 })(module.exports);

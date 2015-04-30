@@ -314,7 +314,7 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
 
     render: function () {
         function renderItem(award, index, awards) {
-            return React.createElement(AwardListItemView, {
+            return React.createElement(AwardsListItemView, {
                 key: award.aid, 
                 award: award})
         }
@@ -22443,7 +22443,8 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
 
     CHANGE_EVENT  = 'change',
     API           = {
-        CREATE_AWARD: 'plugins.ns-awards.createAward'
+        CREATE_AWARD: 'plugins.ns-awards.createAward',
+        GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
 
@@ -22472,10 +22473,15 @@ AppDispatcher.register(function (action) {
                 name  : action.name,
                 desc  : action.desc,
                 fileId: action.fileId
-            }, function (error, payload) {
-                console.log(payload);
+            }, function (error, award) {
                 //Optimistic Award Create
-                //_awards.push(payload);
+                _awards.push(award);
+                AwardsStore.emitChange();
+            });
+            break;
+        case Constants.EVENT_GET_ALL_AWARDS:
+            socket.emit(API.GET_AWARDS, function (error, awards) {
+                _awards = awards;
                 AwardsStore.emitChange();
             });
             break;

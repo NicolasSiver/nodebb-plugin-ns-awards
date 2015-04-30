@@ -17,6 +17,7 @@
         sockets[constants.SOCKETS] = {};
         //Acknowledgements
         sockets[constants.SOCKETS].createAward = Module.createAward;
+        sockets[constants.SOCKETS].getAwards = Module.getAwards;
 
         callback();
     };
@@ -45,6 +46,10 @@
                 database.createAward(payload.name, payload.desc, awardFile.name, next);
             }
         ], callback);
+    };
+
+    Module.getAwards = function (socket, callback) {
+        database.getAllAwards(callback);
     };
 
 })(module.exports);

@@ -30,7 +30,7 @@ var AwardsListView = React.createClass({
 
     render: function () {
         function renderItem(award, index, awards) {
-            return <AwardListItemView
+            return <AwardsListItemView
                 key={award.aid}
                 award={award}/>
         }
