@@ -9,6 +9,7 @@
   height: 48px;
 }
 .create-award-form .award-upload-icon {
-  font-size: 32px;
-  color: #eeeeee;
+  font-size: 48px;
+  cursor: pointer;
+  color: #e0e0e0;
 }
