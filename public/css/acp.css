@@ -5,8 +5,8 @@
   margin-top: 16px;
 }
 .create-award-form .award-preview {
-  max-width: 48px;
-  max-height: 48px;
+  width: 48px;
+  height: 48px;
 }
 .create-award-form .award-upload-icon {
   font-size: 32px;

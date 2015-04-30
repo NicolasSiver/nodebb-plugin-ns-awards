@@ -191,7 +191,11 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
 
     render: function () {
         if (this.state.dataUrl) {
-            return (React.createElement("img", {className: "award-preview", src: this.state.dataUrl}));
+            return (
+                React.createElement("div", {className: "award-preview center-block"}, 
+                    React.createElement("img", {className: "img-responsive", src: this.state.dataUrl})
+                )
+            );
         }
         return (
             React.createElement("i", {className: "fa fa-cloud-upload award-upload-icon"})
