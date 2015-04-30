@@ -1,6 +1,9 @@
 (function (Plugin) {
 
-    var controller = require('./app/controller'),
+    var async      = require('async'),
+        multer     = require('multer'),
+
+        controller = require('./app/controller'),
         sockets    = require('./app/sockets'),
         filters    = require('./app/filters'),
         settings   = require('./app/settings');
@@ -10,18 +13,19 @@
         filters: filters,
         statics: {
             load: function (params, callback) {
-                var router       = params.router,
-                    middleware   = params.middleware,
-                    controllers  = params.controllers,
-                    pluginUri    = '/admin/plugins/awards',
-                    apiUri       = '/api' + pluginUri,
+                var router          = params.router,
+                    middleware      = params.middleware,
+                    controllers     = params.controllers,
+                    pluginUri       = '/admin/plugins/awards',
+                    apiUri          = '/api' + pluginUri,
 
-                    renderAdmin  = function (req, res, next) {
+                    renderAdmin     = function (req, res, next) {
                         res.render(
                             'admin/plugins/awards', {}
                         );
                     },
-                    renderClient = function (req, res, next) {
+
+                    renderClient    = function (req, res, next) {
                         controller.getAllAwards(function (error, payload) {
                             if (error) {
                                 return res.status(500).json(error);
@@ -30,10 +34,17 @@
                                 'client/all-awards', payload
                             );
                         });
-                    };
+                    },
+
+                    storeAwardImage = multer({
+                        onFileUploadComplete: function (file, req, res) {
+                            res.json(file);
+                        }
+                    });
 
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
+                router.post(apiUri + '/images', storeAwardImage);
 
                 //Client page
                 router.get('/awards', middleware.buildHeader, renderClient);
