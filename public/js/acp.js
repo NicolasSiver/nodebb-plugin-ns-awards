@@ -25,6 +25,7 @@ module.exports = {
 },{"../Constants":1,"../dispatcher/AppDispatcher":11}],3:[function(require,module,exports){
 var React            = require('react'),
     AwardImageDrop   = require('./AwardImageDrop.react'),
+    PromptView       = require('./PromptView.react'),
     Actions          = require('../actions/Actions'),
     LinkedStateMixin = require('react/lib/LinkedStateMixin');
 
@@ -33,18 +34,19 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
 
     getInitialState: function () {
         return {
-            action  : '/api/admin/plugins/awards/images',
-            dataUrl : '',
-            name    : '',
-            desc    : '',
-            creating: false
+            action : '/api/admin/plugins/awards/images',
+            dataUrl: '',
+            name   : '',
+            desc   : '',
+            open   : false
         };
     },
 
     render: function () {
-        var inputState;
-        if (this.state.creating) {
-            inputState = React.createElement("form", {className: "create-award-form"}, 
+        var panelContent;
+
+        if (this.state.open) {
+            panelContent = React.createElement("form", {className: "create-award-form"}, 
                 React.createElement("div", {className: "media"}, 
                     React.createElement("div", {className: "media-body", style: {width: '100%'}}, 
                         React.createElement("div", {className: "form-group"}, 
@@ -84,23 +86,16 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
                 )
             );
         } else {
-            inputState = React.createElement("div", {className: "media"}, 
-                React.createElement("div", {className: "media-left media-middle"}, 
-                    React.createElement("button", {
-                        className: "btn btn-success", 
-                        onClick: this._initAwardForm, 
-                        type: "button"}, "Create Award..."
-                    )
-                ), 
-                React.createElement("div", {className: "media-body"}, 
-                    "It is important to give short and clear name, for example: 'Four-Way Medal' or 'Miss Universe'"
-                )
-            );
+            panelContent = React.createElement(PromptView, {
+                label: "Create Award...", 
+                hint: "Give short and clear names for awards, treat them like medals, for example: 'Four-Way Medal' or 'Miss Universe'", 
+                labelDidClick: this._promptViewDidClick});
         }
+
         return (
             React.createElement("div", {className: "panel panel-default"}, 
                 React.createElement("div", {className: "panel-body"}, 
-                    inputState
+                    panelContent
                 )
             )
         );
@@ -120,14 +115,14 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
         });
     },
 
-    _initAwardForm: function () {
-        this.setState({
-            creating: true
-        });
-    },
-
     _isValid: function () {
         return !!this.state.name && !!this.state.desc && !!this.state.fileServer;
+    },
+
+    _promptViewDidClick: function () {
+        this.setState({
+            open: true
+        });
     },
 
     _uploadProgress: function (file, progress, bytesSent) {
@@ -144,7 +139,7 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
 
 module.exports = AwardCreator;
 
-},{"../actions/Actions":2,"./AwardImageDrop.react":4,"react":174,"react/lib/LinkedStateMixin":39}],4:[function(require,module,exports){
+},{"../actions/Actions":2,"./AwardImageDrop.react":4,"./PromptView.react":8,"react":174,"react/lib/LinkedStateMixin":39}],4:[function(require,module,exports){
 var React          = require('react'),
     ReactPropTypes = React.PropTypes,
     Actions        = require('../actions/Actions'),

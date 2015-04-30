@@ -1,5 +1,6 @@
 var React            = require('react'),
     AwardImageDrop   = require('./AwardImageDrop.react'),
+    PromptView       = require('./PromptView.react'),
     Actions          = require('../actions/Actions'),
     LinkedStateMixin = require('react/lib/LinkedStateMixin');
 
@@ -8,18 +9,19 @@ var AwardCreator = React.createClass({
 
     getInitialState: function () {
         return {
-            action  : '/api/admin/plugins/awards/images',
-            dataUrl : '',
-            name    : '',
-            desc    : '',
-            creating: false
+            action : '/api/admin/plugins/awards/images',
+            dataUrl: '',
+            name   : '',
+            desc   : '',
+            open   : false
         };
     },
 
     render: function () {
-        var inputState;
-        if (this.state.creating) {
-            inputState = <form className="create-award-form">
+        var panelContent;
+
+        if (this.state.open) {
+            panelContent = <form className="create-award-form">
                 <div className="media">
                     <div className="media-body" style={{width: '100%'}}>
                         <div className="form-group">
@@ -59,23 +61,16 @@ var AwardCreator = React.createClass({
                 </div>
             </form>;
         } else {
-            inputState = <div className="media">
-                <div className="media-left media-middle">
-                    <button
-                        className="btn btn-success"
-                        onClick={this._initAwardForm}
-                        type="button">Create Award...
-                    </button>
-                </div>
-                <div className="media-body">
-                    It is important to give short and clear name, for example: 'Four-Way Medal' or 'Miss Universe'
-                </div>
-            </div>;
+            panelContent = <PromptView
+                label="Create Award..."
+                hint="Give short and clear names for awards, treat them like medals, for example: 'Four-Way Medal' or 'Miss Universe'"
+                labelDidClick={this._promptViewDidClick}/>;
         }
+
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
-                    {inputState}
+                    {panelContent}
                 </div>
             </div>
         );
@@ -95,14 +90,14 @@ var AwardCreator = React.createClass({
         });
     },
 
-    _initAwardForm: function () {
-        this.setState({
-            creating: true
-        });
-    },
-
     _isValid: function () {
         return !!this.state.name && !!this.state.desc && !!this.state.fileServer;
+    },
+
+    _promptViewDidClick: function () {
+        this.setState({
+            open: true
+        });
     },
 
     _uploadProgress: function (file, progress, bytesSent) {
