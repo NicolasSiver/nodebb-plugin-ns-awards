@@ -1,17 +1,16 @@
-var React          = require('react'),
-    AwardImageDrop = require('./AwardImageDrop.react'),
-    Actions        = require('../actions/Actions');
+var React            = require('react'),
+    AwardImageDrop   = require('./AwardImageDrop.react'),
+    Actions          = require('../actions/Actions'),
+    LinkedStateMixin = require('react/lib/LinkedStateMixin');
 
 var AwardCreator = React.createClass({
-    componentDidMount: function () {
-    },
-
-    componentWillUnmount: function () {
-    },
+    mixins: [LinkedStateMixin],
 
     getInitialState: function () {
         return {
             action  : '/api/admin/plugins/awards/images',
+            name    : '',
+            desc    : '',
             creating: false
         };
     },
@@ -24,7 +23,9 @@ var AwardCreator = React.createClass({
                     <div className="media-body" style={{width: '100%'}}>
                         <div className="form-group">
                             <label htmlFor="awardName">Name</label>
-                            <input type="text" className="form-control" id="awardName" placeholder="Enter name"/>
+                            <input
+                                type="text" className="form-control" id="awardName" placeholder="Enter name"
+                                valueLink={this.linkState('name')}/>
                         </div>
                     </div>
                     <div className="media-right media-middle">
@@ -37,7 +38,8 @@ var AwardCreator = React.createClass({
                 <div className="form-group">
                     <label htmlFor="awardDesc">Description</label>
                     <textarea className="form-control" rows="4" id="awardDesc"
-                              placeholder="Enter full description"></textarea>
+                              placeholder="Enter full description"
+                              valueLink={this.linkState('desc')}></textarea>
                 </div>
                 <div className="pull-right controls">
                     <button
@@ -93,15 +95,18 @@ var AwardCreator = React.createClass({
     },
 
     _isValid: function () {
-        return false;
+        return !!this.state.name && !!this.state.desc && !!this.state.fileServer;
     },
 
     _uploadProgress: function (file, progress, bytesSent) {
-        console.log(arguments);
+        //noop: could be used in future for indication
     },
 
     _uploadSuccess: function (fileClient, fileServer) {
-        console.log(arguments);
+        this.setState({
+            fileClient: fileClient,
+            fileServer: fileServer
+        });
     }
 });
 
