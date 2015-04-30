@@ -23,7 +23,20 @@
   },
   "browserify-shim": {
     "jquery": "global:$",
-    "socket": "global:socket"
+    "socket": "global:socket",
+    "bootstrap": {
+      "exports": "global:bootstrap",
+      "depends": [
+        "jquery"
+      ]
+    },
+    "bootbox": {
+      "exports": "global:bootbox",
+      "depends": [
+        "jquery",
+        "bootstrap"
+      ]
+    }
   },
   "author": "Nicolas Siver",
   "license": "MIT",
