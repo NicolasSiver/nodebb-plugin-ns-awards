@@ -22512,6 +22512,7 @@ AppDispatcher.register(function (action) {
                 var index = getIndexById(action.id, _awards);
                 if (index != -1) {
                     _awards.splice(index, 1);
+                    AwardsStore.emitChange();
                 }
             });
             break;
@@ -22530,7 +22531,7 @@ function getIndexById(id, list) {
     var i = 0, len = list.length, item;
     for (i; i < len; ++i) {
         item = list[i];
-        if (item.id === id) {
+        if (item.aid === id) {
             return i;
         }
     }
