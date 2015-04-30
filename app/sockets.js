@@ -17,6 +17,7 @@
         sockets[constants.SOCKETS] = {};
         //Acknowledgements
         sockets[constants.SOCKETS].createAward = Module.createAward;
+        sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
         sockets[constants.SOCKETS].getAwards = Module.getAwards;
 
         callback();
@@ -38,7 +39,7 @@
                 awardFile = file;
                 fse.copy(
                     file.path,
-                    path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, file.name),
+                    getUploadImagePath(file.name),
                     next
                 );
             },
@@ -48,8 +49,28 @@
         ], callback);
     };
 
+    Module.deleteAward = function (socket, payload, callback) {
+        async.waterfall([
+            async.apply(database.getAward, payload.id),
+            function (award, next) {
+                if (!award) {
+                    return callback(new Error('Award with id - ' + payload.id + 'can not be found'));
+                }
+
+                async.parallel([
+                    async.apply(fse.remove, getUploadImagePath(award.image)),
+                    async.apply(database.deleteAward, award.aid)
+                ], next);
+            }
+        ], callback);
+    };
+
     Module.getAwards = function (socket, callback) {
         database.getAllAwards(callback);
     };
+
+    function getUploadImagePath(fileName) {
+        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
+    }
 
 })(module.exports);

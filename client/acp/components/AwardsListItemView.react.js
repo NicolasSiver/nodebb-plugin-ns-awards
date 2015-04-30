@@ -1,6 +1,8 @@
 var React          = require('react'),
+    bootbox        = require('bootbox'),
     ReactPropTypes = React.PropTypes,
     Actions        = require('../actions/Actions');
+
 
 var AwardsListItemView = React.createClass({
     propTypes: {
@@ -8,8 +10,6 @@ var AwardsListItemView = React.createClass({
     },
 
     render: function () {
-        console.log(this.props.award);
-
         var imageUrl = "../../uploads/awards/" + this.props.award.image;
 
         return (
@@ -24,7 +24,7 @@ var AwardsListItemView = React.createClass({
                     </div>
                     <div className="col-md-2">
                         <div className="pull-right"><i
-                            className="fa fa-times"
+                            className="fa fa-times icon-danger icon-control"
                             onClick={this._deleteItem}></i></div>
                     </div>
                 </div>
@@ -33,7 +33,12 @@ var AwardsListItemView = React.createClass({
     },
 
     _deleteItem: function () {
-
+        var self = this;
+        bootbox.confirm("Are you sure?", function (result) {
+            if (result) {
+                Actions.deleteAward(self.props.award);
+            }
+        });
     }
 });
 

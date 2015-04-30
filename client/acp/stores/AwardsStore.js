@@ -7,6 +7,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     CHANGE_EVENT  = 'change',
     API           = {
         CREATE_AWARD: 'plugins.ns-awards.createAward',
+        DELETE_AWARD: 'plugins.ns-awards.deleteAward',
         GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
@@ -42,6 +43,17 @@ AppDispatcher.register(function (action) {
                 AwardsStore.emitChange();
             });
             break;
+        case Constants.EVENT_DELETE_AWARD:
+            socket.emit(API.DELETE_AWARD, {
+                id: action.id
+            }, function (error) {
+                //Optimistic Award Delete
+                var index = getIndexById(action.id, _awards);
+                if (index != -1) {
+                    _awards.splice(index, 1);
+                }
+            });
+            break;
         case Constants.EVENT_GET_ALL_AWARDS:
             socket.emit(API.GET_AWARDS, function (error, awards) {
                 _awards = awards;
@@ -52,5 +64,16 @@ AppDispatcher.register(function (action) {
             return true;
     }
 });
+
+function getIndexById(id, list) {
+    var i = 0, len = list.length, item;
+    for (i; i < len; ++i) {
+        item = list[i];
+        if (item.id === id) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 module.exports = AwardsStore;

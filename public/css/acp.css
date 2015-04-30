@@ -3,6 +3,13 @@
   margin: 0;
   padding: 0;
 }
+.awards-list .icon-control {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.awards-list .icon-danger {
+  color: #ef5350;
+}
 .create-award-form .btn-success {
   margin-left: 4px;
 }

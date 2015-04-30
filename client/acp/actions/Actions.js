@@ -11,6 +11,13 @@ module.exports = {
         });
     },
 
+    deleteAward: function (awardEntity) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_DELETE_AWARD,
+            id        : awardEntity.aid
+        });
+    },
+
     getAwards: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_GET_ALL_AWARDS

@@ -38,6 +38,13 @@
         ], done);
     };
 
+    Database.deleteAward = function (id, done) {
+        async.parallel([
+            async.apply(db.delete, namespace + ':' + id),
+            async.apply(db.sortedSetRemove, namespace, id)
+        ], done);
+    };
+
     Database.getAllAwards = function (done) {
         async.waterfall([
             async.apply(db.getSortedSetRange, namespace, 0, -1),
@@ -50,6 +57,10 @@
                 }), next);
             }
         ], done);
+    };
+
+    Database.getAward = function (id, done) {
+        db.getObject(namespace + ':' + id, done);
     };
 
 

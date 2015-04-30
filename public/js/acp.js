@@ -3,6 +3,7 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
     EVENT_CREATE_AWARD  : null,
+    EVENT_DELETE_AWARD  : null,
     EVENT_GET_ALL_AWARDS: null
 });
 
@@ -17,6 +18,13 @@ module.exports = {
             name      : name,
             desc      : description,
             fileId    : imageFileId
+        });
+    },
+
+    deleteAward: function (awardEntity) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_DELETE_AWARD,
+            id        : awardEntity.aid
         });
     },
 
@@ -249,9 +257,12 @@ var AwardsApp = React.createClass({displayName: "AwardsApp",
 module.exports = AwardsApp;
 
 },{"./AwardCreator.react":3,"./AwardsListView.react":7,"./Settings.react":9,"./UserAwardManager.react":10,"react":174}],6:[function(require,module,exports){
+(function (global){
 var React          = require('react'),
+    bootbox        = (typeof window !== "undefined" ? window.bootbox : typeof global !== "undefined" ? global.bootbox : null),
     ReactPropTypes = React.PropTypes,
     Actions        = require('../actions/Actions');
+
 
 var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     propTypes: {
@@ -259,8 +270,6 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     },
 
     render: function () {
-        console.log(this.props.award);
-
         var imageUrl = "../../uploads/awards/" + this.props.award.image;
 
         return (
@@ -275,7 +284,7 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
                     ), 
                     React.createElement("div", {className: "col-md-2"}, 
                         React.createElement("div", {className: "pull-right"}, React.createElement("i", {
-                            className: "fa fa-times", 
+                            className: "fa fa-times icon-danger icon-control", 
                             onClick: this._deleteItem}))
                     )
                 )
@@ -284,12 +293,18 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     },
 
     _deleteItem: function () {
-
+        var self = this;
+        bootbox.confirm("Are you sure?", function (result) {
+            if (result) {
+                Actions.deleteAward(self.props.award);
+            }
+        });
     }
 });
 
 module.exports = AwardsListItemView;
 
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../actions/Actions":2,"react":174}],7:[function(require,module,exports){
 var React              = require('react'),
     AwardsListItemView = require('./AwardsListItemView.react'),
@@ -22453,6 +22468,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     CHANGE_EVENT  = 'change',
     API           = {
         CREATE_AWARD: 'plugins.ns-awards.createAward',
+        DELETE_AWARD: 'plugins.ns-awards.deleteAward',
         GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
@@ -22488,6 +22504,17 @@ AppDispatcher.register(function (action) {
                 AwardsStore.emitChange();
             });
             break;
+        case Constants.EVENT_DELETE_AWARD:
+            socket.emit(API.DELETE_AWARD, {
+                id: action.id
+            }, function (error) {
+                //Optimistic Award Delete
+                var index = getIndexById(action.id, _awards);
+                if (index != -1) {
+                    _awards.splice(index, 1);
+                }
+            });
+            break;
         case Constants.EVENT_GET_ALL_AWARDS:
             socket.emit(API.GET_AWARDS, function (error, awards) {
                 _awards = awards;
@@ -22498,6 +22525,17 @@ AppDispatcher.register(function (action) {
             return true;
     }
 });
+
+function getIndexById(id, list) {
+    var i = 0, len = list.length, item;
+    for (i; i < len; ++i) {
+        item = list[i];
+        if (item.id === id) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 module.exports = AwardsStore;
 
