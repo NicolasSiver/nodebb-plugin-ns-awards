@@ -8,11 +8,20 @@ var AwardsListItemView = React.createClass({
     },
 
     render: function () {
+        console.log(this.props.award);
+
+        var imageUrl = "../../uploads/awards/" + this.props.award.image;
+
         return (
             <li className="awards-item">
                 <div className="row">
-                    <div className="col-md-3">{this.props.award.name}</div>
-                    <div className="col-md-7">{this.props.award.desc}</div>
+                    <div className="col-md-2"><img className="img-responsive" src={imageUrl}/></div>
+                    <div className="col-md-8">
+                        <dl>
+                            <dt>{this.props.award.name}</dt>
+                            <dd>{this.props.award.desc}</dd>
+                        </dl>
+                    </div>
                     <div className="col-md-2">
                         <div className="pull-right"><i
                             className="fa fa-times"

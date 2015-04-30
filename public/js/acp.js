@@ -259,11 +259,20 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     },
 
     render: function () {
+        console.log(this.props.award);
+
+        var imageUrl = "../../uploads/awards/" + this.props.award.image;
+
         return (
             React.createElement("li", {className: "awards-item"}, 
                 React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-md-3"}, this.props.award.name), 
-                    React.createElement("div", {className: "col-md-7"}, this.props.award.desc), 
+                    React.createElement("div", {className: "col-md-2"}, React.createElement("img", {className: "img-responsive", src: imageUrl})), 
+                    React.createElement("div", {className: "col-md-8"}, 
+                        React.createElement("dl", null, 
+                            React.createElement("dt", null, this.props.award.name), 
+                            React.createElement("dd", null, this.props.award.desc)
+                        )
+                    ), 
                     React.createElement("div", {className: "col-md-2"}, 
                         React.createElement("div", {className: "pull-right"}, React.createElement("i", {
                             className: "fa fa-times", 

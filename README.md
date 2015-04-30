@@ -5,5 +5,6 @@ System for rewarding forum users. It allows admin to define set of awards that c
 ## TODO
 
 - Add Sections to categorise awards, like: Forum, One time event, etc.
+- ACP: Add Awarded Users statistics
 
 ## Changelog
