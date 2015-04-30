@@ -1,7 +1,8 @@
-var React          = require('react'),
-    AwardsListView = require('./AwardsListView.react'),
-    AwardCreator   = require('./AwardCreator.react'),
-    Settings       = require('./Settings.react');
+var React            = require('react'),
+    AwardsListView   = require('./AwardsListView.react'),
+    AwardCreator     = require('./AwardCreator.react'),
+    UserAwardManager = require('./UserAwardManager.react'),
+    Settings         = require('./Settings.react');
 
 var AwardsApp = React.createClass({
     render: function () {
@@ -15,6 +16,7 @@ var AwardsApp = React.createClass({
                 </div>
                 <div className="col-md-4">
                     <AwardCreator />
+                    <UserAwardManager />
 
                     <div className="alert alert-info" role="alert">Plugin is under development. Don't hesitate to <a
                         href="https://github.com/NicolasSiver/nodebb-plugin-ns-awards#todo"
