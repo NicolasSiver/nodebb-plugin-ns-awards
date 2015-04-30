@@ -8,7 +8,7 @@
         constants = require('./constants'),
         namespace = constants.NAMESPACE;
 
-    Database.createAward = function (name, description, imageUrl, done) {
+    Database.createAward = function (name, description, image, done) {
         async.waterfall([
             function (next) {
                 db.incrObjectField('global', 'nextNsAwardId', next);
@@ -25,7 +25,7 @@
                     aid  : id,
                     name : name,
                     desc : description,
-                    image: imageUrl
+                    image: image
                 };
                 db.setObject(namespace + ':' + id, awardModel, function (error) {
                     if (error) {

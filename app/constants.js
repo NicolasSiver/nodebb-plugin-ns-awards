@@ -7,3 +7,4 @@ function define(name, value) {
 
 define('NAMESPACE', 'ns:awards');
 define('SOCKETS', 'ns-awards');
+define('UPLOAD_DIR', 'awards');

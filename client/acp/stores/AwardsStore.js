@@ -30,6 +30,18 @@ var AwardsStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
+        case Constants.EVENT_CREATE_AWARD:
+            socket.emit(API.CREATE_AWARD, {
+                name  : action.name,
+                desc  : action.desc,
+                fileId: action.fileId
+            }, function (error, payload) {
+                console.log(payload);
+                //Optimistic Award Create
+                //_awards.push(payload);
+                AwardsStore.emitChange();
+            });
+            break;
         default:
             return true;
     }

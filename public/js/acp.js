@@ -11,6 +11,15 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     Constants     = require('../Constants');
 
 module.exports = {
+    createAward: function (name, description, imageFileId) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_CREATE_AWARD,
+            name      : name,
+            desc      : description,
+            fileId    : imageFileId
+        });
+    },
+
     getAwards: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_GET_ALL_AWARDS
@@ -24,10 +33,11 @@ module.exports = {
 
 },{"../Constants":1,"../dispatcher/AppDispatcher":11}],3:[function(require,module,exports){
 var React            = require('react'),
+    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
+
     AwardImageDrop   = require('./AwardImageDrop.react'),
     PromptView       = require('./PromptView.react'),
-    Actions          = require('../actions/Actions'),
-    LinkedStateMixin = require('react/lib/LinkedStateMixin');
+    Actions          = require('../actions/Actions');
 
 var AwardCreator = React.createClass({displayName: "AwardCreator",
     mixins: [LinkedStateMixin],
@@ -106,7 +116,7 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
     },
 
     _createAward: function () {
-
+        Actions.createAward(this.state.name, this.state.desc, this.state.fileServer.id);
     },
 
     _imageDidSelect: function (file, dataUrl) {
@@ -22457,6 +22467,18 @@ var AwardsStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
+        case Constants.EVENT_CREATE_AWARD:
+            socket.emit(API.CREATE_AWARD, {
+                name  : action.name,
+                desc  : action.desc,
+                fileId: action.fileId
+            }, function (error, payload) {
+                console.log(payload);
+                //Optimistic Award Create
+                //_awards.push(payload);
+                AwardsStore.emitChange();
+            });
+            break;
         default:
             return true;
     }

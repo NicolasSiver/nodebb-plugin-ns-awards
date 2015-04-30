@@ -9,8 +9,14 @@
         done(null, files[id]);
     };
 
+    /**
+     * Bind multer's file object to identifier
+     *
+     * @param file see - https://github.com/expressjs/multer#multer-file-object
+     * @param done
+     */
     Uploads.setFile = function (file, done) {
-        var id = counter++;
+        var id = ++counter;
         files[id] = file;
         done(null, id);
     };

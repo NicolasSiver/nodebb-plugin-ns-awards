@@ -1,8 +1,9 @@
 var React            = require('react'),
+    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
+
     AwardImageDrop   = require('./AwardImageDrop.react'),
     PromptView       = require('./PromptView.react'),
-    Actions          = require('../actions/Actions'),
-    LinkedStateMixin = require('react/lib/LinkedStateMixin');
+    Actions          = require('../actions/Actions');
 
 var AwardCreator = React.createClass({
     mixins: [LinkedStateMixin],
@@ -81,7 +82,7 @@ var AwardCreator = React.createClass({
     },
 
     _createAward: function () {
-
+        Actions.createAward(this.state.name, this.state.desc, this.state.fileServer.id);
     },
 
     _imageDidSelect: function (file, dataUrl) {
