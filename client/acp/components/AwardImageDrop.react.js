@@ -29,7 +29,6 @@ var AwardImageDrop = React.createClass({
 
             //Overwrite Dropzone events
             addedfile: function (file) {
-
             },
 
             thumbnail: function (file, dataUrl) {
@@ -51,7 +50,7 @@ var AwardImageDrop = React.createClass({
 
     render: function () {
         if (this.state.dataUrl) {
-            return (<img src={this.state.dataUrl}/>);
+            return (<img className="award-preview" src={this.state.dataUrl}/>);
         }
         return (
             <i className="fa fa-cloud-upload award-upload-icon"></i>

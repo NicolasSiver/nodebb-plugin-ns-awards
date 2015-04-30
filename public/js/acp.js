@@ -152,7 +152,6 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
 
             //Overwrite Dropzone events
             addedfile: function (file) {
-
             },
 
             thumbnail: function (file, dataUrl) {
@@ -174,7 +173,7 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
 
     render: function () {
         if (this.state.dataUrl) {
-            return (React.createElement("img", {src: this.state.dataUrl}));
+            return (React.createElement("img", {className: "award-preview", src: this.state.dataUrl}));
         }
         return (
             React.createElement("i", {className: "fa fa-cloud-upload award-upload-icon"})
