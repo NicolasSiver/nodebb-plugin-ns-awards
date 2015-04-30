@@ -8,14 +8,10 @@ var React          = require('react'),
 var AwardImageDrop = React.createClass({
     propTypes: {
         action        : ReactPropTypes.string.isRequired,
+        dataUrl       : ReactPropTypes.string.isRequired,
+        imageDidSelect: ReactPropTypes.func.isRequired,
         success       : ReactPropTypes.func.isRequired,
         uploadProgress: ReactPropTypes.func.isRequired
-    },
-
-    getInitialState: function () {
-        return {
-            dataUrl: null
-        };
     },
 
     componentDidMount: function () {
@@ -38,9 +34,7 @@ var AwardImageDrop = React.createClass({
             },
 
             thumbnail: function (file, dataUrl) {
-                self.setState({
-                    dataUrl: dataUrl
-                });
+                self.props.imageDidSelect(file, dataUrl);
             },
 
             uploadprogress: function (file, progress, bytesSent) {
@@ -55,10 +49,10 @@ var AwardImageDrop = React.createClass({
     },
 
     render: function () {
-        if (this.state.dataUrl) {
+        if (this.props.dataUrl) {
             return (
                 <div className="award-preview center-block">
-                    <img className="img-responsive" src={this.state.dataUrl}/>
+                    <img className="img-responsive" src={this.props.dataUrl}/>
                 </div>
             );
         }

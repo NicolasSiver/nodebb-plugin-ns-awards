@@ -34,6 +34,7 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
     getInitialState: function () {
         return {
             action  : '/api/admin/plugins/awards/images',
+            dataUrl : '',
             name    : '',
             desc    : '',
             creating: false
@@ -56,6 +57,8 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
                     React.createElement("div", {className: "media-right media-middle"}, 
                         React.createElement(AwardImageDrop, {
                             action: this.state.action, 
+                            dataUrl: this.state.dataUrl, 
+                            imageDidSelect: this._imageDidSelect, 
                             success: this._uploadSuccess, 
                             uploadProgress: this._uploadProgress})
                     )
@@ -104,13 +107,17 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
     },
 
     _cancelAwardForm: function () {
-        this.setState({
-            creating: false
-        })
+        this.replaceState(this.getInitialState());
     },
 
     _createAward: function () {
 
+    },
+
+    _imageDidSelect: function (file, dataUrl) {
+        this.setState({
+            dataUrl: dataUrl
+        });
     },
 
     _initAwardForm: function () {
@@ -148,14 +155,10 @@ var React          = require('react'),
 var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
     propTypes: {
         action        : ReactPropTypes.string.isRequired,
+        dataUrl       : ReactPropTypes.string.isRequired,
+        imageDidSelect: ReactPropTypes.func.isRequired,
         success       : ReactPropTypes.func.isRequired,
         uploadProgress: ReactPropTypes.func.isRequired
-    },
-
-    getInitialState: function () {
-        return {
-            dataUrl: null
-        };
     },
 
     componentDidMount: function () {
@@ -178,9 +181,7 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
             },
 
             thumbnail: function (file, dataUrl) {
-                self.setState({
-                    dataUrl: dataUrl
-                });
+                self.props.imageDidSelect(file, dataUrl);
             },
 
             uploadprogress: function (file, progress, bytesSent) {
@@ -195,10 +196,10 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
     },
 
     render: function () {
-        if (this.state.dataUrl) {
+        if (this.props.dataUrl) {
             return (
                 React.createElement("div", {className: "award-preview center-block"}, 
-                    React.createElement("img", {className: "img-responsive", src: this.state.dataUrl})
+                    React.createElement("img", {className: "img-responsive", src: this.props.dataUrl})
                 )
             );
         }

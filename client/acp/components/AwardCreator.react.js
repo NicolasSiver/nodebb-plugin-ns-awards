@@ -9,6 +9,7 @@ var AwardCreator = React.createClass({
     getInitialState: function () {
         return {
             action  : '/api/admin/plugins/awards/images',
+            dataUrl : '',
             name    : '',
             desc    : '',
             creating: false
@@ -31,6 +32,8 @@ var AwardCreator = React.createClass({
                     <div className="media-right media-middle">
                         <AwardImageDrop
                             action={this.state.action}
+                            dataUrl={this.state.dataUrl}
+                            imageDidSelect={this._imageDidSelect}
                             success={this._uploadSuccess}
                             uploadProgress={this._uploadProgress}/>
                     </div>
@@ -79,13 +82,17 @@ var AwardCreator = React.createClass({
     },
 
     _cancelAwardForm: function () {
-        this.setState({
-            creating: false
-        })
+        this.replaceState(this.getInitialState());
     },
 
     _createAward: function () {
 
+    },
+
+    _imageDidSelect: function (file, dataUrl) {
+        this.setState({
+            dataUrl: dataUrl
+        });
     },
 
     _initAwardForm: function () {
