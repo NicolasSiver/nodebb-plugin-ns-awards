@@ -11,6 +11,7 @@ var AwardCreator = React.createClass({
 
     getInitialState: function () {
         return {
+            action  : '/api/admin/plugins/awards/images',
             creating: false
         };
     },
@@ -27,7 +28,10 @@ var AwardCreator = React.createClass({
                         </div>
                     </div>
                     <div className="media-right media-middle">
-                        <AwardImageDrop />
+                        <AwardImageDrop
+                            action={this.state.action}
+                            success={this._uploadSuccess}
+                            uploadProgress={this._uploadProgress}/>
                     </div>
                 </div>
                 <div className="form-group">
@@ -91,6 +95,14 @@ var AwardCreator = React.createClass({
     _isValid: function () {
         return false;
     },
+
+    _uploadProgress: function (file, progress, bytesSent) {
+        console.log(arguments);
+    },
+
+    _uploadSuccess: function (fileClient, fileServer) {
+        console.log(arguments);
+    }
 });
 
 module.exports = AwardCreator;

@@ -36,6 +36,7 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
 
     getInitialState: function () {
         return {
+            action  : '/api/admin/plugins/awards/images',
             creating: false
         };
     },
@@ -52,7 +53,10 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
                         )
                     ), 
                     React.createElement("div", {className: "media-right media-middle"}, 
-                        React.createElement(AwardImageDrop, null)
+                        React.createElement(AwardImageDrop, {
+                            action: this.state.action, 
+                            success: this._uploadSuccess, 
+                            uploadProgress: this._uploadProgress})
                     )
                 ), 
                 React.createElement("div", {className: "form-group"}, 
@@ -116,6 +120,14 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
     _isValid: function () {
         return false;
     },
+
+    _uploadProgress: function (file, progress, bytesSent) {
+        console.log(arguments);
+    },
+
+    _uploadSuccess: function (fileClient, fileServer) {
+        console.log(arguments);
+    }
 });
 
 module.exports = AwardCreator;
@@ -130,7 +142,9 @@ var React          = require('react'),
 
 var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
     propTypes: {
-        //award: ReactPropTypes.object.isRequired
+        action        : ReactPropTypes.string.isRequired,
+        success       : ReactPropTypes.func.isRequired,
+        uploadProgress: ReactPropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -145,13 +159,17 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
         Dropzone.autoDiscover = false;
 
         dropzone = new Dropzone(this.getDOMNode(), {
-            url      : '/api/admin/plugins/awards/images',
+            url      : this.props.action,
             paramName: 'award',
             clickable: true,
             maxFiles : 1,
 
             //Overwrite Dropzone events
             addedfile: function (file) {
+            },
+
+            success: function (file, response) {
+                self.props.success(file, response);
             },
 
             thumbnail: function (file, dataUrl) {
@@ -161,7 +179,7 @@ var AwardImageDrop = React.createClass({displayName: "AwardImageDrop",
             },
 
             uploadprogress: function (file, progress, bytesSent) {
-                // Display the progress
+                self.props.uploadProgress(file, progress, bytesSent);
             }
         });
     },

@@ -7,7 +7,9 @@ var React          = require('react'),
 
 var AwardImageDrop = React.createClass({
     propTypes: {
-        //award: ReactPropTypes.object.isRequired
+        action        : ReactPropTypes.string.isRequired,
+        success       : ReactPropTypes.func.isRequired,
+        uploadProgress: ReactPropTypes.func.isRequired
     },
 
     getInitialState: function () {
@@ -22,13 +24,17 @@ var AwardImageDrop = React.createClass({
         Dropzone.autoDiscover = false;
 
         dropzone = new Dropzone(this.getDOMNode(), {
-            url      : '/api/admin/plugins/awards/images',
+            url      : this.props.action,
             paramName: 'award',
             clickable: true,
             maxFiles : 1,
 
             //Overwrite Dropzone events
             addedfile: function (file) {
+            },
+
+            success: function (file, response) {
+                self.props.success(file, response);
             },
 
             thumbnail: function (file, dataUrl) {
@@ -38,7 +44,7 @@ var AwardImageDrop = React.createClass({
             },
 
             uploadprogress: function (file, progress, bytesSent) {
-                // Display the progress
+                self.props.uploadProgress(file, progress, bytesSent);
             }
         });
     },
