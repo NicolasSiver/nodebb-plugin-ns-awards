@@ -1,3 +1,10 @@
-.awards-app {
-  color: #ffc107;
+.create-award-form .btn-success {
+  margin-left: 4px;
+}
+.create-award-form .controls {
+  margin-top: 16px;
+}
+.create-award-form .award-upload-icon {
+  font-size: 32px;
+  color: #eeeeee;
 }

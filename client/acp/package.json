@@ -28,6 +28,7 @@
   "author": "Nicolas Siver",
   "license": "MIT",
   "dependencies": {
+    "dropzone": "^4.0.1",
     "flux": "^2.0.1",
     "react": "^0.13.1"
   },
