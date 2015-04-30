@@ -11,15 +11,28 @@ var UserAwardManager = React.createClass({
     },
 
     render: function () {
+        var panelContent;
+
+        if (this.state.open) {
+
+        } else {
+            panelContent = <PromptView
+                label="Give Award..."
+                hint="Overview user's awards and grant him or her a new one. Don't forget to specify reason."
+                labelDidClick={this._promptViewDidClick}/>;
+        }
+
         return (
             <div className="panel panel-default">
                 <div className="panel-body">
-                    <PromptView
-                        label="Give Award..."
-                        hint="Overview user's awards and grant him or her a new one. Don't forget to specify reason."/>
+                    {panelContent}
                 </div>
             </div>
         );
+    },
+
+    _promptViewDidClick: function () {
+        this.setState({open: true});
     }
 });
 

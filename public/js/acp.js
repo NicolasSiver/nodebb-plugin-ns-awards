@@ -441,15 +441,28 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
     },
 
     render: function () {
+        var panelContent;
+
+        if (this.state.open) {
+
+        } else {
+            panelContent = React.createElement(PromptView, {
+                label: "Give Award...", 
+                hint: "Overview user's awards and grant him or her a new one. Don't forget to specify reason.", 
+                labelDidClick: this._promptViewDidClick});
+        }
+
         return (
             React.createElement("div", {className: "panel panel-default"}, 
                 React.createElement("div", {className: "panel-body"}, 
-                    React.createElement(PromptView, {
-                        label: "Give Award...", 
-                        hint: "Overview user's awards and grant him or her a new one. Don't forget to specify reason."})
+                    panelContent
                 )
             )
         );
+    },
+
+    _promptViewDidClick: function () {
+        this.setState({open: true});
     }
 });
 
