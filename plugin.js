@@ -6,26 +6,27 @@
         controller = require('./app/controller'),
         sockets    = require('./app/sockets'),
         filters    = require('./app/filters'),
-        settings   = require('./app/settings');
+        settings   = require('./app/settings'),
+        uploads    = require('./app/uploads');
 
     //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
     Plugin.hooks = {
         filters: filters,
         statics: {
             load: function (params, callback) {
-                var router          = params.router,
-                    middleware      = params.middleware,
-                    controllers     = params.controllers,
-                    pluginUri       = '/admin/plugins/awards',
-                    apiUri          = '/api' + pluginUri,
+                var router            = params.router,
+                    middleware        = params.middleware,
+                    controllers       = params.controllers,
+                    pluginUri         = '/admin/plugins/awards',
+                    apiUri            = '/api' + pluginUri,
 
-                    renderAdmin     = function (req, res, next) {
+                    renderAdmin       = function (req, res, next) {
                         res.render(
                             'admin/plugins/awards', {}
                         );
                     },
 
-                    renderClient    = function (req, res, next) {
+                    renderClient      = function (req, res, next) {
                         controller.getAllAwards(function (error, payload) {
                             if (error) {
                                 return res.status(500).json(error);
@@ -36,15 +37,24 @@
                         });
                     },
 
-                    storeAwardImage = multer({
+                    storageMiddleware = multer({
                         onFileUploadComplete: function (file, req, res) {
-                            res.json(file);
+                            req.awardFile = file;
                         }
-                    });
+                    }),
+
+                    apiImages         = function (req, res, next) {
+                        uploads.setFile(req.awardFile, function (error, id) {
+                            if (error) {
+                                return res.status(500).json(error);
+                            }
+                            res.json({id: id});
+                        });
+                    };
 
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
-                router.post(apiUri + '/images', storeAwardImage);
+                router.post(apiUri + '/images', storageMiddleware, apiImages);
 
                 //Client page
                 router.get('/awards', middleware.buildHeader, renderClient);
