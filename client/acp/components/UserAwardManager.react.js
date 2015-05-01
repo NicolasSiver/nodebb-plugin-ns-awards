@@ -56,8 +56,9 @@ var UserAwardManager = React.createClass({
                 <Autocomplete
                     placeholder="Enter username"
                     valueDidChange={this._usernameDidChange}
+                    optionDidSelect={this._userDidSelect}
                     options={this.state.users.map(function(user){
-                        return user.username;
+                        return {label: user.username, value: user.uid};
                     })}/>
 
                 <div className="form-group">
@@ -109,6 +110,10 @@ var UserAwardManager = React.createClass({
 
     _usernameDidChange: function (username) {
         Actions.searchUser(username);
+    },
+
+    _userDidSelect: function (userMeta) {
+        console.log(userMeta);
     }
 });
 

@@ -42,11 +42,11 @@
   "author": "Nicolas Siver",
   "license": "MIT",
   "dependencies": {
+    "classnames": "^1.2.2",
     "dropzone": "^4.0.1",
     "flux": "^2.0.1",
     "lodash": "^3.7.0",
-    "react": "^0.13.1",
-    "react-typeahead": "^1.0.4"
+    "react": "^0.13.1"
   },
   "devDependencies": {
     "browserify": "^9.0.8",
