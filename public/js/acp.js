@@ -591,6 +591,7 @@ module.exports = Settings;
 
 },{"../actions/Actions":2,"../stores/SettingsStore":187,"react":184}],12:[function(require,module,exports){
 var React            = require('react'),
+    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
     PromptView       = require('./PromptView.react'),
     Autocomplete     = require('./Autocomplete.react'),
     AwardsStore      = require('../stores/AwardsStore'),
@@ -613,6 +614,8 @@ function getUsers() {
 }
 
 var UserAwardManager = React.createClass({displayName: "UserAwardManager",
+    mixins: [LinkedStateMixin],
+
     componentDidMount: function () {
         AwardsStore.addChangeListener(this.awardsDidChange);
         SearchUsersStore.addChangeListener(this.usersDidFind);
@@ -634,7 +637,8 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
     getInitialState: function () {
         return assign({
             open   : false,
-            awardId: 0
+            awardId: 0,
+            reason : ''
         }, getAwards(), getUsers());
     },
 
@@ -699,7 +703,8 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {htmlFor: "awardReason"}, "Reason"), 
                     React.createElement("textarea", {className: "form-control", rows: "4", id: "awardReason", 
-                              placeholder: "Enter reason, what accomplishments user have achieved to have such award"})
+                              placeholder: "Enter reason, what accomplishments user have achieved to have such award", 
+                              valueLink: this.linkState('reason')})
                 ), 
 
                 React.createElement(PanelControls, {
@@ -734,7 +739,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
     },
 
     _isValid: function () {
-        return this.state.users.length && this.state.awardId;
+        return this.state.users.length && this.state.awardId && this.state.reason;
     },
 
     _promptViewDidClick: function () {
@@ -756,7 +761,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
 module.exports = UserAwardManager;
 
-},{"../actions/Actions":2,"../stores/AwardsStore":185,"../stores/SearchUsersStore":186,"./Autocomplete.react":3,"./PanelControls.react":9,"./PromptView.react":10,"react":184,"react/lib/Object.assign":53}],13:[function(require,module,exports){
+},{"../actions/Actions":2,"../stores/AwardsStore":185,"../stores/SearchUsersStore":186,"./Autocomplete.react":3,"./PanelControls.react":9,"./PromptView.react":10,"react":184,"react/lib/LinkedStateMixin":49,"react/lib/Object.assign":53}],13:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 

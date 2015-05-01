@@ -1,4 +1,5 @@
 var React            = require('react'),
+    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
     PromptView       = require('./PromptView.react'),
     Autocomplete     = require('./Autocomplete.react'),
     AwardsStore      = require('../stores/AwardsStore'),
@@ -21,6 +22,8 @@ function getUsers() {
 }
 
 var UserAwardManager = React.createClass({
+    mixins: [LinkedStateMixin],
+
     componentDidMount: function () {
         AwardsStore.addChangeListener(this.awardsDidChange);
         SearchUsersStore.addChangeListener(this.usersDidFind);
@@ -42,7 +45,8 @@ var UserAwardManager = React.createClass({
     getInitialState: function () {
         return assign({
             open   : false,
-            awardId: 0
+            awardId: 0,
+            reason : ''
         }, getAwards(), getUsers());
     },
 
@@ -107,7 +111,8 @@ var UserAwardManager = React.createClass({
                 <div className="form-group">
                     <label htmlFor="awardReason">Reason</label>
                     <textarea className="form-control" rows="4" id="awardReason"
-                              placeholder="Enter reason, what accomplishments user have achieved to have such award"></textarea>
+                              placeholder="Enter reason, what accomplishments user have achieved to have such award"
+                              valueLink={this.linkState('reason')}></textarea>
                 </div>
 
                 <PanelControls
@@ -142,7 +147,7 @@ var UserAwardManager = React.createClass({
     },
 
     _isValid: function () {
-        return this.state.users.length && this.state.awardId;
+        return this.state.users.length && this.state.awardId && this.state.reason;
     },
 
     _promptViewDidClick: function () {
