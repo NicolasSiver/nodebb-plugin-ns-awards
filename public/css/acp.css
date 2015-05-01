@@ -10,11 +10,11 @@
 .awards-list .icon-danger {
   color: #ef5350;
 }
-.create-award-form .btn-success {
-  margin-left: 4px;
-}
-.create-award-form .controls {
+.panel-controls {
   margin-top: 16px;
+}
+.panel-controls .btn + .btn {
+  margin-left: 4px;
 }
 .create-award-form .award-preview {
   width: 48px;

@@ -1,6 +1,8 @@
-var React      = require('react'),
-    PromptView = require('./PromptView.react'),
-    Actions    = require('../actions/Actions');
+var React         = require('react'),
+    PromptView    = require('./PromptView.react'),
+    Autocomplete  = require('./Autocomplete.react'),
+    PanelControls = require('./PanelControls.react'),
+    Actions       = require('../actions/Actions');
 
 var UserAwardManager = React.createClass({
 
@@ -12,9 +14,14 @@ var UserAwardManager = React.createClass({
 
     render: function () {
         var panelContent;
-
         if (this.state.open) {
+            panelContent = <div>
+                <Autocomplete />
 
+                <PanelControls
+                    labelSuccess="Grant!"
+                    valid={this._isValid}/>
+            </div>;
         } else {
             panelContent = <PromptView
                 label="Give Award..."
@@ -29,6 +36,10 @@ var UserAwardManager = React.createClass({
                 </div>
             </div>
         );
+    },
+
+    _isValid: function () {
+        return false;
     },
 
     _promptViewDidClick: function () {

@@ -2,6 +2,7 @@ var React            = require('react'),
     LinkedStateMixin = require('react/lib/LinkedStateMixin'),
 
     AwardImageDrop   = require('./AwardImageDrop.react'),
+    PanelControls    = require('./PanelControls.react'),
     PromptView       = require('./PromptView.react'),
     Actions          = require('../actions/Actions');
 
@@ -47,19 +48,8 @@ var AwardCreator = React.createClass({
                               placeholder="Enter full description"
                               valueLink={this.linkState('desc')}></textarea>
                 </div>
-                <div className="pull-right controls">
-                    <button
-                        className="btn btn-danger"
-                        onClick={this._cancelAwardForm}
-                        type="button">Cancel
-                    </button>
-                    <button
-                        className="btn btn-success"
-                        onClick={this._createAward}
-                        disabled={this._isValid() ? '' : 'disabled'}
-                        type="button">Add
-                    </button>
-                </div>
+                <PanelControls labelSuccess="Add" valid={this._isValid} cancelDidClick={this._cancelAwardForm}
+                               successDidClick={this._createAward}/>
             </form>;
         } else {
             panelContent = <PromptView
