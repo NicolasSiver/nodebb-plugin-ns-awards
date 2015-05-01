@@ -2,11 +2,12 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
-    EVENT_CREATE_AWARD         : null,
-    EVENT_DELETE_AWARD         : null,
-    EVENT_GET_ALL_AWARDS       : null,
-    EVENT_PICK_USER_FROM_SEARCH: null,
-    EVENT_SEARCH_USER          : null
+    EVENT_CREATE_AWARD           : null,
+    EVENT_DELETE_AWARD           : null,
+    EVENT_GET_ALL_AWARDS         : null,
+    EVENT_PICK_USER_FROM_SEARCH  : null,
+    EVENT_SEARCH_USER            : null,
+    EVENT_UNPICK_USER_FROM_SEARCH: null
 });
 
 },{"react/lib/keyMirror":169}],2:[function(require,module,exports){
@@ -52,6 +53,14 @@ module.exports = {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SEARCH_USER,
             request   : name
+        });
+    },
+
+    unpickUserFromSearch: function (index, uid) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_UNPICK_USER_FROM_SEARCH,
+            index     : index,
+            uid       : uid
         });
     }
 };
@@ -629,13 +638,43 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
     },
 
     render: function () {
-        var panelContent;
+        var panelContent, selectedUsers, self = this;
 
         function renderAwardOption(award, index, awards) {
             return React.createElement("option", {value: award.aid, key: award.aid, label: award.name}, award.name);
-        };
+        }
+
+        function renderSelectedUser(user, index, users) {
+            return (
+                React.createElement("div", {className: "row", key: user.uid}, 
+                    React.createElement("div", {className: "col-md-8"}, 
+                        React.createElement("div", {className: "media"}, 
+                            React.createElement("div", {className: "media-left"}, 
+                                React.createElement("img", {src: user.picture})
+                            ), 
+                            React.createElement("div", {className: "media-body"}, 
+                                React.createElement("dl", null, 
+                                    React.createElement("dt", null, user.username), 
+                                    React.createElement("dd", null, "posts: ", user.postcount, ", reputation: ", user.reputation)
+                                )
+                            )
+                        )
+                    ), 
+                    React.createElement("div", {className: "col-md-4"}, 
+                        React.createElement("div", {className: "pull-right"}, React.createElement("i", {
+                            className: "fa fa-times icon-danger icon-control", 
+                            onClick: self._removeSelectedUser.bind(self, index, user.uid)}))
+                    )
+                )
+            );
+        }
 
         if (this.state.open) {
+
+            if (this.state.users.length) {
+                selectedUsers = React.createElement("div", {className: "selected-users"}, this.state.users.map(renderSelectedUser));
+            }
+
             panelContent = React.createElement("div", {className: "grant-award-form"}, 
                 React.createElement(Autocomplete, {
                     placeholder: "Enter username", 
@@ -644,6 +683,8 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
                     options: this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}), 
+
+                selectedUsers, 
 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {htmlFor: "allAwards"}, "Awards"), 
@@ -690,6 +731,10 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
     _promptViewDidClick: function () {
         this.setState({open: true});
+    },
+
+    _removeSelectedUser: function (index, uid) {
+        Actions.unpickUserFromSearch(index, uid);
     },
 
     _usernameDidChange: function (username) {
@@ -23209,6 +23254,10 @@ AppDispatcher.register(function (action) {
         case Constants.EVENT_PICK_USER_FROM_SEARCH:
             _selected.push(_result[action.index]);
             _result.length = 0;
+            SearchUsersStore.emitChange();
+            break;
+        case Constants.EVENT_UNPICK_USER_FROM_SEARCH:
+            _selected.splice(action.index, 1);
             SearchUsersStore.emitChange();
             break;
         default:

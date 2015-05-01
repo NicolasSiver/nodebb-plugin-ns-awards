@@ -49,6 +49,10 @@ AppDispatcher.register(function (action) {
             _result.length = 0;
             SearchUsersStore.emitChange();
             break;
+        case Constants.EVENT_UNPICK_USER_FROM_SEARCH:
+            _selected.splice(action.index, 1);
+            SearchUsersStore.emitChange();
+            break;
         default:
             return true;
     }

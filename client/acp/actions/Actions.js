@@ -41,5 +41,13 @@ module.exports = {
             actionType: Constants.EVENT_SEARCH_USER,
             request   : name
         });
+    },
+
+    unpickUserFromSearch: function (index, uid) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_UNPICK_USER_FROM_SEARCH,
+            index     : index,
+            uid       : uid
+        });
     }
 };

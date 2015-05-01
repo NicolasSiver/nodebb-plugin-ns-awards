@@ -46,13 +46,43 @@ var UserAwardManager = React.createClass({
     },
 
     render: function () {
-        var panelContent;
+        var panelContent, selectedUsers, self = this;
 
         function renderAwardOption(award, index, awards) {
             return <option value={award.aid} key={award.aid} label={award.name}>{award.name}</option>;
-        };
+        }
+
+        function renderSelectedUser(user, index, users) {
+            return (
+                <div className="row" key={user.uid}>
+                    <div className="col-md-8">
+                        <div className="media">
+                            <div className="media-left">
+                                <img src={user.picture}/>
+                            </div>
+                            <div className="media-body">
+                                <dl>
+                                    <dt>{user.username}</dt>
+                                    <dd>posts: {user.postcount}, reputation: {user.reputation}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="pull-right"><i
+                            className="fa fa-times icon-danger icon-control"
+                            onClick={self._removeSelectedUser.bind(self, index, user.uid)}></i></div>
+                    </div>
+                </div>
+            );
+        }
 
         if (this.state.open) {
+
+            if (this.state.users.length) {
+                selectedUsers = <div className="selected-users">{this.state.users.map(renderSelectedUser)}</div>;
+            }
+
             panelContent = <div className="grant-award-form">
                 <Autocomplete
                     placeholder="Enter username"
@@ -61,6 +91,8 @@ var UserAwardManager = React.createClass({
                     options={this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}/>
+
+                {selectedUsers}
 
                 <div className="form-group">
                     <label htmlFor="allAwards">Awards</label>
@@ -107,6 +139,10 @@ var UserAwardManager = React.createClass({
 
     _promptViewDidClick: function () {
         this.setState({open: true});
+    },
+
+    _removeSelectedUser: function (index, uid) {
+        Actions.unpickUserFromSearch(index, uid);
     },
 
     _usernameDidChange: function (username) {

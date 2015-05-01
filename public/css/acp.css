@@ -3,13 +3,6 @@
   margin: 0;
   padding: 0;
 }
-.awards-list .icon-control {
-  font-size: 1.5em;
-  cursor: pointer;
-}
-.awards-list .icon-danger {
-  color: #ef5350;
-}
 .panel-controls {
   margin-top: 16px;
 }
@@ -28,6 +21,26 @@
 .grant-award-form .auto-complete {
   margin-bottom: 16px;
 }
+.grant-award-form .selected-users {
+  margin: 8px 0;
+}
+.grant-award-form .selected-users .row {
+  background-color: #fafafa;
+}
+.grant-award-form .selected-users .row + .row {
+  margin-top: 8px;
+}
+.grant-award-form .selected-users .media .media-left img {
+  display: block;
+  max-width: 48px;
+  height: auto;
+}
+.grant-award-form .selected-users .media dl {
+  margin-bottom: 0;
+}
+.grant-award-form .selected-users .fa {
+  margin: 8px 8px 0 0;
+}
 .auto-complete {
   position: relative;
   display: inline-block;
@@ -38,4 +51,11 @@
 }
 .auto-complete .hover-item {
   background-color: #c8e6c9;
+}
+.icon-control {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+.icon-danger {
+  color: #ef5350;
 }
