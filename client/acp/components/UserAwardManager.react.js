@@ -118,6 +118,7 @@ var UserAwardManager = React.createClass({
                 <PanelControls
                     labelSuccess="Grant!"
                     cancelDidClick={this._cancel}
+                    successDidClick={this._save}
                     valid={this._isValid}/>
             </div>;
         } else {
@@ -156,6 +157,11 @@ var UserAwardManager = React.createClass({
 
     _removeSelectedUser: function (index, uid) {
         Actions.unpickUserFromSearch(index, uid);
+    },
+
+    _save: function () {
+        Actions.awardUsers(this.state.users, this.state.awardId, this.state.reason);
+        this._cancel();
     },
 
     _usernameDidChange: function (username) {

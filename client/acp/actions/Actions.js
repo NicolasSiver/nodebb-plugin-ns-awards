@@ -2,6 +2,15 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     Constants     = require('../Constants');
 
 module.exports = {
+    awardUsers: function (users, awardId, reason) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_AWARD_USERS,
+            users     : users,
+            award     : awardId,
+            reason    : reason
+        });
+    },
+
     createAward: function (name, description, imageFileId) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_CREATE_AWARD,

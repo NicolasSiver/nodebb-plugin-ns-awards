@@ -2,7 +2,9 @@ var React            = require('react'),
     AwardsListView   = require('./AwardsListView.react'),
     AwardCreator     = require('./AwardCreator.react'),
     UserAwardManager = require('./UserAwardManager.react'),
-    Settings         = require('./Settings.react');
+    Settings         = require('./Settings.react'),
+
+    UsersStore       = require('../stores/UsersStore');
 
 var AwardsApp = React.createClass({
     render: function () {
