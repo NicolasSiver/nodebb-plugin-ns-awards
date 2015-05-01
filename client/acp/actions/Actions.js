@@ -28,6 +28,14 @@ module.exports = {
 
     },
 
+    pickUserFromSearch: function (index, uid) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,
+            index     : index,
+            uid       : uid
+        });
+    },
+
     searchUser: function (name) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SEARCH_USER,

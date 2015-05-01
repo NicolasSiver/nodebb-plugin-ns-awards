@@ -15,7 +15,8 @@ function getAwards() {
 
 function getUsers() {
     return {
-        users: SearchUsersStore.getResult()
+        searchUsers: SearchUsersStore.getResult(),
+        users      : SearchUsersStore.getSelected()
     };
 }
 
@@ -57,7 +58,7 @@ var UserAwardManager = React.createClass({
                     placeholder="Enter username"
                     valueDidChange={this._usernameDidChange}
                     optionDidSelect={this._userDidSelect}
-                    options={this.state.users.map(function(user){
+                    options={this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}/>
 
@@ -113,7 +114,7 @@ var UserAwardManager = React.createClass({
     },
 
     _userDidSelect: function (userMeta) {
-        console.log(userMeta);
+        Actions.pickUserFromSearch(userMeta.index, userMeta.id);
     }
 });
 

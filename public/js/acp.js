@@ -2,10 +2,11 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
-    EVENT_CREATE_AWARD  : null,
-    EVENT_DELETE_AWARD  : null,
-    EVENT_GET_ALL_AWARDS: null,
-    EVENT_SEARCH_USER  : null
+    EVENT_CREATE_AWARD         : null,
+    EVENT_DELETE_AWARD         : null,
+    EVENT_GET_ALL_AWARDS       : null,
+    EVENT_PICK_USER_FROM_SEARCH: null,
+    EVENT_SEARCH_USER          : null
 });
 
 },{"react/lib/keyMirror":169}],2:[function(require,module,exports){
@@ -37,6 +38,14 @@ module.exports = {
 
     getSettings: function () {
 
+    },
+
+    pickUserFromSearch: function (index, uid) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,
+            index     : index,
+            uid       : uid
+        });
     },
 
     searchUser: function (name) {
@@ -589,7 +598,8 @@ function getAwards() {
 
 function getUsers() {
     return {
-        users: SearchUsersStore.getResult()
+        searchUsers: SearchUsersStore.getResult(),
+        users      : SearchUsersStore.getSelected()
     };
 }
 
@@ -631,7 +641,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
                     placeholder: "Enter username", 
                     valueDidChange: this._usernameDidChange, 
                     optionDidSelect: this._userDidSelect, 
-                    options: this.state.users.map(function(user){
+                    options: this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}), 
 
@@ -687,7 +697,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
     },
 
     _userDidSelect: function (userMeta) {
-        console.log(userMeta);
+        Actions.pickUserFromSearch(userMeta.index, userMeta.id);
     }
 });
 
@@ -23160,7 +23170,8 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     API           = {
         SEARCH_USER: 'plugins.ns-awards.searchUser'
     },
-    _result       = [];
+    _result       = [],
+    _selected     = [];
 
 var SearchUsersStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (listener) {
@@ -23173,6 +23184,10 @@ var SearchUsersStore = assign({}, EventEmitter.prototype, {
 
     getResult: function () {
         return _result;
+    },
+
+    getSelected: function () {
+        return _selected;
     },
 
     removeChangeListener: function (listener) {
@@ -23190,6 +23205,11 @@ AppDispatcher.register(function (action) {
                 _result = searchResult.users;
                 SearchUsersStore.emitChange();
             });
+            break;
+        case Constants.EVENT_PICK_USER_FROM_SEARCH:
+            _selected.push(_result[action.index]);
+            _result.length = 0;
+            SearchUsersStore.emitChange();
             break;
         default:
             return true;

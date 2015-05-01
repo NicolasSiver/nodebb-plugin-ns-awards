@@ -8,7 +8,8 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     API           = {
         SEARCH_USER: 'plugins.ns-awards.searchUser'
     },
-    _result       = [];
+    _result       = [],
+    _selected     = [];
 
 var SearchUsersStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (listener) {
@@ -21,6 +22,10 @@ var SearchUsersStore = assign({}, EventEmitter.prototype, {
 
     getResult: function () {
         return _result;
+    },
+
+    getSelected: function () {
+        return _selected;
     },
 
     removeChangeListener: function (listener) {
@@ -38,6 +43,11 @@ AppDispatcher.register(function (action) {
                 _result = searchResult.users;
                 SearchUsersStore.emitChange();
             });
+            break;
+        case Constants.EVENT_PICK_USER_FROM_SEARCH:
+            _selected.push(_result[action.index]);
+            _result.length = 0;
+            SearchUsersStore.emitChange();
             break;
         default:
             return true;
