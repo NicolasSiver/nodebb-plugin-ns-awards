@@ -8,6 +8,7 @@
         nodebb    = require('./nodebb'),
         sockets   = nodebb.pluginSockets,
         nconf     = nodebb.nconf,
+        user      = nodebb.user,
         settings  = require('./settings'),
         database  = require('./database'),
         constants = require('./constants'),
@@ -19,6 +20,7 @@
         sockets[constants.SOCKETS].createAward = Module.createAward;
         sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
         sockets[constants.SOCKETS].getAwards = Module.getAwards;
+        sockets[constants.SOCKETS].searchUser = Module.searchUser;
 
         callback();
     };
@@ -67,6 +69,14 @@
 
     Module.getAwards = function (socket, callback) {
         database.getAllAwards(callback);
+    };
+
+    Module.searchUser = function (socket, payload, callback) {
+        user.search({
+            query   : payload.username,
+            searchBy: ['username'],
+            startsWith: false
+        }, callback);
     };
 
     function getUploadImagePath(fileName) {

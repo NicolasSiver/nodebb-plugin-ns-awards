@@ -32,9 +32,10 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case Constants.EVENT_SEARCH_USER:
             socket.emit(API.SEARCH_USER, {
-                name: action.request
-            }, function (error, users) {
-                _result = users;
+                username: action.request
+            }, function (error, searchResult) {
+                //Search Result will have signature: {matchCount: 1, pagination: PaginationMeta, pageCount: 1, timing: "0.01", users: Array[N]}
+                _result = searchResult.users;
                 SearchUsersStore.emitChange();
             });
             break;
