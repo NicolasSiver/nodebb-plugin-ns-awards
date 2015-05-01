@@ -1,10 +1,11 @@
-var React         = require('react'),
-    PromptView    = require('./PromptView.react'),
-    Autocomplete  = require('./Autocomplete.react'),
-    AwardsStore   = require('../stores/AwardsStore'),
-    PanelControls = require('./PanelControls.react'),
-    assign        = require('react/lib/Object.assign'),
-    Actions       = require('../actions/Actions');
+var React            = require('react'),
+    PromptView       = require('./PromptView.react'),
+    Autocomplete     = require('./Autocomplete.react'),
+    AwardsStore      = require('../stores/AwardsStore'),
+    SearchUsersStore = require('../stores/SearchUsersStore'),
+    PanelControls    = require('./PanelControls.react'),
+    assign           = require('react/lib/Object.assign'),
+    Actions          = require('../actions/Actions');
 
 function getAwards() {
     return {
@@ -12,23 +13,35 @@ function getAwards() {
     };
 }
 
+function getUsers() {
+    return {
+        users: SearchUsersStore.getResult()
+    };
+}
+
 var UserAwardManager = React.createClass({
     componentDidMount: function () {
         AwardsStore.addChangeListener(this.awardsDidChange);
+        SearchUsersStore.addChangeListener(this.usersDidFind);
     },
 
     componentWillUnmount: function () {
         AwardsStore.removeChangeListener(this.awardsDidChange);
+        SearchUsersStore.removeChangeListener(this.usersDidFind);
     },
 
     awardsDidChange: function () {
         this.setState(getAwards());
     },
 
+    usersDidFind: function () {
+        this.setState(getUsers());
+    },
+
     getInitialState: function () {
         return assign({
             open: false
-        }, getAwards());
+        }, getAwards(), getUsers());
     },
 
     render: function () {
@@ -42,7 +55,10 @@ var UserAwardManager = React.createClass({
             panelContent = <div className="grant-award-form">
                 <Autocomplete
                     placeholder="Enter username"
-                    options={['Test1', 'Test2', 'Sex1', 'Sex2']}/>
+                    valueDidChange={this._usernameDidChange}
+                    options={this.state.users.map(function(user){
+                        return user.username;
+                    })}/>
 
                 <div className="form-group">
                     <label htmlFor="allAwards">Awards</label>
@@ -89,6 +105,10 @@ var UserAwardManager = React.createClass({
 
     _promptViewDidClick: function () {
         this.setState({open: true});
+    },
+
+    _usernameDidChange: function (username) {
+        Actions.searchUser(username);
     }
 });
 

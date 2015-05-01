@@ -26,5 +26,12 @@ module.exports = {
 
     getSettings: function () {
 
+    },
+
+    searchUser: function (name) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_SEARCH_USER,
+            request   : name
+        });
     }
 };
