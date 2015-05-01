@@ -25,3 +25,9 @@
   cursor: pointer;
   color: #e0e0e0;
 }
+.grant-award-form .auto-complete {
+  margin-bottom: 16px;
+}
+.auto-complete .hover-item {
+  background-color: #c8e6c9;
+}

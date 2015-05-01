@@ -5,8 +5,11 @@ System for rewarding forum users. It allows admin to define set of awards that c
 ## TODO
 
 - Add Sections to categorise awards, like: Forum, One time event, etc.
+- Add User Manager: manager user's award - order, overview
 - Edit Award
 - Use NodeBB - App alerts
 - ACP: Add Awarded Users statistics
+- Improve Typeahead component for users lookup
+- Create auto-awards (achievements) with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc 
 
 ## Changelog
