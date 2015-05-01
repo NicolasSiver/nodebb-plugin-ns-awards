@@ -25,7 +25,7 @@ var Autocomplete = React.createClass({
             'open'         : this.state.open
         });
 
-        if (this.props.options && this.props.options.length > 0) {
+        if (this.props.options && this.props.options.length) {
             items = this.props.options.map(function (item, index) {
                 return <li className="ac-item" key={item.value}>
                     <a href="#" data-id={item.value} data-index={index}>{item.label}</a>

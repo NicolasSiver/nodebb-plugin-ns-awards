@@ -93,7 +93,7 @@ var Autocomplete = React.createClass({displayName: "Autocomplete",
             'open'         : this.state.open
         });
 
-        if (this.props.options && this.props.options.length > 0) {
+        if (this.props.options && this.props.options.length) {
             items = this.props.options.map(function (item, index) {
                 return React.createElement("li", {className: "ac-item", key: item.value}, 
                     React.createElement("a", {href: "#", "data-id": item.value, "data-index": index}, item.label)
@@ -633,7 +633,8 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
     getInitialState: function () {
         return assign({
-            open: false
+            open   : false,
+            awardId: 0
         }, getAwards(), getUsers());
     },
 
@@ -688,7 +689,8 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {htmlFor: "allAwards"}, "Awards"), 
-                    React.createElement("select", {className: "form-control", defaultValue: "0", id: "allAwards"}, 
+                    React.createElement("select", {className: "form-control", value: this.state.awardId, id: "allAwards", 
+                            onChange: this._awardDidSelect}, 
                         React.createElement("option", {value: "0", disabled: true}, "Please select Award"), 
                         this.state.awards.map(renderAwardOption)
                     )
@@ -721,12 +723,18 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
         );
     },
 
+    _awardDidSelect: function (e) {
+        this.setState({
+            awardId: e.currentTarget.value
+        });
+    },
+
     _cancel: function () {
         this.replaceState(this.getInitialState());
     },
 
     _isValid: function () {
-        return false;
+        return this.state.users.length && this.state.awardId;
     },
 
     _promptViewDidClick: function () {
@@ -753,13 +761,15 @@ var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 
 },{"flux":17}],14:[function(require,module,exports){
-var React     = require('react'),
-    AwardsApp = require('./components/AwardsApp.react');
+(function () {
+    var React     = require('react'),
+        AwardsApp = require('./components/AwardsApp.react');
 
-React.render(
-    React.createElement(AwardsApp, null),
-    document.getElementById('manageAwardsApp')
-);
+    React.render(
+        React.createElement(AwardsApp, null),
+        document.getElementById('manageAwardsApp')
+    );
+})();
 
 },{"./components/AwardsApp.react":6,"react":184}],15:[function(require,module,exports){
 /*!

@@ -1,7 +1,9 @@
-var React     = require('react'),
-    AwardsApp = require('./components/AwardsApp.react');
+(function () {
+    var React     = require('react'),
+        AwardsApp = require('./components/AwardsApp.react');
 
-React.render(
-    <AwardsApp />,
-    document.getElementById('manageAwardsApp')
-);
+    React.render(
+        <AwardsApp />,
+        document.getElementById('manageAwardsApp')
+    );
+})();

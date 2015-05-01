@@ -41,7 +41,8 @@ var UserAwardManager = React.createClass({
 
     getInitialState: function () {
         return assign({
-            open: false
+            open   : false,
+            awardId: 0
         }, getAwards(), getUsers());
     },
 
@@ -96,7 +97,8 @@ var UserAwardManager = React.createClass({
 
                 <div className="form-group">
                     <label htmlFor="allAwards">Awards</label>
-                    <select className="form-control" defaultValue="0" id="allAwards">
+                    <select className="form-control" value={this.state.awardId} id="allAwards"
+                            onChange={this._awardDidSelect}>
                         <option value="0" disabled>Please select Award</option>
                         {this.state.awards.map(renderAwardOption)}
                     </select>
@@ -129,12 +131,18 @@ var UserAwardManager = React.createClass({
         );
     },
 
+    _awardDidSelect: function (e) {
+        this.setState({
+            awardId: e.currentTarget.value
+        });
+    },
+
     _cancel: function () {
         this.replaceState(this.getInitialState());
     },
 
     _isValid: function () {
-        return false;
+        return this.state.users.length && this.state.awardId;
     },
 
     _promptViewDidClick: function () {
