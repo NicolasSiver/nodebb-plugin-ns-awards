@@ -1,6 +1,6 @@
 var React          = require('react'),
     ReactPropTypes = React.PropTypes,
-    cx             = require('react/lib/cx'),
+    classNames     = require('classnames'),
     debounce       = require('lodash/function/debounce');
 
 var Autocomplete = React.createClass({
@@ -20,7 +20,7 @@ var Autocomplete = React.createClass({
 
     render: function () {
         var selectOptions, items;
-        var componentClass = cx({
+        var componentClass = classNames({
             'auto-complete': true,
             'open'         : this.state.open
         });
