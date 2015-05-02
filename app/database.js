@@ -38,6 +38,34 @@
         ], done);
     };
 
+    Database.createGrant = function (uid, aid, reason, initiatorUid, done) {
+        async.waterfall([
+            async.apply(db.incrObjectField, 'global', 'nextNsAwardGrantId'),
+            function (gid, next) {
+
+                var grant = {
+                    uid       : uid,
+                    fromuid   : initiatorUid,
+                    aid       : aid,
+                    gid       : gid,
+                    createtime: Date.now(),
+                    reason    : reason
+                };
+
+                async.parallel([
+                    async.apply(db.sortedSetAdd, namespace + ':award:' + aid, uid, gid),
+                    async.apply(db.sortedSetAdd, namespace + ':user:' + uid, aid, gid),
+                    async.apply(db.setObject, namespace + ':grant:' + gid, grant)
+                ], function (error) {
+                    if (error) {
+                        return next(error);
+                    }
+                    next(null, grant);
+                });
+            }
+        ], done);
+    };
+
     Database.deleteAward = function (id, done) {
         async.parallel([
             async.apply(db.delete, namespace + ':' + id),

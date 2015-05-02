@@ -17,12 +17,28 @@
     Module.init = function (callback) {
         sockets[constants.SOCKETS] = {};
         //Acknowledgements
+        sockets[constants.SOCKETS].awardUsers = Module.awardUsers;
         sockets[constants.SOCKETS].createAward = Module.createAward;
         sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
         sockets[constants.SOCKETS].getAwards = Module.getAwards;
         sockets[constants.SOCKETS].searchUser = Module.searchUser;
 
         callback();
+    };
+
+    /**
+     * Grant Award for multiple users.
+     * Registers: reason of the award, date, relationships
+     *
+     * @param socket Socket.io open connection
+     * @param payload {object} Includes 'users', 'award' and 'reason' fields, where award is Award Id
+     * @param callback
+     */
+    Module.awardUsers = function (socket, payload, callback) {
+        async.each(payload.users, function (user, next) {
+            database.createGrant(user.uid, payload.award, payload.reason, socket.uid, next);
+            //TODO Add Notifications
+        }, callback);
     };
 
     /**
@@ -73,8 +89,8 @@
 
     Module.searchUser = function (socket, payload, callback) {
         user.search({
-            query   : payload.username,
-            searchBy: ['username'],
+            query     : payload.username,
+            searchBy  : ['username'],
             startsWith: false
         }, callback);
     };

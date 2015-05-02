@@ -6,6 +6,7 @@ System for rewarding forum users. It allows admin to define set of awards that c
 
 - Add Sections to categorise awards, like: Forum, One time event, etc.
 - Add User Manager: manager user's award - order, overview
+- Add Notifications
 - Edit Award
 - Use NodeBB - App alerts
 - ACP: Add Awarded Users statistics
