@@ -44,18 +44,19 @@
             async.apply(db.incrObjectField, 'global', nextGrantId),
             function (gid, next) {
 
+                var createTime = Date.now();
                 var grant = {
                     uid       : uid,
                     fromuid   : initiatorUid,
                     aid       : aid,
                     gid       : gid,
-                    createtime: Date.now(),
+                    createtime: createTime,
                     reason    : reason
                 };
 
                 async.parallel([
-                    async.apply(db.sortedSetAdd, namespace + ':award:' + aid, uid, gid),
-                    async.apply(db.sortedSetAdd, namespace + ':user:' + uid, aid, gid),
+                    async.apply(db.sortedSetAdd, namespace + ':award:' + aid, createTime, gid),
+                    async.apply(db.sortedSetAdd, namespace + ':user:' + uid, createTime, gid),
                     async.apply(db.setObject, namespace + ':grant:' + gid, grant)
                 ], function (error) {
                     if (error) {
