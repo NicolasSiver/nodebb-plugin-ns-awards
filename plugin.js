@@ -27,12 +27,12 @@
                     },
 
                     renderClient      = function (req, res, next) {
-                        controller.getAllAwards(function (error, payload) {
+                        controller.getAllAwards(function (error, result) {
                             if (error) {
                                 return res.status(500).json(error);
                             }
                             res.render(
-                                'client/all_awards', payload
+                                'client/all_awards', result
                             );
                         });
                     },

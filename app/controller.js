@@ -13,7 +13,42 @@
         nconf      = nodebb.nconf;
 
     Controller.getAllAwards = function (done) {
-        done(null, null);
+        async.waterfall([
+            async.apply(database.getAllAwards),
+            function (awards, next) {
+                async.map(awards, function (award, next) {
+                    Controller.getAwardRecipients(award.aid, function (error, grants) {
+                        if (error) {
+                            return next(error);
+                        }
+
+                        award.grants = grants;
+                        next(null, award);
+                    });
+                }, next);
+            }
+        ], done);
+    };
+
+    Controller.getAwardRecipients = function (aid, done) {
+        async.waterfall([
+            async.apply(database.getGrantIdsByAward, aid),
+            function (grantIds, next) {
+                grantIds = grantIds || [];
+                database.getGrantsByIds(grantIds, next);
+            },
+            function (grants, next) {
+                async.map(grants, function (grant, next) {
+                    user.getUserFields(grant.uid, ['username', 'userslug'], function (error, user) {
+                        if (error) {
+                            return next(error);
+                        }
+                        grant.user = user;
+                        next(null, grant);
+                    });
+                }, next);
+            }
+        ], done);
     };
 
     Controller.getUserAwards = function (uid, done) {
@@ -21,7 +56,7 @@
             async.apply(database.getGrantIdsByUser, uid),
             function (grantIds, next) {
                 if (!grantIds) {
-                    done(null, []);
+                    return next(null, []);
                 }
 
                 database.getGrantsByIds(grantIds, next);
