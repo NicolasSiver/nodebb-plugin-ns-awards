@@ -1,17 +1,19 @@
 (function (Database) {
     'use strict';
 
-    var async     = require('async'),
+    var async       = require('async'),
 
-        nodebb    = require('./nodebb'),
-        db        = nodebb.db,
-        constants = require('./constants'),
-        namespace = constants.NAMESPACE;
+        nodebb      = require('./nodebb'),
+        db          = nodebb.db,
+        constants   = require('./constants'),
+        namespace   = constants.NAMESPACE,
+        nextAwardId = constants.GLOBAL_AWARD_COUNTER,
+        nextGrantId = constants.GLOBAL_GRANT_COUNTER;
 
     Database.createAward = function (name, description, image, done) {
         async.waterfall([
             function (next) {
-                db.incrObjectField('global', 'nextNsAwardId', next);
+                db.incrObjectField('global', nextAwardId, next);
             }, function (id, next) {
                 //Where score as id will work as index position value for sorting
                 db.sortedSetAdd(namespace, id, id, function (error) {
@@ -40,7 +42,7 @@
 
     Database.createGrant = function (uid, aid, reason, initiatorUid, done) {
         async.waterfall([
-            async.apply(db.incrObjectField, 'global', 'nextNsAwardGrantId'),
+            async.apply(db.incrObjectField, 'global', nextGrantId),
             function (gid, next) {
 
                 var grant = {

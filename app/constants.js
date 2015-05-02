@@ -5,6 +5,8 @@ function define(name, value) {
     });
 }
 
+define('GLOBAL_AWARD_COUNTER', 'nextNsAwardId');
+define('GLOBAL_GRANT_COUNTER', 'nextNsAwardGrantId');
 define('NAMESPACE', 'ns:awards');
 define('SOCKETS', 'ns-awards');
 define('UPLOAD_DIR', 'awards');
