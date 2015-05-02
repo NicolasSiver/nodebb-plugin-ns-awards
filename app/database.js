@@ -119,5 +119,10 @@
         db.getSortedSetRevRange(namespace + ':user:' + uid, 0, -1, done);
     };
 
+    Database.getGrantsByIds = function (ids, done) {
+        db.getObjects(ids.map(function (gid, index) {
+            return namespace + ':grant:' + gid;
+        }), done);
+    };
 
 })(module.exports);
