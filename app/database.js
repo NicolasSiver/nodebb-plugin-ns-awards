@@ -12,9 +12,8 @@
 
     Database.createAward = function (name, description, image, done) {
         async.waterfall([
-            function (next) {
-                db.incrObjectField('global', nextAwardId, next);
-            }, function (id, next) {
+            async.apply(db.incrObjectField, 'global', nextAwardId),
+            function (id, next) {
                 //Where score as id will work as index position value for sorting
                 db.sortedSetAdd(namespace, id, id, function (error) {
                     if (error) {
