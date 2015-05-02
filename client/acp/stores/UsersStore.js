@@ -36,6 +36,9 @@ AppDispatcher.register(function (action) {
                 award : action.award,
                 reason: action.reason
             }, function (error, award) {
+                if (error) {
+                    console.error(error);
+                }
                 //noop
             });
             break;

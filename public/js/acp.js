@@ -788,7 +788,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
     },
 
     _save: function () {
-        Actions.awardUsers(this.state.users, this.state.awardId, this.state.reason);
+        Actions.awardUsers(this.state.users.slice(), this.state.awardId, this.state.reason);
         this._cancel();
     },
 
@@ -23418,6 +23418,9 @@ AppDispatcher.register(function (action) {
                 award : action.award,
                 reason: action.reason
             }, function (error, award) {
+                if (error) {
+                    console.error(error);
+                }
                 //noop
             });
             break;

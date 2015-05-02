@@ -162,7 +162,7 @@ var UserAwardManager = React.createClass({
     },
 
     _save: function () {
-        Actions.awardUsers(this.state.users, this.state.awardId, this.state.reason);
+        Actions.awardUsers(this.state.users.slice(), this.state.awardId, this.state.reason);
         this._cancel();
     },
 
