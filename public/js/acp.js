@@ -474,6 +474,12 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
     },
 
     render: function () {
+        var noItems;
+
+        if (this.state.awards.length == 0) {
+            noItems = React.createElement("li", null, "No Awards. Why not create a new one?");
+        }
+
         function renderItem(award, index, awards) {
             return React.createElement(AwardsListItemView, {
                 key: award.aid, 
@@ -485,6 +491,7 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
                 React.createElement("div", {className: "panel-heading"}, "Awards"), 
                 React.createElement("div", {className: "panel-body"}, 
                     React.createElement("ul", {className: "awards-list"}, 
+                        noItems, 
                         this.state.awards.map(renderItem)
                     )
                 )
@@ -603,7 +610,7 @@ var Settings = React.createClass({displayName: "Settings",
             React.createElement("div", {className: "panel panel-default"}, 
                 React.createElement("div", {className: "panel-heading"}, "Settings"), 
                 React.createElement("div", {className: "panel-body"}, 
-                    "No Settings"
+                    "Setting will be added in future updates"
                 )
             )
         );

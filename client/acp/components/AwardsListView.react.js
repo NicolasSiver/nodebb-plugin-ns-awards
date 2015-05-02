@@ -29,6 +29,12 @@ var AwardsListView = React.createClass({
     },
 
     render: function () {
+        var noItems;
+
+        if (this.state.awards.length == 0) {
+            noItems = <li>No Awards. Why not create a new one?</li>;
+        }
+
         function renderItem(award, index, awards) {
             return <AwardsListItemView
                 key={award.aid}
@@ -40,6 +46,7 @@ var AwardsListView = React.createClass({
                 <div className="panel-heading">Awards</div>
                 <div className="panel-body">
                     <ul className="awards-list">
+                        {noItems}
                         {this.state.awards.map(renderItem)}
                     </ul>
                 </div>
