@@ -1,0 +1,41 @@
+@import "vars";
+
+.profile-awards {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  .award-image {
+
+    img {
+      display: block;
+      max-width: @perfect-size;
+      height: auto;
+    }
+  }
+
+  .award-summary {
+
+    > span {
+      display: block;
+    }
+
+    span + span {
+      margin-top: @margin-s;
+    }
+
+    .award-title {
+      font-size: 1.2em;
+      font-weight: 300;
+    }
+
+    .award-reason {
+      font-style: italic;
+      font-size: @small-text;
+    }
+
+    .award-info {
+
+    }
+  }
+}

@@ -7,12 +7,14 @@
             <li>
                 <div class="media">
                     <div class="media-left award-image">
-                        <img src="{award.picture}" class="img-responsive"/>
+                        <img src="{award.picture}"/>
                     </div>
                     <div class="media-body award-summary">
                         <span class="award-title">{award.name}</span>
                         <span class="award-reason">{reason}</span>
-                        <span class="award-info">handed: <span class="timeago" title="{createtimeiso}"></span></span>
+                        <span class="award-info">
+                            handed <span class="timeago" title="{createtimeiso}"></span>
+                        </span>
                     </div>
                 </div>
             </li>

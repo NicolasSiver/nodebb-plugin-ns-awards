@@ -26,6 +26,9 @@
       "method": "hooks.statics.load"
     }
   ],
+  "less": [
+    "client/board/style/profile.less"
+  ],
   "staticDirs": {
     "templates": "./public/templates",
     "css": "./public/css",
