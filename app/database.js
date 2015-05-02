@@ -107,8 +107,8 @@
         ], done);
     };
 
-    Database.getAward = function (id, done) {
-        db.getObject(namespace + ':' + id, done);
+    Database.getAward = function (aid, done) {
+        db.getObject(namespace + ':' + aid, done);
     };
 
     Database.getGrantIdsByAward = function (aid, done) {

@@ -1,10 +1,7 @@
 (function (Filter) {
     'use strict';
 
-    var async     = require('async'),
-        database  = require('./database'),
-        settings  = require('./settings'),
-        constants = require('./constants');
+    var controller = require('./controller');
 
     /**
      * Hook to render user profile.
@@ -13,14 +10,14 @@
      * @param callback {function}
      */
     Filter.account = function (params, callback) {
-        //database.getPoints(params.userData.uid, function (error, points) {
-        //    if (error) {
-        //        return callback(error);
-        //    }
-        //    params.userData.points = points || 0;
-        //    callback(null, params);
-        //});
-        callback(null, params);
+        controller.getUserAwards(params.userData.uid, function (error, awards) {
+            if (error) {
+                return callback(error);
+            }
+
+            params.userData.awards = awards;
+            callback(null, params);
+        })
     };
 
     Filter.menuAdmin = function (header, callback) {

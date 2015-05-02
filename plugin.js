@@ -32,7 +32,7 @@
                                 return res.status(500).json(error);
                             }
                             res.render(
-                                'client/all-awards', payload
+                                'client/all_awards', payload
                             );
                         });
                     },
