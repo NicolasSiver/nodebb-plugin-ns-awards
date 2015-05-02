@@ -77,7 +77,15 @@
 
                 async.parallel([
                     async.apply(fse.remove, getUploadImagePath(award.image)),
-                    async.apply(database.deleteAward, award.aid)
+                    async.apply(database.deleteAward, award.aid),
+                    function (next) {
+                        //Delete Grants associated with this award
+                        database.getGrantIdsByAward(award.aid, function (error, grantIds) {
+                            async.each(grantIds, function (gid, next) {
+                                database.deleteGrant(gid, next);
+                            }, next);
+                        });
+                    }
                 ], next);
             }
         ], callback);
