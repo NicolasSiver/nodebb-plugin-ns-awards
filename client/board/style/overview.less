@@ -1,0 +1,34 @@
+@import "vars";
+
+.awards-overview {
+  .award-summary {
+    span {
+      display: block;
+    }
+
+    .award-title {
+      font-weight: 300;
+      font-size: 1.4em;
+    }
+
+    .award-desc {
+      margin-top: @margin-s;
+    }
+  }
+
+  .award-owners {
+    > span {
+      &:after {
+        content: ', ';
+      }
+
+      &:last-child:after {
+        content: "";
+      }
+    }
+  }
+}
+
+.awards-overview + .awards-overview {
+  margin-top: @margin;
+}

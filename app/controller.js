@@ -17,6 +17,9 @@
             async.apply(database.getAllAwards),
             function (awards, next) {
                 async.map(awards, function (award, next) {
+
+                    award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
+
                     Controller.getAwardRecipients(award.aid, function (error, grants) {
                         if (error) {
                             return next(error);
@@ -25,7 +28,15 @@
                         award.grants = grants;
                         next(null, award);
                     });
-                }, next);
+                }, function (error, awards) {
+                    if (error) {
+                        return next(error);
+                    }
+
+                    next(null, {
+                        awards: awards
+                    });
+                });
             }
         ], done);
     };

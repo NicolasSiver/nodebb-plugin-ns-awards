@@ -27,7 +27,8 @@
     }
   ],
   "less": [
-    "client/board/style/profile.less"
+    "client/board/style/profile.less",
+    "client/board/style/overview.less"
   ],
   "staticDirs": {
     "templates": "./public/templates",
