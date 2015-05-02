@@ -13,7 +13,8 @@
                         <span class="award-title">{award.name}</span>
                         <span class="award-reason">{reason}</span>
                         <span class="award-info">
-                            handed <span class="timeago" title="{createtimeiso}"></span>
+                            handed <span class="timeago" title="{createtimeiso}"></span> by <a
+                                    href="./{fromuser.userslug}">{fromuser.username}</a>
                         </span>
                     </div>
                 </div>

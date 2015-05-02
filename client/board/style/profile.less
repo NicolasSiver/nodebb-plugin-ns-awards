@@ -5,8 +5,11 @@
   margin: 0;
   padding: 0;
 
-  .award-image {
+  li + li {
+    margin-top: @margin;
+  }
 
+  .award-image {
     img {
       display: block;
       max-width: @perfect-size;
@@ -20,22 +23,19 @@
       display: block;
     }
 
-    span + span {
-      margin-top: @margin-s;
-    }
-
     .award-title {
-      font-size: 1.2em;
+      font-size: 1.4em;
       font-weight: 300;
     }
 
     .award-reason {
       font-style: italic;
-      font-size: @small-text;
+      margin-top: @margin-s;
     }
 
     .award-info {
-
+      font-size: @small-text;
+      margin-top: @margin-xs;
     }
   }
 }

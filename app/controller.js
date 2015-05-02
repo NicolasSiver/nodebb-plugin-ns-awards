@@ -9,6 +9,7 @@
 
         nodebb     = require('./nodebb'),
         utils      = nodebb.utils,
+        user       = nodebb.user,
         nconf      = nodebb.nconf;
 
     Controller.getAllAwards = function (done) {
@@ -30,14 +31,20 @@
 
                     grant.createtimeiso = utils.toISOString(grant.createtime);
 
-                    database.getAward(grant.aid, function (error, award) {
+                    async.parallel({
+                        award: async.apply(database.getAward, grant.aid),
+                        user : async.apply(user.getUserFields, grant.fromuid, ['username', 'userslug'])
+                    }, function (error, result) {
                         if (error) {
                             return next(error);
                         }
 
+                        var award = result.award, user = result.user;
+
                         award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
 
                         grant.award = award;
+                        grant.fromuser = user;
                         next(null, grant);
                     });
                 }, next);
