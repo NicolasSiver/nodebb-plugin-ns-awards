@@ -74,6 +74,24 @@
         ], done);
     };
 
+    Database.deleteGrant = function (gid, done) {
+        var grantKey = namespace + ':grant:' + gid;
+
+        db.getObject(grantKey, function (error, grant) {
+            if (error) {
+                return done(error);
+            } else if (!grant) {
+                return done(new Error('Grant Object can not be found'));
+            }
+
+            async.parallel([
+                async.apply(db.delete, grantKey),
+                async.apply(db.sortedSetRemove, namespace + ':award:' + grant.aid, gid),
+                async.apply(db.sortedSetRemove, namespace + ':user:' + grant.uid, gid)
+            ], done);
+        });
+    };
+
     Database.getAllAwards = function (done) {
         async.waterfall([
             async.apply(db.getSortedSetRange, namespace, 0, -1),
