@@ -13,6 +13,8 @@
         topics       : NodeBB.require('./src/topics'),
         user         : NodeBB.require('./src/user'),
 
+        utils: NodeBB.require('./public/src/utils'),
+
         /**
          * List is incomplete
          *

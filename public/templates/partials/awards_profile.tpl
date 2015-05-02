@@ -2,17 +2,17 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        <ul>
+        <ul class="profile-awards">
             <!-- BEGIN awards -->
             <li>
                 <div class="media">
-                    <div class="media-left">
-                        <img src="{award.image}" class="img-responsive"/>
+                    <div class="media-left award-image">
+                        <img src="{award.picture}" class="img-responsive"/>
                     </div>
-                    <div class="media-body">
+                    <div class="media-body award-summary">
                         <span class="award-title">{award.name}</span>
                         <span class="award-reason">{reason}</span>
-                        <span class="award-info">handed at {createtime}</span>
+                        <span class="award-info">handed: <span class="timeago" title="{createtimeiso}"></span></span>
                     </div>
                 </div>
             </li>

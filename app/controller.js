@@ -5,7 +5,11 @@
         database   = require('./database'),
         settings   = require('./settings'),
         controller = require('./controller'),
-        constants  = require('./constants');
+        constants  = require('./constants'),
+
+        nodebb     = require('./nodebb'),
+        utils      = nodebb.utils,
+        nconf      = nodebb.nconf;
 
     Controller.getAllAwards = function (done) {
         done(null, null);
@@ -23,10 +27,15 @@
             },
             function (grants, next) {
                 async.map(grants, function (grant, next) {
+
+                    grant.createtimeiso = utils.toISOString(grant.createtime);
+
                     database.getAward(grant.aid, function (error, award) {
                         if (error) {
                             return next(error);
                         }
+
+                        award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
 
                         grant.award = award;
                         next(null, grant);
