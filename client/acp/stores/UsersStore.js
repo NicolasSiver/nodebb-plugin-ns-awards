@@ -36,7 +36,7 @@ AppDispatcher.register(function (action) {
                 award : action.award,
                 reason: action.reason
             }, function (error, award) {
-
+                //noop
             });
             break;
         default:

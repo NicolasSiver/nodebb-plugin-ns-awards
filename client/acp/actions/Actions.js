@@ -37,6 +37,13 @@ module.exports = {
 
     },
 
+    panelCancel: function (panel) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_PANEL_CANCEL,
+            panel     : panel
+        });
+    },
+
     pickUserFromSearch: function (index, uid) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,

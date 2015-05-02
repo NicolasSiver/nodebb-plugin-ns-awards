@@ -6,9 +6,12 @@ module.exports = keyMirror({
     EVENT_CREATE_AWARD           : null,
     EVENT_DELETE_AWARD           : null,
     EVENT_GET_ALL_AWARDS         : null,
+    EVENT_PANEL_CANCEL           : null,
     EVENT_PICK_USER_FROM_SEARCH  : null,
     EVENT_SEARCH_USER            : null,
-    EVENT_UNPICK_USER_FROM_SEARCH: null
+    EVENT_UNPICK_USER_FROM_SEARCH: null,
+
+    PANEL_GRANT_AWARD: null
 });
 
 },{"react/lib/keyMirror":169}],2:[function(require,module,exports){
@@ -49,6 +52,13 @@ module.exports = {
 
     getSettings: function () {
 
+    },
+
+    panelCancel: function (panel) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_PANEL_CANCEL,
+            panel     : panel
+        });
     },
 
     pickUserFromSearch: function (index, uid) {
@@ -610,7 +620,8 @@ var React            = require('react'),
     SearchUsersStore = require('../stores/SearchUsersStore'),
     PanelControls    = require('./PanelControls.react'),
     assign           = require('react/lib/Object.assign'),
-    Actions          = require('../actions/Actions');
+    Actions          = require('../actions/Actions'),
+    Constants        = require('../Constants');
 
 function getAwards() {
     return {
@@ -749,6 +760,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
     _cancel: function () {
         this.replaceState(this.getInitialState());
+        Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
     },
 
     _isValid: function () {
@@ -779,7 +791,7 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
 module.exports = UserAwardManager;
 
-},{"../actions/Actions":2,"../stores/AwardsStore":185,"../stores/SearchUsersStore":186,"./Autocomplete.react":3,"./PanelControls.react":9,"./PromptView.react":10,"react":184,"react/lib/LinkedStateMixin":49,"react/lib/Object.assign":53}],13:[function(require,module,exports){
+},{"../Constants":1,"../actions/Actions":2,"../stores/AwardsStore":185,"../stores/SearchUsersStore":186,"./Autocomplete.react":3,"./PanelControls.react":9,"./PromptView.react":10,"react":184,"react/lib/LinkedStateMixin":49,"react/lib/Object.assign":53}],13:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 
@@ -23284,6 +23296,11 @@ AppDispatcher.register(function (action) {
                 SearchUsersStore.emitChange();
             });
             break;
+        case Constants.EVENT_PANEL_CANCEL:
+            if (action.panel === Constants.PANEL_GRANT_AWARD) {
+                clear();
+            }
+            break;
         case Constants.EVENT_PICK_USER_FROM_SEARCH:
             _selected.push(_result[action.index]);
             _result.length = 0;
@@ -23293,10 +23310,19 @@ AppDispatcher.register(function (action) {
             _selected.splice(action.index, 1);
             SearchUsersStore.emitChange();
             break;
+        case Constants.EVENT_AWARD_USERS:
+            clear();
+            break;
         default:
             return true;
     }
 });
+
+function clear() {
+    _result.length = 0;
+    _selected.length = 0;
+    SearchUsersStore.emitChange();
+}
 
 module.exports = SearchUsersStore;
 
@@ -23380,7 +23406,7 @@ AppDispatcher.register(function (action) {
                 award : action.award,
                 reason: action.reason
             }, function (error, award) {
-
+                //noop
             });
             break;
         default:

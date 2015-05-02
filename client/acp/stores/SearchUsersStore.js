@@ -44,6 +44,11 @@ AppDispatcher.register(function (action) {
                 SearchUsersStore.emitChange();
             });
             break;
+        case Constants.EVENT_PANEL_CANCEL:
+            if (action.panel === Constants.PANEL_GRANT_AWARD) {
+                clear();
+            }
+            break;
         case Constants.EVENT_PICK_USER_FROM_SEARCH:
             _selected.push(_result[action.index]);
             _result.length = 0;
@@ -53,9 +58,18 @@ AppDispatcher.register(function (action) {
             _selected.splice(action.index, 1);
             SearchUsersStore.emitChange();
             break;
+        case Constants.EVENT_AWARD_USERS:
+            clear();
+            break;
         default:
             return true;
     }
 });
+
+function clear() {
+    _result.length = 0;
+    _selected.length = 0;
+    SearchUsersStore.emitChange();
+}
 
 module.exports = SearchUsersStore;

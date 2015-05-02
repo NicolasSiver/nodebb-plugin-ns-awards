@@ -6,7 +6,8 @@ var React            = require('react'),
     SearchUsersStore = require('../stores/SearchUsersStore'),
     PanelControls    = require('./PanelControls.react'),
     assign           = require('react/lib/Object.assign'),
-    Actions          = require('../actions/Actions');
+    Actions          = require('../actions/Actions'),
+    Constants        = require('../Constants');
 
 function getAwards() {
     return {
@@ -145,6 +146,7 @@ var UserAwardManager = React.createClass({
 
     _cancel: function () {
         this.replaceState(this.getInitialState());
+        Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
     },
 
     _isValid: function () {
