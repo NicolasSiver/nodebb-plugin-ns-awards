@@ -110,5 +110,13 @@
         db.getObject(namespace + ':' + id, done);
     };
 
+    Database.getGrantIdsByAward = function (aid, done) {
+        db.getSortedSetRevRange(namespace + ':award:' + aid, 0, -1, done);
+    };
+
+    Database.getGrantIdsByUser = function (uid, done) {
+        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, -1, done);
+    };
+
 
 })(module.exports);
