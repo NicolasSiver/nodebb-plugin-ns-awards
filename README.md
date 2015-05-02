@@ -14,5 +14,6 @@ System for rewarding forum users. It allows admin to define set of awards that c
 - Improve Typeahead component for users lookup
 - Add Achievements section, where rules can be specified, and same Awards could be granted automatically (auto-awards with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc)
 - Add Tests (Mocha/Tape)
+- Beautify `Create Award` panel
 
 ## Changelog

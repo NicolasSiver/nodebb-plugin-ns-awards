@@ -426,11 +426,16 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
 
     _deleteItem: function () {
         var self = this;
-        bootbox.confirm("Are you sure?", function (result) {
-            if (result) {
-                Actions.deleteAward(self.props.award);
+        bootbox.confirm({
+            size: 'small',
+            title: 'Attention',
+            message: 'Are you sure?',
+            callback: function(result){
+                if (result) {
+                    Actions.deleteAward(self.props.award);
+                }
             }
-        });
+        })
     }
 });
 
