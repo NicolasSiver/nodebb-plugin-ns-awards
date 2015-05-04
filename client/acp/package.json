@@ -25,6 +25,7 @@
   "browserify-shim": {
     "jquery": "global:$",
     "socket": "global:socket",
+    "define": "global:define",
     "bootstrap": {
       "exports": "global:bootstrap",
       "depends": [

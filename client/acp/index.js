@@ -1,9 +1,15 @@
-(function () {
-    var React     = require('react'),
+define('admin/plugins/awards', function () {
+    var Awards    = {},
+        React     = require('react'),
         AwardsApp = require('./components/AwardsApp.react');
 
-    React.render(
-        <AwardsApp />,
-        document.getElementById('manageAwardsApp')
-    );
-})();
+
+    Awards.init = function () {
+        React.render(
+            <AwardsApp />,
+            document.getElementById('manageAwardsApp')
+        );
+    };
+
+    return Awards;
+});

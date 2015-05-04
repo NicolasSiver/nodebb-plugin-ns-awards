@@ -808,15 +808,21 @@ var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 
 },{"flux":17}],14:[function(require,module,exports){
-(function () {
-    var React     = require('react'),
+define('admin/plugins/awards', function () {
+    var Awards    = {},
+        React     = require('react'),
         AwardsApp = require('./components/AwardsApp.react');
 
-    React.render(
-        React.createElement(AwardsApp, null),
-        document.getElementById('manageAwardsApp')
-    );
-})();
+
+    Awards.init = function () {
+        React.render(
+            React.createElement(AwardsApp, null),
+            document.getElementById('manageAwardsApp')
+        );
+    };
+
+    return Awards;
+});
 
 },{"./components/AwardsApp.react":6,"react":184}],15:[function(require,module,exports){
 /*!
