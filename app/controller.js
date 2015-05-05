@@ -9,6 +9,7 @@
 
         nodebb     = require('./nodebb'),
         utils      = nodebb.utils,
+        helpers    = nodebb.helpers,
         user       = nodebb.user,
         nconf      = nodebb.nconf;
 
@@ -45,7 +46,8 @@
                     }
 
                     next(null, {
-                        awards: awards
+                        awards     : awards,
+                        breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}])
                     });
                 });
             }
