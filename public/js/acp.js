@@ -5,6 +5,7 @@ module.exports = keyMirror({
     EVENT_AWARD_USERS            : null,
     EVENT_CREATE_AWARD           : null,
     EVENT_DELETE_AWARD           : null,
+    EVENT_EDIT_AWARD             : null,
     EVENT_GET_ALL_AWARDS         : null,
     EVENT_PANEL_CANCEL           : null,
     EVENT_PICK_USER_FROM_SEARCH  : null,
@@ -41,6 +42,16 @@ module.exports = {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_DELETE_AWARD,
             id        : awardEntity.aid
+        });
+    },
+
+    editAward: function (aid, name, desc, index) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_EDIT_AWARD,
+            id        : aid,
+            name      : name,
+            desc      : desc,
+            index     : index
         });
     },
 
@@ -530,7 +541,9 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     },
 
     _save: function () {
-        this.props.itemWillSave(this.state.name, this.state.desc);
+        if(this._isValid){
+            this.props.itemWillSave(this.state.name, this.state.desc);
+        }
     }
 });
 
@@ -612,7 +625,7 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
     },
 
     _itemWillSave: function (index, aid, name, description) {
-
+        Actions.editAward(aid, name, description, index);
     }
 });
 
@@ -23310,6 +23323,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     API           = {
         CREATE_AWARD: 'plugins.ns-awards.createAward',
         DELETE_AWARD: 'plugins.ns-awards.deleteAward',
+        EDIT_AWARD: 'plugins.ns-awards.editAward',
         GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
@@ -23353,6 +23367,21 @@ AppDispatcher.register(function (action) {
                 var index = getIndexById(action.id, _awards);
                 if (index != -1) {
                     _awards.splice(index, 1);
+                    AwardsStore.emitChange();
+                }
+            });
+            break;
+        case Constants.EVENT_EDIT_AWARD:
+            socket.emit(API.EDIT_AWARD, {
+                id  : action.id,
+                name: action.name,
+                desc: action.desc
+            }, function (error, award) {
+                if (error) {
+                }
+                var index = getIndexById(award.aid, _awards);
+                if (index != -1) {
+                    _awards[index] = award;
                     AwardsStore.emitChange();
                 }
             });

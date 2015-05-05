@@ -138,7 +138,9 @@ var AwardsListItemView = React.createClass({
     },
 
     _save: function () {
-        this.props.itemWillSave(this.state.name, this.state.desc);
+        if(this._isValid){
+            this.props.itemWillSave(this.state.name, this.state.desc);
+        }
     }
 });
 

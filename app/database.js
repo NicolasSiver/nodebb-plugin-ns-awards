@@ -1,14 +1,15 @@
 (function (Database) {
     'use strict';
 
-    var async       = require('async'),
+    var async        = require('async'),
+        objectAssign = require('object-assign'),
 
-        nodebb      = require('./nodebb'),
-        db          = nodebb.db,
-        constants   = require('./constants'),
-        namespace   = constants.NAMESPACE,
-        nextAwardId = constants.GLOBAL_AWARD_COUNTER,
-        nextGrantId = constants.GLOBAL_GRANT_COUNTER;
+        nodebb       = require('./nodebb'),
+        db           = nodebb.db,
+        constants    = require('./constants'),
+        namespace    = constants.NAMESPACE,
+        nextAwardId  = constants.GLOBAL_AWARD_COUNTER,
+        nextGrantId  = constants.GLOBAL_GRANT_COUNTER;
 
     Database.createAward = function (name, description, image, done) {
         async.waterfall([
@@ -72,6 +73,30 @@
         async.parallel([
             async.apply(db.delete, namespace + ':' + id),
             async.apply(db.sortedSetRemove, namespace, id)
+        ], done);
+    };
+
+    Database.editAward = function (id, name, description, done) {
+        async.waterfall([
+            async.apply(Database.getAward, id),
+            function (award, next) {
+                if (!award) {
+                    next(new Error('Award can not be found'));
+                }
+
+                var update = {
+                    name: name,
+                    desc: description
+                };
+
+                db.setObject(namespace + ':' + id, update, function (error) {
+                    if (error) {
+                        return next(error);
+                    }
+
+                    next(null, objectAssign(award, update));
+                });
+            }
         ], done);
     };
 

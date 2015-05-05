@@ -8,6 +8,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     API           = {
         CREATE_AWARD: 'plugins.ns-awards.createAward',
         DELETE_AWARD: 'plugins.ns-awards.deleteAward',
+        EDIT_AWARD: 'plugins.ns-awards.editAward',
         GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
@@ -51,6 +52,21 @@ AppDispatcher.register(function (action) {
                 var index = getIndexById(action.id, _awards);
                 if (index != -1) {
                     _awards.splice(index, 1);
+                    AwardsStore.emitChange();
+                }
+            });
+            break;
+        case Constants.EVENT_EDIT_AWARD:
+            socket.emit(API.EDIT_AWARD, {
+                id  : action.id,
+                name: action.name,
+                desc: action.desc
+            }, function (error, award) {
+                if (error) {
+                }
+                var index = getIndexById(award.aid, _awards);
+                if (index != -1) {
+                    _awards[index] = award;
                     AwardsStore.emitChange();
                 }
             });

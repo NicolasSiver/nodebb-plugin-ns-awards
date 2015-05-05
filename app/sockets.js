@@ -20,6 +20,7 @@
         sockets[constants.SOCKETS].awardUsers = Module.awardUsers;
         sockets[constants.SOCKETS].createAward = Module.createAward;
         sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
+        sockets[constants.SOCKETS].editAward = Module.editAward;
         sockets[constants.SOCKETS].getAwards = Module.getAwards;
         sockets[constants.SOCKETS].searchUser = Module.searchUser;
 
@@ -89,6 +90,10 @@
                 ], next);
             }
         ], callback);
+    };
+
+    Module.editAward = function (socket, payload, callback) {
+        database.editAward(payload.id, payload.name, payload.desc, callback);
     };
 
     Module.getAwards = function (socket, callback) {

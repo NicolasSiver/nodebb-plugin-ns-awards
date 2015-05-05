@@ -27,6 +27,16 @@ module.exports = {
         });
     },
 
+    editAward: function (aid, name, desc, index) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_EDIT_AWARD,
+            id        : aid,
+            name      : name,
+            desc      : desc,
+            index     : index
+        });
+    },
+
     getAwards: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_GET_ALL_AWARDS
