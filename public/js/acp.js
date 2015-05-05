@@ -541,7 +541,7 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     },
 
     _save: function () {
-        if(this._isValid){
+        if(this._isValid()){
             this.props.itemWillSave(this.state.name, this.state.desc);
         }
     }
