@@ -72,7 +72,7 @@ var AwardsListView = React.createClass({
     },
 
     _itemWillSave: function (index, aid, name, description) {
-        
+
     }
 });
 

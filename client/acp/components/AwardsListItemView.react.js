@@ -133,7 +133,8 @@ var AwardsListItemView = React.createClass({
     },
 
     _isValid: function () {
-        return this.state.name && this.state.desc;
+        return (this.state.name && this.state.name !== this.props.award.name)
+            || (this.state.desc && this.state.desc !== this.props.award.desc);
     },
 
     _save: function () {
