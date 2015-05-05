@@ -47,6 +47,5 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 - Add Tests (Mocha/Tape)
 - Beautify `Create Award` panel
 - Handle multiple awards of the same type (Exapmle: `medal x 8`)
-- Combine Less for ACP and Board
 
 ## Changelog

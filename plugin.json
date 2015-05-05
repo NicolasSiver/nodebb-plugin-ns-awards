@@ -31,8 +31,8 @@
     }
   ],
   "less": [
-    "client/board/style/profile.less",
-    "client/board/style/overview.less"
+    "style/profile.less",
+    "overview.less"
   ],
 
   "staticDirs": {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify . -o ../../public/js/acp.js",
-    "watch-css": "catw -wvc 'lessc - --include-path=style' 'style/*.less' -o ../../public/css/acp.css",
+    "watch-css": "catw -wvc 'lessc - --include-path=../../style' '../../style/acp.less' -o ../../public/css/acp.css",
     "watch-js": "watchify index.js -o ../../public/js/acp.js --verbose",
     "watch-zip": "watchify index.js -o 'uglifyjs -c > ../../public/js/acp.js' --verbose",
     "watch": "npm run watch-css & npm run watch-js",
