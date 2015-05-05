@@ -65,4 +65,9 @@
         //});
         callback(null, topicData);
     };
+
+    Filter.userDelete = function (uid, callback) {
+        controller.deleteUserGrants(uid, callback);
+    };
+
 })(module.exports);

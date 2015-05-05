@@ -12,6 +12,17 @@
         user       = nodebb.user,
         nconf      = nodebb.nconf;
 
+    Controller.deleteUserGrants = function (uid, done) {
+        async.waterfall([
+            async.apply(database.getGrantIdsByUser, uid),
+            function (grantIds, next) {
+                async.each(grantIds, function (gid, next) {
+                    database.deleteGrant(gid, next);
+                }, next);
+            }
+        ], done);
+    };
+
     Controller.getAllAwards = function (done) {
         async.waterfall([
             async.apply(database.getAllAwards),
