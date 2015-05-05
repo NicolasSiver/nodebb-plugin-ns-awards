@@ -3,6 +3,15 @@
   margin: 0;
   padding: 0;
 }
+.awards-list .awards-item .award-edit {
+  margin-bottom: 16px;
+}
+.awards-list .awards-item .award-edit input {
+  margin-bottom: 8px;
+}
+.awards-list .awards-item .item-controls i + i {
+  margin-left: 4px;
+}
 .panel-controls {
   margin-top: 16px;
 }
@@ -55,7 +64,15 @@
 .icon-control {
   font-size: 1.5em;
   cursor: pointer;
+  color: #757575;
 }
 .icon-danger {
   color: #ef5350;
+}
+.icon-ok {
+  color: #66bb6a;
+}
+.icon-disabled {
+  color: #eeeeee;
+  cursor: auto;
 }

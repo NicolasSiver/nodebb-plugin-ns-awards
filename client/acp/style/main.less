@@ -5,6 +5,24 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+
+  .awards-item {
+
+    .award-edit {
+      margin-bottom: @margin-m;
+
+      input {
+        margin-bottom: @padding-s;
+      }
+    }
+
+    .item-controls {
+
+      i + i {
+        margin-left: @margin-xs;
+      }
+    }
+  }
 }
 
 .panel-controls {
@@ -83,8 +101,18 @@
 .icon-control {
   font-size: 1.5em;
   cursor: pointer;
+  color: @md-clr-grey-600;
 }
 
 .icon-danger {
   color: @md-clr-red-400;
+}
+
+.icon-ok {
+  color: @md-clr-green-400;
+}
+
+.icon-disabled {
+  color: @md-clr-grey-200;
+  cursor: auto;
 }

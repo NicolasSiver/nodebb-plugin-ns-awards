@@ -393,56 +393,150 @@ module.exports = AwardsApp;
 var React          = require('react'),
     bootbox        = (typeof window !== "undefined" ? window.bootbox : typeof global !== "undefined" ? global.bootbox : null),
     ReactPropTypes = React.PropTypes,
+    classNames     = require('classnames'),
     Actions        = require('../actions/Actions');
 
 
 var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
     propTypes: {
-        award: ReactPropTypes.object.isRequired
+        award         : ReactPropTypes.object.isRequired,
+        edit          : ReactPropTypes.bool.isRequired,
+        itemWillEdit  : ReactPropTypes.func.isRequired,
+        itemWillCancel: ReactPropTypes.func.isRequired,
+        itemWillSave  : ReactPropTypes.func.isRequired
+    },
+
+    getInitialState: function () {
+        return {
+            name: this.props.award.name,
+            desc: this.props.award.desc
+        }
     },
 
     render: function () {
-        var imageUrl = "../../uploads/awards/" + this.props.award.image;
+        var imageUrl = "../../uploads/awards/" + this.props.award.image, self = this;
+        var controls = getControls(this.props.edit),
+            content  = getContent(this.props.edit);
+
+        function getContent(edit) {
+            if (edit) {
+                return (
+                    React.createElement("div", {className: "award-edit"}, 
+                        React.createElement("div", null, 
+                            React.createElement("input", {
+                                type: "text", 
+                                className: "form-control", 
+                                placeholder: "Enter name", 
+                                value: self.state.name, 
+                                onChange: self._nameDidChange})
+                        ), 
+                        React.createElement("div", null, 
+                            React.createElement("textarea", {className: "form-control", rows: "4", 
+                                      placeholder: "Enter description", 
+                                      value: self.state.desc, 
+                                      onChange: self._descriptionDidChange})
+                        )
+                    )
+                );
+            } else {
+                return (
+                    React.createElement("dl", null, 
+                        React.createElement("dt", null, self.props.award.name), 
+                        React.createElement("dd", null, self.props.award.desc)
+                    )
+                );
+            }
+        }
+
+        function getControls(edit) {
+            if (edit) {
+                var controlOkClass = classNames({
+                    'fa'           : true,
+                    'fa-check'     : true,
+                    'icon-control' : true,
+                    'icon-ok'      : true,
+                    'icon-disabled': !self._isValid()
+                });
+
+                return (
+                    React.createElement("div", null, 
+                        React.createElement("i", {className: controlOkClass, 
+                           onClick: self._save}), 
+                        React.createElement("i", {className: "fa fa-remove icon-danger icon-control", 
+                           onClick: self._cancel})
+                    )
+                );
+            } else {
+                return (
+                    React.createElement("div", null, 
+                        React.createElement("i", {className: "fa fa-pencil icon-control", 
+                           onClick: self.props.itemWillEdit}), 
+                        React.createElement("i", {className: "fa fa-remove icon-danger icon-control", 
+                           onClick: self._deleteItem})
+                    )
+                );
+            }
+        }
 
         return (
             React.createElement("li", {className: "awards-item"}, 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("div", {className: "col-md-2"}, React.createElement("img", {className: "img-responsive", src: imageUrl})), 
                     React.createElement("div", {className: "col-md-8"}, 
-                        React.createElement("dl", null, 
-                            React.createElement("dt", null, this.props.award.name), 
-                            React.createElement("dd", null, this.props.award.desc)
-                        )
+                        content
                     ), 
                     React.createElement("div", {className: "col-md-2"}, 
-                        React.createElement("div", {className: "pull-right"}, React.createElement("i", {
-                            className: "fa fa-times icon-danger icon-control", 
-                            onClick: this._deleteItem}))
+                        React.createElement("div", {className: "pull-right item-controls"}, controls)
                     )
                 )
             )
         );
     },
 
+    _cancel: function () {
+        this.setState(this.getInitialState());
+        this.props.itemWillCancel();
+    },
+
     _deleteItem: function () {
         var self = this;
         bootbox.confirm({
-            size: 'small',
-            title: 'Attention',
-            message: 'Are you sure?',
-            callback: function(result){
+            size    : 'small',
+            title   : 'Attention',
+            message : 'Are you sure?',
+            callback: function (result) {
                 if (result) {
                     Actions.deleteAward(self.props.award);
                 }
             }
         })
+    },
+
+    _descriptionDidChange: function (e) {
+        this.setState({
+            desc: e.currentTarget.value
+        });
+    },
+
+    _nameDidChange: function (e) {
+        this.setState({
+            name: e.currentTarget.value
+        });
+    },
+
+    _isValid: function () {
+        return this.state.name && this.state.desc;
+    },
+
+    _save: function () {
+        this.props.itemWillSave(this.state.name, this.state.desc);
     }
 });
 
 module.exports = AwardsListItemView;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../actions/Actions":2,"react":184}],8:[function(require,module,exports){
+},{"../actions/Actions":2,"classnames":15,"react":184}],8:[function(require,module,exports){
 var React              = require('react'),
     AwardsListItemView = require('./AwardsListItemView.react'),
     AwardsStore        = require('../stores/AwardsStore'),
@@ -451,7 +545,8 @@ var React              = require('react'),
 
 function getAwards() {
     return {
-        awards: AwardsStore.getAwards()
+        awards      : AwardsStore.getAwards(),
+        editPosition: -1
     };
 }
 
@@ -474,7 +569,7 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
     },
 
     render: function () {
-        var noItems;
+        var noItems, self = this;
 
         if (this.state.awards.length == 0) {
             noItems = React.createElement("li", null, "No Awards. Why not create a new one?");
@@ -483,7 +578,11 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
         function renderItem(award, index, awards) {
             return React.createElement(AwardsListItemView, {
                 key: award.aid, 
-                award: award})
+                edit: index === self.state.editPosition, 
+                award: award, 
+                itemWillEdit: self._itemWillEdit.bind(null, index), 
+                itemWillCancel: self._itemWillCancel, 
+                itemWillSave: self._itemWillSave.bind(null, index, award.aid)})
         }
 
         return (
@@ -497,6 +596,22 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
                 )
             )
         );
+    },
+
+    _itemWillCancel: function () {
+        this.setState({
+            editPosition: -1
+        })
+    },
+
+    _itemWillEdit: function (index) {
+        this.setState({
+            editPosition: index
+        })
+    },
+
+    _itemWillSave: function (index, aid, name, description) {
+        
     }
 });
 
@@ -808,21 +923,21 @@ var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 
 },{"flux":17}],14:[function(require,module,exports){
-define('admin/plugins/awards', function () {
+//define('admin/plugins/awards', function () {
     var Awards    = {},
         React     = require('react'),
         AwardsApp = require('./components/AwardsApp.react');
 
 
-    Awards.init = function () {
+    //Awards.init = function () {
         React.render(
             React.createElement(AwardsApp, null),
             document.getElementById('manageAwardsApp')
         );
-    };
+    //};
 
-    return Awards;
-});
+    //return Awards;
+//});
 
 },{"./components/AwardsApp.react":6,"react":184}],15:[function(require,module,exports){
 /*!

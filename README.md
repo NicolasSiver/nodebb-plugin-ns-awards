@@ -47,7 +47,6 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 - Add Achievements section, where rules can be specified, and same Awards could be granted automatically (auto-awards with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc)
 - Add Tests (Mocha/Tape)
 - Beautify `Create Award` panel
-- Handle User deletion
 - Handle multiple awards of the same type (Exapmle: `medal x 8`)
 - Combine Less for ACP and Board
 

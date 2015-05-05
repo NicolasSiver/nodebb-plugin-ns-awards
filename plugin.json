@@ -34,9 +34,7 @@
     "client/board/style/profile.less",
     "client/board/style/overview.less"
   ],
-  "scripts": [
-    "public/js/acp.js"
-  ],
+
   "staticDirs": {
     "templates": "./public/templates",
     "css": "./public/css",

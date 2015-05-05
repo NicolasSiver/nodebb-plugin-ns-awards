@@ -6,7 +6,8 @@ var React              = require('react'),
 
 function getAwards() {
     return {
-        awards: AwardsStore.getAwards()
+        awards      : AwardsStore.getAwards(),
+        editPosition: -1
     };
 }
 
@@ -29,7 +30,7 @@ var AwardsListView = React.createClass({
     },
 
     render: function () {
-        var noItems;
+        var noItems, self = this;
 
         if (this.state.awards.length == 0) {
             noItems = <li>No Awards. Why not create a new one?</li>;
@@ -38,7 +39,11 @@ var AwardsListView = React.createClass({
         function renderItem(award, index, awards) {
             return <AwardsListItemView
                 key={award.aid}
-                award={award}/>
+                edit={index === self.state.editPosition}
+                award={award}
+                itemWillEdit={self._itemWillEdit.bind(null, index)}
+                itemWillCancel={self._itemWillCancel}
+                itemWillSave={self._itemWillSave.bind(null, index, award.aid)}/>
         }
 
         return (
@@ -52,6 +57,22 @@ var AwardsListView = React.createClass({
                 </div>
             </div>
         );
+    },
+
+    _itemWillCancel: function () {
+        this.setState({
+            editPosition: -1
+        })
+    },
+
+    _itemWillEdit: function (index) {
+        this.setState({
+            editPosition: index
+        })
+    },
+
+    _itemWillSave: function (index, aid, name, description) {
+        
     }
 });
 
