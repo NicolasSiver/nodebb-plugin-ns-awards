@@ -34,7 +34,9 @@
     "style/profile.less",
     "overview.less"
   ],
-
+  "scripts": [
+    "public/js/acp.js"
+  ],
   "staticDirs": {
     "templates": "./public/templates",
     "css": "./public/css",
