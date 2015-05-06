@@ -49,3 +49,7 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 - Handle multiple awards of the same type (Exapmle: `medal x 8`)
 
 ## Changelog
+
+### v1.0.0 - 06.05.2015
+
+- Very first release
