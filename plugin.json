@@ -32,7 +32,7 @@
   ],
   "less": [
     "style/profile.less",
-    "overview.less"
+    "style/overview.less"
   ],
   "scripts": [
     "public/js/acp.js"
