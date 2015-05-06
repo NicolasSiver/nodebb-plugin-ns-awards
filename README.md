@@ -11,6 +11,7 @@ System for rewarding forum users. It allows admin to define set of awards that c
   - [Profile template](#profile-template)
 - [TODO](#todo)
 - [Changelog](#changelog)
+  - [v1.0.0 - 06.05.2015](#v100---06052015)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
