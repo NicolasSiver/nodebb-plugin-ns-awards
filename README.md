@@ -51,6 +51,10 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 
 ## Changelog
 
+### v1.0.1 - 08.05.2015
+
+- Use RequireJS for admin script
+
 ### v1.0.0 - 06.05.2015
 
 - Very first release
