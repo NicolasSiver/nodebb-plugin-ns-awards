@@ -1,18 +1,19 @@
 (function (Module) {
     'use strict';
 
-    var async     = require('async'),
-        fse       = require('fs-extra'),
-        path      = require('path'),
+    var async      = require('async'),
+        fse        = require('fs-extra'),
+        path       = require('path'),
 
-        nodebb    = require('./nodebb'),
-        sockets   = nodebb.pluginSockets,
-        nconf     = nodebb.nconf,
-        user      = nodebb.user,
-        settings  = require('./settings'),
-        database  = require('./database'),
-        constants = require('./constants'),
-        uploads   = require('./uploads');
+        nodebb     = require('./nodebb'),
+        sockets    = nodebb.pluginSockets,
+        nconf      = nodebb.nconf,
+        user       = nodebb.user,
+        controller = require('./controller'),
+        settings   = require('./settings'),
+        database   = require('./database'),
+        constants  = require('./constants'),
+        uploads    = require('./uploads');
 
     Module.init = function (callback) {
         sockets[constants.SOCKETS] = {};
@@ -93,7 +94,7 @@
     };
 
     Module.editAward = function (socket, payload, callback) {
-        database.editAward(payload.id, payload.name, payload.desc, callback);
+        controller.editAward(payload.id, payload.name, payload.desc, payload.file, callback);
     };
 
     Module.getAwards = function (socket, callback) {

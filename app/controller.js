@@ -2,10 +2,14 @@
     'use strict';
 
     var async      = require('async'),
+        fse        = require('fs-extra'),
+        path       = require('path'),
+
         database   = require('./database'),
         settings   = require('./settings'),
         controller = require('./controller'),
         constants  = require('./constants'),
+        uploads    = require('./uploads'),
 
         nodebb     = require('./nodebb'),
         utils      = nodebb.utils,
@@ -20,6 +24,66 @@
                 async.each(grantIds, function (gid, next) {
                     database.deleteGrant(gid, next);
                 }, next);
+            }
+        ], done);
+    };
+
+    /**
+     * Edit award.
+     *
+     * @param aid - award identifier
+     * @param name - award name
+     * @param description - award description
+     * @param upload - optional file descriptor, to get filename, 'uploads' module should be used
+     * @param done {function}
+     */
+    Controller.editAward = function (aid, name, description, upload, done) {
+        var update = {
+            name: name,
+            desc: description
+        };
+
+        upload = upload || {};
+
+        async.waterfall([
+            async.apply(uploads.getFileById, upload.id),
+            function (image, next) {
+                if (image) {
+                    Controller.editImage(aid, image, next);
+                }
+                next(null);
+            },
+            function (imageName, next) {
+                if (imageName) {
+                    update.image = imageName;
+                }
+                next(null);
+            },
+            async.apply(database.editAward, aid, update)
+        ], done);
+    };
+
+    /**
+     * Update image. Delete old one if any.
+     *
+     * @param aid {number} award identifier
+     * @param newImage {object} file descriptor from 'uploads' module
+     * @param done {function} returns image name if operation was successful
+     */
+    Controller.editImage = function (aid, newImage, done) {
+        async.waterfall([
+            async.apply(database.getAward, aid),
+            function (award, next) {
+                if (!award) {
+                    next(new Error('Award can not be found'));
+                }
+
+                //Remove old image
+                fse.remove(getUploadImagePath(award.image), next);
+            },
+            async.apply(fse.copy, newImage.path, getUploadImagePath(newImage.name)),
+            function (next) {
+                next(null, newImage.name);
             }
         ], done);
     };
@@ -110,5 +174,9 @@
             }
         ], done);
     };
+
+    function getUploadImagePath(fileName) {
+        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
+    }
 
 })(module.exports);

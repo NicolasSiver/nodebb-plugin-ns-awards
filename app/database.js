@@ -76,18 +76,13 @@
         ], done);
     };
 
-    Database.editAward = function (id, name, description, done) {
+    Database.editAward = function (id, update, done) {
         async.waterfall([
             async.apply(Database.getAward, id),
             function (award, next) {
                 if (!award) {
                     next(new Error('Award can not be found'));
                 }
-
-                var update = {
-                    name: name,
-                    desc: description
-                };
 
                 db.setObject(namespace + ':' + id, update, function (error) {
                     if (error) {
