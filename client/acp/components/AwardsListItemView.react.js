@@ -19,10 +19,10 @@ var AwardsListItemView = React.createClass({
 
     getInitialState: function () {
         return {
-            name     : this.props.award.name,
-            desc     : this.props.award.desc,
-            dataUrl  : '',
-            initImage: this.props.award.image
+            name      : this.props.award.name,
+            desc      : this.props.award.desc,
+            dataUrl   : '',
+            initImage : this.props.award.image
         }
     },
 
@@ -130,7 +130,7 @@ var AwardsListItemView = React.createClass({
     },
 
     _cancel: function () {
-        this.setState(this.getInitialState());
+        this.replaceState(this.getInitialState());
         this.props.itemWillCancel();
     },
 
@@ -167,7 +167,6 @@ var AwardsListItemView = React.createClass({
     },
 
     _newImageUploadSuccess: function (fileClient, fileServer) {
-        console.log(fileClient, fileServer);
         this.setState({
             fileClient: fileClient,
             fileServer: fileServer
@@ -183,7 +182,7 @@ var AwardsListItemView = React.createClass({
     _resetImage: function () {
         this.setState({
             initImage: '',
-            dataUrl: ''
+            dataUrl  : ''
         })
     },
 
