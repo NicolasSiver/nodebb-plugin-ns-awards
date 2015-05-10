@@ -34,16 +34,35 @@
 }
 
 .create-award-form {
-  .award-preview {
-    width: 48px;
-    height: 48px;
+}
+
+.award-preview {
+  width: @award-preview;
+  height: @award-preview;
+}
+
+.award-image-edit {
+  position: relative;
+  width: @award-preview;
+  height: @award-preview;
+
+  img {
+    opacity: 0.8;
   }
 
-  .award-upload-icon {
-    font-size: 48px;
-    cursor: pointer;
-    color: @md-clr-grey-300;
+  i {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
   }
+}
+
+.award-upload-icon {
+  font-size: 48px;
+  cursor: pointer;
+  color: @md-clr-grey-300;
 }
 
 .grant-award-form {

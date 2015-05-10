@@ -2,7 +2,10 @@ var React          = require('react'),
     bootbox        = require('bootbox'),
     ReactPropTypes = React.PropTypes,
     classNames     = require('classnames'),
-    Actions        = require('../actions/Actions');
+    ImageUpdate    = require('./ImageUpdate.react'),
+    pathUtils      = require('../utils/PathUtils'),
+    noop           = require('lodash/utility/noop')
+Actions = require('../actions/Actions');
 
 
 var AwardsListItemView = React.createClass({
@@ -16,15 +19,18 @@ var AwardsListItemView = React.createClass({
 
     getInitialState: function () {
         return {
-            name: this.props.award.name,
-            desc: this.props.award.desc
+            name     : this.props.award.name,
+            desc     : this.props.award.desc,
+            dataUrl  : '',
+            initImage: this.props.award.image
         }
     },
 
     render: function () {
-        var imageUrl = "../../uploads/awards/" + this.props.award.image, self = this;
-        var controls = getControls(this.props.edit),
-            content  = getContent(this.props.edit);
+        var self     = this,
+            controls = getControls(this.props.edit),
+            content  = getContent(this.props.edit),
+            image    = getImage(this.props.edit);
 
         function getContent(edit) {
             if (edit) {
@@ -86,10 +92,32 @@ var AwardsListItemView = React.createClass({
             }
         }
 
+        function getImage(edit) {
+            if (edit) {
+                return (
+                    <ImageUpdate
+                        action={pathUtils.getApiImages()}
+                        currentImageUrl={self.state.initImage}
+                        dataUrl={self.state.dataUrl}
+                        resetImage={self._resetImage}
+                        imageDidSelect={self._newImageDidSelect}
+                        success={self._newImageUploadSuccess}
+                        uploadProgress={noop}/>
+                );
+            } else {
+                var imageUrl = pathUtils.getAwardImageUri(self.props.award.image);
+                return (
+                    <img className="img-responsive" src={imageUrl}/>
+                );
+            }
+        }
+
         return (
             <li className="awards-item">
                 <div className="row">
-                    <div className="col-md-2"><img className="img-responsive" src={imageUrl}/></div>
+                    <div className="col-md-2">
+                        {image}
+                    </div>
                     <div className="col-md-8">
                         {content}
                     </div>
@@ -132,13 +160,34 @@ var AwardsListItemView = React.createClass({
         });
     },
 
+    _newImageDidSelect: function (file, dataUrl) {
+        this.setState({
+            dataUrl: dataUrl
+        });
+    },
+
+    _newImageUploadSuccess: function (fileClient, fileServer) {
+        console.log(fileClient, fileServer);
+        this.setState({
+            fileClient: fileClient,
+            fileServer: fileServer
+        });
+    },
+
     _isValid: function () {
         return (this.state.name && this.state.name !== this.props.award.name)
-            || (this.state.desc && this.state.desc !== this.props.award.desc);
+            || (this.state.desc && this.state.desc !== this.props.award.desc)
+            || this.state.fileServer;
+    },
+
+    _resetImage: function () {
+        this.setState({
+            initImage: ''
+        })
     },
 
     _save: function () {
-        if(this._isValid()){
+        if (this._isValid()) {
             this.props.itemWillSave(this.state.name, this.state.desc);
         }
     }

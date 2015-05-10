@@ -18,11 +18,26 @@
 .panel-controls .btn + .btn {
   margin-left: 4px;
 }
-.create-award-form .award-preview {
+.award-preview {
   width: 48px;
   height: 48px;
 }
-.create-award-form .award-upload-icon {
+.award-image-edit {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+.award-image-edit img {
+  opacity: 0.8;
+}
+.award-image-edit i {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+.award-upload-icon {
   font-size: 48px;
   cursor: pointer;
   color: #e0e0e0;

@@ -5,7 +5,7 @@ var React          = require('react'),
 
     dropzone       = null;
 
-var AwardImageDrop = React.createClass({
+var ImageDrop = React.createClass({
     propTypes: {
         action        : ReactPropTypes.string.isRequired,
         dataUrl       : ReactPropTypes.string.isRequired,
@@ -62,4 +62,4 @@ var AwardImageDrop = React.createClass({
     }
 });
 
-module.exports = AwardImageDrop;
+module.exports = ImageDrop;
