@@ -32,7 +32,7 @@ var Settings = React.createClass({
             <div className="panel panel-default">
                 <div className="panel-heading">Settings</div>
                 <div className="panel-body">
-                    Setting will be added in future updates
+                    Options will be added in future updates
                 </div>
             </div>
         );

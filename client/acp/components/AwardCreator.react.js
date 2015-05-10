@@ -1,9 +1,10 @@
 var React            = require('react'),
     LinkedStateMixin = require('react/lib/LinkedStateMixin'),
 
-    AwardImageDrop   = require('./AwardImageDrop.react'),
+    ImageDrop        = require('./ImageDrop.react'),
     PanelControls    = require('./PanelControls.react'),
     PromptView       = require('./PromptView.react'),
+    pathUtils        = require('../utils/PathUtils'),
     Actions          = require('../actions/Actions');
 
 var AwardCreator = React.createClass({
@@ -11,7 +12,7 @@ var AwardCreator = React.createClass({
 
     getInitialState: function () {
         return {
-            action : '/api/admin/plugins/awards/images',
+            action : pathUtils.getApiImages(),
             dataUrl: '',
             name   : '',
             desc   : '',
@@ -34,7 +35,7 @@ var AwardCreator = React.createClass({
                         </div>
                     </div>
                     <div className="media-right media-middle">
-                        <AwardImageDrop
+                        <ImageDrop
                             action={this.state.action}
                             dataUrl={this.state.dataUrl}
                             imageDidSelect={this._imageDidSelect}
