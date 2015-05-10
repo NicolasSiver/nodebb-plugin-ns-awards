@@ -39,7 +39,6 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 - Add Sections to categorise awards, like: Forum, One time event, etc.
 - Add User Manager: manager user's award - order, overview
 - Add Notifications
-- Edit Award image
 - Use NodeBB's alerts (app.alert)
 - ACP: Add Awarded Users statistics
 - ACP: Improve Auto-complete component for users search - add keyboard handlers like esc, arrows
@@ -51,7 +50,7 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 
 ## Changelog
 
-### v1.1.0 - x.05.2015
+### v1.1.0 - 10.05.2015
 
 - Remove debug script from admin panel
 - Added ability to edit award image
