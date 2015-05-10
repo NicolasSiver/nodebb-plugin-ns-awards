@@ -19,7 +19,8 @@ var ImageDrop = React.createClass({
 
         Dropzone.autoDiscover = false;
 
-        dropzone = new Dropzone(this.getDOMNode(), {
+        //this.getDOMNode() does not work with complex html
+        dropzone = new Dropzone(React.findDOMNode(this.refs.uploadIcon), {
             url      : this.props.action,
             paramName: 'award',
             clickable: true,
@@ -57,7 +58,9 @@ var ImageDrop = React.createClass({
             );
         }
         return (
-            <i className="fa fa-cloud-upload award-upload-icon"></i>
+            <div>
+                <i className="fa fa-cloud-upload award-upload-icon" ref="uploadIcon"></i>
+            </div>
         );
     }
 });
