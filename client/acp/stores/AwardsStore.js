@@ -8,7 +8,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     API           = {
         CREATE_AWARD: 'plugins.ns-awards.createAward',
         DELETE_AWARD: 'plugins.ns-awards.deleteAward',
-        EDIT_AWARD: 'plugins.ns-awards.editAward',
+        EDIT_AWARD  : 'plugins.ns-awards.editAward',
         GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
@@ -58,9 +58,10 @@ AppDispatcher.register(function (action) {
             break;
         case Constants.EVENT_EDIT_AWARD:
             socket.emit(API.EDIT_AWARD, {
-                id  : action.id,
-                name: action.name,
-                desc: action.desc
+                id   : action.id,
+                name : action.name,
+                desc : action.desc,
+                image: action.file
             }, function (error, award) {
                 if (error) {
                 }

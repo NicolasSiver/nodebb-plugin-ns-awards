@@ -45,12 +45,13 @@ module.exports = {
         });
     },
 
-    editAward: function (aid, name, desc, index) {
+    editAward: function (aid, name, desc, file, index) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_EDIT_AWARD,
             id        : aid,
             name      : name,
             desc      : desc,
+            file      : file,
             index     : index
         });
     },
@@ -525,7 +526,7 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
 
     _save: function () {
         if (this._isValid()) {
-            this.props.itemWillSave(this.state.name, this.state.desc);
+            this.props.itemWillSave(this.state.name, this.state.desc, this.state.fileServer);
         }
     }
 });
@@ -607,8 +608,8 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
         })
     },
 
-    _itemWillSave: function (index, aid, name, description) {
-        Actions.editAward(aid, name, description, index);
+    _itemWillSave: function (index, aid, name, description, file) {
+        Actions.editAward(aid, name, description, file, index);
     }
 });
 
@@ -23452,7 +23453,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     API           = {
         CREATE_AWARD: 'plugins.ns-awards.createAward',
         DELETE_AWARD: 'plugins.ns-awards.deleteAward',
-        EDIT_AWARD: 'plugins.ns-awards.editAward',
+        EDIT_AWARD  : 'plugins.ns-awards.editAward',
         GET_AWARDS  : 'plugins.ns-awards.getAwards'
     },
     _awards       = [];
@@ -23502,9 +23503,10 @@ AppDispatcher.register(function (action) {
             break;
         case Constants.EVENT_EDIT_AWARD:
             socket.emit(API.EDIT_AWARD, {
-                id  : action.id,
-                name: action.name,
-                desc: action.desc
+                id   : action.id,
+                name : action.name,
+                desc : action.desc,
+                image: action.file
             }, function (error, award) {
                 if (error) {
                 }
