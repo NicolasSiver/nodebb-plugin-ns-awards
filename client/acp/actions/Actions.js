@@ -27,14 +27,13 @@ module.exports = {
         });
     },
 
-    editAward: function (aid, name, desc, file, index) {
+    editAward: function (aid, name, desc, file) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_EDIT_AWARD,
             id        : aid,
             name      : name,
             desc      : desc,
-            file      : file,
-            index     : index
+            file      : file
         });
     },
 

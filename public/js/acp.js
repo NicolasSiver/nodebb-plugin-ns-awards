@@ -45,14 +45,13 @@ module.exports = {
         });
     },
 
-    editAward: function (aid, name, desc, file, index) {
+    editAward: function (aid, name, desc, file) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_EDIT_AWARD,
             id        : aid,
             name      : name,
             desc      : desc,
-            file      : file,
-            index     : index
+            file      : file
         });
     },
 
@@ -609,7 +608,7 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
     },
 
     _itemWillSave: function (index, aid, name, description, file) {
-        Actions.editAward(aid, name, description, file, index);
+        Actions.editAward(aid, name, description, file);
     }
 });
 
@@ -23509,6 +23508,7 @@ AppDispatcher.register(function (action) {
                 image: action.file
             }, function (error, award) {
                 if (error) {
+                    return console.error(error);
                 }
                 var index = getIndexById(award.aid, _awards);
                 if (index != -1) {

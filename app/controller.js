@@ -49,15 +49,16 @@
             async.apply(uploads.getFileById, upload.id),
             function (image, next) {
                 if (image) {
-                    Controller.editImage(aid, image, next);
+                    Controller.editImage(aid, image, function (error, imageName) {
+                        if (error) {
+                            return next(error);
+                        }
+                        update.image = imageName;
+                        next(null);
+                    });
+                } else {
+                    next(null);
                 }
-                next(null);
-            },
-            function (imageName, next) {
-                if (imageName) {
-                    update.image = imageName;
-                }
-                next(null);
             },
             async.apply(database.editAward, aid, update)
         ], done);

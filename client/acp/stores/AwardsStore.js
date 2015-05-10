@@ -64,6 +64,7 @@ AppDispatcher.register(function (action) {
                 image: action.file
             }, function (error, award) {
                 if (error) {
+                    return console.error(error);
                 }
                 var index = getIndexById(award.aid, _awards);
                 if (index != -1) {

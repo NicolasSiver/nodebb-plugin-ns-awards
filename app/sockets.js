@@ -94,7 +94,7 @@
     };
 
     Module.editAward = function (socket, payload, callback) {
-        controller.editAward(payload.id, payload.name, payload.desc, payload.file, callback);
+        controller.editAward(payload.id, payload.name, payload.desc, payload.image, callback);
     };
 
     Module.getAwards = function (socket, callback) {
