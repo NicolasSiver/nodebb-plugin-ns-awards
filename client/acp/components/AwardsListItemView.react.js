@@ -79,7 +79,7 @@ var AwardsListItemView = React.createClass({
                     <div>
                         <i className="fa fa-pencil icon-control"
                            onClick={self.props.itemWillEdit}></i>
-                        <i className="fa fa-remove icon-danger icon-control"
+                        <i className="fa fa-trash-o icon-danger icon-control"
                            onClick={self._deleteItem}></i>
                     </div>
                 );
