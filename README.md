@@ -51,6 +51,11 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 
 ## Changelog
 
+### v1.1.0 - x.05.2015
+
+- Remove debug script from admin panel
+- Added ability to edit award image
+
 ### v1.0.1 - 08.05.2015
 
 - Use RequireJS for admin script
