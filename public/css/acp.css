@@ -1,3 +1,9 @@
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
 .awards-list {
   list-style-type: none;
   margin: 0;
@@ -28,13 +34,20 @@
   height: 48px;
 }
 .award-image-edit img {
+  position: absolute;
   opacity: 0.8;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .award-image-edit i {
+  display: block;
   position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
+  top: 0;
   right: 0;
 }
 .award-upload-icon {

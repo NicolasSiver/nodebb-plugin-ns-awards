@@ -2,6 +2,7 @@ var React          = require('react'),
     ReactPropTypes = React.PropTypes,
     Actions        = require('../actions/Actions'),
     Dropzone       = require('dropzone'),
+    classNames     = require('classnames'),
 
     dropzone       = null;
 
@@ -49,17 +50,28 @@ var ImageDrop = React.createClass({
         dropzone = null;
     },
 
+    //Dropzone should be presented in render always
     render: function () {
-        if (this.props.dataUrl) {
-            return (
-                <div className="award-preview center-block">
-                    <img className="img-responsive" src={this.props.dataUrl}/>
-                </div>
-            );
-        }
+        var previewAvailable = !!this.props.dataUrl;
+        var previewClass = classNames({
+                'award-preview': previewAvailable,
+                'center-block' : previewAvailable
+            }),
+            iconClass    = classNames({
+                'fa'               : true,
+                'fa-cloud-upload'  : true,
+                'award-upload-icon': true,
+                'hidden'           : previewAvailable
+            }),
+            imageClass   = classNames({
+                'img-responsive': true,
+                'hidden'        : !previewAvailable
+            });
+
         return (
-            <div>
-                <i className="fa fa-cloud-upload award-upload-icon" ref="uploadIcon"></i>
+            <div className={previewClass}>
+                <img className={imageClass} src={this.props.dataUrl}/>
+                <i className={iconClass} ref="uploadIcon"></i>
             </div>
         );
     }

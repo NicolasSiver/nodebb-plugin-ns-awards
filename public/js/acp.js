@@ -519,7 +519,8 @@ var AwardsListItemView = React.createClass({displayName: "AwardsListItemView",
 
     _resetImage: function () {
         this.setState({
-            initImage: ''
+            initImage: '',
+            dataUrl: ''
         })
     },
 
@@ -620,6 +621,7 @@ var React          = require('react'),
     ReactPropTypes = React.PropTypes,
     Actions        = require('../actions/Actions'),
     Dropzone       = require('dropzone'),
+    classNames     = require('classnames'),
 
     dropzone       = null;
 
@@ -637,7 +639,8 @@ var ImageDrop = React.createClass({displayName: "ImageDrop",
 
         Dropzone.autoDiscover = false;
 
-        dropzone = new Dropzone(this.getDOMNode(), {
+        //this.getDOMNode() does not work with complex html
+        dropzone = new Dropzone(React.findDOMNode(this.refs.uploadIcon), {
             url      : this.props.action,
             paramName: 'award',
             clickable: true,
@@ -666,26 +669,40 @@ var ImageDrop = React.createClass({displayName: "ImageDrop",
         dropzone = null;
     },
 
+    //Dropzone should be presented in render always
     render: function () {
-        if (this.props.dataUrl) {
-            return (
-                React.createElement("div", {className: "award-preview center-block"}, 
-                    React.createElement("img", {className: "img-responsive", src: this.props.dataUrl})
-                )
-            );
-        }
+        var previewAvailable = !!this.props.dataUrl;
+        var previewClass = classNames({
+                'award-preview': previewAvailable,
+                'center-block' : previewAvailable
+            }),
+            iconClass    = classNames({
+                'fa'               : true,
+                'fa-cloud-upload'  : true,
+                'award-upload-icon': true,
+                'hidden'           : previewAvailable
+            }),
+            imageClass   = classNames({
+                'img-responsive': true,
+                'hidden'        : !previewAvailable
+            });
+
         return (
-            React.createElement("i", {className: "fa fa-cloud-upload award-upload-icon"})
+            React.createElement("div", {className: previewClass}, 
+                React.createElement("img", {className: imageClass, src: this.props.dataUrl}), 
+                React.createElement("i", {className: iconClass, ref: "uploadIcon"})
+            )
         );
     }
 });
 
 module.exports = ImageDrop;
 
-},{"../actions/Actions":2,"dropzone":17,"react":186}],9:[function(require,module,exports){
+},{"../actions/Actions":2,"classnames":16,"dropzone":17,"react":186}],9:[function(require,module,exports){
 var React          = require('react'),
     ReactPropTypes = React.PropTypes,
     ImageDrop      = require('./ImageDrop.react'),
+    classNames     = require('classnames'),
     pathUtils      = require('../utils/PathUtils');
 
 var ImageUpdate = React.createClass({displayName: "ImageUpdate",
@@ -701,28 +718,30 @@ var ImageUpdate = React.createClass({displayName: "ImageUpdate",
 
     render: function () {
         var preview = pathUtils.getAwardImageUri(this.props.currentImageUrl) || this.props.dataUrl;
+        var resetButton;
+        var wrapperClass = classNames({
+            'award-image-edit': !!preview
+        });
         if (preview) {
-            return (
-                React.createElement("div", {className: "award-image-edit"}, 
-                    React.createElement("img", {className: "img-responsive", src: preview}), 
-                    React.createElement("i", {className: "fa fa-remove icon-danger icon-control", onClick: this.props.resetImage})
-                )
-            );
+            resetButton = React.createElement("i", {className: "fa fa-remove icon-danger icon-control", onClick: this.props.resetImage});
         }
         return (
-            React.createElement(ImageDrop, {
-                action: this.props.action, 
-                dataUrl: this.props.dataUrl, 
-                imageDidSelect: this.props.imageDidSelect, 
-                success: this.props.success, 
-                uploadProgress: this.props.uploadProgress})
+            React.createElement("div", {className: wrapperClass}, 
+                React.createElement(ImageDrop, {
+                    action: this.props.action, 
+                    dataUrl: preview, 
+                    imageDidSelect: this.props.imageDidSelect, 
+                    success: this.props.success, 
+                    uploadProgress: this.props.uploadProgress}), 
+                resetButton
+            )
         );
     }
 });
 
 module.exports = ImageUpdate;
 
-},{"../utils/PathUtils":191,"./ImageDrop.react":8,"react":186}],10:[function(require,module,exports){
+},{"../utils/PathUtils":191,"./ImageDrop.react":8,"classnames":16,"react":186}],10:[function(require,module,exports){
 var React          = require('react'),
     ReactPropTypes = React.PropTypes;
 

@@ -182,7 +182,8 @@ var AwardsListItemView = React.createClass({
 
     _resetImage: function () {
         this.setState({
-            initImage: ''
+            initImage: '',
+            dataUrl: ''
         })
     },
 

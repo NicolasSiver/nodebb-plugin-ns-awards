@@ -1,6 +1,7 @@
 var React          = require('react'),
     ReactPropTypes = React.PropTypes,
     ImageDrop      = require('./ImageDrop.react'),
+    classNames     = require('classnames'),
     pathUtils      = require('../utils/PathUtils');
 
 var ImageUpdate = React.createClass({
@@ -16,21 +17,23 @@ var ImageUpdate = React.createClass({
 
     render: function () {
         var preview = pathUtils.getAwardImageUri(this.props.currentImageUrl) || this.props.dataUrl;
+        var resetButton;
+        var wrapperClass = classNames({
+            'award-image-edit': !!preview
+        });
         if (preview) {
-            return (
-                <div className="award-image-edit">
-                    <img className="img-responsive" src={preview}/>
-                    <i className="fa fa-remove icon-danger icon-control" onClick={this.props.resetImage}></i>
-                </div>
-            );
+            resetButton = <i className="fa fa-remove icon-danger icon-control" onClick={this.props.resetImage}></i>;
         }
         return (
-            <ImageDrop
-                action={this.props.action}
-                dataUrl={this.props.dataUrl}
-                imageDidSelect={this.props.imageDidSelect}
-                success={this.props.success}
-                uploadProgress={this.props.uploadProgress}/>
+            <div className={wrapperClass}>
+                <ImageDrop
+                    action={this.props.action}
+                    dataUrl={preview}
+                    imageDidSelect={this.props.imageDidSelect}
+                    success={this.props.success}
+                    uploadProgress={this.props.uploadProgress}/>
+                {resetButton}
+            </div>
         );
     }
 });
