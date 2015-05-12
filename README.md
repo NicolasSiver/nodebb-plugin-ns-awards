@@ -49,6 +49,9 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 - Add Tests (Mocha/Tape)
 - Beautify `Create Award` panel
 - Handle multiple awards of the same type (Exapmle: `medal x 8`)
+- Move Less styles under `awards` namespace
+- Topic View: use Bootstrap tooltips
+- Settings for CSS classes in topic view
 
 ## Changelog
 
