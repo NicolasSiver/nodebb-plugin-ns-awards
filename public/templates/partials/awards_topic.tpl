@@ -3,7 +3,7 @@
     <!-- BEGIN grants -->
     <div class="awards-item">
         <img class="awards-image" src="{grants.award.picture}" alt="{grants.award.name}" title="{grants.award.name}"
-             data-toggle="tooltip" data-placement="top"/>
+             data-toggle="awards-tooltip" data-placement="top"/>
     </div>
     <!-- END grants -->
 </div>
