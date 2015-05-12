@@ -135,8 +135,8 @@
         db.getSortedSetRevRange(namespace + ':award:' + aid, 0, -1, done);
     };
 
-    Database.getGrantIdsByUser = function (uid, done) {
-        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, -1, done);
+    Database.getGrantIdsByUser = function (uid, limit, done) {
+        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, limit, done);
     };
 
     Database.getGrantsByIds = function (ids, done) {

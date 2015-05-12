@@ -6,8 +6,10 @@ module.exports = keyMirror({
     EVENT_DELETE_AWARD           : null,
     EVENT_EDIT_AWARD             : null,
     EVENT_GET_ALL_AWARDS         : null,
+    EVENT_GET_SETTINGS           : null,
     EVENT_PANEL_CANCEL           : null,
     EVENT_PICK_USER_FROM_SEARCH  : null,
+    EVENT_SAVE_SETTINGS          : null,
     EVENT_SEARCH_USER            : null,
     EVENT_UNPICK_USER_FROM_SEARCH: null,
 

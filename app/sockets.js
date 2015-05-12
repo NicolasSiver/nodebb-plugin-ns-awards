@@ -23,6 +23,8 @@
         sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
         sockets[constants.SOCKETS].editAward = Module.editAward;
         sockets[constants.SOCKETS].getAwards = Module.getAwards;
+        sockets[constants.SOCKETS].getSettings = Module.getSettings;
+        sockets[constants.SOCKETS].saveSettings = Module.saveSettings;
         sockets[constants.SOCKETS].searchUser = Module.searchUser;
 
         callback();
@@ -99,6 +101,14 @@
 
     Module.getAwards = function (socket, callback) {
         database.getAllAwards(callback);
+    };
+
+    Module.getSettings = function (socket, payload, callback) {
+        settings.get(callback);
+    };
+
+    Module.saveSettings = function (socket, payload, callback) {
+        controller.saveValidSettings(payload.settings, callback);
     };
 
     Module.searchUser = function (socket, payload, callback) {

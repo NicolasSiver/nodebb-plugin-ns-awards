@@ -140,9 +140,40 @@
         ], done);
     };
 
-    Controller.getUserAwards = function (uid, done) {
+    Controller.getAwardsTopic = function (payload, done) {
         async.waterfall([
-            async.apply(database.getGrantIdsByUser, uid),
+            async.apply(settings.get),
+            function (settings, postsDidProcess) {
+                if (settings.renderTopic) {
+
+                    async.map(payload.posts, function (post, next) {
+
+                        Controller.getUserAwards(post.uid, settings.maxAwardsTopic, function (error, grants) {
+                            if (error) {
+                                return next(error);
+                            }
+                            post.grants = grants;
+                            next(null, post);
+                        });
+                    }, function (error, postsWithGrants) {
+                        if (error) {
+                            return postsDidProcess(error);
+                        }
+                        payload.posts = postsWithGrants;
+                        postsDidProcess(null, payload);
+                    });
+
+                } else {
+                    //Skip render
+                    postsDidProcess(null, payload);
+                }
+            }
+        ], done);
+    };
+
+    Controller.getUserAwards = function (uid, limit, done) {
+        async.waterfall([
+            async.apply(database.getGrantIdsByUser, uid, limit),
             function (grantIds, next) {
                 if (!grantIds) {
                     return next(null, []);
@@ -175,6 +206,27 @@
             }
         ], done);
     };
+
+    Controller.saveValidSettings = function (data, done) {
+        settings.get(function (error, values) {
+            if (error) {
+                return done(error);
+            }
+            var newSettings = getValidFields(values, data);
+            settings.save(newSettings, done);
+        });
+
+    };
+
+    function getValidFields(fields, object) {
+        var shallowCopy = {};
+        for (var field in fields) {
+            if (field in object) {
+                shallowCopy[field] = object[field];
+            }
+        }
+        return shallowCopy;
+    }
 
     function getUploadImagePath(fileName) {
         return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);

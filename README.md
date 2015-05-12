@@ -9,8 +9,10 @@ System for rewarding forum users. It allows admin to define set of awards that c
 - [How does it work?](#how-does-it-work)
 - [Themes](#themes)
   - [Profile template](#profile-template)
+  - [Topic template](#topic-template)
 - [TODO](#todo)
 - [Changelog](#changelog)
+  - [v1.2.0 - 12.05.2015](#v120---12052015)
   - [v1.1.0 - 10.05.2015](#v110---10052015)
   - [v1.0.1 - 08.05.2015](#v101---08052015)
   - [v1.0.0 - 06.05.2015](#v100---06052015)
@@ -32,9 +34,17 @@ Plugin introduces new entity for your board: Award. It could be anything: ribbon
 
 Use profile partial, it will add small panel with awards as list. Every award item will include: picture, name, reason and date.
 
-Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`:
+Example Vanilla Theme, edit `node_modules/nodebb-theme-vanilla/templates/account/profile.tpl`:
 
     <!-- IMPORT partials/awards_profile.tpl -->
+    
+### Topic template
+
+Use topic partial to show awards for every post. Award's metadata is the same as for Profile template.
+
+Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partials/topic/post.tpl`:
+
+    <!-- IMPORT partials/awards_topic.tpl -->
 
 ## TODO
 
@@ -49,8 +59,17 @@ Example Vanilla Theme, edit `nodebb-theme-vanilla/templates/account/profile.tpl`
 - Add Tests (Mocha/Tape)
 - Beautify `Create Award` panel
 - Handle multiple awards of the same type (Exapmle: `medal x 8`)
+- Move Less styles under `awards` namespace
+- Topic View: use Bootstrap tooltips
+- Settings for CSS classes in topic view
 
 ## Changelog
+
+### v1.2.0 - 12.05.2015
+
+- Added Settings
+- Settings: Topic render flag, max awards in topic
+- Awards now available in Topic View
 
 ### v1.1.0 - 10.05.2015
 

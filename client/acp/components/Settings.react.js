@@ -28,18 +28,67 @@ var Settings = React.createClass({
         //        <div />
         //    );
         //}
+        var footer;
+
+        if (this.state.dirty) {
+            footer = <div>
+                <div className="alert alert-warning" role="alert">NodeBB: Restart will be needed</div>
+                <div className="pull-right panel-controls">
+                    <button
+                        className="btn btn-success"
+                        onClick={this._saveSettings}
+                        type="button">Save Settings
+                    </button>
+                </div>
+            </div>;
+        }
+
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">Settings</div>
                 <div className="panel-body">
-                    Options will be added in future updates
+                    <div className="checkbox">
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={this.state.renderTopic}
+                                onChange={this._renderTopicDidChange}/> Topic View: render awards
+                        </label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="topicLimit">Max awards</label>
+                        <input
+                            type="text" className="form-control" id="topicLimit" placeholder="Enter count"
+                            disabled={this.state.renderTopic ? '' : 'disabled'}
+                            value={this.state.maxAwardsTopic}
+                            onChange={this._maxAwardsTopicDidChange}/>
+                    </div>
+                    {footer}
                 </div>
             </div>
         );
     },
 
     settingsDidChange: function () {
-        this.setState(getSettingsState());
+        this.replaceState(getSettingsState());
+    },
+
+    _maxAwardsTopicDidChange: function (e) {
+        this.setState({
+            maxAwardsTopic: parseInt(e.currentTarget.value, 10),
+            dirty         : true
+        });
+    },
+
+    _renderTopicDidChange: function (e) {
+        this.setState({
+            renderTopic: e.currentTarget.checked,
+            dirty      : true
+        })
+    },
+
+    _saveSettings: function (e) {
+        Actions.saveSettings(this.state);
     }
 });
 

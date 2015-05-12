@@ -10,7 +10,8 @@
      * @param callback {function}
      */
     Filter.account = function (params, callback) {
-        controller.getUserAwards(params.userData.uid, function (error, awards) {
+        //Load all awards
+        controller.getUserAwards(params.userData.uid, -1, function (error, awards) {
             if (error) {
                 return callback(error);
             }
@@ -42,28 +43,12 @@
     };
 
     /**
-     * Hook to render topic thread.
-     * 'topicData' will be used as payload in hook handler.
-     * @param topicData {object} Payload :{posts: [{user:{uid:postOwnerId}}], uid: topicOwnerId}
+     * Hook to render topic thread
+     * @param payload {object} Fields: {posts: posts, uid: uid}
      * @param callback {function}
      */
-    Filter.topic = function (topicData, callback) {
-        //async.map(topicData.posts, function (post, next) {
-        //    database.getPoints(post.user.uid, function (error, points) {
-        //        if (error) {
-        //            return next(error);
-        //        }
-        //        post.points = points || 0;
-        //        next(null, post);
-        //    });
-        //}, function (error, results) {
-        //    if (error) {
-        //        return callback(error);
-        //    }
-        //    topicData.posts = results;
-        //    callback(null, topicData);
-        //});
-        callback(null, topicData);
+    Filter.getPosts = function (payload, callback) {
+        controller.getAwardsTopic(payload, callback);
     };
 
     Filter.userDelete = function (uid, callback) {
