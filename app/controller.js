@@ -140,6 +140,37 @@
         ], done);
     };
 
+    Controller.getAwardsTopic = function (payload, done) {
+        async.waterfall([
+            async.apply(settings.get),
+            function (settings, postsDidProcess) {
+                if (settings.renderTopic) {
+
+                    async.map(payload.posts, function (post, next) {
+
+                        Controller.getUserAwards(post.uid, function (error, grants) {
+                            if (error) {
+                                return next(error);
+                            }
+                            post.grants = grants;
+                            next(null, post);
+                        });
+                    }, function (error, postsWithGrants) {
+                        if (error) {
+                            return postsDidProcess(error);
+                        }
+                        payload.posts = postsWithGrants;
+                        postsDidProcess(null, payload);
+                    });
+
+                } else {
+                    //Skip render
+                    postsDidProcess(null, payload);
+                }
+            }
+        ], done);
+    };
+
     Controller.getUserAwards = function (uid, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid),

@@ -18,8 +18,8 @@
       "method": "hooks.filters.account"
     },
     {
-      "hook": "filter:controllers.topic.get",
-      "method": "hooks.filters.topic"
+      "hook": "filter:post.getPosts",
+      "method": "hooks.filters.getPosts"
     },
     {
       "hook": "filter:user.delete",
