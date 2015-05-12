@@ -44,7 +44,9 @@ module.exports = {
     },
 
     getSettings: function () {
-
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GET_SETTINGS
+        });
     },
 
     panelCancel: function (panel) {
@@ -59,6 +61,13 @@ module.exports = {
             actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,
             index     : index,
             uid       : uid
+        });
+    },
+
+    saveSettings: function (settings) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_SAVE_SETTINGS,
+            settings  : settings
         });
     },
 

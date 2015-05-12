@@ -176,6 +176,27 @@
         ], done);
     };
 
+    Controller.saveValidSettings = function (data, done) {
+        settings.get(function (error, values) {
+            if (error) {
+                return done(error);
+            }
+            var newSettings = getValidFields(values, data);
+            settings.save(newSettings, done);
+        });
+
+    };
+
+    function getValidFields(fields, object) {
+        var shallowCopy = {};
+        for (var field in fields) {
+            if (field in object) {
+                shallowCopy[field] = object[field];
+            }
+        }
+        return shallowCopy;
+    }
+
     function getUploadImagePath(fileName) {
         return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     }

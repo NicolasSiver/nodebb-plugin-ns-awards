@@ -7,8 +7,10 @@ module.exports = keyMirror({
     EVENT_DELETE_AWARD           : null,
     EVENT_EDIT_AWARD             : null,
     EVENT_GET_ALL_AWARDS         : null,
+    EVENT_GET_SETTINGS           : null,
     EVENT_PANEL_CANCEL           : null,
     EVENT_PICK_USER_FROM_SEARCH  : null,
+    EVENT_SAVE_SETTINGS          : null,
     EVENT_SEARCH_USER            : null,
     EVENT_UNPICK_USER_FROM_SEARCH: null,
 
@@ -62,7 +64,9 @@ module.exports = {
     },
 
     getSettings: function () {
-
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GET_SETTINGS
+        });
     },
 
     panelCancel: function (panel) {
@@ -77,6 +81,13 @@ module.exports = {
             actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,
             index     : index,
             uid       : uid
+        });
+    },
+
+    saveSettings: function (settings) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_SAVE_SETTINGS,
+            settings  : settings
         });
     },
 
@@ -843,18 +854,67 @@ var Settings = React.createClass({displayName: "Settings",
         //        <div />
         //    );
         //}
+        var footer;
+
+        if (this.state.dirty) {
+            footer = React.createElement("div", null, 
+                React.createElement("div", {className: "alert alert-warning", role: "alert"}, "NodeBB: Restart will be needed"), 
+                React.createElement("div", {className: "pull-right panel-controls"}, 
+                    React.createElement("button", {
+                        className: "btn btn-success", 
+                        onClick: this._saveSettings, 
+                        type: "button"}, "Save Settings"
+                    )
+                )
+            );
+        }
+
         return (
             React.createElement("div", {className: "panel panel-default"}, 
                 React.createElement("div", {className: "panel-heading"}, "Settings"), 
                 React.createElement("div", {className: "panel-body"}, 
-                    "Options will be added in future updates"
+                    React.createElement("div", {className: "checkbox"}, 
+                        React.createElement("label", null, 
+                            React.createElement("input", {
+                                type: "checkbox", 
+                                checked: this.state.renderTopic, 
+                                onChange: this._renderTopicDidChange}), " Topic View: render awards"
+                        )
+                    ), 
+                    React.createElement("div", {className: "form-group"}, 
+                        React.createElement("label", {htmlFor: "topicLimit"}, "Max awards"), 
+                        React.createElement("input", {
+                            type: "text", className: "form-control", id: "topicLimit", placeholder: "Enter count", 
+                            disabled: this.state.renderTopic ? '' : 'disabled', 
+                            value: this.state.maxAwardsTopic, 
+                            onChange: this._maxAwardsTopicDidChange})
+                    ), 
+                    footer
                 )
             )
         );
     },
 
     settingsDidChange: function () {
-        this.setState(getSettingsState());
+        this.replaceState(getSettingsState());
+    },
+
+    _maxAwardsTopicDidChange: function (e) {
+        this.setState({
+            maxAwardsTopic: parseInt(e.currentTarget.value, 10),
+            dirty         : true
+        });
+    },
+
+    _renderTopicDidChange: function (e) {
+        this.setState({
+            renderTopic: e.currentTarget.checked,
+            dirty      : true
+        })
+    },
+
+    _saveSettings: function (e) {
+        Actions.saveSettings(this.state);
     }
 });
 
@@ -23630,6 +23690,10 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     socket        = (typeof window !== "undefined" ? window.socket : typeof global !== "undefined" ? global.socket : null),
 
     CHANGE_EVENT  = 'change',
+    API           = {
+        GET_SETTINGS : 'plugins.ns-awards.getSettings',
+        SAVE_SETTINGS: 'plugins.ns-awards.saveSettings'
+    },
     _settings     = {};
 
 var SettingsStore = assign({}, EventEmitter.prototype, {
@@ -23652,6 +23716,26 @@ var SettingsStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
+        case Constants.EVENT_GET_SETTINGS:
+            socket.emit(API.GET_SETTINGS, {}, function (error, settings) {
+                if (error) {
+                    console.error(error);
+                }
+                _settings = settings;
+                SettingsStore.emitChange();
+            });
+            break;
+        case Constants.EVENT_SAVE_SETTINGS:
+            socket.emit(API.SAVE_SETTINGS, {
+                settings: action.settings
+            }, function (error, settings) {
+                if (error) {
+                    console.error(error);
+                }
+                _settings = settings;
+                SettingsStore.emitChange();
+            });
+            break;
         default:
             return true;
     }

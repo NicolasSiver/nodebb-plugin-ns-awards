@@ -9,7 +9,8 @@
         //Memory cache
         settingsCache = null,
         defaults      = {
-
+            renderTopic   : true,
+            maxAwardsTopic: 3
         };
 
     Settings.init = function (done) {
@@ -18,13 +19,12 @@
                 return done(error);
             }
             settingsCache = objectAssign(defaults, settings);
-            //logger.log('verbose', 'Settings are loaded', settingsCache);
-            done();
+            done(null);
         });
     };
 
-    Settings.get = function () {
-        return settingsCache;
+    Settings.get = function (done) {
+        return done(null, settingsCache);
     };
 
     Settings.save = function (settings, done) {
