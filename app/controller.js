@@ -148,7 +148,7 @@
 
                     async.map(payload.posts, function (post, next) {
 
-                        Controller.getUserAwards(post.uid, function (error, grants) {
+                        Controller.getUserAwards(post.uid, settings.maxAwardsTopic, function (error, grants) {
                             if (error) {
                                 return next(error);
                             }
@@ -171,9 +171,9 @@
         ], done);
     };
 
-    Controller.getUserAwards = function (uid, done) {
+    Controller.getUserAwards = function (uid, limit, done) {
         async.waterfall([
-            async.apply(database.getGrantIdsByUser, uid),
+            async.apply(database.getGrantIdsByUser, uid, limit),
             function (grantIds, next) {
                 if (!grantIds) {
                     return next(null, []);

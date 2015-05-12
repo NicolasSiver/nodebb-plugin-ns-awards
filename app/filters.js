@@ -10,7 +10,8 @@
      * @param callback {function}
      */
     Filter.account = function (params, callback) {
-        controller.getUserAwards(params.userData.uid, function (error, awards) {
+        //Load all awards
+        controller.getUserAwards(params.userData.uid, -1, function (error, awards) {
             if (error) {
                 return callback(error);
             }
