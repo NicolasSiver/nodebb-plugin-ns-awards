@@ -779,7 +779,7 @@ var PanelControls = React.createClass({displayName: "PanelControls",
                     type: "button"}, this.props.labelCancel
                 ), 
                 React.createElement("button", {
-                    className: "btn btn-success", 
+                    className: "btn btn-primary", 
                     onClick: this.props.successDidClick, 
                     disabled: this.props.valid() ? '' : 'disabled', 
                     type: "button"}, this.props.labelSuccess
