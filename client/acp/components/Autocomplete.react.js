@@ -46,7 +46,8 @@ var Autocomplete = React.createClass({
                     className="form-control"
                     placeholder={this.props.placeholder}
                     value={this.state.inputText}
-                    onChange={this._textDidChange}/>
+                    onChange={this._textDidChange}
+                    onKeyDown={this._keyDidDown}/>
                 {selectOptions}
             </div>
         );
@@ -66,6 +67,27 @@ var Autocomplete = React.createClass({
         this.setState({
             open: true
         });
+    },
+
+    _keyDidDown: function (e) {
+        switch (e.keyCode) {
+            // Enter
+            case 13:
+                console.log('Enter, please implement');
+                break;
+            // Down
+            case 40:
+                console.log('Down, please implement');
+                break;
+            // Up
+            case 38:
+                console.log('Up, please implement');
+                break;
+            // Esc
+            case 27:
+                console.log('Esc, please implement');
+                break;
+        }
     },
 
     _menuDidClick: function (e) {
