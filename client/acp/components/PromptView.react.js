@@ -11,15 +11,16 @@ var PromptView = React.createClass({
     render: function () {
         return (
             <div className="media">
-                <div className="media-left media-middle">
+                <div className="media-body">
+                    <div>
+                        {this.props.hint}
+                    </div>
+
                     <button
-                        className="btn btn-success"
+                        className="btn btn-primary"
                         onClick={this.props.labelDidClick}
                         type="button">{this.props.label}
                     </button>
-                </div>
-                <div className="media-body">
-                    {this.props.hint}
                 </div>
             </div>
         );
