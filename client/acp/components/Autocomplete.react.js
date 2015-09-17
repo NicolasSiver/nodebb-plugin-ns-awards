@@ -23,6 +23,10 @@ var Autocomplete = React.createClass({
         };
     },
 
+    isOptions: function () {
+        return this.props.options && this.props.options.length;
+    },
+
     render: function () {
         var selectOptions, items;
         var componentClass = classNames({
@@ -30,7 +34,7 @@ var Autocomplete = React.createClass({
             'open'         : this.state.open
         });
 
-        if (this.props.options && this.props.options.length) {
+        if (this.isOptions()) {
             items = this.props.options.map(function (item, index) {
                 var itemClass = classNames({
                     'ac-item'    : true,
@@ -89,7 +93,7 @@ var Autocomplete = React.createClass({
         switch (e.keyCode) {
             // Enter
             case 13:
-                if (this.props.options && this.props.options.length) {
+                if (this.isOptions()) {
                     this.setState({inputText: null}, function () {
                         this.props.optionDidSelect();
                     }.bind(this));
@@ -97,11 +101,13 @@ var Autocomplete = React.createClass({
                 break;
             // Down
             case 40:
-                console.log('Down, please implement');
+                e.preventDefault();
+                this.props.optionWillSelectWithOffset(1);
                 break;
             // Up
             case 38:
-                console.log('Up, please implement');
+                e.preventDefault();
+                this.props.optionWillSelectWithOffset(-1);
                 break;
             // Esc
             case 27:
