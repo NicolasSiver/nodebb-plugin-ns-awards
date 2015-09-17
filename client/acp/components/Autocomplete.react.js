@@ -5,16 +5,21 @@ var React          = require('react'),
 
 var Autocomplete = React.createClass({
     propTypes: {
-        options        : ReactPropTypes.array,
-        placeholder    : ReactPropTypes.string,
-        valueDidChange : ReactPropTypes.func,
-        optionDidSelect: ReactPropTypes.func
+        options                   : ReactPropTypes.array,
+        placeholder               : ReactPropTypes.string,
+        valueDidChange            : ReactPropTypes.func,
+        optionDidSelect           : ReactPropTypes.func,
+        optionSelectedIndex       : ReactPropTypes.number,
+        optionWillSelectAt        : ReactPropTypes.func,
+        optionWillSelectWithOffset: ReactPropTypes.func
     },
 
     getInitialState: function () {
         return {
-            open     : false,
-            inputText: ''
+            ignoreFocusStates  : false,
+            inputText          : null,
+            mouseSelectionIndex: null,
+            open               : false
         };
     },
 
@@ -27,26 +32,31 @@ var Autocomplete = React.createClass({
 
         if (this.props.options && this.props.options.length) {
             items = this.props.options.map(function (item, index) {
-                return <li className="ac-item" key={item.value}>
+                var itemClass = classNames({
+                    'ac-item'    : true,
+                    'ac-selected': this.props.optionSelectedIndex === index
+                });
+                return <li className={itemClass} key={item.value}>
                     <a href="#" data-id={item.value} data-index={index}>{item.label}</a>
                 </li>;
-            });
+            }, this);
             selectOptions = <ul
                 className="dropdown-menu ac-menu"
-                onClick={this._menuDidClick}>{items}</ul>;
+                onClick={this._menuDidClick}
+                onMouseDown={this._menuMouseDidDown}>{items}</ul>;
         }
 
         return (
             <div
-                className={componentClass}
-                onFocus={this._focusDidReceive}
-                onBlur={this._focusDidLost}>
+                className={componentClass}>
                 <input
                     type="text"
                     className="form-control"
                     placeholder={this.props.placeholder}
                     value={this.state.inputText}
+                    onBlur={this._focusDidLost}
                     onChange={this._textDidChange}
+                    onFocus={this._focusDidReceive}
                     onKeyDown={this._keyDidDown}/>
                 {selectOptions}
             </div>
@@ -58,12 +68,18 @@ var Autocomplete = React.createClass({
     }, 500),
 
     _focusDidLost: function (e) {
+        if (this.state.ignoreFocusStates) {
+            return;
+        }
         this.setState({
             open: false
         });
     },
 
     _focusDidReceive: function (e) {
+        if (this.state.ignoreFocusStates) {
+            return;
+        }
         this.setState({
             open: true
         });
@@ -91,16 +107,23 @@ var Autocomplete = React.createClass({
     },
 
     _menuDidClick: function (e) {
-        this.setState(this.getInitialState());
-        this.props.optionDidSelect({
-            index: +e.target.dataset.index,
-            id   : +e.target.dataset.id
+        var selectionIndex = this.state.mouseSelectionIndex;
+        this.setState(this.getInitialState(), function () {
+            this.props.optionWillSelectAt(selectionIndex);
+        }.bind(this));
+    },
+
+    _menuMouseDidDown: function (e) {
+        this.setState({
+            ignoreFocusStates  : true,
+            mouseSelectionIndex: +e.target.dataset.index
         });
     },
 
     _textDidChange: function (e) {
-        this.setState({inputText: e.target.value});
-        this._debounceInput();
+        this.setState({inputText: e.target.value}, function () {
+            this._debounceInput();
+        }.bind(this));
     },
 
     _validateInput: function () {

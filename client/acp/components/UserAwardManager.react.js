@@ -17,8 +17,9 @@ function getAwards() {
 
 function getUsers() {
     return {
-        searchUsers: SearchUsersStore.getResult(),
-        users      : SearchUsersStore.getSelected()
+        searchUsers    : SearchUsersStore.getResult(),
+        searchSelection: SearchUsersStore.getResultSelectIndex(),
+        users          : SearchUsersStore.getSelected()
     };
 }
 
@@ -94,6 +95,9 @@ var UserAwardManager = React.createClass({
                     placeholder="Enter username"
                     valueDidChange={this._usernameDidChange}
                     optionDidSelect={this._userDidSelect}
+                    optionWillSelectWithOffset={this._userWillSelectWithOffset}
+                    optionWillSelectAt={this._userWillSelectAt}
+                    optionSelectedIndex={this.state.searchSelection}
                     options={this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}/>
@@ -170,8 +174,17 @@ var UserAwardManager = React.createClass({
         Actions.searchUser(username);
     },
 
-    _userDidSelect: function (userMeta) {
-        Actions.pickUserFromSearch(userMeta.index, userMeta.id);
+    _userDidSelect: function () {
+        // Request for current user selection
+        Actions.pickUserFromSearch();
+    },
+
+    _userWillSelectAt: function (index) {
+        Actions.pickUserFromSearchAt(index);
+    },
+
+    _userWillSelectWithOffset: function (offset) {
+        Actions.offsetUserFromSearchOn(offset);
     }
 });
 

@@ -86,6 +86,9 @@
 .auto-complete .ac-menu {
   width: 100%;
 }
+.auto-complete .ac-selected {
+  background-color: #e1f5fe;
+}
 .auto-complete .hover-item {
   background-color: #c8e6c9;
 }

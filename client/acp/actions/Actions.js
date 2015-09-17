@@ -49,6 +49,13 @@ module.exports = {
         });
     },
 
+    offsetUserFromSearchOn: function (offset) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_OFFSET_USER_FROM_SEARCH_ON,
+            offset    : offset
+        })
+    },
+
     panelCancel: function (panel) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_PANEL_CANCEL,
@@ -56,11 +63,16 @@ module.exports = {
         });
     },
 
-    pickUserFromSearch: function (index, uid) {
+    pickUserFromSearch: function () {
         AppDispatcher.dispatch({
-            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,
-            index     : index,
-            uid       : uid
+            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH
+        });
+    },
+
+    pickUserFromSearchAt: function (index) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH_AT,
+            index     : index
         });
     },
 

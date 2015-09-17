@@ -2,17 +2,19 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
-    EVENT_AWARD_USERS            : null,
-    EVENT_CREATE_AWARD           : null,
-    EVENT_DELETE_AWARD           : null,
-    EVENT_EDIT_AWARD             : null,
-    EVENT_GET_ALL_AWARDS         : null,
-    EVENT_GET_SETTINGS           : null,
-    EVENT_PANEL_CANCEL           : null,
-    EVENT_PICK_USER_FROM_SEARCH  : null,
-    EVENT_SAVE_SETTINGS          : null,
-    EVENT_SEARCH_USER            : null,
-    EVENT_UNPICK_USER_FROM_SEARCH: null,
+    EVENT_AWARD_USERS               : null,
+    EVENT_CREATE_AWARD              : null,
+    EVENT_DELETE_AWARD              : null,
+    EVENT_EDIT_AWARD                : null,
+    EVENT_GET_ALL_AWARDS            : null,
+    EVENT_GET_SETTINGS              : null,
+    EVENT_OFFSET_USER_FROM_SEARCH_ON: null,
+    EVENT_PANEL_CANCEL              : null,
+    EVENT_PICK_USER_FROM_SEARCH     : null,
+    EVENT_PICK_USER_FROM_SEARCH_AT  : null,
+    EVENT_SAVE_SETTINGS             : null,
+    EVENT_SEARCH_USER               : null,
+    EVENT_UNPICK_USER_FROM_SEARCH   : null,
 
     PANEL_GRANT_AWARD: null
 });
@@ -69,6 +71,13 @@ module.exports = {
         });
     },
 
+    offsetUserFromSearchOn: function (offset) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_OFFSET_USER_FROM_SEARCH_ON,
+            offset    : offset
+        })
+    },
+
     panelCancel: function (panel) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_PANEL_CANCEL,
@@ -76,11 +85,16 @@ module.exports = {
         });
     },
 
-    pickUserFromSearch: function (index, uid) {
+    pickUserFromSearch: function () {
         AppDispatcher.dispatch({
-            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH,
-            index     : index,
-            uid       : uid
+            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH
+        });
+    },
+
+    pickUserFromSearchAt: function (index) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_PICK_USER_FROM_SEARCH_AT,
+            index     : index
         });
     },
 
@@ -115,16 +129,21 @@ var React          = require('react'),
 
 var Autocomplete = React.createClass({displayName: "Autocomplete",
     propTypes: {
-        options        : ReactPropTypes.array,
-        placeholder    : ReactPropTypes.string,
-        valueDidChange : ReactPropTypes.func,
-        optionDidSelect: ReactPropTypes.func
+        options                   : ReactPropTypes.array,
+        placeholder               : ReactPropTypes.string,
+        valueDidChange            : ReactPropTypes.func,
+        optionDidSelect           : ReactPropTypes.func,
+        optionSelectedIndex       : ReactPropTypes.number,
+        optionWillSelectAt        : ReactPropTypes.func,
+        optionWillSelectWithOffset: ReactPropTypes.func
     },
 
     getInitialState: function () {
         return {
-            open     : false,
-            inputText: ''
+            ignoreFocusStates  : false,
+            inputText          : null,
+            mouseSelectionIndex: null,
+            open               : false
         };
     },
 
@@ -137,26 +156,31 @@ var Autocomplete = React.createClass({displayName: "Autocomplete",
 
         if (this.props.options && this.props.options.length) {
             items = this.props.options.map(function (item, index) {
-                return React.createElement("li", {className: "ac-item", key: item.value}, 
+                var itemClass = classNames({
+                    'ac-item'    : true,
+                    'ac-selected': this.props.optionSelectedIndex === index
+                });
+                return React.createElement("li", {className: itemClass, key: item.value}, 
                     React.createElement("a", {href: "#", "data-id": item.value, "data-index": index}, item.label)
                 );
-            });
+            }, this);
             selectOptions = React.createElement("ul", {
                 className: "dropdown-menu ac-menu", 
-                onClick: this._menuDidClick}, items);
+                onClick: this._menuDidClick, 
+                onMouseDown: this._menuMouseDidDown}, items);
         }
 
         return (
             React.createElement("div", {
-                className: componentClass, 
-                onFocus: this._focusDidReceive, 
-                onBlur: this._focusDidLost}, 
+                className: componentClass}, 
                 React.createElement("input", {
                     type: "text", 
                     className: "form-control", 
                     placeholder: this.props.placeholder, 
                     value: this.state.inputText, 
+                    onBlur: this._focusDidLost, 
                     onChange: this._textDidChange, 
+                    onFocus: this._focusDidReceive, 
                     onKeyDown: this._keyDidDown}), 
                 selectOptions
             )
@@ -168,12 +192,18 @@ var Autocomplete = React.createClass({displayName: "Autocomplete",
     }, 500),
 
     _focusDidLost: function (e) {
+        if (this.state.ignoreFocusStates) {
+            return;
+        }
         this.setState({
             open: false
         });
     },
 
     _focusDidReceive: function (e) {
+        if (this.state.ignoreFocusStates) {
+            return;
+        }
         this.setState({
             open: true
         });
@@ -201,16 +231,23 @@ var Autocomplete = React.createClass({displayName: "Autocomplete",
     },
 
     _menuDidClick: function (e) {
-        this.setState(this.getInitialState());
-        this.props.optionDidSelect({
-            index: +e.target.dataset.index,
-            id   : +e.target.dataset.id
+        var selectionIndex = this.state.mouseSelectionIndex;
+        this.setState(this.getInitialState(), function () {
+            this.props.optionWillSelectAt(selectionIndex);
+        }.bind(this));
+    },
+
+    _menuMouseDidDown: function (e) {
+        this.setState({
+            ignoreFocusStates  : true,
+            mouseSelectionIndex: +e.target.dataset.index
         });
     },
 
     _textDidChange: function (e) {
-        this.setState({inputText: e.target.value});
-        this._debounceInput();
+        this.setState({inputText: e.target.value}, function () {
+            this._debounceInput();
+        }.bind(this));
     },
 
     _validateInput: function () {
@@ -962,8 +999,9 @@ function getAwards() {
 
 function getUsers() {
     return {
-        searchUsers: SearchUsersStore.getResult(),
-        users      : SearchUsersStore.getSelected()
+        searchUsers    : SearchUsersStore.getResult(),
+        searchSelection: SearchUsersStore.getResultSelectIndex(),
+        users          : SearchUsersStore.getSelected()
     };
 }
 
@@ -1039,6 +1077,9 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
                     placeholder: "Enter username", 
                     valueDidChange: this._usernameDidChange, 
                     optionDidSelect: this._userDidSelect, 
+                    optionWillSelectWithOffset: this._userWillSelectWithOffset, 
+                    optionWillSelectAt: this._userWillSelectAt, 
+                    optionSelectedIndex: this.state.searchSelection, 
                     options: this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}), 
@@ -1115,8 +1156,17 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
         Actions.searchUser(username);
     },
 
-    _userDidSelect: function (userMeta) {
-        Actions.pickUserFromSearch(userMeta.index, userMeta.id);
+    _userDidSelect: function () {
+        // Request for current user selection
+        Actions.pickUserFromSearch();
+    },
+
+    _userWillSelectAt: function (index) {
+        Actions.pickUserFromSearchAt(index);
+    },
+
+    _userWillSelectWithOffset: function (offset) {
+        Actions.offsetUserFromSearchOn(offset);
     }
 });
 
@@ -23640,18 +23690,19 @@ module.exports = AwardsStore;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"../Constants":1,"../dispatcher/AppDispatcher":14,"events":192,"react/lib/Object.assign":55}],188:[function(require,module,exports){
 (function (global){
-var AppDispatcher = require('../dispatcher/AppDispatcher'),
-    EventEmitter  = require('events').EventEmitter,
-    assign        = require('react/lib/Object.assign'),
-    Constants     = require('../Constants'),
-    socket        = (typeof window !== "undefined" ? window['socket'] : typeof global !== "undefined" ? global['socket'] : null),
+var AppDispatcher      = require('../dispatcher/AppDispatcher'),
+    EventEmitter       = require('events').EventEmitter,
+    assign             = require('react/lib/Object.assign'),
+    Constants          = require('../Constants'),
+    socket             = (typeof window !== "undefined" ? window['socket'] : typeof global !== "undefined" ? global['socket'] : null),
 
-    CHANGE_EVENT  = 'change',
-    API           = {
+    CHANGE_EVENT       = 'change',
+    API                = {
         SEARCH_USER: 'plugins.ns-awards.searchUser'
     },
-    _result       = [],
-    _selected     = [];
+    _result            = [],
+    _resultSelectIndex = 0,
+    _selected          = [];
 
 var SearchUsersStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (listener) {
@@ -23664,6 +23715,10 @@ var SearchUsersStore = assign({}, EventEmitter.prototype, {
 
     getResult: function () {
         return _result;
+    },
+
+    getResultSelectIndex: function () {
+        return _resultSelectIndex;
     },
 
     getSelected: function () {
@@ -23683,8 +23738,25 @@ AppDispatcher.register(function (action) {
             }, function (error, searchResult) {
                 //Search Result will have signature: {matchCount: 1, pagination: PaginationMeta, pageCount: 1, timing: "0.01", users: Array[N]}
                 _result = searchResult.users;
+                // Adjust latest selection
+                if (_resultSelectIndex >= _result.length) {
+                    _resultSelectIndex = _result.length - 1;
+                }
                 SearchUsersStore.emitChange();
             });
+            break;
+        case Constants.EVENT_OFFSET_USER_FROM_SEARCH_ON:
+            _resultSelectIndex += action.offset;
+            if (_resultSelectIndex < 0) {
+                if (_result.length > 0) {
+                    _resultSelectIndex = _result.length - 1;
+                } else {
+                    _resultSelectIndex = 0;
+                }
+            } else if (_resultSelectIndex >= _result.length) {
+                _resultSelectIndex = 0;
+            }
+            SearchUsersStore.emitChange();
             break;
         case Constants.EVENT_PANEL_CANCEL:
             if (action.panel === Constants.PANEL_GRANT_AWARD) {
@@ -23692,9 +23764,10 @@ AppDispatcher.register(function (action) {
             }
             break;
         case Constants.EVENT_PICK_USER_FROM_SEARCH:
-            _selected.push(_result[action.index]);
-            _result.length = 0;
-            SearchUsersStore.emitChange();
+            pickUserAt(_resultSelectIndex);
+            break;
+        case Constants.EVENT_PICK_USER_FROM_SEARCH_AT:
+            pickUserAt(action.index);
             break;
         case Constants.EVENT_UNPICK_USER_FROM_SEARCH:
             _selected.splice(action.index, 1);
@@ -23710,7 +23783,21 @@ AppDispatcher.register(function (action) {
 
 function clear() {
     _result.length = 0;
+    _resultSelectIndex = 0;
     _selected.length = 0;
+    SearchUsersStore.emitChange();
+}
+
+function pickUserAt(index) {
+    // Validation
+    if (index < 0 || index >= _result.length) {
+        console.error('Index for picking User is invalid, something went wrong in the system...');
+        return;
+    }
+
+    _selected.push(_result[index]);
+    _result.length = 0;
+    _resultSelectIndex = 0;
     SearchUsersStore.emitChange();
 }
 
