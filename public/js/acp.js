@@ -213,7 +213,11 @@ var Autocomplete = React.createClass({displayName: "Autocomplete",
         switch (e.keyCode) {
             // Enter
             case 13:
-                console.log('Enter, please implement');
+                if (this.props.options && this.props.options.length) {
+                    this.setState({inputText: null}, function () {
+                        this.props.optionDidSelect();
+                    }.bind(this));
+                }
                 break;
             // Down
             case 40:
