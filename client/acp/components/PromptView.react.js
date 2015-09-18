@@ -12,9 +12,9 @@ var PromptView = React.createClass({
         return (
             <div className="media">
                 <div className="media-body">
-                    <div>
+                    <p>
                         {this.props.hint}
-                    </div>
+                    </p>
 
                     <button
                         className="btn btn-primary"
