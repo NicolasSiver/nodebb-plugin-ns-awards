@@ -38,7 +38,8 @@
         "jquery",
         "bootstrap"
       ]
-    }
+    },
+    "StripeCheckout": "global:StripeCheckout"
   },
   "author": "Nicolas Siver",
   "license": "MIT",
