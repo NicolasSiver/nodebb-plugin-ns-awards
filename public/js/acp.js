@@ -698,6 +698,7 @@ var React            = require('react'),
 
     Actions          = require('../actions/Actions'),
 
+    App              = (typeof window !== "undefined" ? window['app'] : typeof global !== "undefined" ? global['app'] : null),
     StripeCheckout   = (typeof window !== "undefined" ? window['StripeCheckout'] : typeof global !== "undefined" ? global['StripeCheckout'] : null);
 
 var Donate = React.createClass({displayName: "Donate",
@@ -705,12 +706,13 @@ var Donate = React.createClass({displayName: "Donate",
 
     componentDidMount: function () {
         this.stripeHandler = StripeCheckout.configure({
-            key   : 'pk_live_AcfQs725nv7nIF5sRCG3v4Q8',
-            image : 'https://s3.amazonaws.com/stripe-uploads/acct_16mDSJB8UmE70jk7merchant-icon-1442539384457-ava-mdpi.jpg',
-            locale: 'auto',
+            key       : 'pk_live_AcfQs725nv7nIF5sRCG3v4Q8',
+            image     : 'https://s3.amazonaws.com/stripe-uploads/acct_16mDSJB8UmE70jk7merchant-icon-1442539384457-ava-mdpi.jpg',
+            locale    : 'auto',
             panelLabel: 'Donate {{amount}}',
-            bitcoin: true,
-            token : function (token) {
+            email     : App.user.email,
+            bitcoin   : true,
+            token     : function (token) {
                 // Use the token to create the charge with a server-side script.
                 // You can access the token ID with `token.id`
                 // NOOP
@@ -720,7 +722,7 @@ var Donate = React.createClass({displayName: "Donate",
 
     getInitialState: function () {
         return {
-            amount : null
+            amount: null
         };
     },
 
@@ -740,7 +742,8 @@ var Donate = React.createClass({displayName: "Donate",
                             React.createElement("button", {
                                 className: "btn btn-primary", 
                                 type: "button", 
-                                onClick: this._donateDidClick}, "Donate ", React.createElement("small", null, "via Stripe")
+                                onClick: this._donateDidClick}, "Donate", 
+                                React.createElement("small", null, "via Stripe")
                             )
                         )
                     )
