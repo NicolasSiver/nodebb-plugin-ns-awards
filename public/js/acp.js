@@ -742,8 +742,7 @@ var Donate = React.createClass({displayName: "Donate",
                             React.createElement("button", {
                                 className: "btn btn-primary", 
                                 type: "button", 
-                                onClick: this._donateDidClick}, "Donate", 
-                                React.createElement("small", null, "via Stripe")
+                                onClick: this._donateDidClick}, "Donate ", React.createElement("small", null, "via Stripe")
                             )
                         )
                     )
