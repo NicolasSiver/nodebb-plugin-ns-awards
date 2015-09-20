@@ -53,6 +53,7 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 - Add Notifications
 - Use NodeBB's alerts (app.alert)
 - ACP: Add Awarded Users statistics
+- ACP: Add small avatar preview to dropdown when you are looking for users
 - Create Profile template with popovers (currently It is a list)
 - Add Achievements section, where rules can be specified, and same Awards could be granted automatically (auto-awards with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc)
 - Add Tests (Mocha/Tape)
