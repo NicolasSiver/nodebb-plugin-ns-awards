@@ -16,10 +16,6 @@ System for rewarding forum users. It allows admin to define set of awards that c
   - [Topic template](#topic-template)
 - [TODO](#todo)
 - [Changelog](#changelog)
-  - [v1.2.0 - 12.05.2015](#v120---12052015)
-  - [v1.1.0 - 10.05.2015](#v110---10052015)
-  - [v1.0.1 - 08.05.2015](#v101---08052015)
-  - [v1.0.0 - 06.05.2015](#v100---06052015)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -69,21 +65,21 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 
 ## Changelog
 
-### v1.2.0 - 12.05.2015
+**v1.2.0 - 12.05.2015**
 
 - Added Settings
 - Settings: Topic render flag, max awards in topic
 - Awards now available in Topic View
 
-### v1.1.0 - 10.05.2015
+**v1.1.0 - 10.05.2015**
 
 - Remove debug script from admin panel
 - Added ability to edit award image
 
-### v1.0.1 - 08.05.2015
+**v1.0.1 - 08.05.2015**
 
 - Use RequireJS for admin script
 
-### v1.0.0 - 06.05.2015
+**v1.0.0 - 06.05.2015**
 
 - Very first release
