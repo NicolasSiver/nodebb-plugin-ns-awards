@@ -52,6 +52,7 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 - Add User Manager: manager user's award - order, overview
 - Add Notifications
 - Use NodeBB's alerts (app.alert)
+- Add HTML to notifications, bold text, etc.
 - ACP: Add Awarded Users statistics
 - ACP: Add small avatar preview to dropdown when you are looking for users
 - Create Profile template with popovers (currently It is a list)

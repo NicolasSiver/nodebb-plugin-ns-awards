@@ -38,7 +38,7 @@
             async.apply(database.getAward, awardId),
             function (award, callback) {
                 notifications.create({
-                    bodyShort: util.format('Congratulations! You have received "<strong>%s</strong>" award.', award.name),
+                    bodyShort: util.format('Congratulations! You have received "%s" award.', award.name),
                     nid      : 'aid:' + awardId + ':uids:' + recipients.join('-'),
                     aid      : awardId,
                     from     : fromUid
