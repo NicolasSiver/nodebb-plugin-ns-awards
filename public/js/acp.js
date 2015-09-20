@@ -1152,19 +1152,24 @@ var UserAwardManager = React.createClass({displayName: "UserAwardManager",
 
             if (this.state.users.length) {
                 selectedUsers = React.createElement("div", {className: "selected-users"}, this.state.users.map(renderSelectedUser));
+            } else {
+                selectedUsers = React.createElement("p", {className: "text-info"}, "0 users selected");
             }
 
             panelContent = React.createElement("div", {className: "grant-award-form"}, 
-                React.createElement(Autocomplete, {
-                    placeholder: "Enter username", 
-                    valueDidChange: this._usernameDidChange, 
-                    optionDidSelect: this._userDidSelect, 
-                    optionWillSelectWithOffset: this._userWillSelectWithOffset, 
-                    optionWillSelectAt: this._userWillSelectAt, 
-                    optionSelectedIndex: this.state.searchSelection, 
-                    options: this.state.searchUsers.map(function(user){
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", {htmlFor: "allAwards"}, "User Search"), 
+                    React.createElement(Autocomplete, {
+                        placeholder: "Enter Username", 
+                        valueDidChange: this._usernameDidChange, 
+                        optionDidSelect: this._userDidSelect, 
+                        optionWillSelectWithOffset: this._userWillSelectWithOffset, 
+                        optionWillSelectAt: this._userWillSelectAt, 
+                        optionSelectedIndex: this.state.searchSelection, 
+                        options: this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
-                    })}), 
+                    })})
+                ), 
 
                 selectedUsers, 
 
