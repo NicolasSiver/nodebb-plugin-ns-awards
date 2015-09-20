@@ -17,8 +17,9 @@ function getAwards() {
 
 function getUsers() {
     return {
-        searchUsers: SearchUsersStore.getResult(),
-        users      : SearchUsersStore.getSelected()
+        searchUsers    : SearchUsersStore.getResult(),
+        searchSelection: SearchUsersStore.getResultSelectIndex(),
+        users          : SearchUsersStore.getSelected()
     };
 }
 
@@ -87,16 +88,24 @@ var UserAwardManager = React.createClass({
 
             if (this.state.users.length) {
                 selectedUsers = <div className="selected-users">{this.state.users.map(renderSelectedUser)}</div>;
+            } else {
+                selectedUsers = <p className="text-info">0 users selected</p>;
             }
 
             panelContent = <div className="grant-award-form">
-                <Autocomplete
-                    placeholder="Enter username"
-                    valueDidChange={this._usernameDidChange}
-                    optionDidSelect={this._userDidSelect}
-                    options={this.state.searchUsers.map(function(user){
+                <div className="form-group">
+                    <label htmlFor="allAwards">User Search</label>
+                    <Autocomplete
+                        placeholder="Enter Username"
+                        valueDidChange={this._usernameDidChange}
+                        optionDidSelect={this._userDidSelect}
+                        optionWillSelectWithOffset={this._userWillSelectWithOffset}
+                        optionWillSelectAt={this._userWillSelectAt}
+                        optionSelectedIndex={this.state.searchSelection}
+                        options={this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}/>
+                </div>
 
                 {selectedUsers}
 
@@ -170,8 +179,17 @@ var UserAwardManager = React.createClass({
         Actions.searchUser(username);
     },
 
-    _userDidSelect: function (userMeta) {
-        Actions.pickUserFromSearch(userMeta.index, userMeta.id);
+    _userDidSelect: function () {
+        // Request for current user selection
+        Actions.pickUserFromSearch();
+    },
+
+    _userWillSelectAt: function (index) {
+        Actions.pickUserFromSearchAt(index);
+    },
+
+    _userWillSelectWithOffset: function (offset) {
+        Actions.offsetUserFromSearchOn(offset);
     }
 });
 

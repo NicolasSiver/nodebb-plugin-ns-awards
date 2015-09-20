@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "no-multi-spaces": 0,
+    "quotes": [
+      2,
+      "single"
+    ]
+  },
+  "ecmaFeatures": {
+    "jsx": true
+  }
+}

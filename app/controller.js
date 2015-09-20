@@ -1,21 +1,56 @@
 (function (Controller) {
     'use strict';
 
-    var async      = require('async'),
-        fse        = require('fs-extra'),
-        path       = require('path'),
+    var async         = require('async'),
+        fse           = require('fs-extra'),
+        path          = require('path'),
+        util          = require('util'),
 
-        database   = require('./database'),
-        settings   = require('./settings'),
-        controller = require('./controller'),
-        constants  = require('./constants'),
-        uploads    = require('./uploads'),
+        database      = require('./database'),
+        settings      = require('./settings'),
+        controller    = require('./controller'),
+        constants     = require('./constants'),
+        uploads       = require('./uploads'),
 
-        nodebb     = require('./nodebb'),
-        utils      = nodebb.utils,
-        helpers    = nodebb.helpers,
-        user       = nodebb.user,
-        nconf      = nodebb.nconf;
+        nodebb        = require('./nodebb'),
+        utils         = nodebb.utils,
+        helpers       = nodebb.helpers,
+        user          = nodebb.user,
+        nconf         = nodebb.nconf,
+        notifications = nodebb.notifications;
+
+    Controller.awardUsers = function (payload, fromUid, done) {
+        var recipients = [],
+            awardId    = parseInt(payload.award, 10);
+
+        async.waterfall([
+            function (callback) {
+                async.each(payload.users, function (user, next) {
+                    async.series([
+                        async.apply(database.createGrant, user.uid, awardId, payload.reason, fromUid),
+                        function (pushed) {
+                            recipients.push(user.uid);
+                            pushed();
+                        }
+                    ], next);
+                }, callback);
+            },
+            async.apply(database.getAward, awardId),
+            function (award, callback) {
+                notifications.create({
+                    bodyShort: util.format('Congratulations! You have received "%s" award.', award.name),
+                    nid      : 'aid:' + awardId + ':uids:' + recipients.join('-'),
+                    aid      : awardId,
+                    from     : fromUid
+                }, callback);
+            },
+            function (notification, callback) {
+                if (notification) {
+                    notifications.push(notification, recipients, callback);
+                }
+            }
+        ], done);
+    };
 
     Controller.deleteUserGrants = function (uid, done) {
         async.waterfall([

@@ -26,7 +26,7 @@ var PanelControls = React.createClass({
                     type="button">{this.props.labelCancel}
                 </button>
                 <button
-                    className="btn btn-success"
+                    className="btn btn-primary"
                     onClick={this.props.successDidClick}
                     disabled={this.props.valid() ? '' : 'disabled'}
                     type="button">{this.props.labelSuccess}

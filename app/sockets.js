@@ -39,10 +39,7 @@
      * @param callback
      */
     Module.awardUsers = function (socket, payload, callback) {
-        async.each(payload.users, function (user, next) {
-            database.createGrant(user.uid, parseInt(payload.award, 10), payload.reason, socket.uid, next);
-            //TODO Add Notifications
-        }, callback);
+        controller.awardUsers(payload, socket.uid, callback);
     };
 
     /**

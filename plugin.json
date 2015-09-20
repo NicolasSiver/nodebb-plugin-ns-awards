@@ -35,9 +35,7 @@
     "style/topic.less",
     "style/overview.less"
   ],
-  "scripts": [
-    "public/js/acp.js"
-  ],
+  "scripts": [],
   "staticDirs": {
     "templates": "./public/templates",
     "css": "./public/css",
