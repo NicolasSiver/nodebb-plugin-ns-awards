@@ -63,6 +63,7 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 - Topic View: use Bootstrap tooltips
 - Settings for CSS classes in topic view
 - Grant Award View: indicate that zero users are selected
+- Integration: add plugin hooks, so another plugins will be able to handle changes
 
 ## Changelog
 
