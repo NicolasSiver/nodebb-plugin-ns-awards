@@ -2,6 +2,7 @@
 
     var async      = require('async'),
         multer     = require('multer'),
+        path       = require('path'),
 
         controller = require('./app/controller'),
         sockets    = require('./app/sockets'),
@@ -38,6 +39,7 @@
                     },
 
                     storageMiddleware = multer({
+                        dest                : path.resolve(__dirname, './public/uploads/'),
                         onFileUploadComplete: function (file, req, res) {
                             req.awardFile = file;
                         }
