@@ -69,6 +69,10 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 
 ## Changelog
 
+**v1.3.1 - 09/21/2015**
+
+- Changed upload script
+
 **v1.3.0 - 09/20/2015**
 
 - Improved Autocomplete widget, selection should be easier

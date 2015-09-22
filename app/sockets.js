@@ -56,6 +56,7 @@
             async.apply(uploads.getFileById, payload.fileId),
             function (file, next) {
                 awardFile = file;
+                // TODO Delete temporal file or create utility to remove all images from 'uploads' directory
                 fse.copy(
                     file.path,
                     getUploadImagePath(file.name),
