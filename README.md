@@ -3,6 +3,7 @@
 System for rewarding forum users. It allows admin to define set of awards that could be granted to users for special accomplishments. 
 
 ![Version](https://img.shields.io/npm/v/nodebb-plugin-ns-awards.svg)
+![Dependencies](https://david-dm.org/NicolasSiver/nodebb-plugin-ns-awards.svg)
 [![bitHound Score](https://www.bithound.io/github/NicolasSiver/nodebb-plugin-ns-awards/badges/score.svg?)](https://www.bithound.io/github/NicolasSiver/nodebb-plugin-ns-awards)
 ![Code Climate](https://img.shields.io/codeclimate/github/NicolasSiver/nodebb-plugin-ns-awards.svg)
 
