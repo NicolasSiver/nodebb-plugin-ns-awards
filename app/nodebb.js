@@ -8,7 +8,7 @@
         meta         : NodeBB.require('./src/meta'),
         notifications: NodeBB.require('./src/notifications'),
         pluginSockets: NodeBB.require('./src/socket.io/plugins'),
-        postTools    : NodeBB.require('./src/postTools'),
+        postTools    : NodeBB.require('./src/posts/tools'),
         settings     : NodeBB.require('./src/settings'),
         socketIndex  : NodeBB.require('./src/socket.io/index'),
         topics       : NodeBB.require('./src/topics'),
