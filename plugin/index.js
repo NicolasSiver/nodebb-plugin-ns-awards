@@ -3,6 +3,7 @@
     var async      = require('async'),
         multer     = require('multer'),
         path       = require('path'),
+        shortId    = require('shortid'),
 
         controller = require('./controller'),
         sockets    = require('./sockets'),
@@ -15,19 +16,19 @@
         filters: filters,
         statics: {
             load: function (params, callback) {
-                var router            = params.router,
-                    middleware        = params.middleware,
-                    controllers       = params.controllers,
-                    pluginUri         = '/admin/plugins/awards',
-                    apiUri            = '/api' + pluginUri,
+                var router       = params.router,
+                    middleware   = params.middleware,
+                    controllers  = params.controllers,
+                    pluginUri    = '/admin/plugins/awards',
+                    apiUri       = '/api' + pluginUri,
 
-                    renderAdmin       = function (req, res, next) {
+                    renderAdmin  = function (req, res, next) {
                         res.render(
                             'admin/plugins/awards', {}
                         );
                     },
 
-                    renderClient      = function (req, res, next) {
+                    renderClient = function (req, res, next) {
                         controller.getAllAwards(function (error, result) {
                             if (error) {
                                 return res.status(500).json(error);
@@ -38,22 +39,29 @@
                         });
                     },
 
-                    apiImages         = function (req, res, next) {
+                    apiImages    = function (req, res, next) {
                         uploads.setFile(req.file, function (error, id) {
                             if (error) {
                                 return res.status(500).json(error);
                             }
                             res.json({id: id});
                         });
-                    };
+                    },
+
+                    storage      = multer.diskStorage({
+                        destination: path.resolve(__dirname, '../public/uploads/'),
+                        filename   : function (req, file, cb) {
+                            cb(null, 'award-' + shortId.generate() + path.extname(file.originalname))
+                        }
+                    });
 
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
 
                 // Image uploader
-                router.post(apiUri + '/images', multer({
-                    dest: path.resolve(__dirname, '../public/uploads/')
-                }).single('award'), apiImages);
+                router.post(
+                    apiUri + '/images',
+                    multer({storage: storage}).single('award'), apiImages);
 
                 //Client page
                 router.get('/awards', middleware.buildHeader, renderClient);

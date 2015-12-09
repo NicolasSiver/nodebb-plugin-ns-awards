@@ -28,6 +28,7 @@
     "lodash": "^3.7.0",
     "multer": "^1.1.0",
     "object-assign": "^4.0.1",
+    "shortid": "^2.2.4",
     "winston": "^1.0.0"
   },
   "nbbpm": {
