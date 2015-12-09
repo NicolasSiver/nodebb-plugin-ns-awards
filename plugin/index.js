@@ -4,11 +4,11 @@
         multer     = require('multer'),
         path       = require('path'),
 
-        controller = require('./app/controller'),
-        sockets    = require('./app/sockets'),
-        filters    = require('./app/filters'),
-        settings   = require('./app/settings'),
-        uploads    = require('./app/uploads');
+        controller = require('./controller'),
+        sockets    = require('./sockets'),
+        filters    = require('./filters'),
+        settings   = require('./settings'),
+        uploads    = require('./uploads');
 
     //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
     Plugin.hooks = {
@@ -39,7 +39,7 @@
                     },
 
                     storageMiddleware = multer({
-                        dest                : path.resolve(__dirname, './public/uploads/'),
+                        dest: path.resolve(__dirname, './public/uploads/'),
                         onFileUploadComplete: function (file, req, res) {
                             req.awardFile = file;
                         }

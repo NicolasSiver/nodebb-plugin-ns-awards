@@ -3,7 +3,7 @@
   "name": "NodeBB Awards",
   "description": "System for rewarding forum users. It allows admin to define set of awards that could be granted to users for special accomplishments.",
   "url": "https://github.com/NicolasSiver/nodebb-plugin-ns-awards",
-  "library": "./plugin.js",
+  "library": "./plugin/index.js",
   "hooks": [
     {
       "hook": "filter:admin.header.build",
