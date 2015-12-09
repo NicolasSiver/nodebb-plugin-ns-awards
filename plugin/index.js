@@ -38,15 +38,8 @@
                         });
                     },
 
-                    storageMiddleware = multer({
-                        dest: path.resolve(__dirname, './public/uploads/'),
-                        onFileUploadComplete: function (file, req, res) {
-                            req.awardFile = file;
-                        }
-                    }),
-
                     apiImages         = function (req, res, next) {
-                        uploads.setFile(req.awardFile, function (error, id) {
+                        uploads.setFile(req.file, function (error, id) {
                             if (error) {
                                 return res.status(500).json(error);
                             }
@@ -56,7 +49,11 @@
 
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
-                router.post(apiUri + '/images', storageMiddleware, apiImages);
+
+                // Image uploader
+                router.post(apiUri + '/images', multer({
+                    dest: path.resolve(__dirname, '../public/uploads/')
+                }).single('award'), apiImages);
 
                 //Client page
                 router.get('/awards', middleware.buildHeader, renderClient);
