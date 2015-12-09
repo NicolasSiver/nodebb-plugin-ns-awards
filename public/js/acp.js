@@ -1264,21 +1264,14 @@ var Dispatcher = require('flux').Dispatcher;
 module.exports = new Dispatcher();
 
 },{"flux":19}],16:[function(require,module,exports){
-define('admin/plugins/awards', function () {
-    var Awards    = {},
-        React     = require('react'),
-        AwardsApp = require('./components/AwardsApp.react');
+var React     = require('react'),
+    AwardsApp = require('./components/AwardsApp.react');
 
 
-    Awards.init = function () {
-        React.render(
-            React.createElement(AwardsApp, null),
-            document.getElementById('manageAwardsApp')
-        );
-    };
-
-    return Awards;
-});
+React.render(
+    React.createElement(AwardsApp, null),
+    document.getElementById('manageAwardsApp')
+);
 
 },{"./components/AwardsApp.react":5,"react":187}],17:[function(require,module,exports){
 /*!
