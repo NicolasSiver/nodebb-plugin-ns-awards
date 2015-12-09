@@ -50,21 +50,21 @@
      * @param callback
      */
     Module.createAward = function (socket, payload, callback) {
-        var awardFile;
-
         async.waterfall([
             async.apply(uploads.getFileById, payload.fileId),
             function (file, next) {
-                awardFile = file;
-                // TODO Delete temporal file or create utility to remove all images from 'uploads' directory
-                fse.copy(
-                    file.path,
-                    getUploadImagePath(file.name),
-                    next
-                );
+                async.series([
+                    async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
+                    async.apply(fse.remove, file.path)
+                ], function (e) {
+                    if(e){
+                        return next(e);
+                    }
+                    next(null, file);
+                });
             },
-            function (next) {
-                database.createAward(payload.name, payload.desc, awardFile.name, next);
+            function (file, next) {
+                database.createAward(payload.name, payload.desc, file.filename, next);
             }
         ], callback);
     };
