@@ -32,7 +32,10 @@ var NavigationStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-
+        case Constants.EVENT_SECTION_WILL_SELECT:
+            _data.current = action.sectionId;
+            NavigationStore.emitChange();
+            break;
         default:
             return true;
     }

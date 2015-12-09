@@ -1,9 +1,9 @@
-var AwardsListView  = require('./AwardsListView.react'),
+var Actions         = require('../actions/Actions'),
+    AwardsListView  = require('./AwardsListView.react'),
     classNames      = require('classnames'),
     Constants       = require('../Constants'),
-    React           = require('react'),
     NavigationStore = require('../stores/NavigationStore'),
-    Actions         = require('../actions/Actions'),
+    React           = require('react'),
     Settings        = require('./Settings.react');
 
 var TabManager = React.createClass({
@@ -70,21 +70,7 @@ var TabManager = React.createClass({
     },
 
     sectionDidClick: function (section) {
-        console.log(section);
-    },
-
-    _maxAwardsTopicDidChange: function (e) {
-        this.setState({
-            maxAwardsTopic: parseInt(e.currentTarget.value, 10),
-            dirty         : true
-        });
-    },
-
-    _renderTopicDidChange: function (e) {
-        this.setState({
-            renderTopic: e.currentTarget.checked,
-            dirty      : true
-        })
+        Actions.setSection(section.id);
     }
 });
 

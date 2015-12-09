@@ -14,6 +14,7 @@ module.exports = keyMirror({
     EVENT_PICK_USER_FROM_SEARCH_AT  : null,
     EVENT_SAVE_SETTINGS             : null,
     EVENT_SEARCH_USER               : null,
+    EVENT_SECTION_WILL_SELECT       : null,
     EVENT_UNPICK_USER_FROM_SEARCH   : null,
 
     PANEL_GRANT_AWARD: null,
@@ -112,6 +113,13 @@ module.exports = {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SEARCH_USER,
             request   : name
+        });
+    },
+
+    setSection: function (sectionId) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_SECTION_WILL_SELECT,
+            sectionId : sectionId
         });
     },
 
@@ -1057,12 +1065,12 @@ var Settings = React.createClass({displayName: "Settings",
 module.exports = Settings;
 
 },{"../actions/Actions":2,"../stores/SettingsStore":192,"react":188}],14:[function(require,module,exports){
-var AwardsListView  = require('./AwardsListView.react'),
+var Actions         = require('../actions/Actions'),
+    AwardsListView  = require('./AwardsListView.react'),
     classNames      = require('classnames'),
     Constants       = require('../Constants'),
-    React           = require('react'),
     NavigationStore = require('../stores/NavigationStore'),
-    Actions         = require('../actions/Actions'),
+    React           = require('react'),
     Settings        = require('./Settings.react');
 
 var TabManager = React.createClass({displayName: "TabManager",
@@ -1129,21 +1137,7 @@ var TabManager = React.createClass({displayName: "TabManager",
     },
 
     sectionDidClick: function (section) {
-        console.log(section);
-    },
-
-    _maxAwardsTopicDidChange: function (e) {
-        this.setState({
-            maxAwardsTopic: parseInt(e.currentTarget.value, 10),
-            dirty         : true
-        });
-    },
-
-    _renderTopicDidChange: function (e) {
-        this.setState({
-            renderTopic: e.currentTarget.checked,
-            dirty      : true
-        })
+        Actions.setSection(section.id);
     }
 });
 
@@ -23890,7 +23884,10 @@ var NavigationStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
-
+        case Constants.EVENT_SECTION_WILL_SELECT:
+            _data.current = action.sectionId;
+            NavigationStore.emitChange();
+            break;
         default:
             return true;
     }

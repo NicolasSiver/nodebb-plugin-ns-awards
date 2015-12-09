@@ -90,6 +90,13 @@ module.exports = {
         });
     },
 
+    setSection: function (sectionId) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_SECTION_WILL_SELECT,
+            sectionId : sectionId
+        });
+    },
+
     unpickUserFromSearch: function (index, uid) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_UNPICK_USER_FROM_SEARCH,
