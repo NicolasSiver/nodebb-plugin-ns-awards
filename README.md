@@ -12,6 +12,7 @@ System for rewarding forum users. It allows admin to define set of awards that c
  
 
 - [How does it work?](#how-does-it-work)
+- [ACP Look](#acp-look)
 - [Themes](#themes)
   - [Profile template](#profile-template)
   - [Topic template](#topic-template)
@@ -27,6 +28,10 @@ Plugin introduces new entity for your board: Award. It could be anything: ribbon
 2. Create several awards, don't forget images.
 3. Give awards to the users.
 4. If you want to list users' awards, you can augment Profile page template - `profile.tpl`
+
+## ACP Look
+
+![Admin Panel View](screenshot.png)
 
 ## Themes
 
