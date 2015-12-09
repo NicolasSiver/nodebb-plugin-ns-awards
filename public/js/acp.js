@@ -658,13 +658,10 @@ var AwardsListView = React.createClass({displayName: "AwardsListView",
         }
 
         return (
-            React.createElement("div", {className: "panel panel-default"}, 
-                React.createElement("div", {className: "panel-heading"}, "Awards"), 
-                React.createElement("div", {className: "panel-body"}, 
-                    React.createElement("ul", {className: "awards-list"}, 
-                        noItems, 
-                        this.state.awards.map(renderItem)
-                    )
+            React.createElement("div", null, 
+                React.createElement("ul", {className: "awards-list"}, 
+                    noItems, 
+                    this.state.awards.map(renderItem)
                 )
             )
         );
