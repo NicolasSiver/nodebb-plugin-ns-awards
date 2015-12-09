@@ -20,6 +20,7 @@ module.exports = keyMirror({
     PANEL_GRANT_AWARD: null,
 
     SECTION_AWARDS  : null,
+    SECTION_DONATION: null,
     SECTION_SETTINGS: null
 });
 
@@ -393,7 +394,6 @@ module.exports = AwardCreator;
 },{"../actions/Actions":2,"../utils/PathUtils":194,"./ImageDrop.react":9,"./PanelControls.react":11,"./PromptView.react":12,"react":188,"react/lib/LinkedStateMixin":53}],5:[function(require,module,exports){
 var React            = require('react'),
     AwardCreator     = require('./AwardCreator.react'),
-    Donate           = require('./Donate.react'),
     UserAwardManager = require('./UserAwardManager.react'),
     TabManager       = require('./TabManager.react'),
     UsersStore       = require('../stores/UsersStore');
@@ -407,8 +407,7 @@ var AwardsApp = React.createClass({displayName: "AwardsApp",
                 ), 
                 React.createElement("div", {className: "col-md-4"}, 
                     React.createElement(AwardCreator, null), 
-                    React.createElement(UserAwardManager, null), 
-                    React.createElement(Donate, null)
+                    React.createElement(UserAwardManager, null)
                 )
             )
         );
@@ -416,7 +415,7 @@ var AwardsApp = React.createClass({displayName: "AwardsApp",
 });
 module.exports = AwardsApp;
 
-},{"../stores/UsersStore":193,"./AwardCreator.react":4,"./Donate.react":8,"./TabManager.react":14,"./UserAwardManager.react":15,"react":188}],6:[function(require,module,exports){
+},{"../stores/UsersStore":193,"./AwardCreator.react":4,"./TabManager.react":14,"./UserAwardManager.react":15,"react":188}],6:[function(require,module,exports){
 (function (global){
 var React          = require('react'),
     bootbox        = (typeof window !== "undefined" ? window['bootbox'] : typeof global !== "undefined" ? global['bootbox'] : null),
@@ -701,14 +700,13 @@ var React            = require('react'),
 
     Actions          = require('../actions/Actions'),
 
-    App              = (typeof window !== "undefined" ? window['app'] : typeof global !== "undefined" ? global['app'] : null),
-    StripeCheckout   = (typeof window !== "undefined" ? window['StripeCheckout'] : typeof global !== "undefined" ? global['StripeCheckout'] : null);
+    App              = (typeof window !== "undefined" ? window['app'] : typeof global !== "undefined" ? global['app'] : null);
 
 var Donate = React.createClass({displayName: "Donate",
     mixins: [LinkedStateMixin],
 
     componentDidMount: function () {
-        this.stripeHandler = StripeCheckout.configure({
+        this.stripeHandler = (typeof window !== "undefined" ? window['StripeCheckout'] : typeof global !== "undefined" ? global['StripeCheckout'] : null).configure({
             key       : 'pk_live_AcfQs725nv7nIF5sRCG3v4Q8',
             image     : 'https://s3.amazonaws.com/stripe-uploads/acct_16mDSJB8UmE70jk7merchant-icon-1442539384457-ava-mdpi.jpg',
             locale    : 'auto',
@@ -731,24 +729,23 @@ var Donate = React.createClass({displayName: "Donate",
 
     render: function () {
         return (
-            React.createElement("div", {className: "panel panel-default"}, 
-                React.createElement("div", {className: "panel-body"}, 
-                    React.createElement("p", null, "Do you like plugin? Support developer. Make a donation. Thank you in advance."), 
+            React.createElement("div", null, 
+                React.createElement("p", null, "Do you like plugin? Support developer. Make a donation. Thank you in advance."), 
 
-                    React.createElement("div", {className: "input-group"}, 
-                        React.createElement("input", {
-                            type: "text", 
-                            className: "form-control", 
-                            placeholder: "Amount", 
-                            valueLink: this.linkState('amount')}), 
+                React.createElement("div", {className: "input-group"}, 
+                    React.createElement("input", {
+                        type: "text", 
+                        className: "form-control", 
+                        placeholder: "Amount", 
+                        valueLink: this.linkState('amount')}), 
                         React.createElement("span", {className: "input-group-btn"}, 
                             React.createElement("button", {
                                 className: "btn btn-primary", 
                                 type: "button", 
-                                onClick: this._donateDidClick}, "Donate ", React.createElement("small", null, "via Stripe")
+                                onClick: this._donateDidClick}, "Donate", 
+                                React.createElement("small", null, "via Stripe")
                             )
                         )
-                    )
                 )
             )
         );
@@ -1060,6 +1057,7 @@ var Actions         = require('../actions/Actions'),
     AwardsListView  = require('./AwardsListView.react'),
     classNames      = require('classnames'),
     Constants       = require('../Constants'),
+    Donate          = require('./Donate.react'),
     NavigationStore = require('../stores/NavigationStore'),
     React           = require('react'),
     Settings        = require('./Settings.react');
@@ -1079,6 +1077,8 @@ var TabManager = React.createClass({displayName: "TabManager",
                 return React.createElement(AwardsListView, null);
             case Constants.SECTION_SETTINGS:
                 return React.createElement(Settings, null);
+            case Constants.SECTION_DONATION:
+                return React.createElement(Donate, null);
         }
     },
 
@@ -1134,7 +1134,7 @@ var TabManager = React.createClass({displayName: "TabManager",
 
 module.exports = TabManager;
 
-},{"../Constants":1,"../actions/Actions":2,"../stores/NavigationStore":190,"./AwardsListView.react":7,"./Settings.react":13,"classnames":18,"react":188}],15:[function(require,module,exports){
+},{"../Constants":1,"../actions/Actions":2,"../stores/NavigationStore":190,"./AwardsListView.react":7,"./Donate.react":8,"./Settings.react":13,"classnames":18,"react":188}],15:[function(require,module,exports){
 var React            = require('react'),
     LinkedStateMixin = require('react/lib/LinkedStateMixin'),
     PromptView       = require('./PromptView.react'),
@@ -23851,7 +23851,8 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
         current: Constants.SECTION_AWARDS,
         list   : [
             {label: 'Awards', icon: 'fa-trophy', id: Constants.SECTION_AWARDS},
-            {label: 'Settings', id: Constants.SECTION_SETTINGS}
+            {label: 'Settings', id: Constants.SECTION_SETTINGS},
+            {label: 'Donate', id: Constants.SECTION_DONATION}
         ]
     };
 

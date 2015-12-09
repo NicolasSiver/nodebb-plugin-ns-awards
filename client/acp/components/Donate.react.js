@@ -3,14 +3,13 @@ var React            = require('react'),
 
     Actions          = require('../actions/Actions'),
 
-    App              = require('app'),
-    StripeCheckout   = require('StripeCheckout');
+    App              = require('app');
 
 var Donate = React.createClass({
     mixins: [LinkedStateMixin],
 
     componentDidMount: function () {
-        this.stripeHandler = StripeCheckout.configure({
+        this.stripeHandler = require('StripeCheckout').configure({
             key       : 'pk_live_AcfQs725nv7nIF5sRCG3v4Q8',
             image     : 'https://s3.amazonaws.com/stripe-uploads/acct_16mDSJB8UmE70jk7merchant-icon-1442539384457-ava-mdpi.jpg',
             locale    : 'auto',
@@ -33,24 +32,23 @@ var Donate = React.createClass({
 
     render: function () {
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    <p>Do you like plugin? Support developer. Make a donation. Thank you in advance.</p>
+            <div>
+                <p>Do you like plugin? Support developer. Make a donation. Thank you in advance.</p>
 
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Amount"
-                            valueLink={this.linkState('amount')}/>
+                <div className="input-group">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Amount"
+                        valueLink={this.linkState('amount')}/>
                         <span className="input-group-btn">
                             <button
                                 className="btn btn-primary"
                                 type="button"
-                                onClick={this._donateDidClick}>Donate <small>via Stripe</small>
+                                onClick={this._donateDidClick}>Donate
+                                <small>via Stripe</small>
                             </button>
                         </span>
-                    </div>
                 </div>
             </div>
         );

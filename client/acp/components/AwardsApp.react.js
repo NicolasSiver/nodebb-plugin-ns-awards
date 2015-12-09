@@ -1,6 +1,5 @@
 var React            = require('react'),
     AwardCreator     = require('./AwardCreator.react'),
-    Donate           = require('./Donate.react'),
     UserAwardManager = require('./UserAwardManager.react'),
     TabManager       = require('./TabManager.react'),
     UsersStore       = require('../stores/UsersStore');
@@ -15,7 +14,6 @@ var AwardsApp = React.createClass({
                 <div className="col-md-4">
                     <AwardCreator />
                     <UserAwardManager />
-                    <Donate />
                 </div>
             </div>
         );
