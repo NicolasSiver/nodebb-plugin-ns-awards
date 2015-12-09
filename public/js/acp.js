@@ -992,12 +992,6 @@ var Settings = React.createClass({displayName: "Settings",
     },
 
     render: function () {
-        //Don't show Settings until we will get something from the NodeBB
-        //if (Object.keys(this.state).length == 0) {
-        //    return (
-        //        <div />
-        //    );
-        //}
         var footer;
 
         if (this.state.dirty) {
@@ -1014,27 +1008,24 @@ var Settings = React.createClass({displayName: "Settings",
         }
 
         return (
-            React.createElement("div", {className: "panel panel-default"}, 
-                React.createElement("div", {className: "panel-heading"}, "Settings"), 
-                React.createElement("div", {className: "panel-body"}, 
-                    React.createElement("div", {className: "checkbox"}, 
-                        React.createElement("label", null, 
-                            React.createElement("input", {
-                                type: "checkbox", 
-                                checked: this.state.renderTopic, 
-                                onChange: this._renderTopicDidChange}), " Topic View: render awards"
-                        )
-                    ), 
-                    React.createElement("div", {className: "form-group"}, 
-                        React.createElement("label", {htmlFor: "topicLimit"}, "Max awards"), 
+            React.createElement("div", null, 
+                React.createElement("div", {className: "checkbox"}, 
+                    React.createElement("label", null, 
                         React.createElement("input", {
-                            type: "text", className: "form-control", id: "topicLimit", placeholder: "Enter count", 
-                            disabled: this.state.renderTopic ? '' : 'disabled', 
-                            value: this.state.maxAwardsTopic, 
-                            onChange: this._maxAwardsTopicDidChange})
-                    ), 
-                    footer
-                )
+                            type: "checkbox", 
+                            checked: this.state.renderTopic, 
+                            onChange: this._renderTopicDidChange}), " Topic View: render awards"
+                    )
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", {htmlFor: "topicLimit"}, "Max awards"), 
+                    React.createElement("input", {
+                        type: "text", className: "form-control", id: "topicLimit", placeholder: "Enter count", 
+                        disabled: this.state.renderTopic ? '' : 'disabled', 
+                        value: this.state.maxAwardsTopic, 
+                        onChange: this._maxAwardsTopicDidChange})
+                ), 
+                footer
             )
         );
     },
@@ -1121,7 +1112,7 @@ var TabManager = React.createClass({displayName: "TabManager",
                         ), 
 
                         React.createElement("div", {className: "tab-content"}, 
-                            React.createElement("div", {role: "tabpanel", className: "tab-pane active"}, 
+                            React.createElement("div", {className: "tab-pane active"}, 
                                 this.getContent(this.state.current)
                             )
                         )

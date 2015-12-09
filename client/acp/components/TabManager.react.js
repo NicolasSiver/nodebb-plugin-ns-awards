@@ -54,7 +54,7 @@ var TabManager = React.createClass({
                         </ul>
 
                         <div className="tab-content">
-                            <div role="tabpanel" className="tab-pane active">
+                            <div className="tab-pane active">
                                 {this.getContent(this.state.current)}
                             </div>
                         </div>

@@ -22,12 +22,6 @@ var Settings = React.createClass({
     },
 
     render: function () {
-        //Don't show Settings until we will get something from the NodeBB
-        //if (Object.keys(this.state).length == 0) {
-        //    return (
-        //        <div />
-        //    );
-        //}
         var footer;
 
         if (this.state.dirty) {
@@ -44,27 +38,24 @@ var Settings = React.createClass({
         }
 
         return (
-            <div className="panel panel-default">
-                <div className="panel-heading">Settings</div>
-                <div className="panel-body">
-                    <div className="checkbox">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={this.state.renderTopic}
-                                onChange={this._renderTopicDidChange}/> Topic View: render awards
-                        </label>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="topicLimit">Max awards</label>
+            <div>
+                <div className="checkbox">
+                    <label>
                         <input
-                            type="text" className="form-control" id="topicLimit" placeholder="Enter count"
-                            disabled={this.state.renderTopic ? '' : 'disabled'}
-                            value={this.state.maxAwardsTopic}
-                            onChange={this._maxAwardsTopicDidChange}/>
-                    </div>
-                    {footer}
+                            type="checkbox"
+                            checked={this.state.renderTopic}
+                            onChange={this._renderTopicDidChange}/> Topic View: render awards
+                    </label>
                 </div>
+                <div className="form-group">
+                    <label htmlFor="topicLimit">Max awards</label>
+                    <input
+                        type="text" className="form-control" id="topicLimit" placeholder="Enter count"
+                        disabled={this.state.renderTopic ? '' : 'disabled'}
+                        value={this.state.maxAwardsTopic}
+                        onChange={this._maxAwardsTopicDidChange}/>
+                </div>
+                {footer}
             </div>
         );
     },
