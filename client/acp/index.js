@@ -3,5 +3,5 @@ var React     = require('react'),
 
 React.render(
     <AwardsApp />,
-    document.getElementById('manageAwardsApp')
+    document.getElementsByClassName('manage-awards')[0]
 );

@@ -1342,7 +1342,7 @@ var React     = require('react'),
 
 React.render(
     React.createElement(AwardsApp, null),
-    document.getElementById('manageAwardsApp')
+    document.getElementsByClassName('manage-awards')[0]
 );
 
 },{"./components/AwardsApp.react":5,"react":188}],18:[function(require,module,exports){

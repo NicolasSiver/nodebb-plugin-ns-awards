@@ -4,6 +4,9 @@
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
+.manage-awards .tab-content {
+  margin-top: 16px;
+}
 .awards-list {
   list-style-type: none;
   margin: 0;
