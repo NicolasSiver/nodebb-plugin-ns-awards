@@ -82,9 +82,9 @@
 
         async.waterfall([
             async.apply(uploads.getFileById, upload.id),
-            function (image, next) {
-                if (image) {
-                    Controller.editImage(aid, image, function (error, imageName) {
+            function (file, next) {
+                if (file) {
+                    Controller.editImage(aid, file, function (error, imageName) {
                         if (error) {
                             return next(error);
                         }
@@ -103,23 +103,23 @@
      * Update image. Delete old one if any.
      *
      * @param aid {number} award identifier
-     * @param newImage {object} file descriptor from 'uploads' module
+     * @param file {object} file descriptor from 'uploads' module
      * @param done {function} returns image name if operation was successful
      */
-    Controller.editImage = function (aid, newImage, done) {
+    Controller.editImage = function (aid, file, done) {
         async.waterfall([
             async.apply(database.getAward, aid),
             function (award, next) {
                 if (!award) {
-                    next(new Error('Award can not be found'));
+                    return next(new Error('Award can not be found'));
                 }
 
                 //Remove old image
                 fse.remove(getUploadImagePath(award.image), next);
             },
-            async.apply(fse.copy, newImage.path, getUploadImagePath(newImage.name)),
+            async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
             function (next) {
-                next(null, newImage.name);
+                next(null, file.filename);
             }
         ], done);
     };
