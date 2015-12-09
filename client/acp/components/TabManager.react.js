@@ -1,0 +1,91 @@
+var AwardsListView  = require('./AwardsListView.react'),
+    classNames      = require('classnames'),
+    Constants       = require('../Constants'),
+    React           = require('react'),
+    NavigationStore = require('../stores/NavigationStore'),
+    Actions         = require('../actions/Actions'),
+    Settings        = require('./Settings.react');
+
+var TabManager = React.createClass({
+    componentDidMount: function () {
+        NavigationStore.addChangeListener(this.navigationDidUpdate);
+    },
+
+    componentWillUnmount: function () {
+        NavigationStore.removeChangeListener(this.navigationDidUpdate);
+    },
+
+    getContent: function (section) {
+        switch (section) {
+            case Constants.SECTION_AWARDS:
+                return <AwardsListView />;
+            case Constants.SECTION_SETTINGS:
+                return <Settings />;
+        }
+    },
+
+    getInitialState: function () {
+        return NavigationStore.getSectionsMeta();
+    },
+
+    render: function () {
+        var self = this;
+
+        function renderSection(section, index, sections) {
+            var icon, sectionClass = classNames({
+                'active': section.id === self.state.current
+            });
+            if ('icon' in section) {
+                icon = <i className={'fa ' + section.icon}></i>;
+            }
+            return (
+                <li key={section.id} className={sectionClass}>
+                    <a href="#" onClick={self.sectionDidClick.bind(null, section)}>{icon} {section.label}</a>
+                </li>
+            );
+        }
+
+        return (
+            <div className="panel panel-default">
+                <div className="panel-body">
+                    <div>
+                        <ul className="nav nav-tabs">
+                            {this.state.list.map(renderSection)}
+                        </ul>
+
+                        <div className="tab-content">
+                            <div role="tabpanel" className="tab-pane active">
+                                {this.getContent(this.state.current)}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        );
+    },
+
+    navigationDidUpdate: function () {
+        this.replaceState(NavigationStore.getSectionsMeta());
+    },
+
+    sectionDidClick: function (section) {
+        console.log(section);
+    },
+
+    _maxAwardsTopicDidChange: function (e) {
+        this.setState({
+            maxAwardsTopic: parseInt(e.currentTarget.value, 10),
+            dirty         : true
+        });
+    },
+
+    _renderTopicDidChange: function (e) {
+        this.setState({
+            renderTopic: e.currentTarget.checked,
+            dirty      : true
+        })
+    }
+});
+
+module.exports = TabManager;
