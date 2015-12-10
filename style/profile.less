@@ -1,5 +1,23 @@
 @import "vars";
 
+// Flex Implementation for 0.9.x
+.awards-flex {
+
+  .awards-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+
+    .award-image {
+      flex: 0 1 auto;
+      align-self: center;
+      width: @aw-award-preview-size;
+      margin: @aw-base-rhythm;
+    }
+  }
+}
+
+// Legacy Implementation
 .profile-awards {
   list-style-type: none;
   margin: 0;
