@@ -37,6 +37,12 @@ Plugin introduces new entity for your board: Award. It could be anything: ribbon
 
 ### Profile template
 
+Use flex template - `awards_profile_flex.tpl` for Persona v4. Place it wherever you like.
+
+```html
+<!-- IMPORT partials/awards_profile_flex.tpl -->
+```
+
 Use profile partial, it will add small panel with awards as list. Every award item will include: picture, name, reason and date.
 
 Example Vanilla Theme, edit `node_modules/nodebb-theme-vanilla/templates/account/profile.tpl`:
