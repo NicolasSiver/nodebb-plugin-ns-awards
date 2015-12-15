@@ -137,7 +137,7 @@ var Autocomplete = React.createClass({
     },
 
     _validateInput: function () {
-        if (this.state.inputText.length >= 3) {
+        if (this.state.inputText.length >= 2) {
             this.props.valueDidChange(this.state.inputText);
         }
     }
