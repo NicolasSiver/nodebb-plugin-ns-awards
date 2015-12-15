@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.1 - 12/15/2015
+
+- User search now works with only 2 characters
+
 ## v2.0.0 - 12/9/2015
 
 - Compatibility with NodeBB 0.9.x
