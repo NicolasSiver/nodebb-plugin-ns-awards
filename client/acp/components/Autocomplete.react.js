@@ -10,6 +10,7 @@ var Autocomplete = React.createClass({
         valueDidChange            : ReactPropTypes.func,
         optionDidSelect           : ReactPropTypes.func,
         optionSelectedIndex       : ReactPropTypes.number,
+        optionsShouldClear        : ReactPropTypes.func,
         optionWillSelectAt        : ReactPropTypes.func,
         optionWillSelectWithOffset: ReactPropTypes.func
     },
@@ -139,6 +140,8 @@ var Autocomplete = React.createClass({
     _validateInput: function () {
         if (this.state.inputText.length >= 2) {
             this.props.valueDidChange(this.state.inputText);
+        } else if (this.isOptions() && this.props.optionsShouldClear) {
+            this.props.optionsShouldClear();
         }
     }
 });

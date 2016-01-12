@@ -2,6 +2,7 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
     EVENT_AWARD_USERS               : null,
+    EVENT_CLEAR_SEARCH_RESULT       : null,
     EVENT_CREATE_AWARD              : null,
     EVENT_DELETE_AWARD              : null,
     EVENT_EDIT_AWARD                : null,

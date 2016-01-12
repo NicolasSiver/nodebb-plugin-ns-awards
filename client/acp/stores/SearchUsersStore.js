@@ -53,6 +53,9 @@ AppDispatcher.register(function (action) {
                 SearchUsersStore.emitChange();
             });
             break;
+        case Constants.EVENT_CLEAR_SEARCH_RESULT:
+            clear();
+            break;
         case Constants.EVENT_OFFSET_USER_FROM_SEARCH_ON:
             _resultSelectIndex += action.offset;
             if (_resultSelectIndex < 0) {

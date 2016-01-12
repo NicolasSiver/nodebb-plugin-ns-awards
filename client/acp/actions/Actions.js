@@ -11,6 +11,12 @@ module.exports = {
         });
     },
 
+    clearUserSearch: function () {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_CLEAR_SEARCH_RESULT
+        });
+    },
+
     createAward: function (name, description, imageFileId) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_CREATE_AWARD,

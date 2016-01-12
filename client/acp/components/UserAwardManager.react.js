@@ -101,6 +101,7 @@ var UserAwardManager = React.createClass({
                         optionDidSelect={this._userDidSelect}
                         optionWillSelectWithOffset={this._userWillSelectWithOffset}
                         optionWillSelectAt={this._userWillSelectAt}
+                        optionsShouldClear={this._clearUsers}
                         optionSelectedIndex={this.state.searchSelection}
                         options={this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
@@ -156,6 +157,10 @@ var UserAwardManager = React.createClass({
     _cancel: function () {
         this.replaceState(this.getInitialState());
         Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
+    },
+
+    _clearUsers: function(){
+        Actions.clearUserSearch();
     },
 
     _isValid: function () {
