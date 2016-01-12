@@ -3,6 +3,7 @@
 ## v2.1.0 - TBD
 
 - Update user delete hook to `static:user.delete`
+- Fix #6 issue with limit when user is deleted
 
 ## v2.0.1 - 12/15/2015
 
