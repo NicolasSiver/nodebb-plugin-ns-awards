@@ -96,9 +96,7 @@
     };
 
     Database.deleteGrant = function (gid, done) {
-        var grantKey = namespace + ':grant:' + gid;
-
-        db.getObject(grantKey, function (error, grant) {
+        db.getObject(namespace + ':grant:' + gid, function (error, grant) {
             if (error) {
                 return done(error);
             } else if (!grant) {
@@ -106,7 +104,7 @@
             }
 
             async.parallel([
-                async.apply(db.delete, grantKey),
+                async.apply(db.delete, namespace + ':grant:' + grant.gid),
                 async.apply(db.sortedSetRemove, namespace + ':award:' + grant.aid, gid),
                 async.apply(db.sortedSetRemove, namespace + ':user:' + grant.uid, gid)
             ], done);

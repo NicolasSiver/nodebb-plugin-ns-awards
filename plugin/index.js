@@ -1,4 +1,5 @@
 (function (Plugin) {
+    'use strict';
 
     var async      = require('async'),
         multer     = require('multer'),
@@ -15,7 +16,7 @@
     Plugin.hooks = {
         filters: filters,
         statics: {
-            load: function (params, callback) {
+            load      : function (params, callback) {
                 var router       = params.router,
                     middleware   = params.middleware,
                     controllers  = params.controllers,
@@ -71,6 +72,9 @@
                     async.apply(settings.init),
                     async.apply(sockets.init)
                 ], callback);
+            },
+            userDelete: function (params, callback) {
+                controller.deleteUserGrants(params.uid, callback);
             }
         }
     };

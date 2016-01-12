@@ -22,8 +22,8 @@
       "method": "hooks.filters.getPosts"
     },
     {
-      "hook": "filter:user.delete",
-      "method": "hooks.filters.userDelete"
+      "hook": "static:user.delete",
+      "method": "hooks.statics.userDelete"
     },
     {
       "hook": "static:app.load",

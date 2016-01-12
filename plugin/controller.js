@@ -54,11 +54,11 @@
 
     Controller.deleteUserGrants = function (uid, done) {
         async.waterfall([
-            async.apply(database.getGrantIdsByUser, uid),
-            function (grantIds, next) {
+            async.apply(database.getGrantIdsByUser, uid, -1),
+            function (grantIds, callback) {
                 async.each(grantIds, function (gid, next) {
                     database.deleteGrant(gid, next);
-                }, next);
+                }, callback);
             }
         ], done);
     };

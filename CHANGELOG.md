@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0 - TBD
+
+- Update user delete hook to `static:user.delete`
+
 ## v2.0.1 - 12/15/2015
 
 - User search now works with only 2 characters

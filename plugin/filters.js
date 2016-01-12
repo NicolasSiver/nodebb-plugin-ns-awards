@@ -51,8 +51,4 @@
         controller.getAwardsTopic(payload, callback);
     };
 
-    Filter.userDelete = function (uid, callback) {
-        controller.deleteUserGrants(uid, callback);
-    };
-
 })(module.exports);
