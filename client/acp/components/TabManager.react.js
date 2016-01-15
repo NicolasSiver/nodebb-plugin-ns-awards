@@ -3,6 +3,7 @@ var Actions         = require('../actions/Actions'),
     classNames      = require('classnames'),
     Constants       = require('../Constants'),
     Donate          = require('./Donate.react'),
+    Manage          = require('./Manage.react'),
     NavigationStore = require('../stores/NavigationStore'),
     React           = require('react'),
     Settings        = require('./Settings.react');
@@ -18,6 +19,8 @@ var TabManager = React.createClass({
 
     getContent: function (section) {
         switch (section) {
+            case Constants.SECTION_MANAGE:
+                return <Manage />;
             case Constants.SECTION_AWARDS:
                 return <AwardsListView />;
             case Constants.SECTION_SETTINGS:

@@ -21,5 +21,6 @@ module.exports = keyMirror({
 
     SECTION_AWARDS  : null,
     SECTION_DONATION: null,
+    SECTION_MANAGE  : null,
     SECTION_SETTINGS: null
 });

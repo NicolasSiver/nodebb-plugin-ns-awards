@@ -8,6 +8,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
         current: Constants.SECTION_AWARDS,
         list   : [
             {label: 'Awards', icon: 'fa-trophy', id: Constants.SECTION_AWARDS},
+            {label: 'Manage', id: Constants.SECTION_MANAGE},
             {label: 'Settings', id: Constants.SECTION_SETTINGS},
             {label: 'Donate', id: Constants.SECTION_DONATION}
         ]

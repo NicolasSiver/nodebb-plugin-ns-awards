@@ -1,6 +1,5 @@
 var React            = require('react'),
     LinkedStateMixin = require('react/lib/LinkedStateMixin'),
-    PromptView       = require('./PromptView.react'),
     Autocomplete     = require('./Autocomplete.react'),
     AwardsStore      = require('../stores/AwardsStore'),
     SearchUsersStore = require('../stores/SearchUsersStore'),
@@ -133,17 +132,16 @@ var UserAwardManager = React.createClass({
                     valid={this._isValid}/>
             </div>;
         } else {
-            panelContent = <PromptView
-                label="Give Award..."
-                hint="Overview user's awards and grant him or her a new one. Don't forget to specify reason."
-                labelDidClick={this._promptViewDidClick}/>;
+            panelContent = <button
+                className="btn btn-primary"
+                onClick={this._mainButtonDidClick}
+                type="button">Award Multiple Users
+            </button>;
         }
 
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    {panelContent}
-                </div>
+            <div>
+                {panelContent}
             </div>
         );
     },
@@ -159,7 +157,7 @@ var UserAwardManager = React.createClass({
         Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
     },
 
-    _clearUsers: function(){
+    _clearUsers: function () {
         Actions.clearUserSearch();
     },
 
@@ -167,7 +165,7 @@ var UserAwardManager = React.createClass({
         return this.state.users.length && this.state.awardId && this.state.reason;
     },
 
-    _promptViewDidClick: function () {
+    _mainButtonDidClick: function () {
         this.setState({open: true});
     },
 
