@@ -15,7 +15,7 @@ module.exports = keyMirror({
     EVENT_SAVE_SETTINGS             : null,
     EVENT_SEARCH_USER               : null,
     EVENT_SECTION_WILL_SELECT       : null,
-    EVENT_UNPICK_USER_FROM_SEARCH   : null,
+    EVENT_USER_DID_SELECT           : null,
 
     PANEL_GRANT_AWARD: null,
 

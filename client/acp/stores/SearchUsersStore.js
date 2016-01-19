@@ -89,7 +89,9 @@ function pickUserAt(index) {
         return;
     }
 
-    Actions.selectUser(_result[index]);
+    // Use delay, to omit waitFor
+    setTimeout(Actions.selectUser, 0, _result[index]);
+    clear();
 }
 
 module.exports = SearchUsersStore;

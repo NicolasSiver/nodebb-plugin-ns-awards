@@ -1,21 +1,62 @@
-var React        = require('react'),
-    Autocomplete = require('./Autocomplete.react');
+var Actions          = require('../actions/Actions'),
+    assign           = require('react/lib/Object.assign'),
+    Autocomplete     = require('./Autocomplete.react'),
+    EditUserStore    = require('../stores/EditUserStore'),
+    React            = require('react'),
+    SearchUsersStore = require('../stores/SearchUsersStore');
+
+function getSearchResult() {
+    return {
+        searchUsers    : SearchUsersStore.getResult(),
+        searchSelection: SearchUsersStore.getSelectIndex()
+    };
+}
+
+function getUsers() {
+    return {
+        users: EditUserStore.getUsers()
+    }
+}
 
 var EditUser = React.createClass({
+    componentDidMount: function () {
+        EditUserStore.addChangeListener(this.usersDidChange);
+        SearchUsersStore.addChangeListener(this.searchDidChange);
+    },
+
+    componentWillUnmount: function () {
+        EditUserStore.removeChangeListener(this.usersDidChange);
+        SearchUsersStore.removeChangeListener(this.searchDidChange);
+    },
+
+    getInitialState: function () {
+        return assign({}, getSearchResult(), getUsers());
+    },
+
     render: function () {
         return (
             <div>
                 <Autocomplete
                     placeholder="Enter Username"
-                    valueDidChange={null}
-                    optionDidSelect={null}
-                    optionWillSelectWithOffset={null}
-                    optionWillSelectAt={null}
-                    optionsShouldClear={null}
-                    optionSelectedIndex={0}
-                    options={[]}/>
+                    valueDidChange={Actions.searchUser}
+                    optionDidSelect={Actions.pickUserFromSearch}
+                    optionWillSelectWithOffset={Actions.offsetUserFromSearchOn}
+                    optionWillSelectAt={Actions.pickUserFromSearchAt}
+                    optionsShouldClear={Actions.clearUserSearch}
+                    optionSelectedIndex={this.state.searchSelection}
+                    options={this.state.searchUsers.map(function(user){
+                        return {label: user.username, value: user.uid};
+                    })}/>
             </div>
         );
+    },
+
+    searchDidChange: function () {
+        this.setState(getSearchResult());
+    },
+
+    usersDidChange: function () {
+        this.setState(getUsers());
     }
 });
 

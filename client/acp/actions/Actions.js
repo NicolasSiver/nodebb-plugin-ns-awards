@@ -96,6 +96,15 @@ module.exports = {
         });
     },
 
+    selectUser: function (user) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_USER_DID_SELECT,
+            payload   : {
+                user: user
+            }
+        });
+    },
+
     setSection: function (sectionId) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SECTION_WILL_SELECT,

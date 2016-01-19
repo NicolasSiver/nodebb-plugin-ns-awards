@@ -1,19 +1,14 @@
 var React         = require('react'),
-    EditUser      = require('./EditUser.react'),
-    AwardMultiple = require('./AwardMultiple.react');
+    EditUser      = require('./EditUser.react');
 
 var Manage = React.createClass({
     render: function () {
         return (
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-7">
                     <EditUser />
                 </div>
-                <div className="col-md-1">
-                    OR
-                </div>
                 <div className="col-md-5">
-                    <AwardMultiple />
                 </div>
             </div>
         );
