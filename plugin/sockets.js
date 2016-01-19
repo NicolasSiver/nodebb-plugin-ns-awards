@@ -24,6 +24,7 @@
         sockets[constants.SOCKETS].deleteGrant = Sockets.deleteGrant;
         sockets[constants.SOCKETS].editAward = Sockets.editAward;
         sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
+        sockets[constants.SOCKETS].getGrantsWithAwards = Sockets.getGrantsWithAwards;
         sockets[constants.SOCKETS].getSettings = Sockets.getSettings;
         sockets[constants.SOCKETS].saveSettings = Sockets.saveSettings;
         sockets[constants.SOCKETS].searchUser = Sockets.searchUser;
@@ -104,6 +105,10 @@
 
     Sockets.getAwards = function (socket, callback) {
         database.getAllAwards(callback);
+    };
+
+    Sockets.getGrantsWithAwards = function (socket, payload, callback) {
+        controller.getUserAwards(payload.uid, -1, callback);
     };
 
     Sockets.getSettings = function (socket, payload, callback) {
