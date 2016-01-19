@@ -1,4 +1,4 @@
-(function (Module) {
+(function (Sockets) {
     'use strict';
 
     var async      = require('async'),
@@ -15,18 +15,18 @@
         constants  = require('./constants'),
         uploads    = require('./uploads');
 
-    Module.init = function (callback) {
+    Sockets.init = function (callback) {
         sockets[constants.SOCKETS] = {};
         //Acknowledgements
-        sockets[constants.SOCKETS].awardUsers = Module.awardUsers;
-        sockets[constants.SOCKETS].createAward = Module.createAward;
-        sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
-        sockets[constants.SOCKETS].deleteGrant = Module.deleteGrant;
-        sockets[constants.SOCKETS].editAward = Module.editAward;
-        sockets[constants.SOCKETS].getAwards = Module.getAwards;
-        sockets[constants.SOCKETS].getSettings = Module.getSettings;
-        sockets[constants.SOCKETS].saveSettings = Module.saveSettings;
-        sockets[constants.SOCKETS].searchUser = Module.searchUser;
+        sockets[constants.SOCKETS].awardUsers = Sockets.awardUsers;
+        sockets[constants.SOCKETS].createAward = Sockets.createAward;
+        sockets[constants.SOCKETS].deleteAward = Sockets.deleteAward;
+        sockets[constants.SOCKETS].deleteGrant = Sockets.deleteGrant;
+        sockets[constants.SOCKETS].editAward = Sockets.editAward;
+        sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
+        sockets[constants.SOCKETS].getSettings = Sockets.getSettings;
+        sockets[constants.SOCKETS].saveSettings = Sockets.saveSettings;
+        sockets[constants.SOCKETS].searchUser = Sockets.searchUser;
 
         callback();
     };
@@ -39,7 +39,7 @@
      * @param payload {object} Includes 'users', 'award' and 'reason' fields, where award is Award Id
      * @param callback
      */
-    Module.awardUsers = function (socket, payload, callback) {
+    Sockets.awardUsers = function (socket, payload, callback) {
         controller.awardUsers(payload, socket.uid, callback);
     };
 
@@ -50,7 +50,7 @@
      * @param payload {object} Includes 'name', 'desc' and 'fieldId' fields
      * @param callback
      */
-    Module.createAward = function (socket, payload, callback) {
+    Sockets.createAward = function (socket, payload, callback) {
         async.waterfall([
             async.apply(uploads.getFileById, payload.fileId),
             function (file, next) {
@@ -70,7 +70,7 @@
         ], callback);
     };
 
-    Module.deleteAward = function (socket, payload, callback) {
+    Sockets.deleteAward = function (socket, payload, callback) {
         async.waterfall([
             async.apply(database.getAward, payload.id),
             function (award, next) {
@@ -94,27 +94,27 @@
         ], callback);
     };
 
-    Module.deleteGrant = function (socket, payload, callback) {
+    Sockets.deleteGrant = function (socket, payload, callback) {
         controller.deleteGrantById(payload.id, callback);
     };
 
-    Module.editAward = function (socket, payload, callback) {
+    Sockets.editAward = function (socket, payload, callback) {
         controller.editAward(payload.id, payload.name, payload.desc, payload.image, callback);
     };
 
-    Module.getAwards = function (socket, callback) {
+    Sockets.getAwards = function (socket, callback) {
         database.getAllAwards(callback);
     };
 
-    Module.getSettings = function (socket, payload, callback) {
+    Sockets.getSettings = function (socket, payload, callback) {
         settings.get(callback);
     };
 
-    Module.saveSettings = function (socket, payload, callback) {
+    Sockets.saveSettings = function (socket, payload, callback) {
         controller.saveValidSettings(payload.settings, callback);
     };
 
-    Module.searchUser = function (socket, payload, callback) {
+    Sockets.searchUser = function (socket, payload, callback) {
         user.search({
             query     : payload.username,
             searchBy  : ['username'],
