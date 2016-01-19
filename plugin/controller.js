@@ -52,6 +52,10 @@
         ], done);
     };
 
+    Controller.deleteGrantById = function (gid, done) {
+        database.deleteGrant(gid, done);
+    };
+
     Controller.deleteUserGrants = function (uid, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid, -1),

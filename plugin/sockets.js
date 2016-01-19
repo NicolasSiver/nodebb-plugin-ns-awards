@@ -21,6 +21,7 @@
         sockets[constants.SOCKETS].awardUsers = Module.awardUsers;
         sockets[constants.SOCKETS].createAward = Module.createAward;
         sockets[constants.SOCKETS].deleteAward = Module.deleteAward;
+        sockets[constants.SOCKETS].deleteGrant = Module.deleteGrant;
         sockets[constants.SOCKETS].editAward = Module.editAward;
         sockets[constants.SOCKETS].getAwards = Module.getAwards;
         sockets[constants.SOCKETS].getSettings = Module.getSettings;
@@ -57,7 +58,7 @@
                     async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
                     async.apply(fse.remove, file.path)
                 ], function (e) {
-                    if(e){
+                    if (e) {
                         return next(e);
                     }
                     next(null, file);
@@ -91,6 +92,10 @@
                 ], next);
             }
         ], callback);
+    };
+
+    Module.deleteGrant = function (socket, payload, callback) {
+        controller.deleteGrantById(payload.id, callback);
     };
 
     Module.editAward = function (socket, payload, callback) {
