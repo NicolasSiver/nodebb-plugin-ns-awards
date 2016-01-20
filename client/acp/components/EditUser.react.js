@@ -3,7 +3,8 @@ var Actions          = require('../actions/Actions'),
     Autocomplete     = require('./Autocomplete.react'),
     EditUserStore    = require('../stores/EditUserStore'),
     React            = require('react'),
-    SearchUsersStore = require('../stores/SearchUsersStore');
+    SearchUsersStore = require('../stores/SearchUsersStore'),
+    UserItemView     = require('./UserItemView.react');
 
 function getSearchResult() {
     return {
@@ -35,7 +36,7 @@ var EditUser = React.createClass({
 
     render: function () {
         return (
-            <div>
+            <div className="edit-users">
                 <Autocomplete
                     placeholder="Enter Username"
                     valueDidChange={Actions.searchUser}
@@ -47,6 +48,14 @@ var EditUser = React.createClass({
                     options={this.state.searchUsers.map(function(user){
                         return {label: user.username, value: user.uid};
                     })}/>
+
+                <div className="users-list">
+                    {this.state.users.map(function (user) {
+                        return <UserItemView
+                            key={user.uid}
+                            user={user}/>;
+                    })}
+                </div>
             </div>
         );
     },

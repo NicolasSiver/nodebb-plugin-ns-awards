@@ -4,8 +4,8 @@ var React          = require('react'),
     classNames     = require('classnames'),
     ImageUpdate    = require('./ImageUpdate.react'),
     pathUtils      = require('../utils/PathUtils'),
-    noop           = require('lodash/utility/noop')
-Actions = require('../actions/Actions');
+    noop           = require('lodash/utility/noop'),
+    Actions        = require('../actions/Actions');
 
 
 var AwardsListItemView = React.createClass({
@@ -19,10 +19,10 @@ var AwardsListItemView = React.createClass({
 
     getInitialState: function () {
         return {
-            name      : this.props.award.name,
-            desc      : this.props.award.desc,
-            dataUrl   : '',
-            initImage : this.props.award.image
+            name     : this.props.award.name,
+            desc     : this.props.award.desc,
+            dataUrl  : '',
+            initImage: this.props.award.image
         }
     },
 

@@ -45,8 +45,7 @@ var Donate = React.createClass({
                             <button
                                 className="btn btn-primary"
                                 type="button"
-                                onClick={this._donateDidClick}>Donate
-                                <small>via Stripe</small>
+                                onClick={this._donateDidClick}>Donate <small>via Stripe</small>
                             </button>
                         </span>
                 </div>

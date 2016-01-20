@@ -7,6 +7,29 @@
 .manage-awards .tab-content {
   margin-top: 16px;
 }
+.manage-awards .users-list .user {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 16px 0;
+}
+.manage-awards .users-list .user .aw-avatar {
+  width: 112px;
+}
+.manage-awards .users-list .user .details {
+  display: flex;
+  flex-flow: column;
+  flex: 1 1 auto;
+  margin-left: 16px;
+}
+.manage-awards .users-list .user .details h5 {
+  font-size: 1.2em;
+  margin-top: 0;
+}
+.manage-awards .users-list .user .details .stats {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
 .awards-list {
   list-style-type: none;
   margin: 0;

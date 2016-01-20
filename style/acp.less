@@ -6,6 +6,36 @@
   .tab-content {
     margin-top: @aw-margin;
   }
+
+  .users-list {
+    .user {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: @aw-margin 0;
+
+      .aw-avatar {
+        width: @aw-avatar-size;
+      }
+
+      .details {
+        display: flex;
+        flex-flow: column;
+        flex: 1 1 auto;
+        margin-left: @aw-margin;
+
+        h5 {
+          font-size: 1.2em;
+          margin-top: 0;
+        }
+
+        .stats {
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
 }
 
 .awards-list {
