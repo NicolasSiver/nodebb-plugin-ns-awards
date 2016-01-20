@@ -1,4 +1,5 @@
 var Actions        = require('../actions/Actions'),
+    Avatar         = require('./Avatar.react'),
     classNames     = require('classnames'),
     React          = require('react'),
     ReactPropTypes = React.PropTypes;
@@ -11,9 +12,7 @@ var UserItemView = React.createClass({
     render: function () {
         return (
             <div className="user">
-                <div className="aw-avatar">
-                    <img className="img-responsive" src={this.props.user.picture}/>
-                </div>
+                <Avatar user={this.props.user}/>
                 <div className="details">
                     <h5>{this.props.user.username}</h5>
                     <div className="stats">
