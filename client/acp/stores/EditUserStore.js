@@ -38,20 +38,24 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case Constants.EVENT_USER_DID_SELECT:
             _users = _users.concat(action.payload.user);
-            EditUserStore.emitChange();
+            getAwards(action.payload.user.uid);
             break;
         case Constants.EVENT_GET_USER_AWARDS:
-            socket.emit(API.GET_GRANTS, {
-                uid: action.payload.uid
-            }, function (error, result) {
-                _grants = _grants.slice();
-                _grants[action.payload.uid] = result;
-                EditUserStore.emitChange();
-            });
+            getAwards(action.payload.uid);
             break;
         default:
             return true;
     }
 });
+
+function getAwards(uid) {
+    socket.emit(API.GET_GRANTS, {
+        uid: uid
+    }, function (error, result) {
+        _grants = _grants.slice();
+        _grants[uid] = result;
+        EditUserStore.emitChange();
+    });
+}
 
 module.exports = EditUserStore;
