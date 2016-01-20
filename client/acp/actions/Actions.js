@@ -49,6 +49,15 @@ module.exports = {
         });
     },
 
+    getUserAwards: function (uid) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GET_USER_AWARDS,
+            payload   : {
+                uid: uid
+            }
+        });
+    },
+
     getSettings: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_GET_SETTINGS
