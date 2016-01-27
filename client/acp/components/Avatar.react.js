@@ -8,7 +8,6 @@ var UserItemView = React.createClass({
     },
 
     render: function () {
-        console.log(this.props.user);
         var content;
         if (this.props.user.picture) {
             content = <img className="img-responsive" src={this.props.user.picture}/>;

@@ -8,6 +8,7 @@
   margin-top: 16px;
 }
 .manage-awards .users-list .user {
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   padding: 16px 0;
@@ -37,6 +38,11 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+}
+.manage-awards .users-list .user .user-close {
+  position: absolute;
+  top: 16px;
+  right: 0;
 }
 .awards-list {
   list-style-type: none;

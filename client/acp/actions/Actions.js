@@ -127,5 +127,14 @@ module.exports = {
             index     : index,
             uid       : uid
         });
+    },
+
+    unselectUser: function (user) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_USER_DID_UNSELECT,
+            payload   : {
+                user: user
+            }
+        });
     }
 };

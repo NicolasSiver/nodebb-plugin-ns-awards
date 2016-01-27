@@ -9,6 +9,7 @@
 
   .users-list {
     .user {
+      position: relative;
       display: flex;
       flex-flow: row nowrap;
       padding: @aw-margin 0;
@@ -42,6 +43,12 @@
           flex-flow: row wrap;
           justify-content: space-between;
         }
+      }
+
+      .user-close {
+        position: absolute;
+        top: @aw-margin;
+        right: 0;
       }
     }
   }

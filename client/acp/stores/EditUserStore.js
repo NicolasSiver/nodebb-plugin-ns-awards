@@ -43,6 +43,12 @@ AppDispatcher.register(function (action) {
         case Constants.EVENT_GET_USER_AWARDS:
             getAwards(action.payload.uid);
             break;
+        case Constants.EVENT_USER_DID_UNSELECT:
+            _users = _users.filter(function (user) {
+                return user.uid !== action.payload.user.uid;
+            });
+            EditUserStore.emitChange();
+            break;
         default:
             return true;
     }

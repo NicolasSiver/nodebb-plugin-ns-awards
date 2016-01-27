@@ -17,6 +17,7 @@ module.exports = keyMirror({
     EVENT_SAVE_SETTINGS             : null,
     EVENT_SEARCH_USER               : null,
     EVENT_SECTION_WILL_SELECT       : null,
+    EVENT_USER_DID_UNSELECT         : null,
     EVENT_USER_DID_SELECT           : null,
 
     PANEL_GRANT_AWARD: null,
@@ -156,6 +157,15 @@ module.exports = {
             actionType: Constants.EVENT_UNPICK_USER_FROM_SEARCH,
             index     : index,
             uid       : uid
+        });
+    },
+
+    unselectUser: function (user) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_USER_DID_UNSELECT,
+            payload   : {
+                user: user
+            }
         });
     }
 };
@@ -322,7 +332,6 @@ var UserItemView = React.createClass({displayName: "UserItemView",
     },
 
     render: function () {
-        console.log(this.props.user);
         var content;
         if (this.props.user.picture) {
             content = React.createElement("img", {className: "img-responsive", src: this.props.user.picture});
@@ -1304,6 +1313,10 @@ var UserItemView = React.createClass({displayName: "UserItemView",
         user: ReactPropTypes.object.isRequired
     },
 
+    closeDidClick: function () {
+        Actions.unselectUser(this.props.user);
+    },
+
     render: function () {
         return (
             React.createElement("div", {className: "user"}, 
@@ -1324,6 +1337,10 @@ var UserItemView = React.createClass({displayName: "UserItemView",
                     React.createElement("div", {className: "awards"}
 
                     )
+                ), 
+                React.createElement("div", {className: "user-close"}, 
+                    React.createElement("i", {className: "fa fa-times icon-danger icon-control", 
+                       onClick: this.closeDidClick.bind(this)})
                 )
             )
         );
@@ -23887,6 +23904,12 @@ AppDispatcher.register(function (action) {
             break;
         case Constants.EVENT_GET_USER_AWARDS:
             getAwards(action.payload.uid);
+            break;
+        case Constants.EVENT_USER_DID_UNSELECT:
+            _users = _users.filter(function (user) {
+                return user.uid !== action.payload.user.uid;
+            });
+            EditUserStore.emitChange();
             break;
         default:
             return true;

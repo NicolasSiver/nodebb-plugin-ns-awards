@@ -9,6 +9,10 @@ var UserItemView = React.createClass({
         user: ReactPropTypes.object.isRequired
     },
 
+    closeDidClick: function () {
+        Actions.unselectUser(this.props.user);
+    },
+
     render: function () {
         return (
             <div className="user">
@@ -29,6 +33,10 @@ var UserItemView = React.createClass({
                     <div className="awards">
 
                     </div>
+                </div>
+                <div className="user-close">
+                    <i className="fa fa-times icon-danger icon-control"
+                       onClick={this.closeDidClick.bind(this)}></i>
                 </div>
             </div>
         );
