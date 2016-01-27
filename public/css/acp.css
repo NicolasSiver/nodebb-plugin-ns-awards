@@ -7,6 +7,16 @@
 .manage-awards .tab-content {
   margin-top: 16px;
 }
+.manage-awards .awards-granted {
+  display: flex;
+  flex-flow: row wrap;
+}
+.manage-awards .awards-granted .award-badge {
+  width: 24px;
+  height: 24px;
+  margin: 4px;
+  cursor: pointer;
+}
 .manage-awards .users-list .user {
   position: relative;
   display: flex;

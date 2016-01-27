@@ -2,7 +2,8 @@ var Actions        = require('../actions/Actions'),
     Avatar         = require('./Avatar.react'),
     classNames     = require('classnames'),
     React          = require('react'),
-    ReactPropTypes = React.PropTypes;
+    ReactPropTypes = React.PropTypes,
+    UserAwardList  = require('./UserAwardList.react');
 
 var UserItemView = React.createClass({
     propTypes: {
@@ -31,7 +32,8 @@ var UserItemView = React.createClass({
                         </div>
                     </div>
                     <div className="awards">
-
+                        <UserAwardList
+                            items={this.props.user.awards}/>
                     </div>
                 </div>
                 <div className="user-close">
