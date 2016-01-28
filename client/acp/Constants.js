@@ -2,7 +2,6 @@ var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
     EVENT_AWARD_DID_SELECT          : null,
-    EVENT_AWARD_USERS               : null,
     EVENT_CLEAR_REWARD_DETAILS      : null,
     EVENT_CLEAR_SEARCH_RESULT       : null,
     EVENT_CREATE_AWARD              : null,

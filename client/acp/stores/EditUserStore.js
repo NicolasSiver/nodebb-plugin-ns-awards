@@ -6,6 +6,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
 
 var CHANGE_EVENT     = 'change',
     API              = {
+        AWARD_USERS : 'plugins.ns-awards.awardUsers',
         DELETE_GRANT: 'plugins.ns-awards.deleteGrant',
         GET_GRANTS  : 'plugins.ns-awards.getGrantsWithAwards'
     },
@@ -72,6 +73,26 @@ AppDispatcher.register(function (action) {
             _selectedAwardId = 0;
             _rewardReason = '';
             EditUserStore.emitChange();
+            break;
+        case Constants.EVENT_REWARD_USERS:
+            socket.emit(API.AWARD_USERS, {
+                users : _users,
+                award : _selectedAwardId,
+                reason: _rewardReason
+            }, function (error, award) {
+                if (error) {
+                    return console.error(error);
+                }
+
+                _selectedAwardId = 0;
+                _rewardReason = '';
+                EditUserStore.emitChange();
+
+                // Update awards for rewarded users
+                _users.forEach(function(user){
+                    getAwards(user.uid);
+                });
+            });
             break;
         default:
             return true;
