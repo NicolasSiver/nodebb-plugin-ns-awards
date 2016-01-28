@@ -24,8 +24,8 @@
   "homepage": "https://github.com/NicolasSiver/nodebb-plugin-ns-awards#readme",
   "dependencies": {
     "async": "^1.5.2",
-    "fs-extra": "^0.26.4",
-    "lodash": "^3.7.0",
+    "fs-extra": "^0.26.5",
+    "lodash": "^4.0.1",
     "multer": "^1.1.0",
     "object-assign": "^4.0.1",
     "shortid": "^2.2.4",
