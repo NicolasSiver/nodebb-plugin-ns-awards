@@ -1,4 +1,5 @@
-var React         = require('react'),
+var AwardSelector = require('./AwardSelector.react'),
+    React         = require('react'),
     EditUser      = require('./EditUser.react');
 
 var Manage = React.createClass({
@@ -9,6 +10,7 @@ var Manage = React.createClass({
                     <EditUser />
                 </div>
                 <div className="col-md-5">
+                    <AwardSelector />
                 </div>
             </div>
         );
