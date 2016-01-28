@@ -1,9 +1,10 @@
-var React            = require('react'),
-    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
-    AwardsStore      = require('../stores/AwardsStore'),
+var Actions          = require('../actions/Actions'),
     assign           = require('react/lib/Object.assign'),
-    Actions          = require('../actions/Actions'),
-    Constants        = require('../Constants');
+    AwardsStore      = require('../stores/AwardsStore'),
+    Constants        = require('../Constants'),
+    EditUserStore    = require('../stores/EditUserStore'),
+    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
+    React            = require('react');
 
 function getAwards() {
     return {
@@ -11,15 +12,23 @@ function getAwards() {
     };
 }
 
+function getUsers() {
+    return {
+        users: EditUserStore.getUsers()
+    }
+}
+
 var AwardSelector = React.createClass({
     mixins: [LinkedStateMixin],
 
     componentDidMount: function () {
         AwardsStore.addChangeListener(this.awardsDidChange);
+        EditUserStore.addChangeListener(this.usersDidChange);
     },
 
     componentWillUnmount: function () {
         AwardsStore.removeChangeListener(this.awardsDidChange);
+        EditUserStore.removeChangeListener(this.usersDidChange);
     },
 
     awardsDidChange: function () {
@@ -30,7 +39,11 @@ var AwardSelector = React.createClass({
         return assign({
             awardId: 0,
             reason : ''
-        }, getAwards());
+        }, getAwards(), getUsers());
+    },
+
+    isValid: function () {
+        return this.state.awardId && this.state.reason && this.state.users.length;
     },
 
     render: function () {
@@ -65,12 +78,16 @@ var AwardSelector = React.createClass({
                     <button
                         className="btn btn-primary"
                         onClick={this.props.successDidClick}
-                        disabled={false ? '' : 'disabled'}
-                        type="button">Award User
+                        disabled={this.isValid() ? '' : 'disabled'}
+                        type="button">Reward User{this.state.users.length > 1 ? 's' : ''}
                     </button>
                 </div>
             </div>
         );
+    },
+
+    usersDidChange: function () {
+        this.setState(getUsers());
     },
 
     _awardDidSelect: function (e) {
@@ -82,10 +99,6 @@ var AwardSelector = React.createClass({
     _cancel: function () {
         this.replaceState(this.getInitialState());
         Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
-    },
-
-    _isValid: function () {
-        return this.state.awardId && this.state.reason;
     },
 
     _mainButtonDidClick: function () {
