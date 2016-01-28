@@ -60,13 +60,12 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 ## TODO
 
 - Add Sections to categorise awards, like: Forum, One time event, etc.
-- Add User Manager: manager user's award - order, overview
+- Manage: ability to change order of awards
 - Add Notifications
 - Use NodeBB's alerts (app.alert)
 - Add HTML to notifications, bold text, etc.
 - ACP: Add Awarded Users statistics
 - ACP: Add small avatar preview to dropdown when you are looking for users
-- Create Profile template with popovers (currently It is a list)
 - Add Achievements section, where rules can be specified, and same Awards could be granted automatically (auto-awards with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc)
 - Add Tests (Mocha/Tape)
 - Beautify `Create Award` panel

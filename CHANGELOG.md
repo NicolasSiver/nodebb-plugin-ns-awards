@@ -5,6 +5,7 @@
 - Update user delete hook to `static:user.delete`
 - Fix #6 issue with limit when user is deleted
 - Improve Autocomplete component: clear search result
+- Introduce Manage section: ability to reward multiple users; manage user's awards;
 
 ## v2.0.1 - 12/15/2015
 
