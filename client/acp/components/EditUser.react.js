@@ -38,6 +38,12 @@ var EditUser = React.createClass({
     },
 
     render: function () {
+        var prompt;
+        if (this.state.users.length == 0) {
+            prompt = <div className="no-users">
+                Use search box to find users. You can select several users to grant awards and to edit them.
+            </div>;
+        }
         return (
             <div className="edit-users">
                 <Autocomplete
@@ -53,6 +59,7 @@ var EditUser = React.createClass({
                     })}/>
 
                 <div className="users-list">
+                    {prompt}
                     {this.state.users.map(function (user) {
                         return <UserItemView
                             key={user.uid}

@@ -17,6 +17,9 @@
   margin: 4px;
   cursor: pointer;
 }
+.manage-awards .users-list .no-users {
+  padding: 16px 0;
+}
 .manage-awards .users-list .user {
   position: relative;
   display: flex;

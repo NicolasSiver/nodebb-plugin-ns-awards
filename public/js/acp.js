@@ -977,6 +977,12 @@ var EditUser = React.createClass({displayName: "EditUser",
     },
 
     render: function () {
+        var prompt;
+        if (this.state.users.length == 0) {
+            prompt = React.createElement("div", {className: "no-users"}, 
+                "Use search box to find users. You can select several users to grant awards and to edit them."
+            );
+        }
         return (
             React.createElement("div", {className: "edit-users"}, 
                 React.createElement(Autocomplete, {
@@ -992,6 +998,7 @@ var EditUser = React.createClass({displayName: "EditUser",
                     })}), 
 
                 React.createElement("div", {className: "users-list"}, 
+                    prompt, 
                     this.state.users.map(function (user) {
                         return React.createElement(UserItemView, {
                             key: user.uid, 
