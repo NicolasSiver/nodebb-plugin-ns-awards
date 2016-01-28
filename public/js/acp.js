@@ -564,7 +564,7 @@ var AwardSelector = React.createClass({displayName: "AwardSelector",
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {htmlFor: "awardReason"}, "Reason"), 
                     React.createElement("textarea", {className: "form-control", rows: "4", id: "awardReason", 
-                              placeholder: "Enter reason, what accomplishments user have achieved to have such award", 
+                              placeholder: "Enter reason, what accomplishments user(s) have achieved to have such award", 
                               onChange: this.reasonDidChange, 
                               value: this.state.reason})
                 ), 
