@@ -1,10 +1,9 @@
-var Actions          = require('../actions/Actions'),
-    assign           = require('react/lib/Object.assign'),
-    AwardsStore      = require('../stores/AwardsStore'),
-    Constants        = require('../Constants'),
-    EditUserStore    = require('../stores/EditUserStore'),
-    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
-    React            = require('react');
+var Actions       = require('../actions/Actions'),
+    assign        = require('react/lib/Object.assign'),
+    AwardsStore   = require('../stores/AwardsStore'),
+    Constants     = require('../Constants'),
+    EditUserStore = require('../stores/EditUserStore'),
+    React         = require('react');
 
 function getAwards() {
     return {
@@ -14,12 +13,20 @@ function getAwards() {
 
 function getUsers() {
     return {
-        users: EditUserStore.getUsers()
+        users  : EditUserStore.getUsers(),
+        reason : EditUserStore.getRewardReason(),
+        awardId: EditUserStore.getSelectedAwardId()
     }
 }
 
 var AwardSelector = React.createClass({
-    mixins: [LinkedStateMixin],
+    awardsDidChange: function () {
+        this.setState(getAwards());
+    },
+
+    awardDidSelect: function (e) {
+        Actions.selectAward(e.currentTarget.value);
+    },
 
     componentDidMount: function () {
         AwardsStore.addChangeListener(this.awardsDidChange);
@@ -31,19 +38,16 @@ var AwardSelector = React.createClass({
         EditUserStore.removeChangeListener(this.usersDidChange);
     },
 
-    awardsDidChange: function () {
-        this.setState(getAwards());
-    },
-
     getInitialState: function () {
-        return assign({
-            awardId: 0,
-            reason : ''
-        }, getAwards(), getUsers());
+        return assign({}, getAwards(), getUsers());
     },
 
     isValid: function () {
         return this.state.awardId && this.state.reason && this.state.users.length;
+    },
+
+    reasonDidChange: function(e) {
+        Actions.setRewardReason(e.target.value);
     },
 
     render: function () {
@@ -56,7 +60,7 @@ var AwardSelector = React.createClass({
                 <div className="form-group">
                     <label htmlFor="allAwards">Awards</label>
                     <select className="form-control" value={this.state.awardId} id="allAwards"
-                            onChange={this._awardDidSelect}>
+                            onChange={this.awardDidSelect}>
                         <option value="0" disabled>Please select Award</option>
                         {this.state.awards.map(renderAwardOption)}
                     </select>
@@ -66,18 +70,19 @@ var AwardSelector = React.createClass({
                     <label htmlFor="awardReason">Reason</label>
                     <textarea className="form-control" rows="4" id="awardReason"
                               placeholder="Enter reason, what accomplishments user have achieved to have such award"
-                              valueLink={this.linkState('reason')}></textarea>
+                              onChange={this.reasonDidChange}
+                              value={this.state.reason}></textarea>
                 </div>
 
                 <div className="pull-right panel-controls">
                     <button
-                        className="btn btn-danger"
-                        onClick={this.props.cancelDidClick}
+                        className="btn btn-warning"
+                        onClick={Actions.clearRewardDetails}
                         type="button">Clear
                     </button>
                     <button
                         className="btn btn-primary"
-                        onClick={this.props.successDidClick}
+                        onClick={Actions.rewardUsers}
                         disabled={this.isValid() ? '' : 'disabled'}
                         type="button">Reward User{this.state.users.length > 1 ? 's' : ''}
                     </button>
@@ -88,26 +93,6 @@ var AwardSelector = React.createClass({
 
     usersDidChange: function () {
         this.setState(getUsers());
-    },
-
-    _awardDidSelect: function (e) {
-        this.setState({
-            awardId: e.currentTarget.value
-        });
-    },
-
-    _cancel: function () {
-        this.replaceState(this.getInitialState());
-        Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
-    },
-
-    _mainButtonDidClick: function () {
-        this.setState({open: true});
-    },
-
-    _save: function () {
-        Actions.awardUsers(this.state.users.slice(), this.state.awardId, this.state.reason);
-        this._cancel();
     }
 });
 

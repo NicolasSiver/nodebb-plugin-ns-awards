@@ -11,6 +11,12 @@ module.exports = {
         });
     },
 
+    clearRewardDetails: function() {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_CLEAR_REWARD_DETAILS
+        });
+    },
+
     clearUserSearch: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_CLEAR_SEARCH_RESULT
@@ -91,6 +97,12 @@ module.exports = {
         });
     },
 
+    rewardUsers: function () {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_USERS
+        });
+    },
+
     saveSettings: function (settings) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SAVE_SETTINGS,
@@ -105,12 +117,28 @@ module.exports = {
         });
     },
 
+    selectAward: function (awardId) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_AWARD_DID_SELECT,
+            payload   : {
+                awardId: awardId
+            }
+        });
+    },
+
     selectUser: function (user) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_USER_DID_SELECT,
             payload   : {
                 user: user
             }
+        });
+    },
+
+    setRewardReason: function (text) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_REASON_DID_CHANGE,
+            payload   : text
         });
     },
 

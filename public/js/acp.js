@@ -2,7 +2,9 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
+    EVENT_AWARD_DID_SELECT          : null,
     EVENT_AWARD_USERS               : null,
+    EVENT_CLEAR_REWARD_DETAILS      : null,
     EVENT_CLEAR_SEARCH_RESULT       : null,
     EVENT_CREATE_AWARD              : null,
     EVENT_DELETE_AWARD              : null,
@@ -14,6 +16,8 @@ module.exports = keyMirror({
     EVENT_PANEL_CANCEL              : null,
     EVENT_PICK_USER_FROM_SEARCH     : null,
     EVENT_PICK_USER_FROM_SEARCH_AT  : null,
+    EVENT_REWARD_REASON_DID_CHANGE  : null,
+    EVENT_REWARD_USERS              : null,
     EVENT_SAVE_SETTINGS             : null,
     EVENT_SEARCH_USER               : null,
     EVENT_SECTION_WILL_SELECT       : null,
@@ -39,6 +43,12 @@ module.exports = {
             users     : users,
             award     : awardId,
             reason    : reason
+        });
+    },
+
+    clearRewardDetails: function() {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_CLEAR_REWARD_DETAILS
         });
     },
 
@@ -122,6 +132,12 @@ module.exports = {
         });
     },
 
+    rewardUsers: function () {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_USERS
+        });
+    },
+
     saveSettings: function (settings) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SAVE_SETTINGS,
@@ -136,12 +152,28 @@ module.exports = {
         });
     },
 
+    selectAward: function (awardId) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_AWARD_DID_SELECT,
+            payload   : {
+                awardId: awardId
+            }
+        });
+    },
+
     selectUser: function (user) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_USER_DID_SELECT,
             payload   : {
                 user: user
             }
+        });
+    },
+
+    setRewardReason: function (text) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_REASON_DID_CHANGE,
+            payload   : text
         });
     },
 
@@ -462,13 +494,12 @@ var AwardCreator = React.createClass({displayName: "AwardCreator",
 module.exports = AwardCreator;
 
 },{"../actions/Actions":2,"../utils/PathUtils":200,"./ImageDrop.react":12,"./PanelControls.react":15,"./PromptView.react":16,"react":193,"react/lib/LinkedStateMixin":58}],6:[function(require,module,exports){
-var Actions          = require('../actions/Actions'),
-    assign           = require('react/lib/Object.assign'),
-    AwardsStore      = require('../stores/AwardsStore'),
-    Constants        = require('../Constants'),
-    EditUserStore    = require('../stores/EditUserStore'),
-    LinkedStateMixin = require('react/lib/LinkedStateMixin'),
-    React            = require('react');
+var Actions       = require('../actions/Actions'),
+    assign        = require('react/lib/Object.assign'),
+    AwardsStore   = require('../stores/AwardsStore'),
+    Constants     = require('../Constants'),
+    EditUserStore = require('../stores/EditUserStore'),
+    React         = require('react');
 
 function getAwards() {
     return {
@@ -478,12 +509,20 @@ function getAwards() {
 
 function getUsers() {
     return {
-        users: EditUserStore.getUsers()
+        users  : EditUserStore.getUsers(),
+        reason : EditUserStore.getRewardReason(),
+        awardId: EditUserStore.getSelectedAwardId()
     }
 }
 
 var AwardSelector = React.createClass({displayName: "AwardSelector",
-    mixins: [LinkedStateMixin],
+    awardsDidChange: function () {
+        this.setState(getAwards());
+    },
+
+    awardDidSelect: function (e) {
+        Actions.selectAward(e.currentTarget.value);
+    },
 
     componentDidMount: function () {
         AwardsStore.addChangeListener(this.awardsDidChange);
@@ -495,19 +534,16 @@ var AwardSelector = React.createClass({displayName: "AwardSelector",
         EditUserStore.removeChangeListener(this.usersDidChange);
     },
 
-    awardsDidChange: function () {
-        this.setState(getAwards());
-    },
-
     getInitialState: function () {
-        return assign({
-            awardId: 0,
-            reason : ''
-        }, getAwards(), getUsers());
+        return assign({}, getAwards(), getUsers());
     },
 
     isValid: function () {
         return this.state.awardId && this.state.reason && this.state.users.length;
+    },
+
+    reasonDidChange: function(e) {
+        Actions.setRewardReason(e.target.value);
     },
 
     render: function () {
@@ -520,7 +556,7 @@ var AwardSelector = React.createClass({displayName: "AwardSelector",
                 React.createElement("div", {className: "form-group"}, 
                     React.createElement("label", {htmlFor: "allAwards"}, "Awards"), 
                     React.createElement("select", {className: "form-control", value: this.state.awardId, id: "allAwards", 
-                            onChange: this._awardDidSelect}, 
+                            onChange: this.awardDidSelect}, 
                         React.createElement("option", {value: "0", disabled: true}, "Please select Award"), 
                         this.state.awards.map(renderAwardOption)
                     )
@@ -530,18 +566,19 @@ var AwardSelector = React.createClass({displayName: "AwardSelector",
                     React.createElement("label", {htmlFor: "awardReason"}, "Reason"), 
                     React.createElement("textarea", {className: "form-control", rows: "4", id: "awardReason", 
                               placeholder: "Enter reason, what accomplishments user have achieved to have such award", 
-                              valueLink: this.linkState('reason')})
+                              onChange: this.reasonDidChange, 
+                              value: this.state.reason})
                 ), 
 
                 React.createElement("div", {className: "pull-right panel-controls"}, 
                     React.createElement("button", {
-                        className: "btn btn-danger", 
-                        onClick: this.props.cancelDidClick, 
+                        className: "btn btn-warning", 
+                        onClick: Actions.clearRewardDetails, 
                         type: "button"}, "Clear"
                     ), 
                     React.createElement("button", {
                         className: "btn btn-primary", 
-                        onClick: this.props.successDidClick, 
+                        onClick: Actions.rewardUsers, 
                         disabled: this.isValid() ? '' : 'disabled', 
                         type: "button"}, "Reward User", this.state.users.length > 1 ? 's' : ''
                     )
@@ -552,32 +589,12 @@ var AwardSelector = React.createClass({displayName: "AwardSelector",
 
     usersDidChange: function () {
         this.setState(getUsers());
-    },
-
-    _awardDidSelect: function (e) {
-        this.setState({
-            awardId: e.currentTarget.value
-        });
-    },
-
-    _cancel: function () {
-        this.replaceState(this.getInitialState());
-        Actions.panelCancel(Constants.PANEL_GRANT_AWARD);
-    },
-
-    _mainButtonDidClick: function () {
-        this.setState({open: true});
-    },
-
-    _save: function () {
-        Actions.awardUsers(this.state.users.slice(), this.state.awardId, this.state.reason);
-        this._cancel();
     }
 });
 
 module.exports = AwardSelector;
 
-},{"../Constants":1,"../actions/Actions":2,"../stores/AwardsStore":194,"../stores/EditUserStore":195,"react":193,"react/lib/LinkedStateMixin":58,"react/lib/Object.assign":62}],7:[function(require,module,exports){
+},{"../Constants":1,"../actions/Actions":2,"../stores/AwardsStore":194,"../stores/EditUserStore":195,"react":193,"react/lib/Object.assign":62}],7:[function(require,module,exports){
 var React            = require('react'),
     AwardCreator     = require('./AwardCreator.react'),
     TabManager       = require('./TabManager.react'),
@@ -24021,15 +24038,18 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     assign        = require('react/lib/Object.assign'),
     Constants     = require('../Constants'),
     EventEmitter  = require('events').EventEmitter,
-    socket        = (typeof window !== "undefined" ? window['socket'] : typeof global !== "undefined" ? global['socket'] : null),
+    socket        = (typeof window !== "undefined" ? window['socket'] : typeof global !== "undefined" ? global['socket'] : null);
 
-    CHANGE_EVENT  = 'change',
-    API           = {
+var CHANGE_EVENT     = 'change',
+    API              = {
         DELETE_GRANT: 'plugins.ns-awards.deleteGrant',
         GET_GRANTS  : 'plugins.ns-awards.getGrantsWithAwards'
     },
-    _grants       = [],
-    _users        = [];
+
+    _grants          = [],
+    _users           = [],
+    _rewardReason    = '',
+    _selectedAwardId = 0;
 
 var EditUserStore = assign({}, EventEmitter.prototype, {
     addChangeListener: function (listener) {
@@ -24044,6 +24064,14 @@ var EditUserStore = assign({}, EventEmitter.prototype, {
         return _grants[uid] || [];
     },
 
+    getRewardReason: function () {
+        return _rewardReason;
+    },
+
+    getSelectedAwardId: function () {
+        return _selectedAwardId;
+    },
+
     getUsers: function () {
         return _users;
     },
@@ -24055,9 +24083,17 @@ var EditUserStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (action) {
     switch (action.actionType) {
+        case Constants.EVENT_REWARD_REASON_DID_CHANGE:
+            _rewardReason = action.payload;
+            EditUserStore.emitChange();
+            break;
         case Constants.EVENT_USER_DID_SELECT:
             _users = _users.concat(action.payload.user);
             getAwards(action.payload.user.uid);
+            break;
+        case Constants.EVENT_AWARD_DID_SELECT:
+            _selectedAwardId = action.payload.awardId;
+            EditUserStore.emitChange();
             break;
         case Constants.EVENT_GET_USER_AWARDS:
             getAwards(action.payload.uid);
@@ -24066,6 +24102,11 @@ AppDispatcher.register(function (action) {
             _users = _users.filter(function (user) {
                 return user.uid !== action.payload.user.uid;
             });
+            EditUserStore.emitChange();
+            break;
+        case Constants.EVENT_CLEAR_REWARD_DETAILS:
+            _selectedAwardId = 0;
+            _rewardReason = '';
             EditUserStore.emitChange();
             break;
         default:

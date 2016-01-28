@@ -1,7 +1,9 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
+    EVENT_AWARD_DID_SELECT          : null,
     EVENT_AWARD_USERS               : null,
+    EVENT_CLEAR_REWARD_DETAILS      : null,
     EVENT_CLEAR_SEARCH_RESULT       : null,
     EVENT_CREATE_AWARD              : null,
     EVENT_DELETE_AWARD              : null,
@@ -13,6 +15,8 @@ module.exports = keyMirror({
     EVENT_PANEL_CANCEL              : null,
     EVENT_PICK_USER_FROM_SEARCH     : null,
     EVENT_PICK_USER_FROM_SEARCH_AT  : null,
+    EVENT_REWARD_REASON_DID_CHANGE  : null,
+    EVENT_REWARD_USERS              : null,
     EVENT_SAVE_SETTINGS             : null,
     EVENT_SEARCH_USER               : null,
     EVENT_SECTION_WILL_SELECT       : null,
