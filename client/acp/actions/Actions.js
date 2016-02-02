@@ -15,7 +15,7 @@ module.exports = {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_REWARD_EDIT_WILL_CANCEL,
             payload   : {
-                user : user
+                user: user
             }
         });
     },
@@ -64,6 +64,16 @@ module.exports = {
             payload   : {
                 user : user,
                 grant: grant
+            }
+        });
+    },
+
+    editRewardReason: function (user, reasonText) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_REASON_DID_EDIT,
+            payload   : {
+                user: user,
+                text: reasonText
             }
         });
     },

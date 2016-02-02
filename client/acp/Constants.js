@@ -16,6 +16,7 @@ module.exports = keyMirror({
     EVENT_PICK_USER_FROM_SEARCH_AT  : null,
     EVENT_REWARD_EDIT_WILL_CANCEL   : null,
     EVENT_REWARD_REASON_DID_CHANGE  : null,
+    EVENT_REWARD_REASON_DID_EDIT    : null,
     EVENT_REWARD_USERS              : null,
     EVENT_REWARD_WILL_EDIT          : null,
     EVENT_SAVE_SETTINGS             : null,

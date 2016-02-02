@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher'),
     assign        = require('react/lib/Object.assign'),
     Constants     = require('../Constants'),
     EventEmitter  = require('events').EventEmitter,
+    objectAssign  = require('object-assign'),
     socket        = require('socket');
 
 var CHANGE_EVENT     = 'change',
@@ -57,9 +58,17 @@ AppDispatcher.register(function (action) {
             _rewardReason = action.payload;
             EditUserStore.emitChange();
             break;
+        case Constants.EVENT_REWARD_REASON_DID_EDIT:
+            _edits = _edits.slice();
+            var edit = _edits[action.payload.user.uid];
+            edit = objectAssign({}, edit);
+            edit.reason = action.payload.text;
+            _edits[action.payload.user.uid] = edit;
+            EditUserStore.emitChange();
+            break;
         case Constants.EVENT_REWARD_WILL_EDIT:
             _edits = _edits.slice();
-            _edits[action.payload.user.uid] = action.payload.grant;
+            _edits[action.payload.user.uid] = objectAssign({}, action.payload.grant);
             EditUserStore.emitChange();
             break;
         case Constants.EVENT_REWARD_EDIT_WILL_CANCEL:

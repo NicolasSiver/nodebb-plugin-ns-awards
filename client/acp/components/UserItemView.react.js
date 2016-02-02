@@ -1,6 +1,7 @@
 var Actions        = require('../actions/Actions'),
     Avatar         = require('./Avatar.react'),
     classNames     = require('classnames'),
+    PanelControls  = require('./PanelControls.react'),
     React          = require('react'),
     ReactPropTypes = React.PropTypes,
     UserAwardList  = require('./UserAwardList.react');
@@ -55,12 +56,29 @@ var UserItemView = React.createClass({
             <div>
                 <p>Awarded by {grant.fromuser.username}</p>
                 <p>Date: {new Date(grant.createtime).toDateString()}</p>
+                <textarea
+                    className="form-control" rows="2"
+                    placeholder="Reason"
+                    value={grant.reason}
+                    onChange={this.reasonDidChange}></textarea>
+                <PanelControls
+                    labelCancel="Delete"
+                    labelSuccess="Save"
+                    valid={this.isSaveAllowed}/>
             </div>
         );
     },
 
     isEditMode: function () {
         return !!this.props.user.rewardEdit;
+    },
+
+    isSaveAllowed: function () {
+        return this.props.user.rewardEdit.reason.length > 0;
+    },
+
+    reasonDidChange: function (e) {
+        Actions.editRewardReason(this.props.user, e.target.value);
     },
 
     render: function () {
