@@ -11,7 +11,16 @@ module.exports = {
         });
     },
 
-    clearRewardDetails: function() {
+    cancelEditReward: function (user) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_EDIT_WILL_CANCEL,
+            payload   : {
+                user : user
+            }
+        });
+    },
+
+    clearRewardDetails: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_CLEAR_REWARD_DETAILS
         });
@@ -46,6 +55,16 @@ module.exports = {
             name      : name,
             desc      : desc,
             file      : file
+        });
+    },
+
+    editReward: function (user, grant) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_WILL_EDIT,
+            payload   : {
+                user : user,
+                grant: grant
+            }
         });
     },
 

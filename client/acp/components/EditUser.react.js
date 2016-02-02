@@ -17,6 +17,7 @@ function getUsers() {
     return {
         users: EditUserStore.getUsers().map(function (user) {
             user.awards = EditUserStore.getUserAwards(user.uid);
+            user.rewardEdit = EditUserStore.getUserEdit(user.uid);
             return user;
         })
     }

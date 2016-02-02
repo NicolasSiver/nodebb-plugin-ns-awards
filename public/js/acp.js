@@ -15,8 +15,10 @@ module.exports = keyMirror({
     EVENT_PANEL_CANCEL              : null,
     EVENT_PICK_USER_FROM_SEARCH     : null,
     EVENT_PICK_USER_FROM_SEARCH_AT  : null,
+    EVENT_REWARD_EDIT_WILL_CANCEL   : null,
     EVENT_REWARD_REASON_DID_CHANGE  : null,
     EVENT_REWARD_USERS              : null,
+    EVENT_REWARD_WILL_EDIT          : null,
     EVENT_SAVE_SETTINGS             : null,
     EVENT_SEARCH_USER               : null,
     EVENT_SECTION_WILL_SELECT       : null,
@@ -45,7 +47,16 @@ module.exports = {
         });
     },
 
-    clearRewardDetails: function() {
+    cancelEditReward: function (user) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_EDIT_WILL_CANCEL,
+            payload   : {
+                user : user
+            }
+        });
+    },
+
+    clearRewardDetails: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_CLEAR_REWARD_DETAILS
         });
@@ -80,6 +91,16 @@ module.exports = {
             name      : name,
             desc      : desc,
             file      : file
+        });
+    },
+
+    editReward: function (user, grant) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_REWARD_WILL_EDIT,
+            payload   : {
+                user : user,
+                grant: grant
+            }
         });
     },
 
@@ -1001,6 +1022,7 @@ function getUsers() {
     return {
         users: EditUserStore.getUsers().map(function (user) {
             user.awards = EditUserStore.getUserAwards(user.uid);
+            user.rewardEdit = EditUserStore.getUserEdit(user.uid);
             return user;
         })
     }
@@ -1460,14 +1482,14 @@ module.exports = TabManager;
 
 },{"../Constants":1,"../actions/Actions":2,"../stores/NavigationStore":202,"./AwardsListView.react":9,"./Donate.react":10,"./Manage.react":14,"./Settings.react":17,"classnames":23,"react":199}],19:[function(require,module,exports){
 var Actions        = require('../actions/Actions'),
-    classNames     = require('classnames'),
     React          = require('react'),
     ReactPropTypes = React.PropTypes,
     ReactTooltip   = require('react-tooltip');
 
 var UserAwardList = React.createClass({displayName: "UserAwardList",
     propTypes: {
-        items: ReactPropTypes.array.isRequired
+        itemDidSelect: ReactPropTypes.func.isRequired,
+        items        : ReactPropTypes.array.isRequired
     },
 
     render: function () {
@@ -1476,7 +1498,7 @@ var UserAwardList = React.createClass({displayName: "UserAwardList",
                 this.props.items.map(function (grant, index) {
                     var id = 'award' + grant.gid;
                     return (
-                        React.createElement("div", {key: index, className: "award-badge", "data-tip": true, "data-for": id}, 
+                        React.createElement("div", {onClick: this.props.itemDidSelect.bind(this, grant), key: index, className: "award-badge", "data-tip": true, "data-for": id}, 
                             React.createElement("img", {className: "img-responsive", src: grant.award.picture}), 
                             React.createElement(ReactTooltip, {id: id}, 
                                 React.createElement("p", null, React.createElement("b", null, grant.award.name)), 
@@ -1485,7 +1507,7 @@ var UserAwardList = React.createClass({displayName: "UserAwardList",
                             )
                         )
                     );
-                })
+                }, this)
             )
         );
     }
@@ -1494,7 +1516,7 @@ var UserAwardList = React.createClass({displayName: "UserAwardList",
 
 module.exports = UserAwardList;
 
-},{"../actions/Actions":2,"classnames":23,"react":199,"react-tooltip":38}],20:[function(require,module,exports){
+},{"../actions/Actions":2,"react":199,"react-tooltip":38}],20:[function(require,module,exports){
 var Actions        = require('../actions/Actions'),
     Avatar         = require('./Avatar.react'),
     classNames     = require('classnames'),
@@ -1507,31 +1529,83 @@ var UserItemView = React.createClass({displayName: "UserItemView",
         user: ReactPropTypes.object.isRequired
     },
 
+    awardDidSelect: function (grant) {
+        Actions.editReward(this.props.user, grant);
+    },
+
     closeDidClick: function () {
-        Actions.unselectUser(this.props.user);
+        (this.isEditMode()) ? Actions.cancelEditReward(this.props.user) : Actions.unselectUser(this.props.user);
+    },
+
+    getAvatarOverlayComponent: function (award) {
+        return (
+            React.createElement("div", {className: "award-overlay"}, 
+                React.createElement("img", {className: "img-responsive", src: award.picture})
+            )
+        );
+    },
+
+    getDetailsComponent: function () {
+        return (
+            React.createElement("div", null, 
+                React.createElement("div", {className: "stats"}, 
+                    React.createElement("div", {className: "metric"}, 
+                        React.createElement("i", {className: "fa fa-file-o"}), " ", this.props.user.postcount
+                    ), 
+                    React.createElement("div", {className: "metric"}, 
+                        React.createElement("i", {className: "fa fa-star-o"}), " ", this.props.user.reputation
+                    ), 
+                    React.createElement("div", {className: "metric"}, 
+                        React.createElement("i", {className: "fa fa-calendar-o"}), " ", new Date(this.props.user.joindate).toDateString()
+                    )
+                ), 
+                React.createElement("div", {className: "awards"}, 
+                    React.createElement(UserAwardList, {
+                        itemDidSelect: this.awardDidSelect, 
+                        items: this.props.user.awards})
+                )
+            )
+        );
+    },
+
+    getEditComponent: function (grant) {
+        console.log(grant);
+        return (
+            React.createElement("div", null, 
+                React.createElement("p", null, "Awarded by ", grant.fromuser.username), 
+                React.createElement("p", null, "Date: ", new Date(grant.createtime).toDateString())
+            )
+        );
+    },
+
+    isEditMode: function () {
+        return !!this.props.user.rewardEdit;
     },
 
     render: function () {
+        var detailsComponent, editComponent, title, avatarOverlayComponent, avatarOverlayClass;
+
+        if (!this.isEditMode()) {
+            detailsComponent = this.getDetailsComponent();
+            title = this.props.user.username;
+        } else {
+            avatarOverlayComponent = this.getAvatarOverlayComponent(this.props.user.rewardEdit.award);
+            editComponent = this.getEditComponent(this.props.user.rewardEdit);
+            title = this.props.user.rewardEdit.award.name;
+        }
+
+        avatarOverlayClass = classNames('avatar-overlay', {'overlay-active': this.isEditMode()});
+
         return (
             React.createElement("div", {className: "user"}, 
-                React.createElement(Avatar, {user: this.props.user}), 
+                React.createElement("div", {className: avatarOverlayClass}, 
+                    React.createElement(Avatar, {user: this.props.user}), 
+                    avatarOverlayComponent
+                ), 
                 React.createElement("div", {className: "details"}, 
-                    React.createElement("h5", null, this.props.user.username), 
-                    React.createElement("div", {className: "stats"}, 
-                        React.createElement("div", {className: "metric"}, 
-                            React.createElement("i", {className: "fa fa-file-o"}), " ", this.props.user.postcount
-                        ), 
-                        React.createElement("div", {className: "metric"}, 
-                            React.createElement("i", {className: "fa fa-star-o"}), " ", this.props.user.reputation
-                        ), 
-                        React.createElement("div", {className: "metric"}, 
-                            React.createElement("i", {className: "fa fa-calendar-o"}), " ", new Date(this.props.user.joindate).toDateString()
-                        )
-                    ), 
-                    React.createElement("div", {className: "awards"}, 
-                        React.createElement(UserAwardList, {
-                            items: this.props.user.awards})
-                    )
+                    React.createElement("h5", null, title), 
+                    detailsComponent, 
+                    editComponent
                 ), 
                 React.createElement("div", {className: "user-close"}, 
                     React.createElement("i", {className: "fa fa-times icon-danger icon-control", 
@@ -24070,6 +24144,7 @@ var CHANGE_EVENT     = 'change',
     },
 
     _grants          = [],
+    _edits           = [],
     _users           = [],
     _rewardReason    = '',
     _selectedAwardId = 0;
@@ -24085,6 +24160,10 @@ var EditUserStore = assign({}, EventEmitter.prototype, {
 
     getUserAwards: function (uid) {
         return _grants[uid] || [];
+    },
+
+    getUserEdit: function (uid) {
+        return _edits[uid];
     },
 
     getRewardReason: function () {
@@ -24108,6 +24187,16 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case Constants.EVENT_REWARD_REASON_DID_CHANGE:
             _rewardReason = action.payload;
+            EditUserStore.emitChange();
+            break;
+        case Constants.EVENT_REWARD_WILL_EDIT:
+            _edits = _edits.slice();
+            _edits[action.payload.user.uid] = action.payload.grant;
+            EditUserStore.emitChange();
+            break;
+        case Constants.EVENT_REWARD_EDIT_WILL_CANCEL:
+            _edits = _edits.slice();
+            _edits[action.payload.user.uid] = undefined;
             EditUserStore.emitChange();
             break;
         case Constants.EVENT_USER_DID_SELECT:
@@ -24147,7 +24236,7 @@ AppDispatcher.register(function (action) {
                 EditUserStore.emitChange();
 
                 // Update awards for rewarded users
-                _users.forEach(function(user){
+                _users.forEach(function (user) {
                     getAwards(user.uid);
                 });
             });

@@ -10,31 +10,83 @@ var UserItemView = React.createClass({
         user: ReactPropTypes.object.isRequired
     },
 
+    awardDidSelect: function (grant) {
+        Actions.editReward(this.props.user, grant);
+    },
+
     closeDidClick: function () {
-        Actions.unselectUser(this.props.user);
+        (this.isEditMode()) ? Actions.cancelEditReward(this.props.user) : Actions.unselectUser(this.props.user);
+    },
+
+    getAvatarOverlayComponent: function (award) {
+        return (
+            <div className="award-overlay">
+                <img className="img-responsive" src={award.picture}/>
+            </div>
+        );
+    },
+
+    getDetailsComponent: function () {
+        return (
+            <div>
+                <div className="stats">
+                    <div className="metric">
+                        <i className="fa fa-file-o"></i> {this.props.user.postcount}
+                    </div>
+                    <div className="metric">
+                        <i className="fa fa-star-o"></i> {this.props.user.reputation}
+                    </div>
+                    <div className="metric">
+                        <i className="fa fa-calendar-o"></i> {new Date(this.props.user.joindate).toDateString()}
+                    </div>
+                </div>
+                <div className="awards">
+                    <UserAwardList
+                        itemDidSelect={this.awardDidSelect}
+                        items={this.props.user.awards}/>
+                </div>
+            </div>
+        );
+    },
+
+    getEditComponent: function (grant) {
+        console.log(grant);
+        return (
+            <div>
+                <p>Awarded by {grant.fromuser.username}</p>
+                <p>Date: {new Date(grant.createtime).toDateString()}</p>
+            </div>
+        );
+    },
+
+    isEditMode: function () {
+        return !!this.props.user.rewardEdit;
     },
 
     render: function () {
+        var detailsComponent, editComponent, title, avatarOverlayComponent, avatarOverlayClass;
+
+        if (!this.isEditMode()) {
+            detailsComponent = this.getDetailsComponent();
+            title = this.props.user.username;
+        } else {
+            avatarOverlayComponent = this.getAvatarOverlayComponent(this.props.user.rewardEdit.award);
+            editComponent = this.getEditComponent(this.props.user.rewardEdit);
+            title = this.props.user.rewardEdit.award.name;
+        }
+
+        avatarOverlayClass = classNames('avatar-overlay', {'overlay-active': this.isEditMode()});
+
         return (
             <div className="user">
-                <Avatar user={this.props.user}/>
+                <div className={avatarOverlayClass}>
+                    <Avatar user={this.props.user}/>
+                    {avatarOverlayComponent}
+                </div>
                 <div className="details">
-                    <h5>{this.props.user.username}</h5>
-                    <div className="stats">
-                        <div className="metric">
-                            <i className="fa fa-file-o"></i> {this.props.user.postcount}
-                        </div>
-                        <div className="metric">
-                            <i className="fa fa-star-o"></i> {this.props.user.reputation}
-                        </div>
-                        <div className="metric">
-                            <i className="fa fa-calendar-o"></i> {new Date(this.props.user.joindate).toDateString()}
-                        </div>
-                    </div>
-                    <div className="awards">
-                        <UserAwardList
-                            items={this.props.user.awards}/>
-                    </div>
+                    <h5>{title}</h5>
+                    {detailsComponent}
+                    {editComponent}
                 </div>
                 <div className="user-close">
                     <i className="fa fa-times icon-danger icon-control"

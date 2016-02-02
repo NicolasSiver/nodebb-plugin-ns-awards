@@ -12,6 +12,7 @@ var CHANGE_EVENT     = 'change',
     },
 
     _grants          = [],
+    _edits           = [],
     _users           = [],
     _rewardReason    = '',
     _selectedAwardId = 0;
@@ -27,6 +28,10 @@ var EditUserStore = assign({}, EventEmitter.prototype, {
 
     getUserAwards: function (uid) {
         return _grants[uid] || [];
+    },
+
+    getUserEdit: function (uid) {
+        return _edits[uid];
     },
 
     getRewardReason: function () {
@@ -50,6 +55,16 @@ AppDispatcher.register(function (action) {
     switch (action.actionType) {
         case Constants.EVENT_REWARD_REASON_DID_CHANGE:
             _rewardReason = action.payload;
+            EditUserStore.emitChange();
+            break;
+        case Constants.EVENT_REWARD_WILL_EDIT:
+            _edits = _edits.slice();
+            _edits[action.payload.user.uid] = action.payload.grant;
+            EditUserStore.emitChange();
+            break;
+        case Constants.EVENT_REWARD_EDIT_WILL_CANCEL:
+            _edits = _edits.slice();
+            _edits[action.payload.user.uid] = undefined;
             EditUserStore.emitChange();
             break;
         case Constants.EVENT_USER_DID_SELECT:
@@ -89,7 +104,7 @@ AppDispatcher.register(function (action) {
                 EditUserStore.emitChange();
 
                 // Update awards for rewarded users
-                _users.forEach(function(user){
+                _users.forEach(function (user) {
                     getAwards(user.uid);
                 });
             });

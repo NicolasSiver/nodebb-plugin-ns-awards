@@ -30,8 +30,27 @@
       flex-flow: row nowrap;
       padding: @aw-margin 0;
 
+      .avatar-overlay {
+        position: relative;
+      }
+
+      .award-overlay {
+        position: absolute;
+        width: @aw-award-preview-size;
+        height: @aw-award-preview-size;
+        top: (@aw-avatar-size - @aw-award-preview-size) / 2;
+        left: (@aw-avatar-size - @aw-award-preview-size) / 2;
+      }
+
+      .overlay-active {
+        .aw-avatar {
+          opacity: 0.1;
+        }
+      }
+
       .aw-avatar {
         width: @aw-avatar-size;
+        transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
 
         .aw-icon {
           width: 100%;
@@ -58,6 +77,10 @@
           display: flex;
           flex-flow: row wrap;
           justify-content: space-between;
+        }
+
+        p {
+          margin: 0;
         }
       }
 

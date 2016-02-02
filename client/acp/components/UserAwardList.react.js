@@ -1,12 +1,12 @@
 var Actions        = require('../actions/Actions'),
-    classNames     = require('classnames'),
     React          = require('react'),
     ReactPropTypes = React.PropTypes,
     ReactTooltip   = require('react-tooltip');
 
 var UserAwardList = React.createClass({
     propTypes: {
-        items: ReactPropTypes.array.isRequired
+        itemDidSelect: ReactPropTypes.func.isRequired,
+        items        : ReactPropTypes.array.isRequired
     },
 
     render: function () {
@@ -15,7 +15,7 @@ var UserAwardList = React.createClass({
                 {this.props.items.map(function (grant, index) {
                     var id = 'award' + grant.gid;
                     return (
-                        <div key={index} className="award-badge" data-tip data-for={id}>
+                        <div onClick={this.props.itemDidSelect.bind(this, grant)} key={index} className="award-badge" data-tip data-for={id}>
                             <img className="img-responsive" src={grant.award.picture}/>
                             <ReactTooltip id={id}>
                                 <p><b>{grant.award.name}</b></p>
@@ -24,7 +24,7 @@ var UserAwardList = React.createClass({
                             </ReactTooltip>
                         </div>
                     );
-                })}
+                }, this)}
             </div>
         );
     }

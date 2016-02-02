@@ -26,8 +26,22 @@
   flex-flow: row nowrap;
   padding: 16px 0;
 }
+.manage-awards .users-list .user .avatar-overlay {
+  position: relative;
+}
+.manage-awards .users-list .user .award-overlay {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 16px;
+  left: 16px;
+}
+.manage-awards .users-list .user .overlay-active .aw-avatar {
+  opacity: 0.1;
+}
 .manage-awards .users-list .user .aw-avatar {
   width: 64px;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
 }
 .manage-awards .users-list .user .aw-avatar .aw-icon {
   width: 100%;
@@ -51,6 +65,9 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+}
+.manage-awards .users-list .user .details p {
+  margin: 0;
 }
 .manage-awards .users-list .user .user-close {
   position: absolute;
