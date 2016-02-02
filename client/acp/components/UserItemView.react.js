@@ -38,7 +38,7 @@ var UserItemView = React.createClass({
                 </div>
                 <div className="user-close">
                     <i className="fa fa-times icon-danger icon-control"
-                       onClick={this.closeDidClick.bind(this)}></i>
+                       onClick={this.closeDidClick}></i>
                 </div>
             </div>
         );

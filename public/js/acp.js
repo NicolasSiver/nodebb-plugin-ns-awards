@@ -1535,7 +1535,7 @@ var UserItemView = React.createClass({displayName: "UserItemView",
                 ), 
                 React.createElement("div", {className: "user-close"}, 
                     React.createElement("i", {className: "fa fa-times icon-danger icon-control", 
-                       onClick: this.closeDidClick.bind(this)})
+                       onClick: this.closeDidClick})
                 )
             )
         );

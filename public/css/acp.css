@@ -27,12 +27,12 @@
   padding: 16px 0;
 }
 .manage-awards .users-list .user .aw-avatar {
-  width: 112px;
+  width: 64px;
 }
 .manage-awards .users-list .user .aw-avatar .aw-icon {
   width: 100%;
-  height: 112px;
-  line-height: 112px;
+  height: 64px;
+  line-height: 64px;
   font-size: 4rem;
   color: #eeeeee;
   text-align: center;
