@@ -11,10 +11,10 @@ var UserAwardList = React.createClass({
     render: function () {
         return (
             <div className="awards-granted">
-                {this.props.items.map(function (grant) {
+                {this.props.items.map(function (grant, index) {
                     console.log(grant);
                     return (
-                        <div className="award-badge">
+                        <div key={index} className="award-badge">
                             <img className="img-responsive" src={grant.award.picture} />
                         </div>
                     );

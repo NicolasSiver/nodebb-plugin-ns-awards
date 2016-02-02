@@ -1,4 +1,4 @@
-var keyMirror = require('react/lib/keyMirror');
+var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
     EVENT_AWARD_DID_SELECT          : null,
