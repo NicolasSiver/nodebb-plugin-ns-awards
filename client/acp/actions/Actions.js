@@ -48,6 +48,16 @@ module.exports = {
         });
     },
 
+    deleteGrant: function (user, grant) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GRANT_WILL_DELETE,
+            payload   : {
+                user : user,
+                grant: grant
+            }
+        });
+    },
+
     editAward: function (aid, name, desc, file) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_EDIT_AWARD,

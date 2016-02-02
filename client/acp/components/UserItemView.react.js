@@ -51,7 +51,6 @@ var UserItemView = React.createClass({
     },
 
     getEditComponent: function (grant) {
-        console.log(grant);
         return (
             <div>
                 <p>Awarded by {grant.fromuser.username}</p>
@@ -64,6 +63,7 @@ var UserItemView = React.createClass({
                 <PanelControls
                     labelCancel="Delete"
                     labelSuccess="Save"
+                    cancelDidClick={Actions.deleteGrant.bind(Actions, this.props.user, grant)}
                     valid={this.isSaveAllowed}/>
             </div>
         );

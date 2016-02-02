@@ -118,6 +118,20 @@ AppDispatcher.register(function (action) {
                 });
             });
             break;
+        case Constants.EVENT_GRANT_WILL_DELETE:
+            socket.emit(API.DELETE_GRANT, {
+                id: action.payload.grant.gid
+            }, function (error) {
+                if (error) {
+                    return console.error(error);
+                }
+
+                _edits = _edits.slice();
+                _edits[action.payload.user.uid] = undefined;
+                EditUserStore.emitChange();
+                getAwards(action.payload.user.uid);
+            });
+            break;
         default:
             return true;
     }

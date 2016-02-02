@@ -11,6 +11,7 @@ module.exports = keyMirror({
     EVENT_GET_ALL_AWARDS            : null,
     EVENT_GET_SETTINGS              : null,
     EVENT_GET_USER_AWARDS           : null,
+    EVENT_GRANT_WILL_DELETE         : null,
     EVENT_OFFSET_USER_FROM_SEARCH_ON: null,
     EVENT_PANEL_CANCEL              : null,
     EVENT_PICK_USER_FROM_SEARCH     : null,
@@ -82,6 +83,16 @@ module.exports = {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_DELETE_AWARD,
             id        : awardEntity.aid
+        });
+    },
+
+    deleteGrant: function (user, grant) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GRANT_WILL_DELETE,
+            payload   : {
+                user : user,
+                grant: grant
+            }
         });
     },
 
@@ -1581,7 +1592,6 @@ var UserItemView = React.createClass({displayName: "UserItemView",
     },
 
     getEditComponent: function (grant) {
-        console.log(grant);
         return (
             React.createElement("div", null, 
                 React.createElement("p", null, "Awarded by ", grant.fromuser.username), 
@@ -1594,6 +1604,7 @@ var UserItemView = React.createClass({displayName: "UserItemView",
                 React.createElement(PanelControls, {
                     labelCancel: "Delete", 
                     labelSuccess: "Save", 
+                    cancelDidClick: Actions.deleteGrant.bind(Actions, this.props.user, grant), 
                     valid: this.isSaveAllowed})
             )
         );
@@ -24318,6 +24329,20 @@ AppDispatcher.register(function (action) {
                 _users.forEach(function (user) {
                     getAwards(user.uid);
                 });
+            });
+            break;
+        case Constants.EVENT_GRANT_WILL_DELETE:
+            socket.emit(API.DELETE_GRANT, {
+                id: action.payload.grant.gid
+            }, function (error) {
+                if (error) {
+                    return console.error(error);
+                }
+
+                _edits = _edits.slice();
+                _edits[action.payload.user.uid] = undefined;
+                EditUserStore.emitChange();
+                getAwards(action.payload.user.uid);
             });
             break;
         default:
