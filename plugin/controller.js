@@ -103,6 +103,10 @@
         ], done);
     };
 
+    Controller.editGrant = function (gid, reason, done) {
+        database.editGrant(gid, {reason: reason}, done);
+    };
+
     /**
      * Update image. Delete old one if any.
      *

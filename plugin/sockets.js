@@ -23,6 +23,7 @@
         sockets[constants.SOCKETS].deleteAward = Sockets.deleteAward;
         sockets[constants.SOCKETS].deleteGrant = Sockets.deleteGrant;
         sockets[constants.SOCKETS].editAward = Sockets.editAward;
+        sockets[constants.SOCKETS].editGrant = Sockets.editGrant;
         sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
         sockets[constants.SOCKETS].getGrantsWithAwards = Sockets.getGrantsWithAwards;
         sockets[constants.SOCKETS].getSettings = Sockets.getSettings;
@@ -101,6 +102,10 @@
 
     Sockets.editAward = function (socket, payload, callback) {
         controller.editAward(payload.id, payload.name, payload.desc, payload.image, callback);
+    };
+
+    Sockets.editGrant = function (socket, payload, callback) {
+        controller.editGrant(payload.gid, payload.reason, callback);
     };
 
     Sockets.getAwards = function (socket, callback) {

@@ -95,6 +95,25 @@
         ], done);
     };
 
+    Database.editGrant = function(gid, update, done) {
+        async.waterfall([
+            async.apply(Database.getGrant, gid),
+            function (grant, next) {
+                if (!grant) {
+                    next(new Error('Reward can not be found'));
+                }
+
+                db.setObject(namespace + ':grant:' + gid, update, function (error) {
+                    if (error) {
+                        return next(error);
+                    }
+
+                    next(null, objectAssign(grant, update));
+                });
+            }
+        ], done);
+    };
+
     Database.deleteGrant = function (gid, done) {
         db.getObject(namespace + ':grant:' + gid, function (error, grant) {
             if (error) {
@@ -127,6 +146,10 @@
 
     Database.getAward = function (aid, done) {
         db.getObject(namespace + ':' + aid, done);
+    };
+
+    Database.getGrant = function(gid, done) {
+        db.getObject(namespace + ':grant:' + gid, done);
     };
 
     Database.getGrantIdsByAward = function (aid, done) {
