@@ -75,3 +75,4 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 - Settings for CSS classes in topic view
 - Integration: add plugin hooks, so another plugins will be able to handle changes
 - ACP: Change list style for award item from bootstrap grid to flex
+- ACP: Prompt message for delete action
