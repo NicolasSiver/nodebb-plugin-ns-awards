@@ -64,6 +64,7 @@ var UserItemView = React.createClass({
                     labelCancel="Delete"
                     labelSuccess="Save"
                     cancelDidClick={Actions.deleteGrant.bind(Actions, this.props.user, grant)}
+                    successDidClick={Actions.saveGrant.bind(Actions, this.props.user, grant)}
                     valid={this.isSaveAllowed}/>
             </div>
         );

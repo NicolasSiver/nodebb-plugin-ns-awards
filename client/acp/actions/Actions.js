@@ -142,6 +142,16 @@ module.exports = {
         });
     },
 
+    saveGrant: function (user, grant) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GRANT_WILL_SAVE,
+            payload   : {
+                user : user,
+                grant: grant
+            }
+        });
+    },
+
     saveSettings: function (settings) {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_SAVE_SETTINGS,

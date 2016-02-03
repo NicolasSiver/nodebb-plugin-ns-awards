@@ -12,6 +12,7 @@ module.exports = keyMirror({
     EVENT_GET_SETTINGS              : null,
     EVENT_GET_USER_AWARDS           : null,
     EVENT_GRANT_WILL_DELETE         : null,
+    EVENT_GRANT_WILL_SAVE           : null,
     EVENT_OFFSET_USER_FROM_SEARCH_ON: null,
     EVENT_PANEL_CANCEL              : null,
     EVENT_PICK_USER_FROM_SEARCH     : null,
@@ -177,6 +178,16 @@ module.exports = {
     rewardUsers: function () {
         AppDispatcher.dispatch({
             actionType: Constants.EVENT_REWARD_USERS
+        });
+    },
+
+    saveGrant: function (user, grant) {
+        AppDispatcher.dispatch({
+            actionType: Constants.EVENT_GRANT_WILL_SAVE,
+            payload   : {
+                user : user,
+                grant: grant
+            }
         });
     },
 
@@ -1605,6 +1616,7 @@ var UserItemView = React.createClass({displayName: "UserItemView",
                     labelCancel: "Delete", 
                     labelSuccess: "Save", 
                     cancelDidClick: Actions.deleteGrant.bind(Actions, this.props.user, grant), 
+                    successDidClick: Actions.saveGrant.bind(Actions, this.props.user, grant), 
                     valid: this.isSaveAllowed})
             )
         );
@@ -24222,6 +24234,7 @@ var CHANGE_EVENT     = 'change',
     API              = {
         AWARD_USERS : 'plugins.ns-awards.awardUsers',
         DELETE_GRANT: 'plugins.ns-awards.deleteGrant',
+        EDIT_GRANT  : 'plugins.ns-awards.editGrant',
         GET_GRANTS  : 'plugins.ns-awards.getGrantsWithAwards'
     },
 
@@ -24334,6 +24347,21 @@ AppDispatcher.register(function (action) {
         case Constants.EVENT_GRANT_WILL_DELETE:
             socket.emit(API.DELETE_GRANT, {
                 id: action.payload.grant.gid
+            }, function (error) {
+                if (error) {
+                    return console.error(error);
+                }
+
+                _edits = _edits.slice();
+                _edits[action.payload.user.uid] = undefined;
+                EditUserStore.emitChange();
+                getAwards(action.payload.user.uid);
+            });
+            break;
+        case Constants.EVENT_GRANT_WILL_SAVE:
+            socket.emit(API.EDIT_GRANT, {
+                gid   : action.payload.grant.gid,
+                reason: action.payload.grant.reason
             }, function (error) {
                 if (error) {
                     return console.error(error);
