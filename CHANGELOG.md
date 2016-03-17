@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.0.0 - 03/16/2016
+
+- Compatibility with NodeBB v1.x
+- Use of relative path for award uploading
+- Show error messages for new awards uploads
+
 ## v2.1.0 - 01/2/2016
 
 - Update user delete hook to `static:user.delete`
