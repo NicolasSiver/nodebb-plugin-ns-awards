@@ -21,7 +21,11 @@ var AwardCreator = React.createClass({
     },
 
     render: function () {
-        var panelContent;
+        var panelContent, error;
+
+        if (this.state.errorMessage) {
+            error = <div className="alert alert-danger" role="alert">Error: {this.state.errorMessage}</div>;
+        }
 
         if (this.state.open) {
             panelContent = <form className="create-award-form">
@@ -40,9 +44,11 @@ var AwardCreator = React.createClass({
                             dataUrl={this.state.dataUrl}
                             imageDidSelect={this._imageDidSelect}
                             success={this._uploadSuccess}
+                            error={this.uploadDidError}
                             uploadProgress={this._uploadProgress}/>
                     </div>
                 </div>
+                {error}
                 <div className="form-group">
                     <label htmlFor="awardDesc">Description</label>
                     <textarea className="form-control" rows="4" id="awardDesc"
@@ -90,6 +96,12 @@ var AwardCreator = React.createClass({
     _promptViewDidClick: function () {
         this.setState({
             open: true
+        });
+    },
+
+    uploadDidError: function (file, errorMessage) {
+        this.setState({
+            errorMessage: errorMessage
         });
     },
 

@@ -12,6 +12,7 @@ var ImageDrop = React.createClass({
         dataUrl       : ReactPropTypes.string.isRequired,
         imageDidSelect: ReactPropTypes.func.isRequired,
         success       : ReactPropTypes.func.isRequired,
+        error         : ReactPropTypes.func,
         uploadProgress: ReactPropTypes.func.isRequired
     },
 
@@ -29,6 +30,10 @@ var ImageDrop = React.createClass({
 
             //Overwrite Dropzone events
             addedfile: function (file) {
+            },
+
+            error: function (file, error) {
+                self.props.error(file, error);
             },
 
             success: function (file, response) {
