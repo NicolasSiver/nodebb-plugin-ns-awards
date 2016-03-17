@@ -23,6 +23,7 @@
   },
   "browserify-shim": {
     "app": "global:app",
+    "ajaxify": "global:ajaxify",
     "jquery": "global:$",
     "socket": "global:socket",
     "define": "global:define",

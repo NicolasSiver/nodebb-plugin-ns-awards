@@ -1,10 +1,12 @@
-var awardsDirectory = '../../uploads/awards/',
-    apiAwardImages  = '/api/admin/plugins/awards/images';
+var ajaxify = require('ajaxify');
+
+var apiAwardImages  = '/api/admin/plugins/awards/images',
+    awardsDirectory = '../../uploads/awards/';
 
 var PathUtils = {
 
     getApiImages: function () {
-        return apiAwardImages;
+        return ajaxify.data.relative_path + apiAwardImages;
     },
 
     getAwardImageUri: function (imageName) {
