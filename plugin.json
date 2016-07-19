@@ -1,8 +1,8 @@
 {
-  "id": "nodebb-plugin-ns-awards",
+  "id": "nodebb-plugin-ns-awards-next",
   "name": "NodeBB Awards",
   "description": "System for rewarding forum users. It allows admin to define set of awards that could be granted to users for special accomplishments.",
-  "url": "https://github.com/NicolasSiver/nodebb-plugin-ns-awards",
+  "url": "https://github.com/digitalLumberjack/nodebb-plugin-ns-awards",
   "library": "./plugin/index.js",
   "hooks": [
     {

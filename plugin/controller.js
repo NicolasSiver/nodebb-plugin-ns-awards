@@ -5,6 +5,7 @@
         fse           = require('fs-extra'),
         path          = require('path'),
         util          = require('util'),
+        uuid          = require('node-uuid'),
 
         database      = require('./database'),
         settings      = require('./settings'),
@@ -17,7 +18,8 @@
         helpers       = nodebb.helpers,
         user          = nodebb.user,
         nconf         = nodebb.nconf,
-        notifications = nodebb.notifications;
+        notifications = nodebb.notifications,
+        plugins       = nodebb.plugins;
 
     Controller.awardUsers = function (payload, fromUid, done) {
         var recipients = [],
@@ -123,11 +125,22 @@
                 }
 
                 //Remove old image
-                fse.remove(getUploadImagePath(award.image), next);
+                if(uploads.isOnFileSystem(award.image)){
+                    fse.remove(uploads.getUploadImagePath(award.image));
+                }
+                next(null,award)
             },
-            async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
-            function (next) {
-                next(null, file.filename);
+            function (award, next) {
+                if (plugins.hasListeners('filter:uploadImage')) {
+                    file.name = file.filename;
+                    plugins.fireHook('filter:uploadImage', {image: file, uid: uuid.v4()}, next);
+                }else {
+                    fse.copy(file.path, uploads.getUploadImagePath(file.filename));
+                    next(null, file);
+                }
+            },
+            function (modifiedFile, next) {
+                next(null, uploads.getPublicImagePath(modifiedFile));
             }
         ], done);
     };
@@ -137,8 +150,7 @@
             async.apply(database.getAllAwards),
             function (awards, next) {
                 async.map(awards, function (award, next) {
-
-                    award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
+                    award.picture = award.image;
 
                     Controller.getAwardRecipients(award.aid, function (error, grants) {
                         if (error) {
@@ -239,8 +251,7 @@
 
                         var award = result.award, user = result.user;
 
-                        award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
-
+                        award.picture = award.image;
                         grant.award = award;
                         grant.fromuser = user;
                         next(null, grant);
@@ -271,8 +282,5 @@
         return shallowCopy;
     }
 
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
-    }
-
+    
 })(module.exports);

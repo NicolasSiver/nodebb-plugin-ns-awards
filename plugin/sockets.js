@@ -4,11 +4,13 @@
     var async      = require('async'),
         fse        = require('fs-extra'),
         path       = require('path'),
+        uuid       = require('node-uuid'),
 
         nodebb     = require('./nodebb'),
         sockets    = nodebb.pluginSockets,
         nconf      = nodebb.nconf,
         user       = nodebb.user,
+        plugins    = nodebb.plugins,
         controller = require('./controller'),
         settings   = require('./settings'),
         database   = require('./database'),
@@ -56,18 +58,24 @@
         async.waterfall([
             async.apply(uploads.getFileById, payload.fileId),
             function (file, next) {
-                async.series([
-                    async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
-                    async.apply(fse.remove, file.path)
-                ], function (e) {
-                    if (e) {
-                        return next(e);
-                    }
-                    next(null, file);
-                });
+                if (plugins.hasListeners('filter:uploadImage')) {
+                    file.name = file.filename;
+                    plugins.fireHook('filter:uploadImage', {image: file, uid: uuid.v4()}, next);
+                }else {
+                    async.series([
+                        async.apply(fse.copy, file.path, uploads.getUploadImagePath(file.filename)),
+                        async.apply(fse.remove, file.path)
+                    ], function (e) {
+                        if (e) {
+                            return next(e);
+                        }
+                        next(null, file);
+                    });
+                }
+
             },
             function (file, next) {
-                database.createAward(payload.name, payload.desc, file.filename, next);
+                    database.createAward(payload.name, payload.desc, uploads.getPublicImagePath(file), next);
             }
         ], callback);
     };
@@ -81,7 +89,12 @@
                 }
 
                 async.parallel([
-                    async.apply(fse.remove, getUploadImagePath(award.image)),
+                    function(next){
+                        if(uploads.isOnFileSystem(award.image)){
+                            fse.remove(uploads.getUploadImagePath(award.image));
+                        }
+                        next(null);
+                    },
                     async.apply(database.deleteAward, award.aid),
                     function (next) {
                         //Delete Grants associated with this award
@@ -131,9 +144,5 @@
             startsWith: false
         }, callback);
     };
-
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
-    }
 
 })(module.exports);
