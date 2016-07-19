@@ -10,10 +10,7 @@ var PathUtils = {
     },
 
     getAwardImageUri: function (imageName) {
-        if (imageName) {
-            return awardsDirectory + imageName;
-        }
-        return null;
+        return imageName;
     }
 };
 
