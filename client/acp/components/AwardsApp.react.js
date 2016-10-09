@@ -1,7 +1,8 @@
-var React            = require('react'),
-    AwardCreator     = require('./AwardCreator.react'),
-    TabManager       = require('./TabManager.react'),
-    UsersStore       = require('../stores/UsersStore');
+var React        = require('react'),
+    AwardCreator = require('./AwardCreator.react'),
+    Donate       = require('./Donate.react'),
+    TabManager   = require('./TabManager.react'),
+    UsersStore   = require('../stores/UsersStore');
 
 var AwardsApp = React.createClass({
     render: function () {
@@ -11,7 +12,16 @@ var AwardsApp = React.createClass({
                     <TabManager />
                 </div>
                 <div className="col-md-4">
-                    <AwardCreator />
+                    <div className="panel panel-default">
+                        <div className="panel-body">
+                            <AwardCreator />
+                        </div>
+                    </div>
+                    <div className="panel panel-default">
+                        <div className="panel-body">
+                            <Donate />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

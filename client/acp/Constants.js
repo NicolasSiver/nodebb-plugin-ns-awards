@@ -30,7 +30,6 @@ module.exports = keyMirror({
     PANEL_GRANT_AWARD: null,
 
     SECTION_AWARDS  : null,
-    SECTION_DONATION: null,
     SECTION_MANAGE  : null,
     SECTION_SETTINGS: null
 });

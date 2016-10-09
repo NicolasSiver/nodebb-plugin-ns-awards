@@ -66,10 +66,8 @@ var AwardCreator = React.createClass({
         }
 
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    {panelContent}
-                </div>
+            <div>
+                {panelContent}
             </div>
         );
     },

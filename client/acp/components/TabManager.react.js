@@ -2,7 +2,6 @@ var Actions         = require('../actions/Actions'),
     AwardsListView  = require('./AwardsListView.react'),
     classNames      = require('classnames'),
     Constants       = require('../Constants'),
-    Donate          = require('./Donate.react'),
     Manage          = require('./Manage.react'),
     NavigationStore = require('../stores/NavigationStore'),
     React           = require('react'),
@@ -25,8 +24,6 @@ var TabManager = React.createClass({
                 return <AwardsListView />;
             case Constants.SECTION_SETTINGS:
                 return <Settings />;
-            case Constants.SECTION_DONATION:
-                return <Donate/>;
         }
     },
 

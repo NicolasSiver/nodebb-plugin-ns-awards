@@ -1,6 +1,6 @@
 {
   "name": "awards-admin-panel",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Client code for ACP",
   "main": "index.js",
   "scripts": {
@@ -39,8 +39,7 @@
         "jquery",
         "bootstrap"
       ]
-    },
-    "StripeCheckout": "global:StripeCheckout"
+    }
   },
   "author": "Nicolas Siver",
   "license": "MIT",
