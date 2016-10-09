@@ -1,11 +1,11 @@
-var React        = require('react'),
-    AwardCreator = require('./AwardCreator.react'),
-    Donate       = require('./Donate.react'),
-    TabManager   = require('./TabManager.react'),
-    UsersStore   = require('../stores/UsersStore');
+import Component from 'inferno-component';
 
-var AwardsApp = React.createClass({
-    render: function () {
+import AwardCreate from './view/widget/award-create';
+import Donate from './view/display/donate';
+import TabManager from './view/widget/tab-manager';
+
+export default class AwardsAcp extends Component {
+    render() {
         return (
             <div className="row">
                 <div className="col-md-8">
@@ -14,7 +14,7 @@ var AwardsApp = React.createClass({
                 <div className="col-md-4">
                     <div className="panel panel-default">
                         <div className="panel-body">
-                            <AwardCreator />
+                            <AwardCreate />
                         </div>
                     </div>
                     <div className="panel panel-default">
@@ -26,5 +26,4 @@ var AwardsApp = React.createClass({
             </div>
         );
     }
-});
-module.exports = AwardsApp;
+}

@@ -1,10 +1,7 @@
-var React            = require('react'),
-    LinkedStateMixin = require('react/lib/LinkedStateMixin');
+import Component from 'inferno-component';
 
-var Donate = React.createClass({
-    mixins: [LinkedStateMixin],
-
-    render: function () {
+export default class Donate extends Component {
+    render() {
         return (
             <div className="donation">
                 <div className="donation__message">Do you like a plugin? Make a donation, It will definitely help as an
@@ -22,6 +19,4 @@ var Donate = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = Donate;
+}
