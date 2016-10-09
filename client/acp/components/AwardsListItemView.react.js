@@ -1,10 +1,10 @@
-var React          = require('react'),
-    bootbox        = require('bootbox'),
-    classNames     = require('classnames'),
-    ImageUpdate    = require('./ImageUpdate.react'),
-    pathUtils      = require('../utils/PathUtils'),
-    noop           = require('lodash/noop'),
-    Actions        = require('../actions/Actions');
+var React       = require('react'),
+    bootbox     = require('bootbox'),
+    classNames  = require('classnames'),
+    ImageUpdate = require('./ImageUpdate.react'),
+    pathUtils   = require('../utils/PathUtils'),
+    noop        = require('lodash/noop'),
+    Actions     = require('../actions/Actions');
 
 
 var AwardsListItemView = React.createClass({
@@ -113,16 +113,14 @@ var AwardsListItemView = React.createClass({
 
         return (
             <li className="awards-item">
-                <div className="row">
-                    <div className="col-md-2">
-                        {image}
-                    </div>
-                    <div className="col-md-8">
-                        {content}
-                    </div>
-                    <div className="col-md-2">
-                        <div className="pull-right item-controls">{controls}</div>
-                    </div>
+                <div className="awards-item__preview">
+                    {image}
+                </div>
+                <div className="awards-item__info">
+                    {content}
+                </div>
+                <div className="awards-item__controls">
+                    <div className="pull-right item-controls">{controls}</div>
                 </div>
             </li>
         );

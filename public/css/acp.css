@@ -85,19 +85,34 @@
   top: 16px;
   right: 0;
 }
+.awards-item {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.awards-item__controls {
+  flex: 0 0 auto;
+}
+.awards-item__controls i + i {
+  margin-left: 8px;
+}
+.awards-item__info {
+  flex: 1 1 auto;
+  margin: 0 16px;
+}
+.awards-item__preview {
+  flex: 0 0 auto;
+  width: 48px;
+}
+.awards-item .award-edit {
+  margin-bottom: 16px;
+}
+.awards-item .award-edit input {
+  margin-bottom: 8px;
+}
 .awards-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-.awards-list .awards-item .award-edit {
-  margin-bottom: 16px;
-}
-.awards-list .awards-item .award-edit input {
-  margin-bottom: 8px;
-}
-.awards-list .awards-item .item-controls i + i {
-  margin-left: 8px;
 }
 .panel-controls {
   margin-top: 16px;
