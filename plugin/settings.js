@@ -1,9 +1,7 @@
 (function (Settings) {
     'use strict';
 
-    var objectAssign  = require('object-assign'),
-
-        meta          = require('./nodebb').meta,
+    var meta          = require('./nodebb').meta,
         constants     = require('./constants'),
 
         //Memory cache
@@ -18,7 +16,7 @@
             if (error) {
                 return done(error);
             }
-            settingsCache = objectAssign(defaults, settings);
+            settingsCache = Object.assign({}, defaults, settings);
             done(null);
         });
     };
@@ -28,7 +26,7 @@
     };
 
     Settings.save = function (settings, done) {
-        settingsCache = objectAssign(settingsCache, settings);
+        settingsCache = Object.assign({}, settingsCache, settings);
         meta.settings.set(constants.NAMESPACE, settingsCache, function (error) {
             done(error, settingsCache);
         });

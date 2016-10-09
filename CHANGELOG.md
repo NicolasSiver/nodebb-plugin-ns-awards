@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.0 - 10/09/2016
+
+- Update plugin dependencies
+
 ## v3.0.0 - 03/16/2016
 
 - Compatibility with NodeBB v1.x
