@@ -1,12 +1,7 @@
-function define(name, value) {
-    Object.defineProperty(exports, name, {
-        value     : value,
-        enumerable: true
-    });
-}
-
-define('GLOBAL_AWARD_COUNTER', 'nextNsAwardId');
-define('GLOBAL_GRANT_COUNTER', 'nextNsAwardGrantId');
-define('NAMESPACE', 'ns:awards');
-define('SOCKETS', 'ns-awards');
-define('UPLOAD_DIR', 'awards');
+module.exports = Object.freeze({
+    'GLOBAL_AWARD_COUNTER': 'nextNsAwardId',
+    'GLOBAL_GRANT_COUNTER': 'nextNsAwardGrantId',
+    'NAMESPACE'           : 'ns:awards',
+    'SOCKETS'             : 'ns-awards',
+    'UPLOAD_DIR'          : 'awards'
+});
