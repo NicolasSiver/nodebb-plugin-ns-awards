@@ -3,6 +3,9 @@
     "es6": true,
     "browser": true
   },
+  "plugins": [
+    "react"
+  ],
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 6,
