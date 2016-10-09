@@ -138,7 +138,7 @@
             function (awards, next) {
                 async.map(awards, function (award, next) {
 
-                    award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
+                    award.picture = getImagePath(award.image);
 
                     Controller.getAwardRecipients(award.aid, function (error, grants) {
                         if (error) {
@@ -239,7 +239,7 @@
 
                         var award = result.award, user = result.user;
 
-                        award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
+                        award.picture = getImagePath(award.image);
 
                         grant.award = award;
                         grant.fromuser = user;
@@ -261,6 +261,14 @@
 
     };
 
+    function getImagePath(image) {
+        return path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
+    }
+
+    function getUploadImagePath(fileName) {
+        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
+    }
+
     function getValidFields(fields, object) {
         var shallowCopy = {};
         for (var field in fields) {
@@ -269,10 +277,6 @@
             }
         }
         return shallowCopy;
-    }
-
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     }
 
 })(module.exports);
