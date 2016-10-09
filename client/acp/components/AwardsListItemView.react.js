@@ -136,7 +136,7 @@ var AwardsListItemView = React.createClass({
         bootbox.confirm({
             size    : 'small',
             title   : 'Attention: Award Deletion',
-            message : 'You are going to delete Award. Are you sure?',
+            message : 'You are going to delete "' + self.props.award.name + '" award. Are you sure?',
             callback: function (result) {
                 if (result) {
                     Actions.deleteAward(self.props.award);
