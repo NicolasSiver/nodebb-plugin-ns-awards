@@ -1,9 +1,9 @@
-var React          = require('react'),
-    Actions        = require('../actions/Actions'),
-    Dropzone       = require('dropzone'),
-    classNames     = require('classnames'),
+var React      = require('react'),
+    Actions    = require('../actions/Actions'),
+    Dropzone   = require('dropzone'),
+    classNames = require('classnames'),
 
-    dropzone       = null;
+    dropzone   = null;
 
 var ImageDrop = React.createClass({
     propTypes: {
@@ -20,8 +20,7 @@ var ImageDrop = React.createClass({
 
         Dropzone.autoDiscover = false;
 
-        //this.getDOMNode() does not work with complex html
-        dropzone = new Dropzone(React.findDOMNode(this.refs.uploadIcon), {
+        dropzone = new Dropzone(this.view, {
             url      : this.props.action,
             paramName: 'award',
             clickable: true,
@@ -75,7 +74,9 @@ var ImageDrop = React.createClass({
         return (
             <div className={previewClass}>
                 <img className={imageClass} src={this.props.dataUrl}/>
-                <i className={iconClass} ref="uploadIcon"></i>
+                <i className={iconClass} ref={function(view) {
+                    this.view = view;
+                }.bind(this)}></i>
             </div>
         );
     }
