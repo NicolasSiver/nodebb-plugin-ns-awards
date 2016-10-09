@@ -1,12 +1,10 @@
-var Actions        = require('../actions/Actions'),
-    React          = require('react'),
-    ReactPropTypes = React.PropTypes,
-    ReactTooltip   = require('react-tooltip');
+var React        = require('react'),
+    ReactTooltip = require('react-tooltip');
 
 var UserAwardList = React.createClass({
     propTypes: {
-        itemDidSelect: ReactPropTypes.func.isRequired,
-        items        : ReactPropTypes.array.isRequired
+        itemDidSelect: React.PropTypes.func.isRequired,
+        items        : React.PropTypes.array.isRequired
     },
 
     render: function () {

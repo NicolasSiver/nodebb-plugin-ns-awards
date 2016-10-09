@@ -1,7 +1,7 @@
 var React          = require('react'),
     ReactPropTypes = React.PropTypes,
     classNames     = require('classnames'),
-    debounce       = require('lodash/function/debounce');
+    debounce       = require('lodash/debounce');
 
 var Autocomplete = React.createClass({
     propTypes: {

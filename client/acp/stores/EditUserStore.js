@@ -1,5 +1,4 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher'),
-    assign        = require('react/lib/Object.assign'),
     Constants     = require('../Constants'),
     EventEmitter  = require('events').EventEmitter,
     objectAssign  = require('object-assign'),
@@ -19,7 +18,7 @@ var CHANGE_EVENT     = 'change',
     _rewardReason    = '',
     _selectedAwardId = 0;
 
-var EditUserStore = assign({}, EventEmitter.prototype, {
+var EditUserStore = objectAssign({}, EventEmitter.prototype, {
     addChangeListener: function (listener) {
         this.on(CHANGE_EVENT, listener);
     },

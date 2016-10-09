@@ -1,11 +1,10 @@
-var React          = require('react'),
-    ReactPropTypes = React.PropTypes;
+var React          = require('react');
 
 var PromptView = React.createClass({
     propTypes: {
-        label        : ReactPropTypes.string.isRequired,
-        hint         : ReactPropTypes.string.isRequired,
-        labelDidClick: ReactPropTypes.func
+        label        : React.PropTypes.string.isRequired,
+        hint         : React.PropTypes.string.isRequired,
+        labelDidClick: React.PropTypes.func
     },
 
     render: function () {

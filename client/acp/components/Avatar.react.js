@@ -1,10 +1,9 @@
-var classNames     = require('classnames'),
-    React          = require('react'),
-    ReactPropTypes = React.PropTypes;
+var classNames = require('classnames'),
+    React      = require('react');
 
 var UserItemView = React.createClass({
     propTypes: {
-        user: ReactPropTypes.object.isRequired
+        user: React.PropTypes.object.isRequired
     },
 
     render: function () {

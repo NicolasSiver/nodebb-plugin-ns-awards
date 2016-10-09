@@ -1,7 +1,6 @@
 var React              = require('react'),
     AwardsListItemView = require('./AwardsListItemView.react'),
     AwardsStore        = require('../stores/AwardsStore'),
-    ReactPropTypes     = React.PropTypes,
     Actions            = require('../actions/Actions');
 
 function getAwards() {

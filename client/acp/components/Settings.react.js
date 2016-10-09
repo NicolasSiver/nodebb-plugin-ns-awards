@@ -1,5 +1,4 @@
 var React          = require('react'),
-    ReactPropTypes = React.PropTypes,
     SettingsStore  = require('../stores/SettingsStore'),
     Actions        = require('../actions/Actions');
 

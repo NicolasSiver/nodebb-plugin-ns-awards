@@ -1,5 +1,4 @@
 var React          = require('react'),
-    ReactPropTypes = React.PropTypes,
     Actions        = require('../actions/Actions'),
     Dropzone       = require('dropzone'),
     classNames     = require('classnames'),
@@ -8,12 +7,12 @@ var React          = require('react'),
 
 var ImageDrop = React.createClass({
     propTypes: {
-        action        : ReactPropTypes.string.isRequired,
-        dataUrl       : ReactPropTypes.string.isRequired,
-        imageDidSelect: ReactPropTypes.func.isRequired,
-        success       : ReactPropTypes.func.isRequired,
-        error         : ReactPropTypes.func,
-        uploadProgress: ReactPropTypes.func.isRequired
+        action        : React.PropTypes.string.isRequired,
+        dataUrl       : React.PropTypes.string.isRequired,
+        imageDidSelect: React.PropTypes.func.isRequired,
+        success       : React.PropTypes.func.isRequired,
+        error         : React.PropTypes.func,
+        uploadProgress: React.PropTypes.func.isRequired
     },
 
     componentDidMount: function () {

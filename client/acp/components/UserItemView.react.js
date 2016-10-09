@@ -3,12 +3,11 @@ var Actions        = require('../actions/Actions'),
     classNames     = require('classnames'),
     PanelControls  = require('./PanelControls.react'),
     React          = require('react'),
-    ReactPropTypes = React.PropTypes,
     UserAwardList  = require('./UserAwardList.react');
 
 var UserItemView = React.createClass({
     propTypes: {
-        user: ReactPropTypes.object.isRequired
+        user: React.PropTypes.object.isRequired
     },
 
     awardDidSelect: function (grant) {

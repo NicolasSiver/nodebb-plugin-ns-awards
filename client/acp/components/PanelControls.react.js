@@ -1,13 +1,12 @@
-var React          = require('react'),
-    ReactPropTypes = React.PropTypes;
+var React          = require('react');
 
 var PanelControls = React.createClass({
     propTypes: {
-        valid          : ReactPropTypes.func.isRequired,
-        cancelDidClick : ReactPropTypes.func,
-        successDidClick: ReactPropTypes.func,
-        labelCancel    : ReactPropTypes.string,
-        labelSuccess   : ReactPropTypes.string
+        valid          : React.PropTypes.func.isRequired,
+        cancelDidClick : React.PropTypes.func,
+        successDidClick: React.PropTypes.func,
+        labelCancel    : React.PropTypes.string,
+        labelSuccess   : React.PropTypes.string
     },
 
     getDefaultProps: function () {

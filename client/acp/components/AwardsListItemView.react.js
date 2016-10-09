@@ -1,20 +1,19 @@
 var React          = require('react'),
     bootbox        = require('bootbox'),
-    ReactPropTypes = React.PropTypes,
     classNames     = require('classnames'),
     ImageUpdate    = require('./ImageUpdate.react'),
     pathUtils      = require('../utils/PathUtils'),
-    noop           = require('lodash/utility/noop'),
+    noop           = require('lodash/noop'),
     Actions        = require('../actions/Actions');
 
 
 var AwardsListItemView = React.createClass({
     propTypes: {
-        award         : ReactPropTypes.object.isRequired,
-        edit          : ReactPropTypes.bool.isRequired,
-        itemWillEdit  : ReactPropTypes.func.isRequired,
-        itemWillCancel: ReactPropTypes.func.isRequired,
-        itemWillSave  : ReactPropTypes.func.isRequired
+        award         : React.PropTypes.object.isRequired,
+        edit          : React.PropTypes.bool.isRequired,
+        itemWillEdit  : React.PropTypes.func.isRequired,
+        itemWillCancel: React.PropTypes.func.isRequired,
+        itemWillSave  : React.PropTypes.func.isRequired
     },
 
     getInitialState: function () {

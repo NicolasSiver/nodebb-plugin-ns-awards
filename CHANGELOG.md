@@ -3,6 +3,8 @@
 ## v3.1.0 - 10/09/2016
 
 - Update plugin dependencies
+- Change award URLs, use relative path
+- Update ACP library dependencies
 
 ## v3.0.0 - 03/16/2016
 

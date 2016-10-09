@@ -1,18 +1,17 @@
 var React          = require('react'),
-    ReactPropTypes = React.PropTypes,
     ImageDrop      = require('./ImageDrop.react'),
     classNames     = require('classnames'),
     pathUtils      = require('../utils/PathUtils');
 
 var ImageUpdate = React.createClass({
     propTypes: {
-        currentImageUrl: ReactPropTypes.string.isRequired,
-        action         : ReactPropTypes.string.isRequired,
-        dataUrl        : ReactPropTypes.string.isRequired,
-        imageDidSelect : ReactPropTypes.func.isRequired,
-        success        : ReactPropTypes.func.isRequired,
-        uploadProgress : ReactPropTypes.func.isRequired,
-        resetImage     : ReactPropTypes.func.isRequired
+        currentImageUrl: React.PropTypes.string.isRequired,
+        action         : React.PropTypes.string.isRequired,
+        dataUrl        : React.PropTypes.string.isRequired,
+        imageDidSelect : React.PropTypes.func.isRequired,
+        success        : React.PropTypes.func.isRequired,
+        uploadProgress : React.PropTypes.func.isRequired,
+        resetImage     : React.PropTypes.func.isRequired
     },
 
     render: function () {

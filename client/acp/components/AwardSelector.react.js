@@ -1,5 +1,5 @@
 var Actions       = require('../actions/Actions'),
-    assign        = require('react/lib/Object.assign'),
+    assign        = require('object-assign'),
     AwardsStore   = require('../stores/AwardsStore'),
     Constants     = require('../Constants'),
     EditUserStore = require('../stores/EditUserStore'),
