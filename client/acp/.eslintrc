@@ -19,6 +19,8 @@
     "DEBUG": false
   },
   "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "quotes": [
       2,
       "single"

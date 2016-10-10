@@ -1,6 +1,6 @@
-import Component from 'inferno-component';
+import React from 'react';
 
-export default class Donate extends Component {
+export default class Donate extends React.Component {
     render() {
         return (
             <div className="donation">

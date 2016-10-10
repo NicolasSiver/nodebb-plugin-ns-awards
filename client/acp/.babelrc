@@ -1,15 +1,7 @@
 {
   "presets": [
-    [
-      "es2015",
-      {
-        "modules": false
-      }
-    ],
-    "stage-0"
-  ],
-  "plugins": [
-    "external-helpers",
-    "inferno"
+    "es2015",
+    "stage-0",
+    "react"
   ]
 }

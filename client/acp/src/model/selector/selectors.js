@@ -1,0 +1,1 @@
+export const isCreationActive = state => state.creationActive;
