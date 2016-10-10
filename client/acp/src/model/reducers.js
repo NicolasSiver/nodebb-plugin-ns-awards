@@ -1,3 +1,5 @@
+import * as ActionTypes from './action-types';
+
 export function creation(state, action) {
     switch (action.type) {
         default:
@@ -7,6 +9,8 @@ export function creation(state, action) {
 
 export function creationActive(state, action) {
     switch (action.type) {
+        case ActionTypes.AWARD_CREATION_STATE_DID_UPDATE:
+            return action.payload;
         default:
             return state;
     }
