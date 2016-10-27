@@ -4,19 +4,19 @@ import {connect} from 'react-redux';
 
 import {setSection} from '../../action/actions';
 import * as Sections from '../../model/sections';
-import {getSection} from '../../model/selector/selectors';
+import {getSection, getSections} from '../../model/selector/selectors';
 
 class TabManager extends React.Component {
     createTabContent(section) {
         switch (section) {
             case Sections.SECTION_ACTIVITY:
-                //return <Manage />;
+            //return <Manage />;
             case Sections.SECTION_AWARDS:
-                //return <AwardsListView />;
+            //return <AwardsListView />;
             case Sections.SECTION_MANAGE:
-                //return <Settings />;
+            //return <Settings />;
             case Sections.SECTION_SETTINGS:
-                //return <Settings />;
+            //return <Settings />;
         }
     }
 
@@ -24,7 +24,7 @@ class TabManager extends React.Component {
         return (
             <div>
                 <ul className="nav nav-tabs">
-                    {this.state.list.map((section) => {
+                    {this.props.sections.map((section) => {
                         let {id, label} = section;
                         let icon, sectionClass = classNames({
                             'active': id === this.props.section
@@ -54,7 +54,8 @@ class TabManager extends React.Component {
 export default connect(
     (state) => {
         return {
-            section: getSection(state)
+            section : getSection(state),
+            sections: getSections(state)
         };
     },
     (dispatch) => {

@@ -9,7 +9,8 @@ export function createReduxStore(state) {
         return {
             creation      : creation(state.creation, action),
             creationActive: creationActive(state.creationActive, action),
-            section       : section(state.section, action)
+            section       : section(state.section, action),
+            sections      : state.sections
         };
     }, state, applyMiddleware(ReduxThunk));
 }
@@ -22,6 +23,12 @@ export function getInitialState() {
         },
 
         creationActive: false,
-        section       : Sections.SECTION_AWARDS
+        section       : Sections.SECTION_AWARDS,
+        sections      : [
+            {label: 'Activity', id: Sections.SECTION_ACTIVITY},
+            {label: 'Awards', icon: 'fa-trophy', id: Sections.SECTION_AWARDS},
+            {label: 'Manage', id: Sections.SECTION_MANAGE},
+            {label: 'Settings', id: Sections.SECTION_SETTINGS}
+        ]
     };
 }
