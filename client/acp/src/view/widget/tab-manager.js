@@ -1,80 +1,65 @@
-var Actions         = require('../actions/Actions'),
-    AwardsListView  = require('./AwardsListView.react'),
-    classNames      = require('classnames'),
-    Constants       = require('../Constants'),
-    Manage          = require('./Manage.react'),
-    NavigationStore = require('../stores/NavigationStore'),
-    React           = require('react'),
-    Settings        = require('./Settings.react');
+import classNames from 'classnames';
+import React from 'react';
+import {connect} from 'react-redux';
 
-var TabManager = React.createClass({
-    componentDidMount: function () {
-        NavigationStore.addChangeListener(this.navigationDidUpdate);
-    },
+import {setSection} from '../../action/actions';
+import * as Sections from '../../model/sections';
+import {getSection} from '../../model/selector/selectors';
 
-    componentWillUnmount: function () {
-        NavigationStore.removeChangeListener(this.navigationDidUpdate);
-    },
-
-    getContent: function (section) {
+class TabManager extends React.Component {
+    createTabContent(section) {
         switch (section) {
-            case Constants.SECTION_MANAGE:
-                return <Manage />;
-            case Constants.SECTION_AWARDS:
-                return <AwardsListView />;
-            case Constants.SECTION_SETTINGS:
-                return <Settings />;
+            case Sections.SECTION_ACTIVITY:
+                //return <Manage />;
+            case Sections.SECTION_AWARDS:
+                //return <AwardsListView />;
+            case Sections.SECTION_MANAGE:
+                //return <Settings />;
+            case Sections.SECTION_SETTINGS:
+                //return <Settings />;
         }
-    },
+    }
 
-    getInitialState: function () {
-        return NavigationStore.getSectionsMeta();
-    },
-
-    render: function () {
-        var self = this;
-
-        function renderSection(section, index, sections) {
-            var icon, sectionClass = classNames({
-                'active': section.id === self.state.current
-            });
-            if ('icon' in section) {
-                icon = <i className={'fa ' + section.icon}></i>;
-            }
-            return (
-                <li key={section.id} className={sectionClass}>
-                    <a href="#" onClick={self.sectionDidClick.bind(null, section)}>{icon} {section.label}</a>
-                </li>
-            );
-        }
-
+    render() {
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    <div>
-                        <ul className="nav nav-tabs">
-                            {this.state.list.map(renderSection)}
-                        </ul>
+            <div>
+                <ul className="nav nav-tabs">
+                    {this.state.list.map((section) => {
+                        let {id, label} = section;
+                        let icon, sectionClass = classNames({
+                            'active': id === this.props.section
+                        });
+                        if (section.hasOwnProperty('icon')) {
+                            icon = <i className={'fa ' + section.icon}></i>;
+                        }
+                        return (
+                            <li key={id} className={sectionClass}>
+                                <a href="#" onClick={() => this.props.updateSection(id)}>{icon} {label}</a>
+                            </li>
+                        );
+                    })}
+                </ul>
 
-                        <div className="tab-content">
-                            <div className="tab-pane active">
-                                {this.getContent(this.state.current)}
-                            </div>
-                        </div>
-
+                <div className="tab-content">
+                    <div className="tab-pane active">
+                        {this.createTabContent(this.props.section)}
                     </div>
                 </div>
+
             </div>
         );
-    },
-
-    navigationDidUpdate: function () {
-        this.replaceState(NavigationStore.getSectionsMeta());
-    },
-
-    sectionDidClick: function (section) {
-        Actions.setSection(section.id);
     }
-});
+}
 
-module.exports = TabManager;
+export default connect(
+    (state) => {
+        return {
+            section: getSection(state)
+        };
+    },
+    (dispatch) => {
+        return {
+            updateSection: (sectionName) => dispatch(setSection(sectionName))
+        };
+    }
+)(TabManager);

@@ -8,7 +8,10 @@ export default class AwardsAcp extends React.Component {
         return (
             <div className="row">
                 <div className="col-md-8">
-
+                    <div className="panel panel-default">
+                        <div className="panel-body">
+                        </div>
+                    </div>
                 </div>
                 <div className="col-md-4">
                     <div className="panel panel-default">

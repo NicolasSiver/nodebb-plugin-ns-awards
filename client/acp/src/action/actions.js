@@ -9,7 +9,14 @@ import * as ActionTypes from '../model/action-types';
 
 export function setAwardCreationState(state) {
     return {
-        type: ActionTypes.AWARD_CREATION_STATE_DID_UPDATE,
+        type   : ActionTypes.AWARD_CREATION_STATE_DID_UPDATE,
         payload: state
+    };
+}
+
+export function setSection(sectionName) {
+    return {
+        type   : ActionTypes.SECTION_DID_UPDATE,
+        payload: sectionName
     };
 }
