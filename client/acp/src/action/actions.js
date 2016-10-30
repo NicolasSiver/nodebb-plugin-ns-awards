@@ -7,6 +7,12 @@
  */
 import * as ActionTypes from '../model/action-types';
 
+export function cancelAwardEdit() {
+    return {
+        type: ActionTypes.AWARD_EDIT_DID_CANCEL
+    };
+}
+
 export function setAwardCreationState(state) {
     return {
         type   : ActionTypes.AWARD_CREATION_STATE_DID_UPDATE,

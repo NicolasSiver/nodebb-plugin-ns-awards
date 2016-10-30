@@ -16,6 +16,15 @@ export function creationActive(state, action) {
     }
 }
 
+export function editAt(state, action) {
+    switch (action.type){
+        case ActionTypes.AWARD_EDIT_DID_CANCEL:
+            return null;
+        default:
+            return state;
+    }
+}
+
 export function section(state, action) {
     switch (action.type) {
         case ActionTypes.SECTION_DID_UPDATE:
