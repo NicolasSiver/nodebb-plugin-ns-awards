@@ -18,6 +18,8 @@ export function creationActive(state, action) {
 
 export function section(state, action) {
     switch (action.type) {
+        case ActionTypes.SECTION_DID_UPDATE:
+            return action.payload;
         default:
             return state;
     }
