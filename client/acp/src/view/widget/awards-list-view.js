@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {cancelAwardEdit, setAwardEditIndex} from '../../action/actions';
 import AwardsListItemView from './awards-list-item-view';
 import {getAwards, getEditAwards} from '../../model/selector/selectors';
+import {createAwardUid} from '../../util/utils';
 
 class AwardsListView extends React.Component {
     render() {
@@ -13,7 +14,7 @@ class AwardsListView extends React.Component {
             items = <li>No Awards. Why not create a new one?</li>;
         } else {
             items = this.props.awards.map((award, index) => {
-                let editedAward = this.props.edited[award.aid];
+                let editedAward = this.props.edited[createAwardUid(award.aid)];
                 award = editedAward || award;
                 return <AwardsListItemView
                     key={award.aid}

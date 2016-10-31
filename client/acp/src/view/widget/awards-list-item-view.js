@@ -2,8 +2,17 @@ import classNames from 'classnames';
 import React from 'react';
 
 export default class AwardsListItemView extends React.Component {
+    createContent(award) {
+        return (
+            <dl>
+                <dt>{award.name}</dt>
+                <dd>{award.desc}</dd>
+            </dl>
+        );
+    }
+
     render() {
-        let image = null, content = null, controls = null;
+        let image = null, content = this.createContent(this.props.award), controls = null;
         return (
             <li className="awards-item">
                 <div className="awards-item__preview">

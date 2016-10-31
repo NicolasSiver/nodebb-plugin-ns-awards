@@ -1,7 +1,7 @@
 import {applyMiddleware, createStore} from 'redux';
 import ReduxThunk from 'redux-thunk';
 
-import {awards, creation, creationActive, editAt, section} from './reducers';
+import {awards, creation, creationActive, editAt, editAwards, section} from './reducers';
 import * as Sections from './sections';
 
 export function createReduxStore(state) {
@@ -11,6 +11,7 @@ export function createReduxStore(state) {
             creation      : creation(state.creation, action),
             creationActive: creationActive(state.creationActive, action),
             editAt        : editAt(state.editAt, action),
+            editAwards    : editAwards(state.editAwards, action),
             section       : section(state.section, action),
             sections      : state.sections
         };

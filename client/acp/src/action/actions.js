@@ -6,10 +6,19 @@
  * Simple. FSA should be simple, straightforward, and flexible in its design.
  */
 import * as ActionTypes from '../model/action-types';
+import SocketService from '../service/socket-service';
 
 export function cancelAwardEdit() {
     return {
         type: ActionTypes.AWARD_EDIT_DID_CANCEL
+    };
+}
+
+export function getAwardsAll() {
+    return (dispatch) => {
+        SocketService.getAwards().then((awards) => {
+            dispatch(setAwards(awards));
+        });
     };
 }
 
@@ -24,6 +33,13 @@ export function setAwardEditIndex(index) {
     return {
         type   : ActionTypes.AWARD_EDIT_INDEX_DID_UPDATE,
         payload: index
+    };
+}
+
+export function setAwards(list) {
+    return {
+        type   : ActionTypes.AWARDS_DID_UPDATE,
+        payload: list
     };
 }
 
