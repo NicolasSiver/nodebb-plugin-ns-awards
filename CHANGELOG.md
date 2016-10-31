@@ -3,6 +3,7 @@
 ## v4.0.0 - TBD
 
 - Add an edit mode for several awards
+- Improve UX for Award creation process
 - Update plugin dependencies
 - Change award URLs, use relative path
 - Update ACP library dependencies

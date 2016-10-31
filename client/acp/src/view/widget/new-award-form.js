@@ -19,7 +19,7 @@ class NewAwardForm extends React.Component {
                         className="form-control"
                         type="text"
                         id="awardName"
-                        placeholder="Enter name"
+                        placeholder="Enter name, ex: 'Good Conduct Medal'"
                         value={this.props.name}/>
                 </div>
                 <div className="form-group">
@@ -28,7 +28,7 @@ class NewAwardForm extends React.Component {
                         className="form-control"
                         rows="4"
                         id="awardDesc"
-                        placeholder="Enter full description"
+                        placeholder="Enter full description, ex: 'The Good Conduct Medal is one of the oldest military awards of the United States Armed Forces.'"
                         value={this.props.description}></textarea>
                 </div>
                 <PanelControls
