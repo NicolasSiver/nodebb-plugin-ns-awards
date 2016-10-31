@@ -5,6 +5,10 @@ import Donate from './view/display/donate';
 import TabManager from './view/widget/tab-manager';
 
 export default class AwardsAcp extends React.Component {
+    componentDidMount() {
+
+    }
+
     render() {
         return (
             <div className="row">

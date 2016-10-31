@@ -1,12 +1,13 @@
 import {applyMiddleware, createStore} from 'redux';
 import ReduxThunk from 'redux-thunk';
 
-import {creation, creationActive, editAt, section} from './reducers';
+import {awards, creation, creationActive, editAt, section} from './reducers';
 import * as Sections from './sections';
 
 export function createReduxStore(state) {
     return createStore((state, action)=> {
         return {
+            awards        : awards(state.awards, action),
             creation      : creation(state.creation, action),
             creationActive: creationActive(state.creationActive, action),
             editAt        : editAt(state.editAt, action),
@@ -27,6 +28,7 @@ export function getInitialState() {
 
         creationActive: false,
         editAt        : null,
+        editAwards    : {},
         section       : Sections.SECTION_AWARDS,
         sections      : [
             {label: 'Awards', icon: 'fa-trophy', id: Sections.SECTION_AWARDS},

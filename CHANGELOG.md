@@ -1,7 +1,8 @@
 # Changelog
 
-## v3.1.0 - 10/09/2016
+## v4.0.0 - TBD
 
+- Add an edit mode for several awards
 - Update plugin dependencies
 - Change award URLs, use relative path
 - Update ACP library dependencies

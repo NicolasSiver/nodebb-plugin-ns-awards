@@ -20,6 +20,13 @@ export function setAwardCreationState(state) {
     };
 }
 
+export function setAwardEditIndex(index) {
+    return {
+        type   : ActionTypes.AWARD_EDIT_INDEX_DID_UPDATE,
+        payload: index
+    };
+}
+
 export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,

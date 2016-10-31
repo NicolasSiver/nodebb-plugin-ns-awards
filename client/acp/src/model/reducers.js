@@ -1,5 +1,12 @@
 import * as ActionTypes from './action-types';
 
+export function awards(state, action) {
+    switch(action.type){
+        default:
+            return state;
+    }
+}
+
 export function creation(state, action) {
     switch (action.type) {
         default:
@@ -17,7 +24,9 @@ export function creationActive(state, action) {
 }
 
 export function editAt(state, action) {
-    switch (action.type){
+    switch (action.type) {
+        case ActionTypes.AWARD_EDIT_INDEX_DID_UPDATE:
+            return action.payload;
         case ActionTypes.AWARD_EDIT_DID_CANCEL:
             return null;
         default:
