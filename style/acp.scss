@@ -2,6 +2,30 @@
 @import "../node_modules/sass-material-colors/sass/sass-material-colors";
 
 .manage-awards {
+  .awards-about {
+    &__details {
+      color: material-color('grey', '600');
+    }
+
+    &__header {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
+    &__icon {
+      flex: 0 0 auto;
+    }
+
+    &__title {
+      color: material-color('grey', '800');
+      flex: 1 1 auto;
+      font-size: 1.5em;
+      font-weight: 300;
+      line-height: normal;
+      margin-bottom: $nsa-padding;
+    }
+  }
+
   .awards-item {
     display: flex;
     flex-flow: row nowrap;
@@ -32,5 +56,13 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+
+    li + li {
+      margin-top: $nsa-padding;
+    }
+  }
+
+  .tab-content {
+    margin-top: $nsa-padding;
   }
 }

@@ -1,25 +1,26 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default class AwardsListItemView extends React.Component {
-    createContent(award) {
-        return (
-            <dl>
-                <dt>{award.name}</dt>
-                <dd>{award.desc}</dd>
-            </dl>
-        );
-    }
+import RoundButton from '../display/round-button';
 
+export default class AwardsListItemView extends React.Component {
     render() {
-        let image = null, content = this.createContent(this.props.award), controls = null;
+        let image = null, controls = null;
         return (
             <li className="awards-item">
                 <div className="awards-item__preview">
                     {image}
                 </div>
                 <div className="awards-item__info">
-                    {content}
+                    <div className="awards-about">
+                        <div className="awards-about__header">
+                            <div className="awards-about__title">{this.props.award.name}</div>
+                            <div className="awards-about__icon">
+                                <RoundButton icon="fa-pencil"/>
+                            </div>
+                        </div>
+                        <div className="awards-about__details">{this.props.award.desc}</div>
+                    </div>
                 </div>
                 <div className="awards-item__controls">
                     <div className="pull-right item-controls">{controls}</div>

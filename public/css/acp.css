@@ -8,6 +8,24 @@
  * @param {string} [color-variant='500']  - quoted, lowercase color variant (e.g.
  *                                          '200', 'a100')
  */
+.manage-awards .awards-about__details {
+  color: #757575; }
+
+.manage-awards .awards-about__header {
+  display: flex;
+  flex-flow: row nowrap; }
+
+.manage-awards .awards-about__icon {
+  flex: 0 0 auto; }
+
+.manage-awards .awards-about__title {
+  color: #424242;
+  flex: 1 1 auto;
+  font-size: 1.5em;
+  font-weight: 300;
+  line-height: normal;
+  margin-bottom: 16px; }
+
 .manage-awards .awards-item {
   display: flex;
   flex-flow: row nowrap; }
@@ -29,3 +47,8 @@
   list-style-type: none;
   margin: 0;
   padding: 0; }
+  .manage-awards .awards-list li + li {
+    margin-top: 16px; }
+
+.manage-awards .tab-content {
+  margin-top: 16px; }
