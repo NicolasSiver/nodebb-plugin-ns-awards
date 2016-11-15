@@ -65,4 +65,21 @@
   .tab-content {
     margin-top: $nsa-padding;
   }
+
+  .round-button {
+    cursor: pointer;
+
+    &__background {
+      color: material-color('grey', '400');
+      transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+
+    &__background:hover{
+      color: material-color('blue', '500');
+    }
+
+    &__icon {
+      pointer-events: none;
+    }
+  }
 }
