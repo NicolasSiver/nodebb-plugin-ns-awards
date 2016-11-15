@@ -1,205 +1,31 @@
-/*---------------------------------------------------
-    LESS Elements 0.9
-  ---------------------------------------------------
-    A set of useful LESS mixins
-    More info at: http://lesselements.com
-  ---------------------------------------------------*/
-.manage-awards .tab-content {
-  margin-top: 16px;
-}
-.manage-awards .awards-granted {
+/**
+ * Retrieves a color value from the $material-colors Sass map
+ * Inspired by https://github.com/nilskaspersson/Google-Material-UI-Color-Palette/
+ *
+ * @function
+ * @param {string} color-name             - quoted, lower-case, dasherized color
+ *                                          name (e.g. 'pink', 'amber')
+ * @param {string} [color-variant='500']  - quoted, lowercase color variant (e.g.
+ *                                          '200', 'a100')
+ */
+.manage-awards .awards-item {
   display: flex;
-  flex-flow: row wrap;
-}
-.manage-awards .awards-granted .award-badge {
-  width: 24px;
-  height: 24px;
-  margin: 4px;
-  cursor: pointer;
-}
-.manage-awards .donation {
-  display: flex;
-  flex-flow: row nowrap;
-}
-.manage-awards .donation__message {
-  flex: 1 1 auto;
-  margin-right: 8px;
-}
-.manage-awards .donation__paypal {
-  flex: 0 0 auto;
-}
-.manage-awards .users-list .no-users {
-  padding: 16px 0;
-}
-.manage-awards .users-list .user {
-  position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  padding: 16px 0;
-}
-.manage-awards .users-list .user .avatar-overlay {
-  position: relative;
-}
-.manage-awards .users-list .user .award-overlay {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  top: 16px;
-  left: 16px;
-}
-.manage-awards .users-list .user .overlay-active .aw-avatar {
-  opacity: 0.1;
-}
-.manage-awards .users-list .user .aw-avatar {
-  width: 64px;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
-}
-.manage-awards .users-list .user .aw-avatar .aw-icon {
-  width: 100%;
-  height: 64px;
-  line-height: 64px;
-  font-size: 4rem;
-  color: #eeeeee;
-  text-align: center;
-}
-.manage-awards .users-list .user .details {
-  display: flex;
-  flex-flow: column;
-  flex: 1 1 auto;
-  margin-left: 16px;
-}
-.manage-awards .users-list .user .details h5 {
-  font-size: 1.2em;
-  margin-top: 0;
-}
-.manage-awards .users-list .user .details .stats {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-.manage-awards .users-list .user .details p {
-  margin: 0;
-}
-.manage-awards .users-list .user .user-close {
-  position: absolute;
-  top: 16px;
-  right: 0;
-}
-.awards-item {
-  display: flex;
-  flex-flow: row nowrap;
-}
-.awards-item__controls {
-  flex: 0 0 auto;
-}
-.awards-item__controls i + i {
-  margin-left: 8px;
-}
-.awards-item__info {
-  flex: 1 1 auto;
-  margin: 0 16px;
-}
-.awards-item__preview {
-  flex: 0 0 auto;
-  width: 48px;
-}
-.awards-item .award-edit {
-  margin-bottom: 16px;
-}
-.awards-item .award-edit input {
-  margin-bottom: 8px;
-}
-.awards-list {
+  flex-flow: row nowrap; }
+  .manage-awards .awards-item__controls {
+    flex: 0 0 auto; }
+    .manage-awards .awards-item__controls i + i {
+      margin-left: 8px; }
+  .manage-awards .awards-item__info {
+    flex: 1 1 auto;
+    margin: 0 16px; }
+  .manage-awards .awards-item__preview {
+    background-color: #fafafa;
+    border: 1px solid #f5f5f5;
+    flex: 0 0 auto;
+    height: 88px;
+    width: 88px; }
+
+.manage-awards .awards-list {
   list-style-type: none;
   margin: 0;
-  padding: 0;
-}
-.panel-controls {
-  margin-top: 16px;
-}
-.panel-controls .btn + .btn {
-  margin-left: 4px;
-}
-.award-preview {
-  width: 48px;
-  height: 48px;
-}
-.award-image-edit {
-  position: relative;
-  width: 48px;
-  height: 48px;
-}
-.award-image-edit img {
-  position: absolute;
-  opacity: 0.8;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.award-image-edit i {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.award-upload-icon {
-  font-size: 48px;
-  cursor: pointer;
-  color: #e0e0e0;
-}
-.grant-award-form .auto-complete {
-  margin-bottom: 16px;
-}
-.grant-award-form .selected-users {
-  margin: 8px 0;
-}
-.grant-award-form .selected-users .row {
-  background-color: #fafafa;
-}
-.grant-award-form .selected-users .row + .row {
-  margin-top: 8px;
-}
-.grant-award-form .selected-users .media .media-left img {
-  display: block;
-  max-width: 48px;
-  height: auto;
-}
-.grant-award-form .selected-users .media dl {
-  margin-bottom: 0;
-}
-.grant-award-form .selected-users .fa {
-  margin: 8px 8px 0 0;
-}
-.auto-complete {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-.auto-complete .ac-menu {
-  width: 100%;
-}
-.auto-complete .ac-selected {
-  background-color: #e1f5fe;
-}
-.auto-complete .hover-item {
-  background-color: #c8e6c9;
-}
-.icon-control {
-  font-size: 1.5em;
-  cursor: pointer;
-  color: #757575;
-}
-.icon-danger {
-  color: #ef5350;
-}
-.icon-ok {
-  color: #66bb6a;
-}
-.icon-disabled {
-  color: #eeeeee;
-  cursor: auto;
-}
+  padding: 0; }

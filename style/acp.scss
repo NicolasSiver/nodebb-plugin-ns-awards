@@ -1,3 +1,36 @@
-.manage-awards {
+@import "vars";
+@import "../node_modules/sass-material-colors/sass/sass-material-colors";
 
+.manage-awards {
+  .awards-item {
+    display: flex;
+    flex-flow: row nowrap;
+
+    &__controls {
+      flex: 0 0 auto;
+
+      i + i {
+        margin-left: $nsa-padding-xs;
+      }
+    }
+
+    &__info {
+      flex: 1 1 auto;
+      margin: 0 16px;
+    }
+
+    &__preview {
+      background-color: material-color('grey', '50');
+      border: 1px solid material-color('grey', '100');
+      flex: 0 0 auto;
+      height: $nsa-preview;
+      width: $nsa-preview;
+    }
+  }
+
+  .awards-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
 }

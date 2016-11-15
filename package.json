@@ -33,5 +33,7 @@
   "nbbpm": {
     "compatibility": "^1.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "sass-material-colors": "^0.0.5"
+  }
 }
