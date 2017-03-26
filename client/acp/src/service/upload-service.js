@@ -1,5 +1,7 @@
 import Dropzone from 'dropzone';
 
+import * as LoaderEvents from '../model/loader-events';
+
 const uploadService = (() => {
     let instance = null;
     let loaders = {};
@@ -51,6 +53,37 @@ const uploadService = (() => {
                     loader.destroy();
                     delete loaders[id];
                 }
+            },
+
+            start: id => {
+                let loader;
+                let errorListener, successListener;
+
+                return new Promise((resolve, reject) => {
+                    loader = loaders[id];
+
+                    if (loader === undefined) {
+                        reject(new Error('Can not find loader with ID: ' + id));
+                    }
+
+                    function manageListeners(add) {
+                        loader[add ? 'on' : 'off'](LoaderEvents.ERROR_DID_OCCUR, errorListener);
+                        loader[add ? 'on' : 'off'](LoaderEvents.FILE_DID_UPLOAD, successListener);
+                    }
+
+                    errorListener = (file, error) => {
+                        manageListeners(false);
+                        reject(error);
+                    };
+
+                    successListener = (file, response) => {
+                        manageListeners(false);
+                        resolve({file, response});
+                    };
+
+                    manageListeners(true);
+                    loader.processQueue();
+                });
             }
         };
     }

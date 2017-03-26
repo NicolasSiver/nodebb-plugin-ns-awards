@@ -19,6 +19,13 @@ export function cancelAwardEdit(aid) {
 
 export function createAward(name, description) {
     return dispatch => {
+        UploadService.sharedInstance().start(Constants.NEW_AWARD_ID)
+            .then(() => {
+                console.log('SUCCESSFUL');
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 }
 
