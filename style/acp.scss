@@ -80,14 +80,17 @@
 
     &__content {
       align-items: center;
-      bottom: 0;
       display: flex;
       flex-flow: column nowrap;
+      height: 100%;
       justify-content: center;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
+      width: 100%;
+    }
+
+    &__preview {
+      padding: $nsa-padding-xxs;
+      max-height: 100%;
+      width: auto;
     }
 
     &__remove {
@@ -95,6 +98,10 @@
       right: $nsa-padding-xxs;
       top: $nsa-padding-xxs;
     }
+  }
+
+  .aws-hidden {
+    display: none;
   }
 
   .round-button {

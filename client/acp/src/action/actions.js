@@ -80,6 +80,13 @@ export function setNewAwardName(value) {
     };
 }
 
+export function setNewAwardPreview(value) {
+    return {
+        type   : ActionTypes.NEW_AWARD_PREVIEW_DID_CHANGE,
+        payload: value
+    };
+}
+
 export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,

@@ -70,18 +70,22 @@
   width: 100%; }
   .manage-awards .image-manager__content {
     align-items: center;
-    bottom: 0;
     display: flex;
     flex-flow: column nowrap;
+    height: 100%;
     justify-content: center;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0; }
+    width: 100%; }
+  .manage-awards .image-manager__preview {
+    padding: 4px;
+    max-height: 100%;
+    width: auto; }
   .manage-awards .image-manager__remove {
     position: absolute;
     right: 4px;
     top: 4px; }
+
+.manage-awards .aws-hidden {
+  display: none; }
 
 .manage-awards .round-button {
   cursor: pointer; }

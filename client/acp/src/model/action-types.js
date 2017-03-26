@@ -16,4 +16,6 @@ export const NEW_AWARD_DESCRIPTION_DID_CHANGE = 'newAwardDescriptionDidChange';
 
 export const NEW_AWARD_NAME_DID_CHANGE = 'newAwardNameDidChange';
 
+export const NEW_AWARD_PREVIEW_DID_CHANGE = 'newAwardPreviewDidChange';
+
 export const SECTION_DID_UPDATE = 'sectionDidUpdate';

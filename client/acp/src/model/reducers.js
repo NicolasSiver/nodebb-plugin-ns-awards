@@ -9,13 +9,6 @@ export function awards(state, action) {
     }
 }
 
-export function creation(state, action) {
-    switch (action.type) {
-        default:
-            return state;
-    }
-}
-
 export function creationActive(state, action) {
     switch (action.type) {
         case ActionTypes.AWARD_CREATION_STATE_DID_UPDATE:
@@ -56,6 +49,8 @@ export function editAwards(state, action) {
 
 export function newAwardName(state, action) {
     switch (action.type) {
+        case ActionTypes.NEW_AWARD_NAME_DID_CHANGE:
+            return action.payload;
         default:
             return state;
     }
@@ -63,6 +58,17 @@ export function newAwardName(state, action) {
 
 export function newAwardDescription(state, action) {
     switch (action.type) {
+        case ActionTypes.NEW_AWARD_DESCRIPTION_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+export function newAwardPreview(state, action) {
+    switch (action.type) {
+        case ActionTypes.NEW_AWARD_PREVIEW_DID_CHANGE:
+            return action.payload;
         default:
             return state;
     }

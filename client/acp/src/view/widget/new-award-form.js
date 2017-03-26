@@ -4,13 +4,15 @@ import {connect} from 'react-redux';
 import {
     setAwardCreationState,
     setNewAwardDescription,
-    setNewAwardName
+    setNewAwardName,
+    setNewAwardPreview
 } from '../../action/actions';
 import ImageManager from '../display/image-manager';
 import PanelControls from '../display/panel-controls';
 import {
     getNewAwardDescription,
     getNewAwardName,
+    getNewAwardPreview,
     getUploadPath
 } from '../../model/selector/selectors';
 
@@ -30,12 +32,17 @@ class NewAwardForm extends React.Component {
                         id="awardName"
                         placeholder="Enter name, ex: 'Good Conduct Medal'"
                         onChange={e => this.props.setName(e.target.value)}
-                        value={this.props.name}/>
+                        value={this.props.name || ''}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="awardImage">Image</label>
                     <div className="award-form__image">
                         <ImageManager
+                            imageDidSelect={(file, url) => this.props.setPreview(url)}
+                            imageDidUpload={() => undefined}
+                            imageWillRemove={() => undefined}
+                            previewUrl={this.props.preview}
+                            uploadDidFail={() => undefined}
                             uploadUrl={this.props.uploadPath}/>
                     </div>
                 </div>
@@ -47,7 +54,7 @@ class NewAwardForm extends React.Component {
                         id="awardDesc"
                         placeholder="Enter full description, ex: 'The Good Conduct Medal is one of the oldest military awards of the United States Armed Forces.'"
                         onChange={e => this.props.setDescription(e.target.value)}
-                        value={this.props.description}></textarea>
+                        value={this.props.description || ''}></textarea>
                 </div>
                 <PanelControls
                     labelSuccess="Create"
@@ -64,6 +71,7 @@ export default connect(
         return {
             description: getNewAwardDescription(state),
             name       : getNewAwardName(state),
+            preview    : getNewAwardPreview(state),
             uploadPath : getUploadPath(state)
         };
     },
@@ -71,7 +79,8 @@ export default connect(
         return {
             cancel        : () => dispatch(setAwardCreationState(false)),
             setName       : value => dispatch(setNewAwardName(value)),
-            setDescription: value => dispatch(setNewAwardDescription(value))
+            setDescription: value => dispatch(setNewAwardDescription(value)),
+            setPreview    : value => dispatch(setNewAwardPreview(value))
         };
     }
 )(NewAwardForm);

@@ -3,12 +3,12 @@ import ReduxThunk from 'redux-thunk';
 
 import {
     awards,
-    creation,
     creationActive,
     editAt,
     editAwards,
     newAwardName,
     newAwardDescription,
+    newAwardPreview,
     section,
     uploadPath
 } from './reducers';
@@ -18,12 +18,12 @@ export function createReduxStore(state) {
     return createStore((state, action) => {
         return {
             awards             : awards(state.awards, action),
-            creation           : creation(state.creation, action),
             creationActive     : creationActive(state.creationActive, action),
             editAt             : editAt(state.editAt, action),
             editAwards         : editAwards(state.editAwards, action),
             newAwardName       : newAwardName(state.newAwardName, action),
             newAwardDescription: newAwardDescription(state.newAwardDescription, action),
+            newAwardPreview    : newAwardPreview(state.newAwardPreview, action),
             section            : section(state.section, action),
             sections           : state.sections,
             uploadPath         : uploadPath(state.uploadPath, action)
@@ -35,17 +35,13 @@ export function getInitialState() {
     return {
         awards: [],
 
-        creation: {
-            name       : null,
-            description: null
-        },
-
         creationActive: false,
         editAt        : null,
         editAwards    : {},
 
-        newAwardName       : null,
         newAwardDescription: null,
+        newAwardName       : null,
+        newAwardPreview    : null,
 
         section: Sections.SECTION_AWARDS,
 

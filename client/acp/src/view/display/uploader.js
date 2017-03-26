@@ -15,6 +15,13 @@ export default class Uploader extends React.Component {
             clickable: true,
             maxFiles : 1,
 
+            thumbnailWidth : null,
+            thumbnailHeight: null,
+
+            // When set to false you have to call myDropzone.processQueue() yourself
+            // in order to upload the dropped files. See below for more information on handling queues.
+            autoProcessQueue: false,
+
             // Consume event to prevent Dropzone's default behavior
             addedfile: () => undefined,
 

@@ -4,9 +4,11 @@ export const getEditAt = state => state.editAt;
 
 export const getEditAwards = state => state.editAwards;
 
+export const getNewAwardDescription = state => state.newAwardDescription;
+
 export const getNewAwardName = state => state.newAwardName;
 
-export const getNewAwardDescription = state => state.newAwardDescription;
+export const getNewAwardPreview = state => state.newAwardPreview;
 
 export const getSection = state => state.section;
 
