@@ -16,6 +16,10 @@ const uploadService = (() => {
                     clickable: true,
                     maxFiles : 1,
 
+                    headers: {
+                        'NS-Award-Entity-ID': id
+                    },
+
                     thumbnailWidth : null,
                     thumbnailHeight: null,
 
