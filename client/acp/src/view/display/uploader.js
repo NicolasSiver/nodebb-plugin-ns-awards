@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import Dropzone from 'dropzone';
 import React from 'react';
 
@@ -49,8 +48,7 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <div className="uploader">
-                <img className="uploader__image" src={this.props.imageUrl}/>
-                <i className="uploader__icon" ref={view => (this.view = view)}></i>
+                <i className="uploader__icon fa fa-cloud-upload fa-3x" ref={view => (this.view = view)}></i>
             </div>
         );
     }
@@ -61,7 +59,6 @@ Uploader.propTypes = {
     dataDidTransfer: React.PropTypes.func,
     imageDidSelect : React.PropTypes.func.isRequired,
     imageDidUpload : React.PropTypes.func.isRequired,
-    imageUrl       : React.PropTypes.string.isRequired,
     uploadDidFail  : React.PropTypes.func.isRequired,
     uploadUrl      : React.PropTypes.string.isRequired
 };

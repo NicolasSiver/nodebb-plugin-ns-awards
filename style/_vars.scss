@@ -1,5 +1,6 @@
 $nsa-base: 4px;
+$nsa-padding-xxs: $nsa-base;
 $nsa-padding-xs: $nsa-base * 2;
 $nsa-padding-s: $nsa-base * 3;
 $nsa-padding: $nsa-base * 4;
-$nsa-preview: 88px;
+$nsa-preview: $nsa-base * 22;
