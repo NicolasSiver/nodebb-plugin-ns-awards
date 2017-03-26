@@ -2,15 +2,16 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {setAwardCreationState} from '../../action/actions';
+import ImageManager from '../display/image-manager';
 import PanelControls from '../display/panel-controls';
-import {getCreation} from '../../model/selector/selectors';
+import {getCreation, getUploadPath} from '../../model/selector/selectors';
 
 class NewAwardForm extends React.Component {
 
     render() {
         let readyCreate = false;
         return (
-            <div>
+            <div className="award-form">
                 <h4>Create Award</h4>
 
                 <div className="form-group">
@@ -21,6 +22,13 @@ class NewAwardForm extends React.Component {
                         id="awardName"
                         placeholder="Enter name, ex: 'Good Conduct Medal'"
                         value={this.props.name}/>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="awardImage">Image</label>
+                    <div className="award-form__image">
+                        <ImageManager
+                            uploadUrl={this.props.uploadPath}/>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="awardDesc">Description</label>
@@ -42,12 +50,13 @@ class NewAwardForm extends React.Component {
 }
 
 export default connect(
-    (state) => {
+    state => {
         return {
-            creation: getCreation(state)
+            creation  : getCreation(state),
+            uploadPath: getUploadPath(state)
         };
     },
-    (dispatch) => {
+    dispatch => {
         return {
             cancel: () => dispatch(setAwardCreationState(false))
         };
