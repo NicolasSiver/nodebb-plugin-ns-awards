@@ -1,5 +1,7 @@
 export const AWARD_CREATION_STATE_DID_UPDATE = 'awardCreationStateDidUpdate';
 
+export const AWARD_DID_EDIT = 'awardDidEdit';
+
 export const AWARD_EDIT_DID_CANCEL = 'awardEditDidCancel';
 
 export const AWARD_EDIT_DID_START = 'awardEditDidStart';

@@ -40,6 +40,7 @@ export function editAwards(state, action) {
     let edits;
 
     switch (action.type) {
+        case ActionTypes.AWARD_DID_EDIT:
         case ActionTypes.AWARD_EDIT_DID_START:
             edits = Object.assign({}, state);
             edits[action.payload.aid] = action.payload.award;

@@ -15,6 +15,13 @@ export function cancelAwardEdit(aid) {
     };
 }
 
+export function editAward(aid, award) {
+    return {
+        type   : ActionTypes.AWARD_DID_EDIT,
+        payload: {aid, award}
+    };
+}
+
 export function getAwardsAll() {
     return (dispatch) => {
         SocketService.getAwards().then((awards) => {

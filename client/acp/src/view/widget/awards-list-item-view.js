@@ -14,15 +14,15 @@ export default class AwardsListItemView extends React.Component {
                 <div className="awards-item__info">
                     <div className="awards-about">
                         <div className="awards-about__header">
-                            <div className="awards-about__title">{this.props.award.name}</div>
+                            <div className="awards-about__title">{this.renderName(this.props.award.name, this.props.edit)}</div>
                             {this.renderIcons(
-                                this.props.edit,
                                 this.props.itemWillCancel,
                                 this.props.itemWillEdit,
-                                this.props.itemWillSave
+                                this.props.itemWillSave,
+                                this.props.edit
                             )}
                         </div>
-                        <div className="awards-about__details">{this.props.award.desc}</div>
+                        <div className="awards-about__details">{this.renderDetails(this.props.award.desc, this.props.edit)}</div>
                     </div>
                 </div>
                 <div className="awards-item__controls">
@@ -32,7 +32,17 @@ export default class AwardsListItemView extends React.Component {
         );
     }
 
-    renderIcons(edit, cancelListener, editListener, saveListener) {
+    renderDetails(value, edit) {
+        return edit ? (
+            <textarea className="form-control"
+                      rows="3"
+                      placeholder="Enter description"
+                      onChange={e => this.textDidChange('desc', e.target.value)}
+                      value={value}></textarea>
+        ) : value;
+    }
+
+    renderIcons(cancelListener, editListener, saveListener, edit) {
         let dangerButton, successButton;
 
         if (edit) {
@@ -55,11 +65,29 @@ export default class AwardsListItemView extends React.Component {
             </div>
         );
     }
+
+    renderName(value, edit) {
+        return edit ? (
+            <input
+                type="text"
+                className="form-control"
+                placeholder="Enter name"
+                onChange={e => this.textDidChange('name', e.target.value)}
+                value={value}/>
+        ) : value;
+    }
+
+    textDidChange(field, value) {
+        let award = this.props.award;
+        award[field] = value;
+        this.props.itemDidEdit(award);
+    }
 }
 
 AwardsListItemView.propTypes = {
     award         : React.PropTypes.object.isRequired,
     edit          : React.PropTypes.bool.isRequired,
+    itemDidEdit   : React.PropTypes.func.isRequired,
     itemWillEdit  : React.PropTypes.func.isRequired,
     itemWillCancel: React.PropTypes.func.isRequired,
     itemWillSave  : React.PropTypes.func.isRequired
