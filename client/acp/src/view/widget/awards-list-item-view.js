@@ -15,9 +15,12 @@ export default class AwardsListItemView extends React.Component {
                     <div className="awards-about">
                         <div className="awards-about__header">
                             <div className="awards-about__title">{this.props.award.name}</div>
-                            <div className="awards-about__icon">
-                                <RoundButton icon="fa-pencil"/>
-                            </div>
+                            {this.renderIcons(
+                                this.props.edit,
+                                this.props.itemWillCancel,
+                                this.props.itemWillEdit,
+                                this.props.itemWillSave
+                            )}
                         </div>
                         <div className="awards-about__details">{this.props.award.desc}</div>
                     </div>
@@ -26,6 +29,30 @@ export default class AwardsListItemView extends React.Component {
                     <div className="pull-right item-controls">{controls}</div>
                 </div>
             </li>
+        );
+    }
+
+    renderIcons(edit, cancelListener, editListener, saveListener) {
+        let dangerButton, successButton;
+
+        if (edit) {
+            dangerButton = <RoundButton
+                icon="fa-trash"
+                animate={true}
+                role="danger"/>;
+            successButton = <RoundButton
+                icon="fa-check"
+                animate={true}
+                role="success"
+                clickListener={saveListener}/>;
+        }
+
+        return (
+            <div className="awards-about__icon">
+                {dangerButton}
+                {successButton}
+                <RoundButton icon="fa-pencil" role={edit ? 'active' : null} clickListener={edit ? cancelListener : editListener}/>
+            </div>
         );
     }
 }

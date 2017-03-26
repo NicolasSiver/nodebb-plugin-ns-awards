@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {cancelAwardEdit, setAwardEditIndex} from '../../action/actions';
+import {cancelAwardEdit, startAwardEdit} from '../../action/actions';
 import AwardsListItemView from './awards-list-item-view';
 import {getAwards, getEditAwards} from '../../model/selector/selectors';
 import {createAwardUid} from '../../util/utils';
@@ -10,18 +10,19 @@ class AwardsListView extends React.Component {
     render() {
         let items;
 
-        if (this.props.awards.length == 0) {
+        if (this.props.awards.length === 0) {
             items = <li>No Awards. Why not create a new one?</li>;
         } else {
             items = this.props.awards.map((award, index) => {
-                let editedAward = this.props.edited[createAwardUid(award.aid)];
+                let aid = createAwardUid(award.aid);
+                let editedAward = this.props.edited[aid];
                 award = editedAward || award;
                 return <AwardsListItemView
                     key={award.aid}
                     edit={!!editedAward}
                     award={award}
-                    itemWillEdit={() => this.props.edit(index)}
-                    itemWillCancel={() => this.props.cancel()}
+                    itemWillEdit={() => this.props.edit(aid, award)}
+                    itemWillCancel={() => this.props.cancel(aid)}
                     itemWillSave={(name, description, file) => this.props.save(index, award.aid, name, description, file)}/>;
             });
         }
@@ -37,16 +38,16 @@ class AwardsListView extends React.Component {
 }
 
 export default connect(
-    (state) => {
+    state => {
         return {
             awards: getAwards(state),
             edited: getEditAwards(state)
         };
     },
-    (dispatch) => {
+    dispatch => {
         return {
-            cancel: () => dispatch(cancelAwardEdit()),
-            edit  : (index) => dispatch(setAwardEditIndex(index))
+            cancel: aid => dispatch(cancelAwardEdit(aid)),
+            edit  : (aid, award) => dispatch(startAwardEdit(aid, Object.assign({}, award)))
             // save  : (index, aid, name, description, file) => dispatch(setSection(sectionName))
         };
     }
