@@ -1,3 +1,11 @@
+@keyframes slideIn {
+  from {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0; }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
 /**
  * Retrieves a color value from the $material-colors Sass map
  * Inspired by https://github.com/nilskaspersson/Google-Material-UI-Color-Palette/
@@ -60,5 +68,13 @@
     transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
   .manage-awards .round-button__background:hover {
     color: #2196f3; }
+  .manage-awards .round-button__background--active {
+    color: #2196f3; }
+  .manage-awards .round-button__background--danger:hover {
+    color: #f44336; }
+  .manage-awards .round-button__background--success:hover {
+    color: #4caf50; }
   .manage-awards .round-button__icon {
     pointer-events: none; }
+  .manage-awards .round-button--animate {
+    animation: slideIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }

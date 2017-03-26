@@ -37,7 +37,17 @@ export function editAt(state, action) {
 }
 
 export function editAwards(state, action) {
-    switch (action.types) {
+    let edits;
+
+    switch (action.type) {
+        case ActionTypes.AWARD_EDIT_DID_START:
+            edits = Object.assign({}, state);
+            edits[action.payload.aid] = action.payload.award;
+            return edits;
+        case ActionTypes.AWARD_EDIT_DID_CANCEL:
+            edits = Object.assign({}, state);
+            delete edits[action.payload];
+            return edits;
         default:
             return state;
     }

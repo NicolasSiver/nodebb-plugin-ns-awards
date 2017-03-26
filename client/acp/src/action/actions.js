@@ -8,9 +8,10 @@
 import * as ActionTypes from '../model/action-types';
 import SocketService from '../service/socket-service';
 
-export function cancelAwardEdit() {
+export function cancelAwardEdit(aid) {
     return {
-        type: ActionTypes.AWARD_EDIT_DID_CANCEL
+        type   : ActionTypes.AWARD_EDIT_DID_CANCEL,
+        payload: aid
     };
 }
 
@@ -47,5 +48,12 @@ export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,
         payload: sectionName
+    };
+}
+
+export function startAwardEdit(aid, award) {
+    return {
+        type   : ActionTypes.AWARD_EDIT_DID_START,
+        payload: {aid, award}
     };
 }

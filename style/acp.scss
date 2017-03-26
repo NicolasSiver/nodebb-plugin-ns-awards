@@ -1,3 +1,4 @@
+@import "animation";
 @import "vars";
 @import "../node_modules/sass-material-colors/sass/sass-material-colors";
 
@@ -74,12 +75,28 @@
       transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     }
 
-    &__background:hover{
+    &__background:hover {
       color: material-color('blue', '500');
+    }
+
+    &__background--active {
+      color: material-color('blue', '500');
+    }
+
+    &__background--danger:hover {
+      color: material-color('red', '500');
+    }
+
+    &__background--success:hover {
+      color: material-color('green', '500');
     }
 
     &__icon {
       pointer-events: none;
+    }
+
+    &--animate {
+      animation: slideIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
     }
   }
 }
