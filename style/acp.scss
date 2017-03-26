@@ -114,6 +114,12 @@
     display: none;
   }
 
+  .panel-controls {
+    .btn + .btn {
+      margin-left: $nsa-padding-xs;
+    }
+  }
+
   .round-button {
     cursor: pointer;
 

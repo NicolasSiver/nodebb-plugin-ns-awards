@@ -93,6 +93,9 @@
 .manage-awards .aws-hidden {
   display: none; }
 
+.manage-awards .panel-controls .btn + .btn {
+  margin-left: 8px; }
+
 .manage-awards .round-button {
   cursor: pointer; }
   .manage-awards .round-button__background {
