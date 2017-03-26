@@ -38,6 +38,15 @@ export function getConfig() {
     };
 }
 
+export function resetNewAwardPreview(uploader) {
+    return dispatch => {
+        if (uploader !== undefined) {
+            uploader.reset();
+        }
+        dispatch(setNewAwardPreview(null));
+    };
+}
+
 export function setAwardCreationState(state) {
     return {
         type   : ActionTypes.AWARD_CREATION_STATE_DID_UPDATE,

@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {
+    resetNewAwardPreview,
     setAwardCreationState,
     setNewAwardDescription,
     setNewAwardName,
@@ -40,9 +41,10 @@ class NewAwardForm extends React.Component {
                         <ImageManager
                             imageDidSelect={(file, url) => this.props.setPreview(url)}
                             imageDidUpload={() => undefined}
-                            imageWillRemove={() => undefined}
+                            imageWillRemove={() => this.props.resetPreview(this.uploader)}
                             previewUrl={this.props.preview}
                             uploadDidFail={() => undefined}
+                            uploadDidInit={uploader => this.uploader = uploader}
                             uploadUrl={this.props.uploadPath}/>
                     </div>
                 </div>
@@ -78,6 +80,7 @@ export default connect(
     dispatch => {
         return {
             cancel        : () => dispatch(setAwardCreationState(false)),
+            resetPreview  : uploader => dispatch(resetNewAwardPreview(uploader)),
             setName       : value => dispatch(setNewAwardName(value)),
             setDescription: value => dispatch(setNewAwardDescription(value)),
             setPreview    : value => dispatch(setNewAwardPreview(value))

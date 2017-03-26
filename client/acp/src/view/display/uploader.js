@@ -46,6 +46,8 @@ export default class Uploader extends React.Component {
                 }
             }
         });
+
+        this.props.uploadDidInit(this.createWrapper(this.dropzone));
     }
 
     componentWillUnmount() {
@@ -53,6 +55,18 @@ export default class Uploader extends React.Component {
             this.dropzone.destroy();
             this.dropzone = null;
         }
+    }
+
+    createWrapper(dropzone) {
+        return {
+            reset: () => {
+                dropzone.removeAllFiles();
+            },
+
+            start: () => {
+                dropzone.processQueue();
+            }
+        };
     }
 
     render() {
@@ -70,5 +84,6 @@ Uploader.propTypes = {
     imageDidSelect : React.PropTypes.func.isRequired,
     imageDidUpload : React.PropTypes.func.isRequired,
     uploadDidFail  : React.PropTypes.func.isRequired,
+    uploadDidInit  : React.PropTypes.func.isRequired,
     uploadUrl      : React.PropTypes.string.isRequired
 };
