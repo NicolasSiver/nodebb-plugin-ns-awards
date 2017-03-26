@@ -15,6 +15,9 @@ export default class Uploader extends React.Component {
             clickable: true,
             maxFiles : 1,
 
+            // Consume event to prevent Dropzone's default behavior
+            addedfile: () => undefined,
+
             // An error occured. Receives the errorMessage as second parameter
             // and if the error was due to the XMLHttpRequest the xhr object as third.
             error: (file, error) => this.props.uploadDidFail(file, error),
