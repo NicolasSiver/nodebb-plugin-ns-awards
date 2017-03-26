@@ -67,7 +67,7 @@
     color: #bdbdbd;
     transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
   .manage-awards .round-button__background:hover {
-    color: #2196f3; }
+    color: #64b5f6; }
   .manage-awards .round-button__background--active {
     color: #2196f3; }
   .manage-awards .round-button__background--danger:hover {
