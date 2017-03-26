@@ -6,12 +6,19 @@
  * Simple. FSA should be simple, straightforward, and flexible in its design.
  */
 import * as ActionTypes from '../model/action-types';
+import * as Constants from '../model/constants';
 import SocketService from '../service/socket-service';
+import UploadService from '../service/upload-service';
 
 export function cancelAwardEdit(aid) {
     return {
         type   : ActionTypes.AWARD_EDIT_DID_CANCEL,
         payload: aid
+    };
+}
+
+export function createAward(name, description) {
+    return dispatch => {
     };
 }
 
@@ -38,10 +45,11 @@ export function getConfig() {
     };
 }
 
-export function resetNewAwardPreview(uploader) {
+export function resetNewAwardPreview() {
     return dispatch => {
-        if (uploader !== undefined) {
-            uploader.reset();
+        let loader = UploadService.sharedInstance().getLoader(Constants.NEW_AWARD_ID);
+        if (loader !== undefined) {
+            loader.removeAllFiles();
         }
         dispatch(setNewAwardPreview(null));
     };
