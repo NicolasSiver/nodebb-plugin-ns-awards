@@ -31,7 +31,7 @@
     "winston": "^2.2.0"
   },
   "nbbpm": {
-    "compatibility": "^1.0.0"
+    "compatibility": "^1.4.0"
   },
   "devDependencies": {
     "sass-material-colors": "^0.0.5"
