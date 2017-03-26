@@ -7,6 +7,8 @@ import {
     creationActive,
     editAt,
     editAwards,
+    newAwardName,
+    newAwardDescription,
     section,
     uploadPath
 } from './reducers';
@@ -15,14 +17,16 @@ import * as Sections from './sections';
 export function createReduxStore(state) {
     return createStore((state, action) => {
         return {
-            awards        : awards(state.awards, action),
-            creation      : creation(state.creation, action),
-            creationActive: creationActive(state.creationActive, action),
-            editAt        : editAt(state.editAt, action),
-            editAwards    : editAwards(state.editAwards, action),
-            section       : section(state.section, action),
-            sections      : state.sections,
-            uploadPath    : uploadPath(state.uploadPath, action)
+            awards             : awards(state.awards, action),
+            creation           : creation(state.creation, action),
+            creationActive     : creationActive(state.creationActive, action),
+            editAt             : editAt(state.editAt, action),
+            editAwards         : editAwards(state.editAwards, action),
+            newAwardName       : newAwardName(state.newAwardName, action),
+            newAwardDescription: newAwardDescription(state.newAwardDescription, action),
+            section            : section(state.section, action),
+            sections           : state.sections,
+            uploadPath         : uploadPath(state.uploadPath, action)
         };
     }, state, applyMiddleware(ReduxThunk));
 }
@@ -39,7 +43,11 @@ export function getInitialState() {
         creationActive: false,
         editAt        : null,
         editAwards    : {},
-        section       : Sections.SECTION_AWARDS,
+
+        newAwardName       : null,
+        newAwardDescription: null,
+
+        section: Sections.SECTION_AWARDS,
 
         sections: [
             {label: 'Awards', icon: 'fa-trophy', id: Sections.SECTION_AWARDS},

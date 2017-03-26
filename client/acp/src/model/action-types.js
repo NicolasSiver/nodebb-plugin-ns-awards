@@ -12,4 +12,8 @@ export const AWARDS_DID_UPDATE = 'awardsDidUpdate';
 
 export const CONFIG_DID_UPDATE = 'configDidUpdate';
 
+export const NEW_AWARD_DESCRIPTION_DID_CHANGE = 'newAwardDescriptionDidChange';
+
+export const NEW_AWARD_NAME_DID_CHANGE = 'newAwardNameDidChange';
+
 export const SECTION_DID_UPDATE = 'sectionDidUpdate';

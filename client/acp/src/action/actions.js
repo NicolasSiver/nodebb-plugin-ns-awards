@@ -66,6 +66,20 @@ export function setConfig(config) {
     };
 }
 
+export function setNewAwardDescription(value) {
+    return {
+        type   : ActionTypes.NEW_AWARD_DESCRIPTION_DID_CHANGE,
+        payload: value
+    };
+}
+
+export function setNewAwardName(value) {
+    return {
+        type   : ActionTypes.NEW_AWARD_NAME_DID_CHANGE,
+        payload: value
+    };
+}
+
 export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,

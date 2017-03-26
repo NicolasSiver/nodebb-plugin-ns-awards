@@ -54,6 +54,20 @@ export function editAwards(state, action) {
     }
 }
 
+export function newAwardName(state, action) {
+    switch (action.type) {
+        default:
+            return state;
+    }
+}
+
+export function newAwardDescription(state, action) {
+    switch (action.type) {
+        default:
+            return state;
+    }
+}
+
 export function section(state, action) {
     switch (action.type) {
         case ActionTypes.SECTION_DID_UPDATE:
