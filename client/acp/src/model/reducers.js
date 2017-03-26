@@ -62,3 +62,12 @@ export function section(state, action) {
             return state;
     }
 }
+
+export function uploadPath(state, action) {
+    switch (action.type) {
+        case ActionTypes.CONFIG_DID_UPDATE:
+            return action.payload.uploadPath;
+        default:
+            return state;
+    }
+}

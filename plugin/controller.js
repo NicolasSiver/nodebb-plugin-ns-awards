@@ -214,6 +214,18 @@
         ], done);
     };
 
+    Controller.getConfig = function (done) {
+        var uploadPath = path.join(
+            nconf.get('relative_path'),
+            constants.API_PATH,
+            constants.PLUGIN_PATH,
+            constants.IMAGE_SERVICE_PATH
+        );
+        done(null, {
+            uploadPath: uploadPath
+        });
+    };
+
     Controller.getUserAwards = function (uid, limit, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid, limit),

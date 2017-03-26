@@ -10,4 +10,6 @@ export const getSection = state => state.section;
 
 export const getSections = state => state.sections;
 
+export const getUploadPath = state => state.uploadPath;
+
 export const isCreationActive = state => state.creationActive;

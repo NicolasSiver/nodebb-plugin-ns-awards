@@ -1,14 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {getAwardsAll} from './action/actions';
+import {getAwardsAll, getConfig} from './action/actions';
 import AwardCreate from './view/widget/award-create';
 import Donate from './view/display/donate';
 import TabManager from './view/widget/tab-manager';
 
 class AwardsAcp extends React.Component {
     componentDidMount() {
-        this.props.dispatch(getAwardsAll());
+        this.props.getConfig();
+        this.props.getAwards();
     }
 
     render() {
@@ -38,4 +39,12 @@ class AwardsAcp extends React.Component {
     }
 }
 
-export default connect()(AwardsAcp);
+export default connect(
+    null,
+    dispatch => {
+        return {
+            getAwards: () => dispatch(getAwardsAll()),
+            getConfig: () => dispatch(getConfig())
+        };
+    }
+)(AwardsAcp);

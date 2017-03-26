@@ -26,6 +26,7 @@
         sockets[constants.SOCKETS].editGrant = Sockets.editGrant;
         sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
         sockets[constants.SOCKETS].getGrantsWithAwards = Sockets.getGrantsWithAwards;
+        sockets[constants.SOCKETS].getConfig = Sockets.getConfig;
         sockets[constants.SOCKETS].getSettings = Sockets.getSettings;
         sockets[constants.SOCKETS].saveSettings = Sockets.saveSettings;
         sockets[constants.SOCKETS].searchUser = Sockets.searchUser;
@@ -114,6 +115,10 @@
 
     Sockets.getGrantsWithAwards = function (socket, payload, callback) {
         controller.getUserAwards(payload.uid, -1, callback);
+    };
+
+    Sockets.getConfig = function (socket, payload, callback) {
+        controller.getConfig(callback);
     };
 
     Sockets.getSettings = function (socket, payload, callback) {

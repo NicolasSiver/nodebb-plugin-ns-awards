@@ -56,6 +56,8 @@
                         }
                     });
 
+                console.dir(middleware);
+
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
 

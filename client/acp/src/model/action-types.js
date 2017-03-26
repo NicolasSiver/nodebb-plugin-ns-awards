@@ -10,4 +10,6 @@ export const AWARD_EDIT_INDEX_DID_UPDATE = 'awardEditIndexDidUpdate';
 
 export const AWARDS_DID_UPDATE = 'awardsDidUpdate';
 
+export const CONFIG_DID_UPDATE = 'configDidUpdate';
+
 export const SECTION_DID_UPDATE = 'sectionDidUpdate';

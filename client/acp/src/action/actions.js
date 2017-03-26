@@ -23,9 +23,17 @@ export function editAward(aid, award) {
 }
 
 export function getAwardsAll() {
-    return (dispatch) => {
-        SocketService.getAwards().then((awards) => {
+    return dispatch => {
+        SocketService.getAwards().then(awards => {
             dispatch(setAwards(awards));
+        });
+    };
+}
+
+export function getConfig() {
+    return dispatch => {
+        SocketService.getConfig().then(config => {
+            dispatch(setConfig(config));
         });
     };
 }
@@ -48,6 +56,13 @@ export function setAwards(list) {
     return {
         type   : ActionTypes.AWARDS_DID_UPDATE,
         payload: list
+    };
+}
+
+export function setConfig(config) {
+    return {
+        type   : ActionTypes.CONFIG_DID_UPDATE,
+        payload: config
     };
 }
 
