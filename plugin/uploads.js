@@ -5,7 +5,7 @@
         fse        = require('fs-extra'),
         multer     = require('multer'),
         path       = require('path'),
-        shortId    = require('shortid'),
+        uuidv4     = require('uuid/v4'),
 
         constants  = require('./constants'),
         controller = require('./controller'),
@@ -62,9 +62,7 @@
             },
             filename   : function (req, file, next) {
                 var name = 'award-';
-                // Use first 8 characters from the original file
-                name += file.originalname.slice(0, 8) + '-';
-                name += shortId.generate();
+                name += uuidv4();
                 // Append image extension
                 name += path.extname(file.originalname);
                 next(null, name);
