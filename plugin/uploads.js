@@ -61,7 +61,13 @@
                 next(null, path.resolve(__dirname, '../public/uploads/'));
             },
             filename   : function (req, file, next) {
-                next(null, 'award-' + shortId.generate() + path.extname(file.originalname));
+                var name = 'award-';
+                // Use first 8 characters from the original file
+                name += file.originalname.slice(0, 8) + '-';
+                name += shortId.generate();
+                // Append image extension
+                name += path.extname(file.originalname);
+                next(null, name);
             }
         });
         done(null, storage);
