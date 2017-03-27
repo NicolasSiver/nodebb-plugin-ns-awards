@@ -2,9 +2,6 @@
     'use strict';
 
     var async      = require('async'),
-        multer     = require('multer'),
-        path       = require('path'),
-        shortId    = require('shortid'),
 
         controller = require('./controller'),
         sockets    = require('./sockets'),
@@ -16,7 +13,7 @@
     Plugin.hooks = {
         filters: filters,
         statics: {
-            load      : function (params, callback) {
+            load: function (params, callback) {
                 var router       = params.router,
                     middleware   = params.middleware,
                     controllers  = params.controllers,
@@ -38,43 +35,22 @@
                                 'client/all_awards', result
                             );
                         });
-                    },
-
-                    apiImages    = function (req, res, next) {
-                        uploads.setFile(req.file, function (error, id) {
-                            if (error) {
-                                return res.status(500).json(error);
-                            }
-                            res.json({id: id});
-                        });
-                    },
-
-                    storage      = multer.diskStorage({
-                        destination: path.resolve(__dirname, '../public/uploads/'),
-                        filename   : function (req, file, cb) {
-                            cb(null, 'award-' + shortId.generate() + path.extname(file.originalname))
-                        }
-                    });
-
-                console.dir(middleware);
+                    };
 
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
-
-                // Image uploader
-                router.post(
-                    apiUri + '/images',
-                    multer({storage: storage}).single('award'), apiImages);
 
                 //Client page
                 router.get('/awards', middleware.buildHeader, renderClient);
                 router.get('/api/awards', renderClient);
 
                 async.series([
+                    async.apply(uploads.init, router, middleware),
                     async.apply(settings.init),
                     async.apply(sockets.init)
                 ], callback);
             },
+
             userDelete: function (params, callback) {
                 controller.deleteUserGrants(params.uid, callback);
             }
