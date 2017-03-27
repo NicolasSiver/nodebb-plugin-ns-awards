@@ -67,6 +67,10 @@
         done(null, storage);
     }
 
+    Uploads.getFileById = function (id, done) {
+        done(null, files[id]);
+    };
+
     Uploads.getUploadPath = function (fileName) {
         return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     };

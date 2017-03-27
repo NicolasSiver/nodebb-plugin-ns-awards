@@ -4,6 +4,7 @@ module.exports = Object.freeze({
     'GLOBAL_GRANT_COUNTER': 'nextNsAwardGrantId',
     'IMAGE_SERVICE_PATH'  : '/images',
     'NAMESPACE'           : 'ns:awards',
+    'NEW_AWARD_ID'        : 'newAwardId',
     'PLUGIN_PATH'         : '/admin/plugins/awards',
     'SOCKETS'             : 'ns-awards',
     'UPLOAD_DIR'          : 'awards'
