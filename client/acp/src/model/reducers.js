@@ -13,6 +13,8 @@ export function creationActive(state, action) {
     switch (action.type) {
         case ActionTypes.AWARD_CREATION_STATE_DID_UPDATE:
             return action.payload;
+        case ActionTypes.NEW_AWARD_WILL_RESET:
+            return false;
         default:
             return state;
     }
@@ -51,6 +53,8 @@ export function newAwardName(state, action) {
     switch (action.type) {
         case ActionTypes.NEW_AWARD_NAME_DID_CHANGE:
             return action.payload;
+        case ActionTypes.NEW_AWARD_WILL_RESET:
+            return null;
         default:
             return state;
     }
@@ -60,6 +64,8 @@ export function newAwardDescription(state, action) {
     switch (action.type) {
         case ActionTypes.NEW_AWARD_DESCRIPTION_DID_CHANGE:
             return action.payload;
+        case ActionTypes.NEW_AWARD_WILL_RESET:
+            return null;
         default:
             return state;
     }
@@ -69,6 +75,8 @@ export function newAwardPreview(state, action) {
     switch (action.type) {
         case ActionTypes.NEW_AWARD_PREVIEW_DID_CHANGE:
             return action.payload;
+        case ActionTypes.NEW_AWARD_WILL_RESET:
+            return null;
         default:
             return state;
     }

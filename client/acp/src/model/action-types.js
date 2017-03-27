@@ -18,4 +18,6 @@ export const NEW_AWARD_NAME_DID_CHANGE = 'newAwardNameDidChange';
 
 export const NEW_AWARD_PREVIEW_DID_CHANGE = 'newAwardPreviewDidChange';
 
+export const NEW_AWARD_WILL_RESET = 'newAwardWillReset';
+
 export const SECTION_DID_UPDATE = 'sectionDidUpdate';

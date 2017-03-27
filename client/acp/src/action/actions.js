@@ -20,8 +20,10 @@ export function cancelAwardEdit(aid) {
 export function createAward(name, description) {
     return dispatch => {
         UploadService.sharedInstance().start(Constants.NEW_AWARD_ID)
+            .then(() => SocketService.createAward(name, description))
             .then(() => {
-                console.log('SUCCESSFUL');
+                dispatch(resetNewAward());
+                dispatch(getAwardsAll());
             })
             .catch(error => {
                 console.error(error);
@@ -49,6 +51,12 @@ export function getConfig() {
         SocketService.getConfig().then(config => {
             dispatch(setConfig(config));
         });
+    };
+}
+
+export function resetNewAward() {
+    return {
+        type: ActionTypes.NEW_AWARD_WILL_RESET
     };
 }
 
