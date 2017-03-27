@@ -19,7 +19,8 @@ const uploadService = (() => {
                     maxFiles : 1,
 
                     headers: {
-                        'NS-Award-Entity-ID': id
+                        'x-ns-award-entity-id': id,
+                        'x-csrf-token'        : window.config.csrf_token
                     },
 
                     thumbnailWidth : null,
