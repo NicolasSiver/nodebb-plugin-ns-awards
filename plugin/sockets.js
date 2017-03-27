@@ -49,28 +49,12 @@
     /**
      * Create a new Award
      *
-     * @param socket Socket.io open connection
-     * @param payload {object} Includes 'name', 'desc' and 'fieldId' fields
-     * @param callback
+     * @param {object} socket Socket.io open connection
+     * @param {object} payload {object} includes 'name' and 'description' fields
+     * @param {function} callback
      */
     Sockets.createAward = function (socket, payload, callback) {
-        async.waterfall([
-            async.apply(uploads.getFileById, payload.fileId),
-            function (file, next) {
-                async.series([
-                    async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
-                    async.apply(fse.remove, file.path)
-                ], function (e) {
-                    if (e) {
-                        return next(e);
-                    }
-                    next(null, file);
-                });
-            },
-            function (file, next) {
-                database.createAward(payload.name, payload.desc, file.filename, next);
-            }
-        ], callback);
+        controller.createAward(payload, callback);
     };
 
     Sockets.deleteAward = function (socket, payload, callback) {

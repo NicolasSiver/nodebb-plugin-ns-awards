@@ -52,6 +52,15 @@
         ], done);
     };
 
+    Controller.createAward = function (awardMeta, done) {
+        async.waterfall([
+            async.apply(uploads.getFileById, constants.NEW_AWARD_ID),
+            function (file, next) {
+                database.createAward(awardMeta.name, awardMeta.description, file.filename, next);
+            }
+        ], done);
+    };
+
     Controller.deleteGrantById = function (gid, done) {
         database.deleteGrant(gid, done);
     };
