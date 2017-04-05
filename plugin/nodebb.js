@@ -7,6 +7,7 @@
         emitter      : NodeBB.require('./src/emitter'),
         meta         : NodeBB.require('./src/meta'),
         notifications: NodeBB.require('./src/notifications'),
+        plugins      : NodeBB.require('./src/plugins'),
         pluginSockets: NodeBB.require('./src/socket.io/plugins'),
         postTools    : NodeBB.require('./src/posts/tools'),
         settings     : NodeBB.require('./src/settings'),

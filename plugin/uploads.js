@@ -12,8 +12,9 @@
         nodebb     = require('./nodebb');
 
 
-    var files = {},
-        nconf = nodebb.nconf;
+    var files   = {},
+        nconf   = nodebb.nconf,
+        plugins = nodebb.plugins;
 
     // Multer File Object - https://github.com/expressjs/multer#multer-file-object
 
@@ -35,21 +36,33 @@
         var fileMiddleware = multer({storage: storage}).single('award');
 
         router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticate], function (req, res, next) {
-            let entityId = req.headers['x-ns-award-entity-id'];
+            var saveDidComplete = function (error, file) {
+                var entityId = req.headers['x-ns-award-entity-id'];
 
-            storeLocal(req.file, function (error, file) {
                 if (error) {
                     return res.status(500).json(error);
                 }
 
-                files[entityId] = file;
+                fse.remove(file.path, function (err) {
+                    if (err) {
+                        return res.status(500).json(err);
+                    }
 
-                res.json({
-                    entityId: entityId,
-                    file    : file,
-                    storage : 'local'
+                    files[entityId] = file;
+
+                    res.json({
+                        entityId: entityId,
+                        file    : file,
+                        storage : Uploads.isLocalFile(file) ? constants.FILE_LOCAL : constants.FILE_REMOTE
+                    });
                 });
-            });
+            };
+
+            if (plugins.hasListeners('filter:uploadImage')) {
+                storeCloud(req.file, req.user, saveDidComplete);
+            } else {
+                storeLocal(req.file, saveDidComplete);
+            }
         });
 
         done(null);
@@ -75,21 +88,51 @@
         done(null, files[id]);
     };
 
+    Uploads.getFinalDestination = function (file, done) {
+        var destination = null;
+
+        if (Uploads.isLocalFile(file)) {
+            destination = file.localPath;
+        } else {
+            destination = file.url;
+        }
+
+        done(null, destination);
+    };
+
     Uploads.getUploadPath = function (fileName) {
         return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     };
 
-    function storeLocal(file, done) {
-        var uploadPath = Uploads.getUploadPath(file.filename);
+    Uploads.isLocalFile = function (file) {
+        return file.hasOwnProperty('localPath');
+    };
 
-        async.series([
-            async.apply(fse.copy, file.path, uploadPath),
-            async.apply(fse.remove, file.path)
-        ], function (error) {
+    function storeCloud(file, user, done) {
+        var imageFile = Object.assign({}, file, {name: file.originalname});
+        plugins.fireHook('filter:uploadImage', {
+            image: imageFile,
+            uid  : user.uid
+        }, function (error, image) {
             if (error) {
                 return done(error);
             }
-            done(null, Object.assign({}, file, {path: uploadPath}));
+            // Image object, properties:
+            // - {string} name
+            // - {string} url fully qualified URL to the cloud storage
+
+            done(null, Object.assign({}, file, image));
+        });
+    }
+
+    function storeLocal(file, done) {
+        var uploadPath = Uploads.getUploadPath(file.filename);
+
+        fse.copy(file.path, uploadPath, function (error) {
+            if (error) {
+                return done(error);
+            }
+            done(null, Object.assign({}, file, {localPath: uploadPath}));
         });
     }
 
