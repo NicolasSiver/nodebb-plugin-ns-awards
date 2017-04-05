@@ -39,23 +39,24 @@
     display: flex;
     flex-flow: row nowrap;
 
-    &__controls {
-      flex: 0 0 auto;
-
-      i + i {
-        margin-left: $nsa-padding-xs;
-      }
-    }
-
     &__info {
       flex: 1 1 auto;
       margin: 0 16px;
     }
 
+    &__image {
+      padding: $nsa-padding-xxs;
+      max-width: 100%;
+      height: auto;
+    }
+
     &__preview {
+      align-items: center;
       background-color: material-color('grey', '50');
       border: 1px solid material-color('grey', '100');
+      display: flex;
       flex: 0 0 auto;
+      justify-content: center;
       height: $nsa-preview;
       width: $nsa-preview;
     }

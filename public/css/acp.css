@@ -41,17 +41,20 @@
 .manage-awards .awards-item {
   display: flex;
   flex-flow: row nowrap; }
-  .manage-awards .awards-item__controls {
-    flex: 0 0 auto; }
-    .manage-awards .awards-item__controls i + i {
-      margin-left: 8px; }
   .manage-awards .awards-item__info {
     flex: 1 1 auto;
     margin: 0 16px; }
+  .manage-awards .awards-item__image {
+    padding: 4px;
+    max-width: 100%;
+    height: auto; }
   .manage-awards .awards-item__preview {
+    align-items: center;
     background-color: #fafafa;
     border: 1px solid #f5f5f5;
+    display: flex;
     flex: 0 0 auto;
+    justify-content: center;
     height: 88px;
     width: 88px; }
 

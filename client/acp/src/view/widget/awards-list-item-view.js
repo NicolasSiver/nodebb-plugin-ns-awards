@@ -4,11 +4,10 @@ import RoundButton from '../display/round-button';
 
 export default class AwardsListItemView extends React.Component {
     render() {
-        let image = null, controls = null;
         return (
             <li className="awards-item">
                 <div className="awards-item__preview">
-                    {image}
+                    <img className="awards-item__image" src={this.props.award.image}/>
                 </div>
                 <div className="awards-item__info">
                     <div className="awards-about">
@@ -23,9 +22,6 @@ export default class AwardsListItemView extends React.Component {
                         </div>
                         <div className="awards-about__details">{this.renderDetails(this.props.award.desc, this.props.edit)}</div>
                     </div>
-                </div>
-                <div className="awards-item__controls">
-                    <div className="pull-right item-controls">{controls}</div>
                 </div>
             </li>
         );
