@@ -25,8 +25,11 @@ export function createAward(name, description) {
                 dispatch(resetNewAward());
                 dispatch(getAwardsAll());
             })
+            .then(() => {
+                window.app.alertSuccess(`Award "${name}" is successfully created.`);
+            })
             .catch(error => {
-                console.error(error);
+                window.app.alertError('Error did occur: ' + error);
             });
     };
 }
