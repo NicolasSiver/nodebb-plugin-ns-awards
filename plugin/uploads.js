@@ -37,7 +37,7 @@
 
         router.post(route, [fileMiddleware, middleware.authenticate], function (req, res, next) {
             var saveDidComplete = function (error, file) {
-                var entityId = req.headers['x-ns-award-entity-id'];
+                var entityId = req.headers['x-ns-award-entity-id'] || 'newAwardId';
 
                 if (error) {
                     return res.status(500).json(error);
@@ -47,7 +47,6 @@
                     if (err) {
                         return res.status(500).json(err);
                     }
-
                     files[entityId] = file;
 
                     res.json({
