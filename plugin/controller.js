@@ -288,11 +288,12 @@
     };
 
     function getImagePath(image) {
-        return nodebb.plugins.hasListeners('filter:uploadImage') ? image : path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
+        return image.indexOf('http') !== -1 ? image : 
+            path.join(nconf.get('relative_path'), image.replace(path.join(nconf.get('base_dir'), 'public'), '')).replace(/\\/g, '/');
     }
 
     function getUploadImagePath(fileName) {
-        return nodebb.plugins.hasListeners('filter:uploadImage') ? fileName : path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
+        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     }
 
     function getValidFields(fields, object) {
