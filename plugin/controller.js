@@ -168,6 +168,7 @@
                     }
 
                     next(null, {
+                        title: 'Awards',
                         awards     : awards,
                         breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}])
                     });
