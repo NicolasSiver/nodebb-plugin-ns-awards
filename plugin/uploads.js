@@ -101,7 +101,8 @@
     };
 
     Uploads.getUploadPath = function (fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
+
+        return path.join(nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     };
 
     Uploads.isLocalFile = function (file) {
