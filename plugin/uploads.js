@@ -35,7 +35,7 @@
         ).replace(/\\/g, '/');
         var fileMiddleware = multer({storage: storage}).single('award');
 
-        router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticate], function (req, res, next) {
+        router.post(route, [fileMiddleware, middleware.authenticate], function (req, res, next) {
             var saveDidComplete = function (error, file) {
                 var entityId = req.headers['x-ns-award-entity-id'];
 
