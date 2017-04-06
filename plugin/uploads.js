@@ -32,7 +32,7 @@
             constants.API_PATH,
             constants.PLUGIN_PATH,
             constants.IMAGE_SERVICE_PATH
-        );
+        ).replace(/\\/g, '/');
         var fileMiddleware = multer({storage: storage}).single('award');
 
         router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticate], function (req, res, next) {
