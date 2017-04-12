@@ -1,179 +1,121 @@
-/*---------------------------------------------------
-    LESS Elements 0.9
-  ---------------------------------------------------
-    A set of useful LESS mixins
-    More info at: http://lesselements.com
-  ---------------------------------------------------*/
-.manage-awards .tab-content {
-  margin-top: 16px;
-}
-.manage-awards .awards-granted {
+@keyframes slideIn {
+  from {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0; }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
+/**
+ * Retrieves a color value from the $material-colors Sass map
+ * Inspired by https://github.com/nilskaspersson/Google-Material-UI-Color-Palette/
+ *
+ * @function
+ * @param {string} color-name             - quoted, lower-case, dasherized color
+ *                                          name (e.g. 'pink', 'amber')
+ * @param {string} [color-variant='500']  - quoted, lowercase color variant (e.g.
+ *                                          '200', 'a100')
+ */
+.manage-awards .award-form__image {
+  height: 88px;
+  width: 100%; }
+
+.manage-awards .awards-about__details {
+  color: #757575; }
+
+.manage-awards .awards-about__header {
   display: flex;
-  flex-flow: row wrap;
-}
-.manage-awards .awards-granted .award-badge {
-  width: 24px;
-  height: 24px;
-  margin: 4px;
-  cursor: pointer;
-}
-.manage-awards .users-list .no-users {
-  padding: 16px 0;
-}
-.manage-awards .users-list .user {
-  position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  padding: 16px 0;
-}
-.manage-awards .users-list .user .avatar-overlay {
-  position: relative;
-}
-.manage-awards .users-list .user .award-overlay {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  top: 16px;
-  left: 16px;
-}
-.manage-awards .users-list .user .overlay-active .aw-avatar {
-  opacity: 0.1;
-}
-.manage-awards .users-list .user .aw-avatar {
-  width: 64px;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
-}
-.manage-awards .users-list .user .aw-avatar .aw-icon {
-  width: 100%;
-  height: 64px;
-  line-height: 64px;
-  font-size: 4rem;
-  color: #eeeeee;
-  text-align: center;
-}
-.manage-awards .users-list .user .details {
-  display: flex;
-  flex-flow: column;
+  flex-flow: row nowrap; }
+
+.manage-awards .awards-about__icon {
+  flex: 0 0 auto; }
+
+.manage-awards .awards-about__title {
+  color: #424242;
   flex: 1 1 auto;
-  margin-left: 16px;
-}
-.manage-awards .users-list .user .details h5 {
-  font-size: 1.2em;
-  margin-top: 0;
-}
-.manage-awards .users-list .user .details .stats {
+  font-size: 1.5em;
+  font-weight: 300;
+  line-height: normal;
+  margin-bottom: 16px; }
+
+.manage-awards .awards-item {
   display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-.manage-awards .users-list .user .details p {
-  margin: 0;
-}
-.manage-awards .users-list .user .user-close {
-  position: absolute;
-  top: 16px;
-  right: 0;
-}
-.awards-list {
+  flex-flow: row nowrap; }
+  .manage-awards .awards-item__info {
+    flex: 1 1 auto;
+    margin: 0 16px; }
+  .manage-awards .awards-item__image {
+    padding: 4px;
+    max-width: 100%;
+    height: auto; }
+  .manage-awards .awards-item__preview {
+    align-items: center;
+    background-color: #fafafa;
+    border: 1px solid #f5f5f5;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    height: 88px;
+    width: 88px; }
+
+.manage-awards .awards-list {
   list-style-type: none;
   margin: 0;
-  padding: 0;
-}
-.awards-list .awards-item .award-edit {
-  margin-bottom: 16px;
-}
-.awards-list .awards-item .award-edit input {
-  margin-bottom: 8px;
-}
-.awards-list .awards-item .item-controls i + i {
-  margin-left: 8px;
-}
-.panel-controls {
-  margin-top: 16px;
-}
-.panel-controls .btn + .btn {
-  margin-left: 4px;
-}
-.award-preview {
-  width: 48px;
-  height: 48px;
-}
-.award-image-edit {
-  position: relative;
-  width: 48px;
-  height: 48px;
-}
-.award-image-edit img {
-  position: absolute;
-  opacity: 0.8;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.award-image-edit i {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.award-upload-icon {
-  font-size: 48px;
-  cursor: pointer;
-  color: #e0e0e0;
-}
-.grant-award-form .auto-complete {
-  margin-bottom: 16px;
-}
-.grant-award-form .selected-users {
-  margin: 8px 0;
-}
-.grant-award-form .selected-users .row {
+  padding: 0; }
+  .manage-awards .awards-list li + li {
+    margin-top: 16px; }
+
+.manage-awards .image-manager {
   background-color: #fafafa;
-}
-.grant-award-form .selected-users .row + .row {
-  margin-top: 8px;
-}
-.grant-award-form .selected-users .media .media-left img {
-  display: block;
-  max-width: 48px;
-  height: auto;
-}
-.grant-award-form .selected-users .media dl {
-  margin-bottom: 0;
-}
-.grant-award-form .selected-users .fa {
-  margin: 8px 8px 0 0;
-}
-.auto-complete {
+  border: 1px solid #f5f5f5;
+  height: 100%;
   position: relative;
-  display: inline-block;
-  width: 100%;
-}
-.auto-complete .ac-menu {
-  width: 100%;
-}
-.auto-complete .ac-selected {
-  background-color: #e1f5fe;
-}
-.auto-complete .hover-item {
-  background-color: #c8e6c9;
-}
-.icon-control {
-  font-size: 1.5em;
-  cursor: pointer;
-  color: #757575;
-}
-.icon-danger {
-  color: #ef5350;
-}
-.icon-ok {
-  color: #66bb6a;
-}
-.icon-disabled {
-  color: #eeeeee;
-  cursor: auto;
-}
+  width: 100%; }
+  .manage-awards .image-manager__content {
+    align-items: center;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    justify-content: center;
+    width: 100%; }
+  .manage-awards .image-manager__icon {
+    color: #bdbdbd;
+    cursor: pointer;
+    transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .manage-awards .image-manager__icon:hover {
+    color: #64b5f6; }
+  .manage-awards .image-manager__preview {
+    padding: 4px;
+    max-height: 100%;
+    width: auto; }
+  .manage-awards .image-manager__remove {
+    position: absolute;
+    right: 4px;
+    top: 4px; }
+
+.manage-awards .aws-hidden {
+  display: none; }
+
+.manage-awards .panel-controls .btn + .btn {
+  margin-left: 8px; }
+
+.manage-awards .round-button {
+  cursor: pointer; }
+  .manage-awards .round-button__background {
+    color: #bdbdbd;
+    transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .manage-awards .round-button__background:hover {
+    color: #64b5f6; }
+  .manage-awards .round-button__background--active {
+    color: #2196f3; }
+  .manage-awards .round-button__background--danger:hover {
+    color: #f44336; }
+  .manage-awards .round-button__background--success:hover {
+    color: #4caf50; }
+  .manage-awards .round-button__icon {
+    pointer-events: none; }
+  .manage-awards .round-button--animate {
+    animation: slideIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+
+.manage-awards .tab-content {
+  margin-top: 16px; }

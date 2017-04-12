@@ -1,15 +1,15 @@
 (function (Database) {
     'use strict';
 
-    var async        = require('async'),
-        objectAssign = require('object-assign'),
+    var async     = require('async'),
 
-        nodebb       = require('./nodebb'),
-        db           = nodebb.db,
-        constants    = require('./constants'),
-        namespace    = constants.NAMESPACE,
-        nextAwardId  = constants.GLOBAL_AWARD_COUNTER,
-        nextGrantId  = constants.GLOBAL_GRANT_COUNTER;
+        constants = require('./constants'),
+        nodebb    = require('./nodebb');
+
+    var db          = nodebb.db,
+        namespace   = constants.NAMESPACE,
+        nextAwardId = constants.GLOBAL_AWARD_COUNTER,
+        nextGrantId = constants.GLOBAL_GRANT_COUNTER;
 
     Database.createAward = function (name, description, image, done) {
         async.waterfall([
@@ -89,13 +89,13 @@
                         return next(error);
                     }
 
-                    next(null, objectAssign(award, update));
+                    next(null, Object.assign({}, award, update));
                 });
             }
         ], done);
     };
 
-    Database.editGrant = function(gid, update, done) {
+    Database.editGrant = function (gid, update, done) {
         async.waterfall([
             async.apply(Database.getGrant, gid),
             function (grant, next) {
@@ -108,7 +108,7 @@
                         return next(error);
                     }
 
-                    next(null, objectAssign(grant, update));
+                    next(null, Object.assign({}, grant, update));
                 });
             }
         ], done);
@@ -148,7 +148,7 @@
         db.getObject(namespace + ':' + aid, done);
     };
 
-    Database.getGrant = function(gid, done) {
+    Database.getGrant = function (gid, done) {
         db.getObject(namespace + ':grant:' + gid, done);
     };
 

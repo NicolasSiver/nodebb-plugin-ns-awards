@@ -52,6 +52,20 @@
         ], done);
     };
 
+    Controller.createAward = function (awardMeta, done) {
+        async.waterfall([
+            async.apply(uploads.getFileById, constants.NEW_AWARD_ID),
+            async.apply(uploads.getFinalDestination),
+            function (awardUri, next) {
+                database.createAward(
+                    awardMeta.name,
+                    awardMeta.description,
+                    awardUri,
+                    next);
+            }
+        ], done);
+    };
+
     Controller.deleteGrantById = function (gid, done) {
         database.deleteGrant(gid, done);
     };
@@ -138,7 +152,7 @@
             function (awards, next) {
                 async.map(awards, function (award, next) {
 
-                    award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
+                    award.picture = getImagePath(award.image);
 
                     Controller.getAwardRecipients(award.aid, function (error, grants) {
                         if (error) {
@@ -154,6 +168,7 @@
                     }
 
                     next(null, {
+                        title: 'Awards',
                         awards     : awards,
                         breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}])
                     });
@@ -214,6 +229,18 @@
         ], done);
     };
 
+    Controller.getConfig = function (done) {
+        var uploadPath = path.join(
+            nconf.get('relative_path'),
+            constants.API_PATH,
+            constants.PLUGIN_PATH,
+            constants.IMAGE_SERVICE_PATH
+        );
+        done(null, {
+            uploadPath: uploadPath
+        });
+    };
+
     Controller.getUserAwards = function (uid, limit, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid, limit),
@@ -239,7 +266,7 @@
 
                         var award = result.award, user = result.user;
 
-                        award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
+                        award.picture = getImagePath(award.image);
 
                         grant.award = award;
                         grant.fromuser = user;
@@ -261,6 +288,15 @@
 
     };
 
+    function getImagePath(image) {
+        return image.indexOf('http') !== -1 ? image : 
+            path.join(nconf.get('relative_path'), image.replace(path.join(nconf.get('base_dir'), 'public'), '')).replace(/\\/g, '/');
+    }
+
+    function getUploadImagePath(fileName) {
+        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
+    }
+
     function getValidFields(fields, object) {
         var shallowCopy = {};
         for (var field in fields) {
@@ -269,10 +305,6 @@
             }
         }
         return shallowCopy;
-    }
-
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     }
 
 })(module.exports);

@@ -1,5 +1,5 @@
 <!-- IF awards.length -->
-<div class="panel panel-default">
+<div class="awards-panel panel panel-default">
     <div class="panel-body">
 
         <ul class="profile-awards">

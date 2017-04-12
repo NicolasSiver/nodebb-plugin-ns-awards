@@ -1,5 +1,19 @@
 # Changelog
 
+## v4.0.0 - TBD
+
+- Add an edit mode for multiple awards
+- Add support for plugin driven image upload
+- Add activity section to ACP
+- Add protection for an image upload service
+- Change UX for the creation of awards
+- Change UX for Overview section
+- Change award URL to use an absolute path
+- Change award upload
+- Change NodeBB compatibility to v1.4.x and higher
+- Update plugin dependencies
+- Update ACP library dependencies
+
 ## v3.0.0 - 03/16/2016
 
 - Compatibility with NodeBB v1.x

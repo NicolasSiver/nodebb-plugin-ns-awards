@@ -19,6 +19,20 @@
     }
   }
 
+  .donation {
+    display: flex;
+    flex-flow: row nowrap;
+
+    &__message {
+      flex: 1 1 auto;
+      margin-right: 8px;
+    }
+
+    &__paypal {
+      flex: 0 0 auto;
+    }
+  }
+
   .users-list {
     .no-users {
       padding: @aw-margin 0;
@@ -93,28 +107,41 @@
   }
 }
 
+.awards-item {
+  display: flex;
+  flex-flow: row nowrap;
+
+  &__controls {
+    flex: 0 0 auto;
+
+    i + i {
+      margin-left: @margin-s;
+    }
+  }
+
+  &__info {
+    flex: 1 1 auto;
+    margin: 0 16px;
+  }
+
+  &__preview{
+    flex: 0 0 auto;
+    width: 48px;
+  }
+
+  .award-edit {
+    margin-bottom: @margin;
+
+    input {
+      margin-bottom: @padding-s;
+    }
+  }
+}
+
 .awards-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
-
-  .awards-item {
-
-    .award-edit {
-      margin-bottom: @margin;
-
-      input {
-        margin-bottom: @padding-s;
-      }
-    }
-
-    .item-controls {
-
-      i + i {
-        margin-left: @margin-s;
-      }
-    }
-  }
 }
 
 .panel-controls {
