@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {cancelAwardEdit, editAward, startAwardEdit} from '../../action/actions';
+import {cancelAwardEdit, deleteAward, editAward, startAwardEdit} from '../../action/actions';
 import AwardsListItemView from './awards-list-item-view';
 import {getAwards, getEditAwards} from '../../model/selector/selectors';
 import {createAwardUid} from '../../util/utils';
@@ -24,6 +24,7 @@ class AwardsListView extends React.Component {
                     itemDidEdit={awardEdited => this.props.edit(aid, Object.assign({}, awardEdited))}
                     itemWillEdit={() => this.props.editStart(aid, Object.assign({}, award))}
                     itemWillCancel={() => this.props.cancel(aid)}
+                    itemWillDelete={() => this.props.delete(aid)}
                     itemWillSave={(name, description, file) => this.props.save(index, award.aid, name, description, file)}/>;
             });
         }
@@ -48,6 +49,7 @@ export default connect(
     dispatch => {
         return {
             cancel   : aid => dispatch(cancelAwardEdit(aid)),
+            delete   : aid => dispatch(deleteAward(aid)),
             edit     : (aid, award) => dispatch(editAward(aid, award)),
             editStart: (aid, award) => dispatch(startAwardEdit(aid, award))
             // save  : (index, aid, name, description, file) => dispatch(setSection(sectionName))

@@ -62,7 +62,7 @@
             async.apply(database.getAward, payload.id),
             function (award, next) {
                 if (!award) {
-                    return callback(new Error('Award with id - ' + payload.id + 'can not be found'));
+                    return callback(new Error('Award with id - ' + payload.id + ' can not be found'));
                 }
 
                 async.parallel([

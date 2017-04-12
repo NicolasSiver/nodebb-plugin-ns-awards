@@ -15,6 +15,7 @@ export default class AwardsListItemView extends React.Component {
                             <div className="awards-about__title">{this.renderName(this.props.award.name, this.props.edit)}</div>
                             {this.renderIcons(
                                 this.props.itemWillCancel,
+                                this.props.itemWillDelete,
                                 this.props.itemWillEdit,
                                 this.props.itemWillSave,
                                 this.props.edit
@@ -37,14 +38,15 @@ export default class AwardsListItemView extends React.Component {
         ) : value;
     }
 
-    renderIcons(cancelListener, editListener, saveListener, edit) {
+    renderIcons(cancelListener, deleteListener, editListener, saveListener, edit) {
         let dangerButton, successButton;
 
         if (edit) {
             dangerButton = <RoundButton
                 icon="fa-trash"
                 animate={true}
-                role="danger"/>;
+                role="danger"
+                clickListener={deleteListener}/>;
             successButton = <RoundButton
                 icon="fa-check"
                 animate={true}
@@ -83,8 +85,9 @@ AwardsListItemView.propTypes = {
     award         : React.PropTypes.object.isRequired,
     edit          : React.PropTypes.bool.isRequired,
     itemDidEdit   : React.PropTypes.func.isRequired,
-    itemWillEdit  : React.PropTypes.func.isRequired,
     itemWillCancel: React.PropTypes.func.isRequired,
+    itemWillDelete: React.PropTypes.func.isRequired,
+    itemWillEdit  : React.PropTypes.func.isRequired,
     itemWillSave  : React.PropTypes.func.isRequired
 };
 

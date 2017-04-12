@@ -16,6 +16,19 @@ export default class SocketService {
         });
     }
 
+    static deleteAward(id) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.DELETE_AWARD, {
+                id
+            }, error => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve();
+            });
+        });
+    }
+
     static getAwards() {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.GET_AWARDS, (error, awards) => {

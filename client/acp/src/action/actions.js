@@ -1,3 +1,9 @@
+import * as ActionTypes from '../model/action-types';
+import * as Constants from '../model/constants';
+import SocketService from '../service/socket-service';
+import UploadService from '../service/upload-service';
+import {awardUidToId} from '../util/utils';
+
 /**
  * Flux Standard Actions
  *
@@ -5,10 +11,6 @@
  * Useful. FSA actions should enable the creation of useful tools and abstractions.
  * Simple. FSA should be simple, straightforward, and flexible in its design.
  */
-import * as ActionTypes from '../model/action-types';
-import * as Constants from '../model/constants';
-import SocketService from '../service/socket-service';
-import UploadService from '../service/upload-service';
 
 export function cancelAwardEdit(aid) {
     return {
@@ -31,6 +33,35 @@ export function createAward(name, description) {
             .catch(error => {
                 window.app.alertError('Error did occur: ' + error);
             });
+    };
+}
+
+export function deleteAward(aid) {
+    return dispatch => {
+        window.bootbox.confirm({
+            size    : 'small',
+            title   : 'Delete Award?',
+            message : 'You are going to delete an award. It will not be possible to recover an award, and every user will lose this award.',
+            buttons : {
+                confirm: {
+                    label: 'Delete'
+                }
+            },
+            callback: result => {
+                if (result === true) {
+                    SocketService.deleteAward(awardUidToId(aid))
+                        .then(() => {
+                            dispatch(getAwardsAll());
+                        })
+                        .then(() => {
+                            window.app.alertSuccess('Award is deleted.');
+                        })
+                        .catch(error => {
+                            window.app.alertError('Error did occur: ' + JSON.stringify(error));
+                        });
+                }
+            }
+        });
     };
 }
 
