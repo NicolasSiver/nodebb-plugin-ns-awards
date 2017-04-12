@@ -92,12 +92,17 @@
         var destination = null;
 
         if (Uploads.isLocalFile(file)) {
-            destination = file.localPath;
+            destination = file.filename;
         } else {
             destination = file.url;
         }
 
         done(null, destination);
+    };
+
+    Uploads.getImageUrl = function (image, done) {
+        var url = image.indexOf('http') === 0 ? image : path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
+        done(null, url);
     };
 
     Uploads.getUploadPath = function (fileName) {

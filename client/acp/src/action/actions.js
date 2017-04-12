@@ -74,7 +74,7 @@ export function editAward(aid, award) {
 
 export function getAwardsAll() {
     return dispatch => {
-        SocketService.getAwards().then(awards => {
+        SocketService.getAwards().then(({awards}) => {
             dispatch(setAwards(awards));
         });
     };

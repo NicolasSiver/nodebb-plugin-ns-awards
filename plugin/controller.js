@@ -60,6 +60,8 @@
                 database.createAward(
                     awardMeta.name,
                     awardMeta.description,
+                    // Local storage - filename
+                    // Cloud storage - fully qualified URL
                     awardUri,
                     next);
             }
@@ -171,6 +173,35 @@
                         awards     : awards,
                         breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}])
                     });
+                });
+            }
+        ], done);
+    };
+
+    Controller.getAwards = function (done) {
+        async.waterfall([
+            async.apply(database.getAllAwards),
+            function (awards, callback) {
+                async.map(awards, function (award, next) {
+                    async.parallel({
+                        url   : async.apply(uploads.getImageUrl, award.image),
+                        grants: async.apply(Controller.getAwardRecipients, award.aid)
+                    }, function (error, results) {
+                        if (error) {
+                            return next(error);
+                        }
+
+                        award.url = results.url;
+                        award.grants = results.grants;
+
+                        next(null, award);
+                    });
+                }, function (error, awards) {
+                    if (error) {
+                        return callback(error);
+                    }
+
+                    callback(null, {awards: awards});
                 });
             }
         ], done);

@@ -59,6 +59,7 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 
 ## TODO
 
+- Add Plugin API: grant award. Introduce tokens.
 - Add support for SVG
 - Add Sections to categorise awards, like: Forum, One time event, etc.
 - Manage: ability to change order of awards

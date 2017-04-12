@@ -7,7 +7,7 @@ export default class AwardsListItemView extends React.Component {
         return (
             <li className="awards-item">
                 <div className="awards-item__preview">
-                    <img className="awards-item__image" src={this.props.award.image}/>
+                    <img className="awards-item__image" src={this.props.award.url}/>
                 </div>
                 <div className="awards-item__info">
                     <div className="awards-about">

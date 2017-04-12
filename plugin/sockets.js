@@ -94,7 +94,7 @@
     };
 
     Sockets.getAwards = function (socket, callback) {
-        database.getAllAwards(callback);
+        controller.getAwards(callback);
     };
 
     Sockets.getGrantsWithAwards = function (socket, payload, callback) {
