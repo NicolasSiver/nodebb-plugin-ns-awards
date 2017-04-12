@@ -113,6 +113,35 @@
         return file.hasOwnProperty('localPath');
     };
 
+    Uploads.replaceFile = function (previousImageUri, fileId, file, done) {
+        async.waterfall([
+            // Delete local file if needed
+            function (callback) {
+                if (previousImageUri.indexOf('http') === 0) {
+                    callback(null);
+                } else {
+                    fse.remove(Uploads.getUploadPath(previousImageUri), function (error) {
+                        if (error) {
+                            // Fail silently
+                            console.warn('[NS Awards, Uploads]: can not delete previous file ' + previousImageUri + ', error: ' + error);
+                        }
+                        callback(null);
+                    });
+                }
+            },
+            // Delete upload from the memory
+            function (callback) {
+                if (!files.hasOwnProperty(fileId)) {
+                    // Fail silently
+                    console.warn('[NS Awards, Uploads]: can not delete file from memory at ' + fileId);
+                }
+                delete files[fileId];
+                callback(null);
+            },
+            async.apply(Uploads.getFinalDestination, file)
+        ], done);
+    };
+
     function storeCloud(file, user, done) {
         var imageFile = Object.assign({}, file, {name: file.originalname});
         plugins.fireHook('filter:uploadImage', {

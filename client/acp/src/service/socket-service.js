@@ -29,6 +29,21 @@ export default class SocketService {
         });
     }
 
+    static editAward(id, name, description) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.EDIT_AWARD, {
+                id,
+                name,
+                description
+            }, (error, award) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(award);
+            });
+        });
+    }
+
     static getAwards() {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.GET_AWARDS, (error, awards) => {

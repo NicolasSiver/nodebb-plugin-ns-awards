@@ -86,66 +86,42 @@
     /**
      * Edit award.
      *
-     * @param aid - award identifier
-     * @param name - award name
-     * @param description - award description
-     * @param upload - optional file descriptor, to get filename, 'uploads' module should be used
-     * @param done {function}
+     * @param {number} id award identifier
+     * @param {string} name award name
+     * @param {string} description - award description
+     * @param {function} done
      */
-    Controller.editAward = function (aid, name, description, upload, done) {
-        var update = {
-            name: name,
-            desc: description
-        };
-
-        upload = upload || {};
-
+    Controller.editAward = function (id, name, description, done) {
+        var fileId = constants.FILE_PREFIX + ':' + id;
         async.waterfall([
-            async.apply(uploads.getFileById, upload.id),
-            function (file, next) {
-                if (file) {
-                    Controller.editImage(aid, file, function (error, imageName) {
-                        if (error) {
-                            return next(error);
-                        }
-                        update.image = imageName;
-                        next(null);
-                    });
-                } else {
-                    next(null);
-                }
+            function (next) {
+                async.parallel({
+                    award: async.apply(database.getAward, id),
+                    file : async.apply(uploads.getFileById, fileId)
+                }, function (error, results) {
+                    if (error) {
+                        return next(error);
+                    } else if (!results.award) {
+                        return next(new Error(util.format('Award "%d" can not be found', id)));
+                    } else if (!results.file) {
+                        return next(null, null);
+                    } else {
+                        return uploads.replaceFile(award.image, fileId, file, next);
+                    }
+                });
             },
-            async.apply(database.editAward, aid, update)
+            function (awardUri, next) {
+                var awardData = {name: name, desc: description};
+                if (awardUri) {
+                    awardData.image = awardUri;
+                }
+                database.editAward(id, awardData, next);
+            }
         ], done);
     };
 
     Controller.editGrant = function (gid, reason, done) {
         database.editGrant(gid, {reason: reason}, done);
-    };
-
-    /**
-     * Update image. Delete old one if any.
-     *
-     * @param aid {number} award identifier
-     * @param file {object} file descriptor from 'uploads' module
-     * @param done {function} returns image name if operation was successful
-     */
-    Controller.editImage = function (aid, file, done) {
-        async.waterfall([
-            async.apply(database.getAward, aid),
-            function (award, next) {
-                if (!award) {
-                    return next(new Error('Award can not be found'));
-                }
-
-                //Remove old image
-                fse.remove(getUploadImagePath(award.image), next);
-            },
-            async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
-            function (next) {
-                next(null, file.filename);
-            }
-        ], done);
     };
 
     Controller.getAllAwards = function (done) {

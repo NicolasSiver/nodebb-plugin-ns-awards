@@ -1,5 +1,6 @@
 import * as ActionTypes from '../model/action-types';
 import * as Constants from '../model/constants';
+import {getEditAwards} from '../model/selector/selectors';
 import SocketService from '../service/socket-service';
 import UploadService from '../service/upload-service';
 import {awardUidToId} from '../util/utils';
@@ -101,6 +102,27 @@ export function resetNewAwardPreview() {
             loader.removeAllFiles();
         }
         dispatch(setNewAwardPreview(null));
+    };
+}
+
+export function saveAward(aid) {
+    return (dispatch, getState) => {
+        let awards = getEditAwards(getState());
+        let {aid: id, name, desc} = awards[aid];
+
+        Promise.resolve()
+        // UploadService.sharedInstance().start(aid)
+            .then(() => SocketService.editAward(id, name, desc))
+            .then(() => {
+                dispatch(cancelAwardEdit(aid));
+                dispatch(getAwardsAll());
+            })
+            .then(() => {
+                window.app.alertSuccess(`Award "${name}" is successfully updated.`);
+            })
+            .catch(error => {
+                window.app.alertError('Error did occur: ' + error);
+            });
     };
 }
 

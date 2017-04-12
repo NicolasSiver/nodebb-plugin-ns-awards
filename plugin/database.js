@@ -81,7 +81,7 @@
             async.apply(Database.getAward, id),
             function (award, next) {
                 if (!award) {
-                    next(new Error('Award can not be found'));
+                    return next(new Error('Award can not be found'));
                 }
 
                 db.setObject(namespace + ':' + id, update, function (error) {

@@ -86,7 +86,7 @@
     };
 
     Sockets.editAward = function (socket, payload, callback) {
-        controller.editAward(payload.id, payload.name, payload.desc, payload.image, callback);
+        controller.editAward(parseInt(payload.id), payload.name, payload.description, callback);
     };
 
     Sockets.editGrant = function (socket, payload, callback) {
