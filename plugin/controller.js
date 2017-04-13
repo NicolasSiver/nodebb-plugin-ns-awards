@@ -106,7 +106,7 @@
                     } else if (!results.file) {
                         return next(null, null);
                     } else {
-                        return uploads.replaceFile(award.image, fileId, file, next);
+                        return uploads.replaceFile(results.award.image, fileId, results.file, next);
                     }
                 });
             },

@@ -108,10 +108,14 @@ export function resetNewAwardPreview() {
 export function saveAward(aid) {
     return (dispatch, getState) => {
         let awards = getEditAwards(getState());
-        let {aid: id, name, desc} = awards[aid];
+        let {aid: id, name, desc, preview} = awards[aid];
 
         Promise.resolve()
-        // UploadService.sharedInstance().start(aid)
+            .then(() => {
+                if (preview) {
+                    return UploadService.sharedInstance().start(aid);
+                }
+            })
             .then(() => SocketService.editAward(id, name, desc))
             .then(() => {
                 dispatch(cancelAwardEdit(aid));
