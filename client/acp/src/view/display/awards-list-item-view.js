@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ImageManager from '../display/image-manager';
-import RoundButton from '../display/round-button';
+import ImageManager from './image-manager';
+import RoundButton from './round-button';
 import {createAwardUid} from '../../util/utils';
 
 export default class AwardsListItemView extends React.Component {

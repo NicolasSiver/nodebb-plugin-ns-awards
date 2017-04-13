@@ -9,7 +9,7 @@ import {
     setAwardPreview,
     startAwardEdit
 } from '../../action/actions';
-import AwardsListItemView from './awards-list-item-view';
+import AwardsListItemView from '../display/awards-list-item-view';
 import {getAwards, getEditAwards, getUploadPath} from '../../model/selector/selectors';
 import {createAwardUid} from '../../util/utils';
 
