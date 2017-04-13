@@ -1,9 +1,16 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {cancelAwardEdit, deleteAward, editAward, saveAward, startAwardEdit} from '../../action/actions';
+import {
+    cancelAwardEdit,
+    deleteAward,
+    editAward,
+    saveAward,
+    setAwardPreview,
+    startAwardEdit
+} from '../../action/actions';
 import AwardsListItemView from './awards-list-item-view';
-import {getAwards, getEditAwards} from '../../model/selector/selectors';
+import {getAwards, getEditAwards, getUploadPath} from '../../model/selector/selectors';
 import {createAwardUid} from '../../util/utils';
 
 class AwardsListView extends React.Component {
@@ -22,10 +29,13 @@ class AwardsListView extends React.Component {
                     edit={!!editedAward}
                     award={award}
                     itemDidEdit={awardEdited => this.props.edit(aid, Object.assign({}, awardEdited))}
+                    itemImageDidChange={value => this.props.setPreview(aid, value)}
+                    itemImageDidReset={() => this.props.resetPreview(aid)}
                     itemWillEdit={() => this.props.editStart(aid, Object.assign({}, award))}
                     itemWillCancel={() => this.props.cancel(aid)}
                     itemWillDelete={() => this.props.delete(aid)}
-                    itemWillSave={() => this.props.save(aid)}/>;
+                    itemWillSave={() => this.props.save(aid)}
+                    uploadPath={this.props.uploadPath}/>;
             });
         }
 
@@ -42,17 +52,20 @@ class AwardsListView extends React.Component {
 export default connect(
     state => {
         return {
-            awards: getAwards(state),
-            edited: getEditAwards(state)
+            awards    : getAwards(state),
+            edited    : getEditAwards(state),
+            uploadPath: getUploadPath(state)
         };
     },
     dispatch => {
         return {
-            cancel   : aid => dispatch(cancelAwardEdit(aid)),
-            delete   : aid => dispatch(deleteAward(aid)),
-            edit     : (aid, award) => dispatch(editAward(aid, award)),
-            editStart: (aid, award) => dispatch(startAwardEdit(aid, award)),
-            save     : aid => dispatch(saveAward(aid))
+            cancel      : aid => dispatch(cancelAwardEdit(aid)),
+            delete      : aid => dispatch(deleteAward(aid)),
+            edit        : (aid, award) => dispatch(editAward(aid, award)),
+            editStart   : (aid, award) => dispatch(startAwardEdit(aid, award)),
+            resetPreview: aid => dispatch(setAwardPreview(aid, null)),
+            save        : aid => dispatch(saveAward(aid)),
+            setPreview  : (aid, value) => dispatch(setAwardPreview(aid, value))
         };
     }
 )(AwardsListView);

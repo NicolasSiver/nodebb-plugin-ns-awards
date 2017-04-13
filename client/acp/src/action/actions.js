@@ -140,6 +140,13 @@ export function setAwardEditIndex(index) {
     };
 }
 
+export function setAwardPreview(aid, value) {
+    return {
+        type   : ActionTypes.AWARD_PREVIEW_DID_CHANGE,
+        payload: {aid, value}
+    };
+}
+
 export function setAwards(list) {
     return {
         type   : ActionTypes.AWARDS_DID_UPDATE,

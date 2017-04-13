@@ -8,6 +8,8 @@ export const AWARD_EDIT_DID_START = 'awardEditDidStart';
 
 export const AWARD_EDIT_INDEX_DID_UPDATE = 'awardEditIndexDidUpdate';
 
+export const AWARD_PREVIEW_DID_CHANGE = 'awardPreviewDidChange';
+
 export const AWARDS_DID_UPDATE = 'awardsDidUpdate';
 
 export const CONFIG_DID_UPDATE = 'configDidUpdate';
