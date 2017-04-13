@@ -10,6 +10,7 @@ import {
     newAwardDescription,
     newAwardPreview,
     section,
+    username,
     uploadPath
 } from './reducers';
 import * as Sections from './sections';
@@ -26,6 +27,7 @@ export function createReduxStore(state) {
             newAwardPreview    : newAwardPreview(state.newAwardPreview, action),
             section            : section(state.section, action),
             sections           : state.sections,
+            username           : username(state.username, action),
             uploadPath         : uploadPath(state.uploadPath, action)
         };
     }, state, applyMiddleware(ReduxThunk));
@@ -53,6 +55,7 @@ export function getInitialState() {
             {label: 'Settings', id: Sections.SECTION_SETTINGS}
         ],
 
+        username  : null,
         uploadPath: null
     };
 }

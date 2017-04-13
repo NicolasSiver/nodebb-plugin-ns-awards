@@ -1,6 +1,6 @@
 import * as ActionTypes from '../model/action-types';
 import * as Constants from '../model/constants';
-import {getEditAwards} from '../model/selector/selectors';
+import {getEditAwards, getUsername} from '../model/selector/selectors';
 import SocketService from '../service/socket-service';
 import UploadService from '../service/upload-service';
 import {awardUidToId} from '../util/utils';
@@ -130,6 +130,21 @@ export function saveAward(aid) {
     };
 }
 
+export function searchUser() {
+    return (dispatch, getState) => {
+        let username = getUsername(getState());
+        if (username) {
+            // Search Result:
+            // {matchCount: 1, pagination: PaginationMeta, pageCount: 1, timing: "0.01", users: Array[User]}
+            SocketService.searchUser(username).then(({users}) => {
+                // dispatch();
+            }).catch(error => {
+                window.app.alertError('Error did occur: ' + error);
+            });
+        }
+    };
+}
+
 export function setAwardCreationState(state) {
     return {
         type   : ActionTypes.AWARD_CREATION_STATE_DID_UPDATE,
@@ -190,6 +205,13 @@ export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,
         payload: sectionName
+    };
+}
+
+export function setUsername(value) {
+    return {
+        type   : ActionTypes.USERNAME_DID_CHANGE,
+        payload: value
     };
 }
 

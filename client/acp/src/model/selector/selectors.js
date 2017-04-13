@@ -16,4 +16,6 @@ export const getSections = state => state.sections;
 
 export const getUploadPath = state => state.uploadPath;
 
+export const getUsername = state => state.username;
+
 export const isCreationActive = state => state.creationActive;

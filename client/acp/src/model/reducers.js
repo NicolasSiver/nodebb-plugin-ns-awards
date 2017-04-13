@@ -96,6 +96,15 @@ export function section(state, action) {
     }
 }
 
+export function username(state, action) {
+    switch (action.type) {
+        case ActionTypes.USERNAME_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function uploadPath(state, action) {
     switch (action.type) {
         case ActionTypes.CONFIG_DID_UPDATE:

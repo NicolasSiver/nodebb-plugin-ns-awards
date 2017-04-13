@@ -66,4 +66,17 @@ export default class SocketService {
         });
     }
 
+    static searchUser(username) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.SEARCH_USER, {
+                username
+            }, (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(result);
+            });
+        });
+    }
+
 }

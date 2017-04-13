@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import {setSection} from '../../action/actions';
 import AwardsListView from './awards-list-view';
+import GrantingView from './granting-view';
 import * as Sections from '../../model/sections';
 import {getSection, getSections} from '../../model/selector/selectors';
 
@@ -11,13 +12,15 @@ class TabManager extends React.Component {
     createTabContent(section) {
         switch (section) {
             case Sections.SECTION_ACTIVITY:
-            //return <Manage />;
+                return;
             case Sections.SECTION_AWARDS:
                 return <AwardsListView />;
-            case Sections.SECTION_MANAGE:
-            //return <Settings />;
+            case Sections.SECTION_GRANTING:
+                return <GrantingView/>;
+            case Sections.SECTION_MANAGEMENT:
+                return;
             case Sections.SECTION_SETTINGS:
-            //return <Settings />;
+                return;
         }
     }
 
@@ -55,7 +58,7 @@ class TabManager extends React.Component {
 export default connect(
     (state) => {
         return {
-            section: getSection(state),
+            section : getSection(state),
             sections: getSections(state)
         };
     },
