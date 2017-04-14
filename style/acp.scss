@@ -111,6 +111,20 @@
     }
   }
 
+  .aws-avatar {
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+    width: $nsa-avatar-size;
+
+    &__icon {
+      color: material-color('grey', '200');
+      height: $nsa-avatar-size;
+      font-size: 4rem;
+      line-height: $nsa-avatar-size;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
   .aws-hidden {
     display: none;
   }
@@ -156,6 +170,16 @@
 
   .tab-content {
     margin-top: $nsa-padding;
+  }
+
+  .user-search {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    &__menu {
+      width: 100%;
+    }
   }
 
 }

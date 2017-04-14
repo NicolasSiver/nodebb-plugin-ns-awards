@@ -93,6 +93,17 @@
     right: 4px;
     top: 4px; }
 
+.manage-awards .aws-avatar {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
+  width: 48px; }
+  .manage-awards .aws-avatar__icon {
+    color: #eeeeee;
+    height: 48px;
+    font-size: 4rem;
+    line-height: 48px;
+    text-align: center;
+    width: 100%; }
+
 .manage-awards .aws-hidden {
   display: none; }
 
@@ -119,3 +130,10 @@
 
 .manage-awards .tab-content {
   margin-top: 16px; }
+
+.manage-awards .user-search {
+  position: relative;
+  display: inline-block;
+  width: 100%; }
+  .manage-awards .user-search__menu {
+    width: 100%; }
