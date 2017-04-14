@@ -1,9 +1,9 @@
 import * as ActionTypes from '../model/action-types';
 import * as Constants from '../model/constants';
-import {getEditAwards, getUsername} from '../model/selector/selectors';
+import {getEditAwards, getUserHighlight, getUsername, getUsers} from '../model/selector/selectors';
 import SocketService from '../service/socket-service';
 import UploadService from '../service/upload-service';
-import {awardUidToId} from '../util/utils';
+import {awardUidToId, compareUsers, getItemIndex} from '../util/utils';
 
 /**
  * Flux Standard Actions
@@ -89,6 +89,27 @@ export function getConfig() {
     };
 }
 
+export function highlightUser(direction) {
+    return (dispatch, getState) => {
+        let state = getState();
+        let users = getUsers(state);
+        let userHighlight = getUserHighlight(state);
+        let position;
+
+        if (users.length > 0) {
+            position = getItemIndex(users, userHighlight, compareUsers);
+            position += direction;
+            if (position < 0) {
+                position = users.length - 1;
+            } else if (position >= users.length) {
+                position = 0;
+            }
+
+            dispatch(setUserHighlight(users[position]));
+        }
+    };
+}
+
 export function resetNewAward() {
     return {
         type: ActionTypes.NEW_AWARD_WILL_RESET
@@ -102,6 +123,13 @@ export function resetNewAwardPreview() {
             loader.removeAllFiles();
         }
         dispatch(setNewAwardPreview(null));
+    };
+}
+
+export function resetUsername() {
+    return dispatch => {
+        dispatch(setUsername(null));
+        dispatch(setUsers([]));
     };
 }
 
@@ -137,10 +165,14 @@ export function searchUser() {
             // Search Result:
             // {matchCount: 1, pagination: PaginationMeta, pageCount: 1, timing: "0.01", users: Array[User]}
             SocketService.searchUser(username).then(({users}) => {
-                // dispatch();
+                // At most, show only 6 users
+                dispatch(setUsers(users.slice(0, 6)));
+                dispatch(setUserHighlight(users[0]));
             }).catch(error => {
                 window.app.alertError('Error did occur: ' + error);
             });
+        } else {
+            dispatch(setUsers([]));
         }
     };
 }
@@ -208,10 +240,24 @@ export function setSection(sectionName) {
     };
 }
 
+export function setUserHighlight(user) {
+    return {
+        type   : ActionTypes.USER_HIGHLIGHT_DID_CHANGE,
+        payload: user
+    };
+}
+
 export function setUsername(value) {
     return {
         type   : ActionTypes.USERNAME_DID_CHANGE,
         payload: value
+    };
+}
+
+export function setUsers(list) {
+    return {
+        type   : ActionTypes.SEARCH_USERS_DID_CHANGE,
+        payload: list
     };
 }
 

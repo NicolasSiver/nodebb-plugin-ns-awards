@@ -1,10 +1,40 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import Avatar from './avatar';
+import {compareUsers} from '../../util/utils';
+
 export default class UserSearch extends React.Component {
+    keyDidChange(e) {
+        switch (e.keyCode) {
+            // Enter
+            case 13:
+                // if (this.isOptions()) {
+                //     this.setState({inputText: null}, function () {
+                //         this.props.optionDidSelect();
+                //     }.bind(this));
+                // }
+                break;
+            // Down
+            case 40:
+                e.preventDefault();
+                this.props.selectionWillChange(1);
+                break;
+            // Up
+            case 38:
+                e.preventDefault();
+                this.props.selectionWillChange(-1);
+                break;
+            // Esc
+            case 27:
+                e.preventDefault();
+                this.props.valueWillReset();
+                break;
+        }
+    }
+
     render() {
-        let items = null;
-        let mainClass = classNames('user-search');
+        let mainClass = classNames('user-search', 'open');
         return (
             <div className={mainClass}>
                 <input
@@ -12,21 +42,45 @@ export default class UserSearch extends React.Component {
                     className="form-control"
                     placeholder={this.props.placeholder}
                     value={this.props.value || ''}
-                    onBlur={() => undefined}
+                    onBlur={() => console.log('BLUR')}
                     onChange={e => this.props.valueDidChange(e.target.value)}
                     onFocus={() => undefined}
-                    onKeyDown={() => undefined}/>
-                {items}
+                    onKeyDown={e => this.keyDidChange(e)}/>
+                {this.renderOptions(this.props.options, this.props.highlight)}
             </div>
+        );
+    }
+
+    renderOptionItem(user, highlight) {
+        let itemClass = classNames('user-search__item', {
+            'user-search__item--highlight': compareUsers(user, highlight)
+        });
+        return <li className={itemClass} key={user.username}>
+            <div className="user-search__image"><Avatar user={user}/></div>
+            <div className="user-search__name">{user.username}</div>
+        </li>;
+    }
+
+    renderOptions(list, selectedItem) {
+        return list.length === 0 ? null : (
+            <ul
+                className="dropdown-menu user-search__menu"
+                onClick={() => undefined}
+                onMouseDown={() => undefined}>
+                {list.map(item => this.renderOptionItem(item, selectedItem))}
+            </ul>
         );
     }
 }
 
 UserSearch.propTypes = {
-    options       : React.PropTypes.array,
-    placeholder   : React.PropTypes.string,
-    value         : React.PropTypes.string,
-    valueDidChange: React.PropTypes.func.isRequired
+    highlight          : React.PropTypes.object,
+    options            : React.PropTypes.array,
+    placeholder        : React.PropTypes.string,
+    selectionWillChange: React.PropTypes.func.isRequired,
+    value              : React.PropTypes.string,
+    valueDidChange     : React.PropTypes.func.isRequired,
+    valueWillReset     : React.PropTypes.func.isRequired
 };
 
 

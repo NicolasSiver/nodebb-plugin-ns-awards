@@ -22,6 +22,10 @@ export const NEW_AWARD_PREVIEW_DID_CHANGE = 'newAwardPreviewDidChange';
 
 export const NEW_AWARD_WILL_RESET = 'newAwardWillReset';
 
+export const SEARCH_USERS_DID_CHANGE = 'searchUsersDidChange';
+
 export const SECTION_DID_UPDATE = 'sectionDidUpdate';
 
 export const USERNAME_DID_CHANGE = 'usernameDidChange';
+
+export const USER_HIGHLIGHT_DID_CHANGE = 'userHighlightDidChange';

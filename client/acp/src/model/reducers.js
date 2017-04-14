@@ -96,9 +96,27 @@ export function section(state, action) {
     }
 }
 
+export function userHighlight(state, action) {
+    switch (action.type) {
+        case ActionTypes.USER_HIGHLIGHT_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function username(state, action) {
     switch (action.type) {
         case ActionTypes.USERNAME_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+export function users(state, action) {
+    switch (action.type) {
+        case ActionTypes.SEARCH_USERS_DID_CHANGE:
             return action.payload;
         default:
             return state;
