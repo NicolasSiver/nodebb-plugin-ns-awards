@@ -189,6 +189,7 @@
     &__item {
       align-items: center;
       border-left: $nsa-padding-xxs solid transparent;
+      cursor: pointer;
       display: flex;
       flex-flow: row nowrap;
       padding: $nsa-padding-xs;

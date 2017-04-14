@@ -123,6 +123,19 @@ export function users(state, action) {
     }
 }
 
+export function usersForGrant(state, action) {
+    let users;
+
+    switch (action.type) {
+        case ActionTypes.USER_FOR_GRANT_DID_ADD:
+            users = state.slice();
+            users.push(action.payload);
+            return users;
+        default:
+            return state;
+    }
+}
+
 export function uploadPath(state, action) {
     switch (action.type) {
         case ActionTypes.CONFIG_DID_UPDATE:

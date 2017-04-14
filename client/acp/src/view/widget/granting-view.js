@@ -2,7 +2,7 @@ import debounce from 'lodash.debounce';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {resetUsername, searchUser, highlightUser, setUsername} from '../../action/actions';
+import {addUserForGrant, highlightUser, resetUsername, searchUser, setUsername} from '../../action/actions';
 import {getUserHighlight, getUsername, getUsers} from '../../model/selector/selectors';
 import UserSearch from '../display/user-search';
 
@@ -12,6 +12,7 @@ class GrantingView extends React.Component {
             <div className="granting">
                 <UserSearch
                     highlight={this.props.userHighlight}
+                    optionDidSelect={option => this.props.select(option)}
                     options={this.props.users}
                     placeholder="Enter Username"
                     selectionWillChange={direction => this.props.highlight(direction)}
@@ -38,8 +39,9 @@ export default connect(
                 dispatch(setUsername(text));
                 debounceSearch();
             },
+            highlight     : direction => dispatch(highlightUser(direction)),
             resetUsername : () => dispatch(resetUsername()),
-            highlight     : direction => dispatch(highlightUser(direction))
+            select        : user => dispatch(addUserForGrant(user))
         };
     }
 )(GrantingView);

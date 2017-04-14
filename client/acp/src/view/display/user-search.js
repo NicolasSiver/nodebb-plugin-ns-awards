@@ -9,11 +9,8 @@ export default class UserSearch extends React.Component {
         switch (e.keyCode) {
             // Enter
             case 13:
-                // if (this.isOptions()) {
-                //     this.setState({inputText: null}, function () {
-                //         this.props.optionDidSelect();
-                //     }.bind(this));
-                // }
+                e.preventDefault();
+                this.props.optionDidSelect(null);
                 break;
             // Down
             case 40:
@@ -46,28 +43,25 @@ export default class UserSearch extends React.Component {
                     onChange={e => this.props.valueDidChange(e.target.value)}
                     onFocus={() => undefined}
                     onKeyDown={e => this.keyDidChange(e)}/>
-                {this.renderOptions(this.props.options, this.props.highlight)}
+                {this.renderOptions(this.props.options, this.props.highlight, this.props.optionDidSelect)}
             </div>
         );
     }
 
-    renderOptionItem(user, highlight) {
+    renderOptionItem(user, highlight, clickListener) {
         let itemClass = classNames('user-search__item', {
             'user-search__item--highlight': compareUsers(user, highlight)
         });
-        return <li className={itemClass} key={user.username}>
+        return <li className={itemClass} key={user.username} onClick={() => clickListener(user)}>
             <div className="user-search__image"><Avatar user={user}/></div>
             <div className="user-search__name">{user.username}</div>
         </li>;
     }
 
-    renderOptions(list, selectedItem) {
+    renderOptions(list, selectedItem, selectListener) {
         return list.length === 0 ? null : (
-            <ul
-                className="dropdown-menu user-search__menu"
-                onClick={() => undefined}
-                onMouseDown={() => undefined}>
-                {list.map(item => this.renderOptionItem(item, selectedItem))}
+            <ul className="dropdown-menu user-search__menu">
+                {list.map(item => this.renderOptionItem(item, selectedItem, selectListener))}
             </ul>
         );
     }
@@ -75,6 +69,7 @@ export default class UserSearch extends React.Component {
 
 UserSearch.propTypes = {
     highlight          : React.PropTypes.object,
+    optionDidSelect    : React.PropTypes.func.isRequired,
     options            : React.PropTypes.array,
     placeholder        : React.PropTypes.string,
     selectionWillChange: React.PropTypes.func.isRequired,

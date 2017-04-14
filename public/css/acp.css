@@ -143,6 +143,7 @@
   .manage-awards .user-search__item {
     align-items: center;
     border-left: 4px solid transparent;
+    cursor: pointer;
     display: flex;
     flex-flow: row nowrap;
     padding: 8px; }

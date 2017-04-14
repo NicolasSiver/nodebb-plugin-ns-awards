@@ -13,6 +13,7 @@ import {
     userHighlight,
     username,
     users,
+    usersForGrant,
     uploadPath
 } from './reducers';
 import * as Sections from './sections';
@@ -32,6 +33,7 @@ export function createReduxStore(state) {
             userHighlight      : userHighlight(state.userHighlight, action),
             username           : username(state.username, action),
             users              : users(state.users, action),
+            usersForGrant      : usersForGrant(state.usersForGrant, action),
             uploadPath         : uploadPath(state.uploadPath, action)
         };
     }, state, applyMiddleware(ReduxThunk));
@@ -62,6 +64,7 @@ export function getInitialState() {
         userHighlight: null,
         username     : null,
         users        : [],
+        usersForGrant: [],
 
         uploadPath: null
     };

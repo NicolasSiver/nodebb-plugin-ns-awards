@@ -13,6 +13,15 @@ import {awardUidToId, compareUsers, getItemIndex} from '../util/utils';
  * Simple. FSA should be simple, straightforward, and flexible in its design.
  */
 
+export function addUserForGrant(user) {
+    return (dispatch, getState) => {
+        let userForGrant = user ? user : getUserHighlight(getState());
+
+        dispatch(resetUsername());
+        dispatch(setUserForGrant(userForGrant));
+    };
+}
+
 export function cancelAwardEdit(aid) {
     return {
         type   : ActionTypes.AWARD_EDIT_DID_CANCEL,
@@ -130,6 +139,7 @@ export function resetUsername() {
     return dispatch => {
         dispatch(setUsername(null));
         dispatch(setUsers([]));
+        dispatch(setUserHighlight(null));
     };
 }
 
@@ -237,6 +247,13 @@ export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,
         payload: sectionName
+    };
+}
+
+export function setUserForGrant(user) {
+    return {
+        type   : ActionTypes.USER_FOR_GRANT_DID_ADD,
+        payload: user
     };
 }
 

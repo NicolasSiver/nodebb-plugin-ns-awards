@@ -28,4 +28,6 @@ export const SECTION_DID_UPDATE = 'sectionDidUpdate';
 
 export const USERNAME_DID_CHANGE = 'usernameDidChange';
 
+export const USER_FOR_GRANT_DID_ADD = 'userForGrantDidAdd';
+
 export const USER_HIGHLIGHT_DID_CHANGE = 'userHighlightDidChange';
