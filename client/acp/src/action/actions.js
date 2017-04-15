@@ -1,6 +1,6 @@
 import * as ActionTypes from '../model/action-types';
 import * as Constants from '../model/constants';
-import {getEditAwards, getUserHighlight, getUsername, getUsers} from '../model/selector/selectors';
+import {getEditAwards, getUserHighlight, getUsername, getUsers, getUsersForGrant} from '../model/selector/selectors';
 import SocketService from '../service/socket-service';
 import UploadService from '../service/upload-service';
 import {awardUidToId, compareUsers, getItemIndex} from '../util/utils';
@@ -15,11 +15,17 @@ import {awardUidToId, compareUsers, getItemIndex} from '../util/utils';
 
 export function addUserForGrant(user) {
     return (dispatch, getState) => {
-        let userForGrant = user ? user : getUserHighlight(getState());
+        let state = getState();
+        let userForGrant = user ? user : getUserHighlight(state);
+        let usersForGrant = getUsersForGrant(state);
 
         if (userForGrant) {
-            dispatch(resetUsername());
-            dispatch(setUserForGrant(userForGrant));
+            if (getItemIndex(usersForGrant, userForGrant, compareUsers) !== -1) {
+                window.app.alertError(`User "${userForGrant.username}" has already been added for rewarding.`, 2000);
+            } else {
+                dispatch(resetUsername());
+                dispatch(setUserForGrant(userForGrant));
+            }
         }
     };
 }
