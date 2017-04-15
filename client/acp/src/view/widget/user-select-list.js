@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {removeUserForGrant} from '../../action/actions';
 import UserSelectListItem from '../display/user-select-list-item';
 import {getUsersForGrant} from '../../model/selector/selectors';
 
@@ -15,6 +16,7 @@ class UserSelectList extends React.Component {
         } else {
             items = this.props.usersForGrant.map(user => {
                 return <UserSelectListItem
+                    itemWillDelete={() => this.props.deleteUser(user)}
                     key={user.username}
                     user={user}/>;
             });
@@ -28,6 +30,11 @@ class UserSelectList extends React.Component {
     }
 }
 
+UserSelectList.propTypes = {
+    deleteUser   : React.PropTypes.func,
+    usersForGrant: React.PropTypes.array
+};
+
 export default connect(
     state => {
         return {
@@ -35,6 +42,8 @@ export default connect(
         };
     },
     dispatch => {
-        return {};
+        return {
+            deleteUser: user => dispatch(removeUserForGrant(user))
+        };
     }
 )(UserSelectList);

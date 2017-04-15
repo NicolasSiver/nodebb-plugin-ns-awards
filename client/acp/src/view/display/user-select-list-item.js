@@ -23,12 +23,13 @@ export default class UserSelectListItem extends React.Component {
                     icon="fa-times"
                     animate={true}
                     role="danger"
-                    clickListener={() => undefined}/>
+                    clickListener={() => this.props.itemWillDelete()}/>
             </div>
         );
     }
 }
 
 UserSelectListItem.propTypes = {
-    user: React.PropTypes.object.isRequired
+    itemWillDelete: React.PropTypes.func.isRequired,
+    user          : React.PropTypes.object.isRequired
 };

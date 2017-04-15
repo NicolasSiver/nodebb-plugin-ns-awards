@@ -1,4 +1,5 @@
 import * as ActionTypes from './action-types';
+import {compareUsers, getItemIndex} from '../util/utils';
 
 export function awardForGrant(state, action) {
     switch (action.type) {
@@ -142,13 +143,21 @@ export function userSearchFocus(state, action) {
 }
 
 export function usersForGrant(state, action) {
-    let users;
+    let users, index;
 
     switch (action.type) {
         case ActionTypes.USER_FOR_GRANT_DID_ADD:
             users = state.slice();
             users.push(action.payload);
             return users;
+        case ActionTypes.USER_FOR_GRANT_DID_REMOVE:
+            index = getItemIndex(state, action.payload, compareUsers);
+            if (index !== -1) {
+                users = state.slice();
+                users.splice(index, 1);
+                return users;
+            }
+            return state;
         default:
             return state;
     }

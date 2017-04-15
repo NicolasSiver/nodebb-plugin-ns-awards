@@ -24,6 +24,13 @@ export function addUserForGrant(user) {
     };
 }
 
+export function removeUserForGrant(user) {
+    return {
+        type   : ActionTypes.USER_FOR_GRANT_DID_REMOVE,
+        payload: user
+    };
+}
+
 export function cancelAwardEdit(aid) {
     return {
         type   : ActionTypes.AWARD_EDIT_DID_CANCEL,
