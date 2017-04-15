@@ -4,6 +4,8 @@
 
 .manage-awards {
 
+  font-size: $nsa-base-font-size;
+
   .award-form {
     &__image {
       height: $nsa-preview;
@@ -309,7 +311,7 @@
   .user-select-list {
     margin: $nsa-padding 0;
 
-    div + div {
+    .user-select-list-item + .user-select-list-item {
       margin-top: $nsa-padding-xs;
     }
   }
@@ -320,6 +322,16 @@
     border-left: $nsa-padding-xxs solid material-color('green', '100');;
     display: flex;
     padding: $nsa-padding-xs;
+
+    &__details {
+      flex: 1 1 auto;
+      padding-left: $nsa-padding-xs;
+    }
+
+    &__info {
+      font-size: 0.8em;
+      line-height: 1.2em;
+    }
   }
 
 }
