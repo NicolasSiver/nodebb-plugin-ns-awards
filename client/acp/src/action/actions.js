@@ -17,8 +17,10 @@ export function addUserForGrant(user) {
     return (dispatch, getState) => {
         let userForGrant = user ? user : getUserHighlight(getState());
 
-        dispatch(resetUsername());
-        dispatch(setUserForGrant(userForGrant));
+        if (userForGrant) {
+            dispatch(resetUsername());
+            dispatch(setUserForGrant(userForGrant));
+        }
     };
 }
 
