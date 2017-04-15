@@ -1,5 +1,6 @@
 module.exports = Object.freeze({
     'API_PATH'            : '/api',
+    'CLIENT_PAGE_PATH'    : '/awards',
     'FILE_LOCAL'          : 'local',
     'FILE_PREFIX'         : 'award',
     'FILE_REMOTE'         : 'remote',

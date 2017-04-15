@@ -167,6 +167,8 @@ export function usersForGrant(state, action) {
                 return users;
             }
             return state;
+        case ActionTypes.USERS_FOR_GRANT_WILL_RESET:
+            return [];
         default:
             return state;
     }

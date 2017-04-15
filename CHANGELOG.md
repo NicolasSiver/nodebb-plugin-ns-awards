@@ -11,6 +11,7 @@
 - Change award URL to use an absolute path
 - Change award upload
 - Change NodeBB compatibility to v1.4.x and higher
+- Change notifications
 - Update plugin dependencies
 - Update ACP library dependencies
 

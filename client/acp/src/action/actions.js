@@ -1,6 +1,14 @@
 import * as ActionTypes from '../model/action-types';
 import * as Constants from '../model/constants';
-import {getEditAwards, getUserHighlight, getUsername, getUsers, getUsersForGrant} from '../model/selector/selectors';
+import {
+    getAwardForGrant,
+    getEditAwards,
+    getGrantReason,
+    getUserHighlight,
+    getUsername,
+    getUsers,
+    getUsersForGrant
+} from '../model/selector/selectors';
 import SocketService from '../service/socket-service';
 import UploadService from '../service/upload-service';
 import {awardUidToId, compareUsers, getItemIndex} from '../util/utils';
@@ -27,13 +35,6 @@ export function addUserForGrant(user) {
                 dispatch(setUserForGrant(userForGrant));
             }
         }
-    };
-}
-
-export function removeUserForGrant(user) {
-    return {
-        type   : ActionTypes.USER_FOR_GRANT_DID_REMOVE,
-        payload: user
     };
 }
 
@@ -141,6 +142,22 @@ export function pickAward(award) {
     };
 }
 
+export function removeUserForGrant(user) {
+    return {
+        type   : ActionTypes.USER_FOR_GRANT_DID_REMOVE,
+        payload: user
+    };
+}
+
+export function resetAwardGrant() {
+    return dispatch => {
+        dispatch(pickAward(null));
+        dispatch(setGrantReason(null));
+        dispatch(resetUsername());
+        dispatch(resetUsersForGrant());
+    };
+}
+
 export function resetNewAward() {
     return {
         type: ActionTypes.NEW_AWARD_WILL_RESET
@@ -162,6 +179,30 @@ export function resetUsername() {
         dispatch(setUsername(null));
         dispatch(setUsers([]));
         dispatch(setUserHighlight(null));
+    };
+}
+
+export function resetUsersForGrant() {
+    return {
+        type: ActionTypes.USERS_FOR_GRANT_WILL_RESET
+    };
+}
+
+export function rewardUsers() {
+    return (dispatch, getState) => {
+        let state = getState();
+        let award = getAwardForGrant(state);
+        let users = getUsersForGrant(state);
+        let reason = getGrantReason(state);
+
+        SocketService.awardUsers(award.aid, users.map(user => user.uid), reason)
+            .then(() => {
+                dispatch(resetAwardGrant());
+                window.app.alertSuccess('Users have been awarded.');
+            })
+            .catch(error => {
+                window.app.alertError('Error did occur: ' + JSON.stringify(error));
+            });
     };
 }
 

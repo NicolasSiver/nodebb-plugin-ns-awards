@@ -6,6 +6,7 @@ import {
     addUserForGrant,
     highlightUser,
     resetUsername,
+    rewardUsers,
     searchUser,
     setGrantReason,
     setUsername,
@@ -60,7 +61,7 @@ class GrantingView extends React.Component {
                         disableCancel={true}
                         labelSuccess="Grant"
                         valid={this.props.awardGrantValid}
-                        successDidClick={() => undefined}/>
+                        successDidClick={() => this.props.grant()}/>
                 </div>
             </div>
         );
@@ -70,6 +71,7 @@ class GrantingView extends React.Component {
 GrantingView.propTypes = {
     awardGrantValid  : React.PropTypes.bool,
     changeUsername   : React.PropTypes.func,
+    grant            : React.PropTypes.func,
     grantReason      : React.PropTypes.string,
     highlight        : React.PropTypes.func,
     resetUsername    : React.PropTypes.func,
@@ -103,6 +105,7 @@ export default connect(
                 dispatch(setUsername(text));
                 debounceSearch();
             },
+            grant         : () => dispatch(rewardUsers()),
             highlight     : direction => dispatch(highlightUser(direction)),
             resetUsername : () => dispatch(resetUsername()),
             select        : user => dispatch(addUserForGrant(user)),

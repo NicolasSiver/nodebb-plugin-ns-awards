@@ -1,12 +1,14 @@
 (function (Plugin) {
     'use strict';
 
-    var async      = require('async'),
+    var async = require('async'),
+        path  = require('path');
 
+    var constants  = require('./constants'),
         controller = require('./controller'),
-        sockets    = require('./sockets'),
         filters    = require('./filters'),
         settings   = require('./settings'),
+        sockets    = require('./sockets'),
         uploads    = require('./uploads');
 
     //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
@@ -40,9 +42,9 @@
                 router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
                 router.get(apiUri, renderAdmin);
 
-                //Client page
-                router.get('/awards', middleware.buildHeader, renderClient);
-                router.get('/api/awards', renderClient);
+                // Client Awards page
+                router.get(constants.CLIENT_PAGE_PATH, middleware.buildHeader, renderClient);
+                router.get(path.join(constants.API_PATH, constants.CLIENT_PAGE_PATH), renderClient);
 
                 async.series([
                     async.apply(uploads.init, router, middleware),

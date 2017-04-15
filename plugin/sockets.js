@@ -38,12 +38,16 @@
      * Grant Award for multiple users.
      * Registers: reason of the award, date, relationships
      *
-     * @param socket Socket.io open connection
-     * @param payload {object} Includes 'users', 'award' and 'reason' fields, where award is Award Id
-     * @param callback
+     * @param {object} socket Socket.io open connection
+     * @param {{awardId: number, reason: string, userIds: array}} payload
+     * @param {function} callback
      */
     Sockets.awardUsers = function (socket, payload, callback) {
-        controller.awardUsers(payload, socket.uid, callback);
+        var awardId = parseInt(payload.awardId),
+            userIds = payload.userIds.map(function (uid) {
+                return parseInt(uid);
+            });
+        controller.awardUsers(awardId, socket.uid, userIds, payload.reason, callback);
     };
 
     /**

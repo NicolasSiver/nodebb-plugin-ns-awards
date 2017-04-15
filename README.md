@@ -63,7 +63,6 @@ Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partial
 - Add support for SVG
 - Add Sections to categorise awards, like: Forum, One time event, etc.
 - Manage: ability to change order of awards
-- Add Notifications
 - Add HTML to notifications, bold text, etc.
 - ACP: Add Awarded Users statistics
 - ACP: Add small avatar preview to dropdown when you are looking for users

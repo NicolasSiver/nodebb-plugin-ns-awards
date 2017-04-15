@@ -2,7 +2,6 @@
     'use strict';
 
     var async         = require('async'),
-        fse           = require('fs-extra'),
         path          = require('path'),
         util          = require('util'),
 
@@ -19,34 +18,26 @@
         nconf         = nodebb.nconf,
         notifications = nodebb.notifications;
 
-    Controller.awardUsers = function (payload, fromUid, done) {
-        var recipients = [],
-            awardId    = parseInt(payload.award, 10);
-
+    Controller.awardUsers = function (awardId, fromUid, toUids, reasonText, done) {
         async.waterfall([
             function (callback) {
-                async.each(payload.users, function (user, next) {
-                    async.series([
-                        async.apply(database.createGrant, user.uid, awardId, payload.reason, fromUid),
-                        function (pushed) {
-                            recipients.push(user.uid);
-                            pushed();
-                        }
-                    ], next);
+                async.each(toUids, function (uid, next) {
+                    database.createGrant(uid, awardId, reasonText, fromUid, next);
                 }, callback);
             },
             async.apply(database.getAward, awardId),
             function (award, callback) {
                 notifications.create({
-                    bodyShort: util.format('Congratulations! You have received "%s" award.', award.name),
-                    nid      : 'aid:' + awardId + ':uids:' + recipients.join('-'),
+                    bodyShort: util.format('Congratulations! You have been awarded <strong>"%s"</strong> award.', award.name),
+                    nid      : 'aid:' + awardId + ':uids:' + toUids.join('-'),
                     aid      : awardId,
-                    from     : fromUid
+                    from     : fromUid,
+                    path     : constants.CLIENT_PAGE_PATH
                 }, callback);
             },
             function (notification, callback) {
                 if (notification) {
-                    notifications.push(notification, recipients, callback);
+                    notifications.push(notification, toUids, callback);
                 }
             }
         ], done);

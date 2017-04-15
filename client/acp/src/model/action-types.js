@@ -39,3 +39,5 @@ export const USER_FOR_GRANT_DID_REMOVE = 'userForGrantDidRemove';
 export const USER_HIGHLIGHT_DID_CHANGE = 'userHighlightDidChange';
 
 export const USER_SEARCH_FOCUS_DID_CHANGE = 'userSearchFocusDidChange';
+
+export const USERS_FOR_GRANT_WILL_RESET = 'usersForGrantWillReset';

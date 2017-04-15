@@ -1,3 +1,5 @@
+export const AWARD_USERS = 'plugins.ns-awards.awardUsers';
+
 export const CREATE_AWARD = 'plugins.ns-awards.createAward';
 
 export const DELETE_AWARD = 'plugins.ns-awards.deleteAward';
