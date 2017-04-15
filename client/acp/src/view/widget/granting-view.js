@@ -60,6 +60,18 @@ class GrantingView extends React.Component {
     }
 }
 
+GrantingView.propTypes = {
+    changeUsername   : React.PropTypes.func,
+    highlight        : React.PropTypes.func,
+    resetUsername    : React.PropTypes.func,
+    select           : React.PropTypes.func,
+    setFocus         : React.PropTypes.func,
+    userHighlight    : React.PropTypes.object,
+    username         : React.PropTypes.string,
+    users            : React.PropTypes.array,
+    userSearchFocused: React.PropTypes.bool
+};
+
 export default connect(
     state => {
         return {
