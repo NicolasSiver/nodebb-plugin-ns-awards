@@ -2,13 +2,17 @@ import React from 'react';
 
 export default class PanelControls extends React.Component {
     render() {
+        let cancelButton = this.props.disableCancel ? null : (
+            <button
+                className="btn btn-danger"
+                onClick={this.props.cancelDidClick}
+                type="button">{this.props.labelCancel}
+            </button>
+        );
+
         return (
             <div className="pull-right panel-controls">
-                <button
-                    className="btn btn-danger"
-                    onClick={this.props.cancelDidClick}
-                    type="button">{this.props.labelCancel}
-                </button>
+                {cancelButton}
                 <button
                     className="btn btn-primary"
                     onClick={this.props.successDidClick}
@@ -21,15 +25,17 @@ export default class PanelControls extends React.Component {
 }
 
 PanelControls.defaultProps = {
-    labelCancel: 'Cancel',
-    labelSuccess: 'OK'
+    disableCancel: false,
+    labelCancel  : 'Cancel',
+    labelSuccess : 'OK'
 };
 
 
-PanelControls.PropTypes = {
-    valid: React.PropTypes.bool,
-    cancelDidClick: React.PropTypes.func,
+PanelControls.propTypes = {
+    cancelDidClick : React.PropTypes.func,
+    disableCancel  : React.PropTypes.bool,
+    labelCancel    : React.PropTypes.string,
+    labelSuccess   : React.PropTypes.string,
     successDidClick: React.PropTypes.func,
-    labelCancel: React.PropTypes.string,
-    labelSuccess: React.PropTypes.string
+    valid          : React.PropTypes.bool
 };

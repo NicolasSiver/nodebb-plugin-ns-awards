@@ -12,6 +12,7 @@ import {
     setUserSearchFocus
 } from '../../action/actions';
 import AwardPicker from './award-picker';
+import isAwardGrantValid from '../../model/selector/is-award-grant-valid';
 import PanelControls from '../display/panel-controls';
 import {
     getGrantReason,
@@ -56,10 +57,9 @@ class GrantingView extends React.Component {
                             value={this.props.grantReason || ''}/>
                     </div>
                     <PanelControls
-                        labelCancel="Clear"
+                        disableCancel={true}
                         labelSuccess="Grant"
-                        valid={false}
-                        cancelDidClick={() => undefined}
+                        valid={this.props.awardGrantValid}
                         successDidClick={() => undefined}/>
                 </div>
             </div>
@@ -68,6 +68,7 @@ class GrantingView extends React.Component {
 }
 
 GrantingView.propTypes = {
+    awardGrantValid  : React.PropTypes.bool,
     changeUsername   : React.PropTypes.func,
     grantReason      : React.PropTypes.string,
     highlight        : React.PropTypes.func,
@@ -82,13 +83,17 @@ GrantingView.propTypes = {
 };
 
 export default connect(
-    state => {
-        return {
-            grantReason      : getGrantReason(state),
-            userHighlight    : getUserHighlight(state),
-            username         : getUsername(state),
-            users            : getUsers(state),
-            userSearchFocused: isUserSearchFocused(state)
+    () => {
+        let selectAwardGrantValid = isAwardGrantValid();
+        return state => {
+            return {
+                awardGrantValid  : selectAwardGrantValid(state),
+                grantReason      : getGrantReason(state),
+                userHighlight    : getUserHighlight(state),
+                username         : getUsername(state),
+                users            : getUsers(state),
+                userSearchFocused: isUserSearchFocused(state)
+            };
         };
     },
     dispatch => {
