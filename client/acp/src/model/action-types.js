@@ -33,3 +33,5 @@ export const USERNAME_DID_CHANGE = 'usernameDidChange';
 export const USER_FOR_GRANT_DID_ADD = 'userForGrantDidAdd';
 
 export const USER_HIGHLIGHT_DID_CHANGE = 'userHighlightDidChange';
+
+export const USER_SEARCH_FOCUS_DID_CHANGE = 'userSearchFocusDidChange';

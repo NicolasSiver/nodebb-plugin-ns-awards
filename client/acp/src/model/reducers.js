@@ -132,6 +132,15 @@ export function users(state, action) {
     }
 }
 
+export function userSearchFocus(state, action) {
+    switch (action.type) {
+        case ActionTypes.USER_SEARCH_FOCUS_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function usersForGrant(state, action) {
     let users;
 

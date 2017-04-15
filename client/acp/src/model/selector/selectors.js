@@ -27,3 +27,5 @@ export const getUsers = state => state.users;
 export const getUsersForGrant = state => state.usersForGrant;
 
 export const isCreationActive = state => state.creationActive;
+
+export const isUserSearchFocused = state => state.userSearchFocus;

@@ -287,6 +287,13 @@ export function setUsers(list) {
     };
 }
 
+export function setUserSearchFocus(state) {
+    return {
+        type   : ActionTypes.USER_SEARCH_FOCUS_DID_CHANGE,
+        payload: state
+    };
+}
+
 export function startAwardEdit(aid, award) {
     return {
         type   : ActionTypes.AWARD_EDIT_DID_START,

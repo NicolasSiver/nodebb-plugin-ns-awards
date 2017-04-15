@@ -2,10 +2,17 @@ import debounce from 'lodash.debounce';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {addUserForGrant, highlightUser, resetUsername, searchUser, setUsername} from '../../action/actions';
+import {
+    addUserForGrant,
+    highlightUser,
+    resetUsername,
+    searchUser,
+    setUsername,
+    setUserSearchFocus
+} from '../../action/actions';
 import AwardPicker from './award-picker';
 import PanelControls from '../display/panel-controls';
-import {getUserHighlight, getUsername, getUsers} from '../../model/selector/selectors';
+import {getUserHighlight, getUsername, getUsers, isUserSearchFocused} from '../../model/selector/selectors';
 import UserSearch from '../display/user-search';
 import UserSelectList from './user-select-list';
 
@@ -20,6 +27,8 @@ class GrantingView extends React.Component {
                 <div className="granting__details">
                     <h5>Select Users:</h5>
                     <UserSearch
+                        focus={this.props.userSearchFocused}
+                        focusDidChange={state => this.props.setFocus(state)}
                         highlight={this.props.userHighlight}
                         optionDidSelect={option => this.props.select(option)}
                         options={this.props.users}
@@ -54,9 +63,10 @@ class GrantingView extends React.Component {
 export default connect(
     state => {
         return {
-            userHighlight: getUserHighlight(state),
-            username     : getUsername(state),
-            users        : getUsers(state)
+            userHighlight    : getUserHighlight(state),
+            username         : getUsername(state),
+            users            : getUsers(state),
+            userSearchFocused: isUserSearchFocused(state)
         };
     },
     dispatch => {
@@ -68,7 +78,8 @@ export default connect(
             },
             highlight     : direction => dispatch(highlightUser(direction)),
             resetUsername : () => dispatch(resetUsername()),
-            select        : user => dispatch(addUserForGrant(user))
+            select        : user => dispatch(addUserForGrant(user)),
+            setFocus      : state => dispatch(setUserSearchFocus(state))
         };
     }
 )(GrantingView);

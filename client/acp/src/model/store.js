@@ -14,6 +14,7 @@ import {
     userHighlight,
     username,
     users,
+    userSearchFocus,
     usersForGrant,
     uploadPath
 } from './reducers';
@@ -35,6 +36,7 @@ export function createReduxStore(state) {
             userHighlight      : userHighlight(state.userHighlight, action),
             username           : username(state.username, action),
             users              : users(state.users, action),
+            userSearchFocus    : userSearchFocus(state.userSearchFocus, action),
             usersForGrant      : usersForGrant(state.usersForGrant, action),
             uploadPath         : uploadPath(state.uploadPath, action)
         };
@@ -64,10 +66,11 @@ export function getInitialState() {
             {label: 'Settings', id: Sections.SECTION_SETTINGS}
         ],
 
-        userHighlight: null,
-        username     : null,
-        users        : [],
-        usersForGrant: [],
+        userHighlight  : null,
+        username       : null,
+        users          : [],
+        userSearchFocus: null,
+        usersForGrant  : [],
 
         uploadPath: null
     };
