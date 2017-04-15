@@ -22,4 +22,6 @@ export const getUsername = state => state.username;
 
 export const getUsers = state => state.users;
 
+export const getUsersForGrant = state => state.usersForGrant;
+
 export const isCreationActive = state => state.creationActive;

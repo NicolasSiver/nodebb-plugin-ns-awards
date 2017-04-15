@@ -112,26 +112,59 @@
   }
 
   .aws-avatar {
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
-    width: $nsa-avatar-size;
+
+    &--big {
+      height: $nsa-avatar-big-size;
+      width: $nsa-avatar-big-size;
+    }
 
     &__icon {
       border-radius: 50%;
       color: material-color('grey', '200');
-      height: $nsa-avatar-size;
-      font-size: 3rem;
-      line-height: $nsa-avatar-size;
+      height: 100%;
       text-align: center;
       width: 100%;
+
+      &--big {
+        font-size: 4rem;
+        line-height: $nsa-avatar-big-size;
+      }
+
+      &--normal {
+        font-size: 3rem;
+        line-height: $nsa-avatar-normal-size;
+      }
     }
 
     &__image {
       border-radius: 50%;
     }
+
+    &--normal {
+      height: $nsa-avatar-normal-size;
+      width: $nsa-avatar-normal-size;
+    }
   }
 
   .aws-hidden {
     display: none;
+  }
+
+  .granting {
+    display: flex;
+
+    &__awards {
+      flex: 7 1 auto;
+      padding-right: $nsa-padding;
+    }
+
+    &__details {
+      flex: 3 1 auto;
+    }
+
+    &__reason {
+      margin-top: $nsa-padding;
+    }
   }
 
   .panel-controls {
@@ -212,6 +245,22 @@
       line-height: normal;
       padding-left: $nsa-padding;
     }
+  }
+
+  .user-select-list {
+    margin: $nsa-padding 0;
+
+    div + div {
+      margin-top: $nsa-padding-xs;
+    }
+  }
+
+  .user-select-list-item {
+    animation: fadeIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    background-color: material-color('green', '50');
+    border-left: $nsa-padding-xxs solid material-color('green', '100');;
+    display: flex;
+    padding: $nsa-padding-xs;
   }
 
 }

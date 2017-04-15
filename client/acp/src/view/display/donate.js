@@ -5,7 +5,7 @@ export default class Donate extends React.Component {
         return (
             <div className="donation">
                 <div className="donation__message">Do you like a plugin? Make a donation, It will definitely help as an
-                    extra motivation to push new features. Thank you in advance for your support.
+                    extra motivation to push new features. Thank you.
                 </div>
 
                 <div className="donation__paypal">
