@@ -1,3 +1,5 @@
+export const getAwardForGrant = state => state.awardForGrant;
+
 export const getAwards = state => state.awards;
 
 export const getEditAt = state => state.editAt;

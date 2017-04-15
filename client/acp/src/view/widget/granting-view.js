@@ -3,6 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {addUserForGrant, highlightUser, resetUsername, searchUser, setUsername} from '../../action/actions';
+import AwardPicker from './award-picker';
 import PanelControls from '../display/panel-controls';
 import {getUserHighlight, getUsername, getUsers} from '../../model/selector/selectors';
 import UserSearch from '../display/user-search';
@@ -14,6 +15,7 @@ class GrantingView extends React.Component {
             <div className="granting">
                 <div className="granting__awards">
                     <h5>Pick Award:</h5>
+                    <AwardPicker/>
                 </div>
                 <div className="granting__details">
                     <h5>Select Users:</h5>

@@ -26,6 +26,47 @@
   height: 88px;
   width: 100%; }
 
+.manage-awards .award-picker .award-picker-item + .award-picker-item {
+  margin-top: 4px; }
+
+.manage-awards .award-picker-item {
+  cursor: pointer;
+  display: flex;
+  height: 48px;
+  overflow: hidden; }
+  .manage-awards .award-picker-item__body {
+    border-bottom: 1px solid transparent;
+    border-left: 4px solid transparent;
+    border-right: 1px solid transparent;
+    border-top: 1px solid transparent;
+    display: flex;
+    flex: 1 1 auto;
+    flex-flow: row nowrap;
+    transition: background-color 0.25s cubic-bezier(0.42, 0, 0.58, 1); }
+    .manage-awards .award-picker-item__body--selected {
+      background-color: #e3f2fd;
+      border-bottom: 1px solid #90caf9;
+      border-left: 4px solid #90caf9;
+      border-right: 1px solid #90caf9;
+      border-top: 1px solid #90caf9; }
+  .manage-awards .award-picker-item__details {
+    flex: 1 1 auto;
+    padding-left: 8px; }
+  .manage-awards .award-picker-item__description {
+    line-height: 23px;
+    font-size: 0.8em; }
+  .manage-awards .award-picker-item__pin {
+    fill: #90caf9;
+    flex: 0 0 auto;
+    width: 8px; }
+  .manage-awards .award-picker-item__preview {
+    flex: 0 0 auto;
+    height: 100%;
+    padding: 4px;
+    width: 46px; }
+  .manage-awards .award-picker-item__title {
+    line-height: 23px; }
+
 .manage-awards .awards-about__details {
   color: #757575; }
 
@@ -129,10 +170,10 @@
 .manage-awards .granting {
   display: flex; }
   .manage-awards .granting__awards {
-    flex: 7 1 auto;
+    flex: 1 1 60%;
     padding-right: 16px; }
   .manage-awards .granting__details {
-    flex: 3 1 auto; }
+    flex: 1 1 40%; }
   .manage-awards .granting__reason {
     margin-top: 16px; }
 

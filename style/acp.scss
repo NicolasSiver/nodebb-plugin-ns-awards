@@ -11,6 +11,65 @@
     }
   }
 
+  .award-picker {
+    .award-picker-item + .award-picker-item {
+      margin-top: $nsa-padding-xxs;
+    }
+  }
+
+  .award-picker-item {
+    cursor: pointer;
+    display: flex;
+    height: $nsa-award-picker-item-height;
+    overflow: hidden;
+
+    &__body {
+      border-bottom: 1px solid transparent;
+      border-left: $nsa-padding-xxs solid transparent;
+      border-right: 1px solid transparent;
+      border-top: 1px solid transparent;
+      display: flex;
+      flex: 1 1 auto;
+      flex-flow: row nowrap;
+      transition: background-color 0.25s $nsa-ease-in-out;
+
+      &--selected {
+        background-color: material-color('blue', '50');
+        border-bottom: 1px solid material-color('blue', '200');
+        border-left: $nsa-padding-xxs solid material-color('blue', '200');
+        border-right: 1px solid material-color('blue', '200');
+        border-top: 1px solid material-color('blue', '200');
+      }
+    }
+
+    &__details {
+      flex: 1 1 auto;
+      padding-left: $nsa-padding-xs;
+    }
+
+    &__description {
+      line-height: $nsa-award-picker-item-height / 2 - 1;
+      font-size: 0.8em;
+    }
+
+    &__pin {
+      fill: material-color('blue', '200');
+      flex: 0 0 auto;
+      width: $nsa-padding-xs;
+    }
+
+    &__preview {
+      flex: 0 0 auto;
+      height: 100%;
+      padding: $nsa-padding-xxs;
+      width: $nsa-award-picker-item-height - 2;
+    }
+
+    &__title {
+      line-height: $nsa-award-picker-item-height / 2 - 1;
+    }
+  }
+
   .awards-about {
     &__details {
       color: material-color('grey', '600');
@@ -154,12 +213,12 @@
     display: flex;
 
     &__awards {
-      flex: 7 1 auto;
+      flex: 1 1 60%;
       padding-right: $nsa-padding;
     }
 
     &__details {
-      flex: 3 1 auto;
+      flex: 1 1 40%;
     }
 
     &__reason {

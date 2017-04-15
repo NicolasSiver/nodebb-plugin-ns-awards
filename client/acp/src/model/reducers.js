@@ -1,5 +1,14 @@
 import * as ActionTypes from './action-types';
 
+export function awardForGrant(state, action) {
+    switch (action.type) {
+        case ActionTypes.AWARD_FOR_GRANT_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function awards(state, action) {
     switch (action.type) {
         case ActionTypes.AWARDS_DID_UPDATE:

@@ -119,6 +119,13 @@ export function highlightUser(direction) {
     };
 }
 
+export function pickAward(award) {
+    return {
+        type   : ActionTypes.AWARD_FOR_GRANT_DID_CHANGE,
+        payload: award
+    };
+}
+
 export function resetNewAward() {
     return {
         type: ActionTypes.NEW_AWARD_WILL_RESET
