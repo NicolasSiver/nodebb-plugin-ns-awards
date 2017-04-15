@@ -7,12 +7,19 @@ import {
     highlightUser,
     resetUsername,
     searchUser,
+    setGrantReason,
     setUsername,
     setUserSearchFocus
 } from '../../action/actions';
 import AwardPicker from './award-picker';
 import PanelControls from '../display/panel-controls';
-import {getUserHighlight, getUsername, getUsers, isUserSearchFocused} from '../../model/selector/selectors';
+import {
+    getGrantReason,
+    getUserHighlight,
+    getUsername,
+    getUsers,
+    isUserSearchFocused
+} from '../../model/selector/selectors';
 import UserSearch from '../display/user-search';
 import UserSelectList from './user-select-list';
 
@@ -45,8 +52,8 @@ class GrantingView extends React.Component {
                             rows="4"
                             id="grantReason"
                             placeholder="Enter the reason. Reason text is public and can not be edited."
-                            onChange={e => undefined}
-                            value={this.props.reason || ''}/>
+                            onChange={e => this.props.setReason(e.target.value)}
+                            value={this.props.grantReason || ''}/>
                     </div>
                     <PanelControls
                         labelCancel="Clear"
@@ -62,10 +69,12 @@ class GrantingView extends React.Component {
 
 GrantingView.propTypes = {
     changeUsername   : React.PropTypes.func,
+    grantReason      : React.PropTypes.string,
     highlight        : React.PropTypes.func,
     resetUsername    : React.PropTypes.func,
     select           : React.PropTypes.func,
     setFocus         : React.PropTypes.func,
+    setReason        : React.PropTypes.func,
     userHighlight    : React.PropTypes.object,
     username         : React.PropTypes.string,
     users            : React.PropTypes.array,
@@ -75,6 +84,7 @@ GrantingView.propTypes = {
 export default connect(
     state => {
         return {
+            grantReason      : getGrantReason(state),
             userHighlight    : getUserHighlight(state),
             username         : getUsername(state),
             users            : getUsers(state),
@@ -91,7 +101,8 @@ export default connect(
             highlight     : direction => dispatch(highlightUser(direction)),
             resetUsername : () => dispatch(resetUsername()),
             select        : user => dispatch(addUserForGrant(user)),
-            setFocus      : state => dispatch(setUserSearchFocus(state))
+            setFocus      : state => dispatch(setUserSearchFocus(state)),
+            setReason     : value => dispatch(setGrantReason(value))
         };
     }
 )(GrantingView);

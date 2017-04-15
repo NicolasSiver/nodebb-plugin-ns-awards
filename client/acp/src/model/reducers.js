@@ -64,6 +64,15 @@ export function editAwards(state, action) {
     }
 }
 
+export function grantReason(state, action) {
+    switch (action.type) {
+        case ActionTypes.GRANT_REASON_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function newAwardName(state, action) {
     switch (action.type) {
         case ActionTypes.NEW_AWARD_NAME_DID_CHANGE:

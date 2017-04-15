@@ -7,6 +7,7 @@ import {
     creationActive,
     editAt,
     editAwards,
+    grantReason,
     newAwardName,
     newAwardDescription,
     newAwardPreview,
@@ -28,6 +29,7 @@ export function createReduxStore(state) {
             creationActive     : creationActive(state.creationActive, action),
             editAt             : editAt(state.editAt, action),
             editAwards         : editAwards(state.editAwards, action),
+            grantReason        : grantReason(state.grantReason, action),
             newAwardName       : newAwardName(state.newAwardName, action),
             newAwardDescription: newAwardDescription(state.newAwardDescription, action),
             newAwardPreview    : newAwardPreview(state.newAwardPreview, action),
@@ -51,6 +53,7 @@ export function getInitialState() {
         creationActive: false,
         editAt        : null,
         editAwards    : {},
+        grantReason   : null,
 
         newAwardDescription: null,
         newAwardName       : null,

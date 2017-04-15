@@ -238,6 +238,13 @@ export function setConfig(config) {
     };
 }
 
+export function setGrantReason(text) {
+    return {
+        type   : ActionTypes.GRANT_REASON_DID_CHANGE,
+        payload: text
+    };
+}
+
 export function setNewAwardDescription(value) {
     return {
         type   : ActionTypes.NEW_AWARD_DESCRIPTION_DID_CHANGE,

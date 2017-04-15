@@ -16,6 +16,8 @@ export const AWARDS_DID_UPDATE = 'awardsDidUpdate';
 
 export const CONFIG_DID_UPDATE = 'configDidUpdate';
 
+export const GRANT_REASON_DID_CHANGE = 'grantReasonDidChange';
+
 export const NEW_AWARD_DESCRIPTION_DID_CHANGE = 'newAwardDescriptionDidChange';
 
 export const NEW_AWARD_NAME_DID_CHANGE = 'newAwardNameDidChange';
