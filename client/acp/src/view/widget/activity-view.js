@@ -11,6 +11,10 @@ class ActivityView extends React.Component {
     }
 
     render() {
+        if (this.props.grants.length === 0) {
+            return <span>Activity is empty. Give some awards to see an activity.</span>;
+        }
+
         return (
             <div className="activity-view">
                 {this.props.grants.map(grant => {
