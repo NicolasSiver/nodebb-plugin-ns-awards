@@ -222,6 +222,17 @@
       pointer-events: none; }
     .manage-awards .round-button--animate {
       animation: slideIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .manage-awards .section-loading {
+    align-items: center;
+    display: flex;
+    height: 272px;
+    justify-content: center;
+    stroke: #bdbdbd;
+    width: 100%; }
+    .manage-awards .section-loading__animation {
+      flex: 0 0 auto;
+      height: 48px;
+      width: 48px; }
   .manage-awards .tab-content {
     margin-top: 16px; }
   .manage-awards .user-search {

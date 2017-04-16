@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {getAwardGrants} from '../../action/actions';
 import Grant from '../display/grant';
+import SectionLoading from '../display/section-loading';
 import {getGrants} from '../../model/selector/selectors';
 
 class ActivityView extends React.Component {
@@ -11,8 +12,16 @@ class ActivityView extends React.Component {
     }
 
     render() {
+        if (this.props.grants === null) {
+            return <SectionLoading/>;
+        }
+
         if (this.props.grants.length === 0) {
-            return <span>Activity is empty. Give some awards to see an activity.</span>;
+            return (
+                <span
+                    className="empty-section-message">Activity is empty. Give some awards to see an activity.
+            </span>
+            );
         }
 
         return (

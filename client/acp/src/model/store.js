@@ -53,7 +53,7 @@ export function getInitialState() {
         creationActive: false,
         editAwards    : {},
         grantReason   : null,
-        grants        : [],
+        grants        : null,
 
         newAwardDescription: null,
         newAwardName       : null,
