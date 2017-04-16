@@ -145,6 +145,20 @@
         ], done);
     };
 
+    Controller.getAward = function (aid, done) {
+        async.waterfall([
+            async.apply(database.getAward, aid),
+            function (award, callback) {
+                uploads.getImageUrl(award.image, function (error, url) {
+                    if (error) {
+                        return callback(error);
+                    }
+                    callback(null, Object.assign(award, {url: url}));
+                });
+            }
+        ], done);
+    };
+
     Controller.getAwards = function (done) {
         async.waterfall([
             async.apply(database.getAllAwards),
@@ -236,6 +250,37 @@
         done(null, {
             uploadPath: uploadPath
         });
+    };
+
+    Controller.getGrants = function (done) {
+        async.waterfall([
+            async.apply(database.getGrants),
+            function (grants, callback) {
+                async.map(grants, function (grant, next) {
+                    async.parallel({
+                        award  : async.apply(Controller.getAward, grant.aid),
+                        granter: async.apply(Controller.getUser, grant.fromuid),
+                        grantee: async.apply(Controller.getUser, grant.uid)
+                    }, function (error, results) {
+                        if (error) {
+                            return next(error);
+                        }
+
+                        next(null, Object.assign(grant, results));
+                    });
+                }, function (error, result) {
+                    if (error) {
+                        return callback(error);
+                    }
+
+                    callback(null, {grants: result});
+                });
+            }
+        ], done);
+    };
+
+    Controller.getUser = function (uid, done) {
+        user.getUserFields(uid, ['uid', 'picture', 'username', 'userslug'], done);
     };
 
     Controller.getUserAwards = function (uid, limit, done) {

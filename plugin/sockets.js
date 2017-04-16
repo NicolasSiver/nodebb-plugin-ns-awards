@@ -25,6 +25,7 @@
         sockets[constants.SOCKETS].editAward = Sockets.editAward;
         sockets[constants.SOCKETS].editGrant = Sockets.editGrant;
         sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
+        sockets[constants.SOCKETS].getGrants = Sockets.getGrants;
         sockets[constants.SOCKETS].getGrantsWithAwards = Sockets.getGrantsWithAwards;
         sockets[constants.SOCKETS].getConfig = Sockets.getConfig;
         sockets[constants.SOCKETS].getSettings = Sockets.getSettings;
@@ -99,6 +100,10 @@
 
     Sockets.getAwards = function (socket, callback) {
         controller.getAwards(callback);
+    };
+
+    Sockets.getGrants = function (socket, payload, callback) {
+        controller.getGrants(callback);
     };
 
     Sockets.getGrantsWithAwards = function (socket, payload, callback) {

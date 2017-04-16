@@ -15,7 +15,7 @@
         async.waterfall([
             async.apply(db.incrObjectField, 'global', nextAwardId),
             function (id, next) {
-                //Where score as id will work as index position value for sorting
+                // Where score as id will work as index position value for sorting
                 db.sortedSetAdd(namespace, id, id, function (error) {
                     if (error) {
                         return next(error);
@@ -58,6 +58,7 @@
                 async.parallel([
                     async.apply(db.sortedSetAdd, namespace + ':award:' + aid, createTime, gid),
                     async.apply(db.sortedSetAdd, namespace + ':user:' + uid, createTime, gid),
+                    async.apply(db.sortedSetAdd, namespace + ':grants', createTime, gid),
                     async.apply(db.setObject, namespace + ':grant:' + gid, grant)
                 ], function (error) {
                     if (error) {
@@ -125,7 +126,8 @@
             async.parallel([
                 async.apply(db.delete, namespace + ':grant:' + grant.gid),
                 async.apply(db.sortedSetRemove, namespace + ':award:' + grant.aid, gid),
-                async.apply(db.sortedSetRemove, namespace + ':user:' + grant.uid, gid)
+                async.apply(db.sortedSetRemove, namespace + ':user:' + grant.uid, gid),
+                async.apply(db.sortedSetRemove, namespace + ':grants', gid)
             ], done);
         });
     };
@@ -150,6 +152,21 @@
 
     Database.getGrant = function (gid, done) {
         db.getObject(namespace + ':grant:' + gid, done);
+    };
+
+    Database.getGrants = function (done) {
+        async.waterfall([
+            async.apply(db.getSortedSetRange, namespace + ':grants', 0, 80),
+            function (gids, next) {
+                if (gids.length === 0) {
+                    return next(null, []);
+                }
+
+                db.getObjects(gids.map(function (gid) {
+                    return namespace + ':grant:' + gid;
+                }), next);
+            }
+        ], done);
     };
 
     Database.getGrantIdsByAward = function (aid, done) {
