@@ -48,7 +48,7 @@ export function createReduxStore(state) {
 export function getInitialState() {
     return {
         awardForGrant: null,
-        awards       : [],
+        awards       : null,
 
         creationActive: false,
         editAwards    : {},

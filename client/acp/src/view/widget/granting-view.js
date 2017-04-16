@@ -2,9 +2,12 @@ import debounce from 'lodash.debounce';
 import React from 'react';
 import {connect} from 'react-redux';
 
+import * as Constants from '../../model/constants';
+
 import {
     addUserForGrant,
     highlightUser,
+    pickAward,
     resetUsername,
     rewardUsers,
     searchUser,
@@ -12,10 +15,12 @@ import {
     setUsername,
     setUserSearchFocus
 } from '../../action/actions';
-import AwardPicker from './award-picker';
+import AwardPicker from '../display/award-picker';
 import isAwardGrantValid from '../../model/selector/is-award-grant-valid';
 import PanelControls from '../display/panel-controls';
 import {
+    getAwards,
+    getAwardForGrant,
     getGrantReason,
     getUserHighlight,
     getUsername,
@@ -23,15 +28,23 @@ import {
     isUserSearchFocused
 } from '../../model/selector/selectors';
 import UserSearch from '../display/user-search';
+import SectionLoading from '../display/section-loading';
 import UserSelectList from './user-select-list';
 
 class GrantingView extends React.Component {
     render() {
+        if (this.props.awards === null) {
+            return <SectionLoading/>;
+        }
+
         return (
             <div className="granting">
                 <div className="granting__awards">
                     <h5>Pick Award:</h5>
-                    <AwardPicker/>
+                    <AwardPicker
+                        awardForGrant={this.props.awardForGrant}
+                        awards={this.props.awards}
+                        itemDidSelect={award => this.props.selectAward(award)}/>
                 </div>
                 <div className="granting__details">
                     <h5>Select Users:</h5>
@@ -69,13 +82,16 @@ class GrantingView extends React.Component {
 }
 
 GrantingView.propTypes = {
+    awardForGrant    : React.PropTypes.object,
     awardGrantValid  : React.PropTypes.bool,
+    awards           : React.PropTypes.array,
     changeUsername   : React.PropTypes.func,
     grant            : React.PropTypes.func,
     grantReason      : React.PropTypes.string,
     highlight        : React.PropTypes.func,
     resetUsername    : React.PropTypes.func,
     select           : React.PropTypes.func,
+    selectAward      : React.PropTypes.func,
     setFocus         : React.PropTypes.func,
     setReason        : React.PropTypes.func,
     userHighlight    : React.PropTypes.object,
@@ -89,7 +105,9 @@ export default connect(
         let selectAwardGrantValid = isAwardGrantValid();
         return state => {
             return {
+                awardForGrant    : getAwardForGrant(state),
                 awardGrantValid  : selectAwardGrantValid(state),
+                awards           : getAwards(state),
                 grantReason      : getGrantReason(state),
                 userHighlight    : getUserHighlight(state),
                 username         : getUsername(state),
@@ -99,7 +117,7 @@ export default connect(
         };
     },
     dispatch => {
-        let debounceSearch = debounce(() => dispatch(searchUser()), 400);
+        let debounceSearch = debounce(() => dispatch(searchUser()), Constants.SEARCH_DEBOUNCE_DELAY);
         return {
             changeUsername: text => {
                 dispatch(setUsername(text));
@@ -109,6 +127,7 @@ export default connect(
             highlight     : direction => dispatch(highlightUser(direction)),
             resetUsername : () => dispatch(resetUsername()),
             select        : user => dispatch(addUserForGrant(user)),
+            selectAward   : award => dispatch(pickAward(award)),
             setFocus      : state => dispatch(setUserSearchFocus(state)),
             setReason     : value => dispatch(setGrantReason(value))
         };
