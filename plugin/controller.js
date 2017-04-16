@@ -1,22 +1,22 @@
 (function (Controller) {
     'use strict';
 
-    var async         = require('async'),
-        path          = require('path'),
-        util          = require('util'),
+    var async = require('async'),
+        path  = require('path'),
+        util  = require('util');
 
-        database      = require('./database'),
-        settings      = require('./settings'),
-        controller    = require('./controller'),
-        constants     = require('./constants'),
-        uploads       = require('./uploads'),
+    var constants  = require('./constants'),
+        controller = require('./controller'),
+        database   = require('./database'),
+        nodebb     = require('./nodebb'),
+        settings   = require('./settings'),
+        uploads    = require('./uploads');
 
-        nodebb        = require('./nodebb'),
-        utils         = nodebb.utils,
-        helpers       = nodebb.helpers,
+
+    var nconf         = nodebb.nconf,
+        notifications = nodebb.notifications,
         user          = nodebb.user,
-        nconf         = nodebb.nconf,
-        notifications = nodebb.notifications;
+        utils         = nodebb.utils;
 
     Controller.awardUsers = function (awardId, fromUid, toUids, reasonText, done) {
         async.waterfall([
@@ -309,18 +309,13 @@
             if (error) {
                 return done(error);
             }
-            var newSettings = getValidFields(values, data);
-            settings.save(newSettings, done);
+            settings.save(getValidFields(values, data), done);
         });
 
     };
 
     function getImagePath(image) {
         return path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
-    }
-
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
     }
 
     function getValidFields(fields, object) {
