@@ -5,7 +5,6 @@ import {
     awardForGrant,
     awards,
     creationActive,
-    editAt,
     editAwards,
     grantReason,
     newAwardName,
@@ -27,7 +26,6 @@ export function createReduxStore(state) {
             awardForGrant      : awardForGrant(state.awardForGrant, action),
             awards             : awards(state.awards, action),
             creationActive     : creationActive(state.creationActive, action),
-            editAt             : editAt(state.editAt, action),
             editAwards         : editAwards(state.editAwards, action),
             grantReason        : grantReason(state.grantReason, action),
             newAwardName       : newAwardName(state.newAwardName, action),
@@ -51,7 +49,6 @@ export function getInitialState() {
         awards       : [],
 
         creationActive: false,
-        editAt        : null,
         editAwards    : {},
         grantReason   : null,
 

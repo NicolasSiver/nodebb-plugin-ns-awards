@@ -30,17 +30,6 @@ export function creationActive(state, action) {
     }
 }
 
-export function editAt(state, action) {
-    switch (action.type) {
-        case ActionTypes.AWARD_EDIT_INDEX_DID_UPDATE:
-            return action.payload;
-        case ActionTypes.AWARD_EDIT_DID_CANCEL:
-            return null;
-        default:
-            return state;
-    }
-}
-
 export function editAwards(state, action) {
     let edits, award;
 
