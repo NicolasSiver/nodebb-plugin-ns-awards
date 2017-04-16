@@ -10,6 +10,7 @@ import {
     startAwardEdit
 } from '../../action/actions';
 import AwardsListItemView from '../display/awards-list-item-view';
+import SectionLoading from '../display/section-loading';
 import {getAwards, getEditAwards, getUploadPath} from '../../model/selector/selectors';
 import {createAwardUid} from '../../util/utils';
 
@@ -17,10 +18,14 @@ class AwardsListView extends React.Component {
     render() {
         let items;
 
+        if (this.props.awards === null) {
+            return <SectionLoading/>;
+        }
+
         if (this.props.awards.length === 0) {
             items = <li>You don't have any awards. Why not create a new one?</li>;
         } else {
-            items = this.props.awards.map((award, index) => {
+            items = this.props.awards.map(award => {
                 let aid = createAwardUid(award.aid);
                 let editedAward = this.props.edited[aid];
                 award = editedAward || award;
@@ -48,6 +53,19 @@ class AwardsListView extends React.Component {
         );
     }
 }
+
+AwardsListView.propTypes = {
+    awards      : React.PropTypes.array,
+    cancel      : React.PropTypes.func,
+    delete      : React.PropTypes.func,
+    edit        : React.PropTypes.func,
+    edited      : React.PropTypes.object,
+    editStart   : React.PropTypes.func,
+    resetPreview: React.PropTypes.func,
+    save        : React.PropTypes.func,
+    setPreview  : React.PropTypes.func,
+    uploadPath  : React.PropTypes.string
+};
 
 export default connect(
     state => {
