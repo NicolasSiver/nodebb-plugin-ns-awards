@@ -6,6 +6,8 @@ export const getEditAwards = state => state.editAwards;
 
 export const getGrantReason = state => state.grantReason;
 
+export const getGrants = state => state.grants;
+
 export const getNewAwardDescription = state => state.newAwardDescription;
 
 export const getNewAwardName = state => state.newAwardName;

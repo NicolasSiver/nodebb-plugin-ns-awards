@@ -3,6 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {setSection} from '../../action/actions';
+import ActivityView from './activity-view';
 import AwardsListView from './awards-list-view';
 import GrantingView from './granting-view';
 import * as Sections from '../../model/sections';
@@ -12,7 +13,7 @@ class TabManager extends React.Component {
     createTabContent(section) {
         switch (section) {
             case Sections.SECTION_ACTIVITY:
-                return;
+                return <ActivityView/>;
             case Sections.SECTION_AWARDS:
                 return <AwardsListView />;
             case Sections.SECTION_GRANTING:

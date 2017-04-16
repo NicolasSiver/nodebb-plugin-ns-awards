@@ -105,6 +105,38 @@
     padding: 0; }
     .manage-awards .awards-list li + li {
       margin-top: 16px; }
+  .manage-awards .grant__arrow {
+    margin: 0 8px; }
+  .manage-awards .grant__header {
+    display: flex;
+    line-height: 1.8em; }
+  .manage-awards .grant__preview {
+    align-self: center;
+    margin-right: 8px;
+    width: 1.8em; }
+  .manage-awards .grant__reason {
+    border-left: 4px solid #eeeeee;
+    margin-bottom: 8px;
+    margin-left: 16px;
+    margin-top: 8px;
+    padding-left: 12px; }
+  .manage-awards .grant__time {
+    display: block;
+    font-size: 0.9em;
+    opacity: 0.8; }
+  .manage-awards .grant__title {
+    flex: 1 1 auto;
+    font-size: 1.5em;
+    font-weight: 300;
+    line-height: 1.8em;
+    margin: 0; }
+  .manage-awards .grant__username {
+    margin-left: 4px; }
+  .manage-awards .grant__users {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    flex-flow: row nowrap; }
   .manage-awards .image-manager {
     background-color: #fafafa;
     border: 1px solid #f5f5f5;
@@ -147,11 +179,17 @@
     .manage-awards .aws-avatar__icon--normal {
       font-size: 3rem;
       line-height: 48px; }
+    .manage-awards .aws-avatar__icon--small {
+      font-size: 1.5em;
+      line-height: 24px; }
   .manage-awards .aws-avatar__image {
     border-radius: 50%; }
   .manage-awards .aws-avatar--normal {
     height: 48px;
     width: 48px; }
+  .manage-awards .aws-avatar--small {
+    height: 24px;
+    width: 24px; }
   .manage-awards .aws-hidden {
     display: none; }
   .manage-awards .granting {

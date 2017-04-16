@@ -81,6 +81,17 @@ export default class SocketService {
         });
     }
 
+    static getGrants() {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.GET_GRANTS, (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(result);
+            });
+        });
+    }
+
     static searchUser(username) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.SEARCH_USER, {

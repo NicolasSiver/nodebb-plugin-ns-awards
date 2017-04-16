@@ -133,6 +133,57 @@
     }
   }
 
+  .grant {
+
+    &__arrow {
+      margin: 0 $nsa-padding-xs;
+    }
+
+    &__header {
+      display: flex;
+      line-height: 1.8em;
+    }
+
+    &__preview {
+      align-self: center;
+      margin-right: $nsa-padding-xs;
+      width: 1.8em;
+    }
+
+    &__reason {
+      border-left: $nsa-padding-xxs solid material-color('grey', '200');
+      margin-bottom: $nsa-padding-xs;
+      margin-left: $nsa-padding;
+      margin-top: $nsa-padding-xs;
+      padding-left: $nsa-padding-s;
+    }
+
+    &__time {
+      display: block;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    &__title {
+      flex: 1 1 auto;
+      font-size: 1.5em;
+      font-weight: 300;
+      line-height: 1.8em;
+      margin: 0;
+    }
+
+    &__username {
+      margin-left: $nsa-padding-xxs;
+    }
+
+    &__users {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      flex-flow: row nowrap;
+    }
+  }
+
   .image-manager {
     background-color: material-color('grey', '50');
     border: 1px solid material-color('grey', '100');
@@ -195,6 +246,11 @@
         font-size: 3rem;
         line-height: $nsa-avatar-normal-size;
       }
+
+      &--small {
+        font-size: 1.5em;
+        line-height: $nsa-avatar-small-size;
+      }
     }
 
     &__image {
@@ -204,6 +260,11 @@
     &--normal {
       height: $nsa-avatar-normal-size;
       width: $nsa-avatar-normal-size;
+    }
+
+    &--small {
+      height: $nsa-avatar-small-size;
+      width: $nsa-avatar-small-size;
     }
   }
 

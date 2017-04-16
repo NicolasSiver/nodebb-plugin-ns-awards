@@ -106,6 +106,14 @@ export function getAwardsAll() {
     };
 }
 
+export function getAwardGrants() {
+    return dispatch => {
+        SocketService.getGrants().then(({grants}) => {
+            dispatch(setGrants(grants));
+        });
+    };
+}
+
 export function getConfig() {
     return dispatch => {
         SocketService.getConfig().then(config => {
@@ -257,13 +265,6 @@ export function setAwardCreationState(state) {
     };
 }
 
-export function setAwardEditIndex(index) {
-    return {
-        type   : ActionTypes.AWARD_EDIT_INDEX_DID_UPDATE,
-        payload: index
-    };
-}
-
 export function setAwardPreview(aid, value) {
     return {
         type   : ActionTypes.AWARD_PREVIEW_DID_CHANGE,
@@ -289,6 +290,13 @@ export function setGrantReason(text) {
     return {
         type   : ActionTypes.GRANT_REASON_DID_CHANGE,
         payload: text
+    };
+}
+
+export function setGrants(list) {
+    return {
+        type   : ActionTypes.GRANTS_DID_UPDATE,
+        payload: list
     };
 }
 
