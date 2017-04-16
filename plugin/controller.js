@@ -254,7 +254,7 @@
 
     Controller.getGrants = function (done) {
         async.waterfall([
-            async.apply(database.getGrants),
+            async.apply(database.getGrants, true),
             function (grants, callback) {
                 async.map(grants, function (grant, next) {
                     async.parallel({

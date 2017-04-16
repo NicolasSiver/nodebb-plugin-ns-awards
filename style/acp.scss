@@ -3,8 +3,13 @@
 @import "../node_modules/sass-material-colors/sass/sass-material-colors";
 
 .manage-awards {
-
   font-size: $nsa-base-font-size;
+
+  .activity-view {
+    .grant + .grant {
+      margin-top: $nsa-padding;
+    }
+  }
 
   .award-form {
     &__image {
