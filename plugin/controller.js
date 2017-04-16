@@ -115,36 +115,6 @@
         database.editGrant(gid, {reason: reason}, done);
     };
 
-    Controller.getAllAwards = function (done) {
-        async.waterfall([
-            async.apply(database.getAllAwards),
-            function (awards, next) {
-                async.map(awards, function (award, next) {
-
-                    award.picture = getImagePath(award.image);
-
-                    Controller.getAwardRecipients(award.aid, function (error, grants) {
-                        if (error) {
-                            return next(error);
-                        }
-
-                        award.grants = grants;
-                        next(null, award);
-                    });
-                }, function (error, awards) {
-                    if (error) {
-                        return next(error);
-                    }
-
-                    next(null, {
-                        awards     : awards,
-                        breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}])
-                    });
-                });
-            }
-        ], done);
-    };
-
     Controller.getAward = function (aid, done) {
         async.waterfall([
             async.apply(database.getAward, aid),
@@ -161,21 +131,36 @@
 
     Controller.getAwards = function (done) {
         async.waterfall([
-            async.apply(database.getAllAwards),
+            async.apply(database.getAwards, true),
             function (awards, callback) {
                 async.map(awards, function (award, next) {
-                    async.parallel({
-                        url   : async.apply(uploads.getImageUrl, award.image),
-                        grants: async.apply(Controller.getAwardRecipients, award.aid)
-                    }, function (error, results) {
+                    uploads.getImageUrl(award.image, function (error, url) {
                         if (error) {
                             return next(error);
                         }
+                        next(null, Object.assign(award, {url: url}));
+                    });
+                }, function (error, awards) {
+                    if (error) {
+                        return callback(error);
+                    }
 
-                        award.url = results.url;
-                        award.grants = results.grants;
+                    callback(null, {awards: awards});
+                });
+            }
+        ], done);
+    };
 
-                        next(null, award);
+    Controller.getAwardsWithGrants = function (done) {
+        async.waterfall([
+            async.apply(Controller.getAwards),
+            function (awards, callback) {
+                async.map(awards, function (award, next) {
+                    Controller.getAwardRecipients(award.aid, function (error, grants) {
+                        if (error) {
+                            return next(error);
+                        }
+                        next(null, Object.assign(award, {grants: grants}));
                     });
                 }, function (error, awards) {
                     if (error) {

@@ -132,22 +132,22 @@
         });
     };
 
-    Database.getAllAwards = function (done) {
+    Database.getAward = function (aid, done) {
+        db.getObject(namespace + ':' + aid, done);
+    };
+
+    Database.getAwards = function (reverse, done) {
         async.waterfall([
-            async.apply(db.getSortedSetRange, namespace, 0, -1),
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace, 0, -1),
             function (ids, next) {
-                if (!ids.length) {
-                    return next(null, ids);
+                if (ids.length === 0) {
+                    return next(null, []);
                 }
                 db.getObjects(ids.map(function (id) {
                     return namespace + ':' + id;
                 }), next);
             }
         ], done);
-    };
-
-    Database.getAward = function (aid, done) {
-        db.getObject(namespace + ':' + aid, done);
     };
 
     Database.getGrant = function (gid, done) {
