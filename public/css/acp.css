@@ -194,6 +194,8 @@
     width: 24px; }
   .manage-awards .aws-hidden {
     display: none; }
+  .manage-awards .donate__paypal {
+    margin-top: 16px; }
   .manage-awards .granting {
     display: flex; }
     .manage-awards .granting__awards {

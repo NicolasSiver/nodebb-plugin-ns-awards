@@ -277,6 +277,12 @@
     display: none;
   }
 
+  .donate {
+    &__paypal {
+      margin-top: $nsa-padding;
+    }
+  }
+
   .granting {
     display: flex;
 
