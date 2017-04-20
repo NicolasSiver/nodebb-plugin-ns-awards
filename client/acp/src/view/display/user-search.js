@@ -52,7 +52,7 @@ export default class UserSearch extends React.Component {
         let itemClass = classNames('user-search__item', {
             'user-search__item--highlight': compareUsers(user, highlight)
         });
-        return <li className={itemClass} key={user.username} onClick={() => clickListener(user)}>
+        return <li className={itemClass} key={user.username} onMouseDown={() => clickListener(user)}>
             <div className="user-search__image"><Avatar user={user}/></div>
             <div className="user-search__name">{user.username}</div>
         </li>;
