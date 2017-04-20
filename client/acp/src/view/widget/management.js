@@ -15,6 +15,7 @@ import {
     setUsername,
     setUserSearchFocus
 } from '../../action/actions';
+import Avatar from '../display/avatar';
 import {
     getUserHighlight,
     getUserInspect,
@@ -43,6 +44,15 @@ class Management extends React.Component {
                     value={this.props.username}
                     valueDidChange={text => this.props.changeUsername(text)}
                     valueWillReset={() => this.props.resetUsername()}/>
+                {this.props.userInspect !== null ? this.renderUser(this.props.userInspect) : null}
+            </div>
+        );
+    }
+
+    renderUser(user) {
+        return (
+            <div className="management__user">
+                <Avatar size="big" user={user}/>
             </div>
         );
     }

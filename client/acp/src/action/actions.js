@@ -46,9 +46,10 @@ export function cancelAwardEdit(aid) {
 }
 
 export function changeUserForInspect(user) {
-    return dispatch => {
+    return (dispatch, getState) => {
+        let userInspect = user ? user : getUserHighlight(getState());
         dispatch(resetUsername());
-        dispatch(setUserForInspect(user));
+        dispatch(setUserForInspect(userInspect));
     };
 }
 
