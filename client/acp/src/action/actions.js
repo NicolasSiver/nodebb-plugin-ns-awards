@@ -45,6 +45,13 @@ export function cancelAwardEdit(aid) {
     };
 }
 
+export function changeUserForInspect(user) {
+    return dispatch => {
+        dispatch(resetUsername());
+        dispatch(setUserForInspect(user));
+    };
+}
+
 export function createAward(name, description) {
     return dispatch => {
         UploadService.sharedInstance().start(Constants.NEW_AWARD_ID)
@@ -331,6 +338,13 @@ export function setSection(sectionName) {
 export function setUserForGrant(user) {
     return {
         type   : ActionTypes.USER_FOR_GRANT_DID_ADD,
+        payload: user
+    };
+}
+
+export function setUserForInspect(user) {
+    return {
+        type   : ActionTypes.USER_FOR_INSPECT_DID_CHANGE,
         payload: user
     };
 }

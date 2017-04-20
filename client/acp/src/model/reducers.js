@@ -122,6 +122,15 @@ export function userHighlight(state, action) {
     }
 }
 
+export function userInspect(state, action) {
+    switch (action.type) {
+        case ActionTypes.USER_FOR_INSPECT_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function username(state, action) {
     switch (action.type) {
         case ActionTypes.USERNAME_DID_CHANGE:

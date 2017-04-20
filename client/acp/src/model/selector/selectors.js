@@ -22,6 +22,8 @@ export const getUploadPath = state => state.uploadPath;
 
 export const getUserHighlight = state => state.userHighlight;
 
+export const getUserInspect = state => state.userInspect;
+
 export const getUsername = state => state.username;
 
 export const getUsers = state => state.users;

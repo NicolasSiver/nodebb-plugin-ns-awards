@@ -13,6 +13,7 @@ import {
     newAwardPreview,
     section,
     userHighlight,
+    userInspect,
     username,
     users,
     userSearchFocus,
@@ -36,6 +37,7 @@ export function createReduxStore(state) {
             section            : section(state.section, action),
             sections           : state.sections,
             userHighlight      : userHighlight(state.userHighlight, action),
+            userInspect        : userInspect(state.userInspect, action),
             username           : username(state.username, action),
             users              : users(state.users, action),
             userSearchFocus    : userSearchFocus(state.userSearchFocus, action),
@@ -70,6 +72,7 @@ export function getInitialState() {
         ],
 
         userHighlight  : null,
+        userInspect    : null,
         username       : null,
         users          : [],
         userSearchFocus: null,

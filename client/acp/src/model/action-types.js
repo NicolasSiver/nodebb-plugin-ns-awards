@@ -36,6 +36,8 @@ export const USER_FOR_GRANT_DID_ADD = 'userForGrantDidAdd';
 
 export const USER_FOR_GRANT_DID_REMOVE = 'userForGrantDidRemove';
 
+export const USER_FOR_INSPECT_DID_CHANGE = 'userForInspectDidChange';
+
 export const USER_HIGHLIGHT_DID_CHANGE = 'userHighlightDidChange';
 
 export const USER_SEARCH_FOCUS_DID_CHANGE = 'userSearchFocusDidChange';

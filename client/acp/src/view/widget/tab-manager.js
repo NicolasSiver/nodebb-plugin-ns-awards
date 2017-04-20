@@ -6,6 +6,7 @@ import {setSection} from '../../action/actions';
 import ActivityView from './activity-view';
 import AwardsListView from './awards-list-view';
 import GrantingView from './granting-view';
+import Management from './management';
 import * as Sections from '../../model/sections';
 import {getSection, getSections} from '../../model/selector/selectors';
 
@@ -19,7 +20,7 @@ class TabManager extends React.Component {
             case Sections.SECTION_GRANTING:
                 return <GrantingView/>;
             case Sections.SECTION_MANAGEMENT:
-                return;
+                return <Management/>;
             case Sections.SECTION_SETTINGS:
                 return;
         }
@@ -55,6 +56,12 @@ class TabManager extends React.Component {
         );
     }
 }
+
+TabManager.propTypes = {
+    section      : React.PropTypes.string,
+    sections     : React.PropTypes.array,
+    updateSection: React.PropTypes.func
+};
 
 export default connect(
     (state) => {
