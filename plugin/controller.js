@@ -18,6 +18,20 @@
         user          = nodebb.user,
         utils         = nodebb.utils;
 
+    Controller.augmentGrant = function (grant, done) {
+        async.parallel({
+            award  : async.apply(Controller.getAward, grant.aid),
+            granter: async.apply(Controller.getUser, grant.fromuid),
+            grantee: async.apply(Controller.getUser, grant.uid)
+        }, function (error, results) {
+            if (error) {
+                return done(error);
+            }
+
+            done(null, Object.assign(grant, results));
+        });
+    };
+
     Controller.awardUsers = function (awardId, fromUid, toUids, reasonText, done) {
         async.waterfall([
             function (callback) {
@@ -242,17 +256,7 @@
             async.apply(database.getGrants, true),
             function (grants, callback) {
                 async.map(grants, function (grant, next) {
-                    async.parallel({
-                        award  : async.apply(Controller.getAward, grant.aid),
-                        granter: async.apply(Controller.getUser, grant.fromuid),
-                        grantee: async.apply(Controller.getUser, grant.uid)
-                    }, function (error, results) {
-                        if (error) {
-                            return next(error);
-                        }
-
-                        next(null, Object.assign(grant, results));
-                    });
+                    Controller.augmentGrant(grant, next);
                 }, function (error, result) {
                     if (error) {
                         return callback(error);
@@ -300,6 +304,24 @@
                         next(null, grant);
                     });
                 }, next);
+            }
+        ], done);
+    };
+
+    Controller.getUserGrants = function (uid, limit, done) {
+        async.waterfall([
+            async.apply(database.getGrantIdsByUser, uid, limit),
+            function (grantIds, callback) {
+                if (!grantIds) {
+                    return callback(null, []);
+                }
+
+                database.getGrantsByIds(grantIds, callback);
+            },
+            function (grants, callback) {
+                async.map(grants, function (grant, next) {
+                    Controller.augmentGrant(grant, next);
+                }, callback);
             }
         ], done);
     };
