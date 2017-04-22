@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -82,22 +83,22 @@ class GrantingView extends React.Component {
 }
 
 GrantingView.propTypes = {
-    awardForGrant    : React.PropTypes.object,
-    awardGrantValid  : React.PropTypes.bool,
-    awards           : React.PropTypes.array,
-    changeUsername   : React.PropTypes.func,
-    grant            : React.PropTypes.func,
-    grantReason      : React.PropTypes.string,
-    highlight        : React.PropTypes.func,
-    resetUsername    : React.PropTypes.func,
-    select           : React.PropTypes.func,
-    selectAward      : React.PropTypes.func,
-    setFocus         : React.PropTypes.func,
-    setReason        : React.PropTypes.func,
-    userHighlight    : React.PropTypes.object,
-    username         : React.PropTypes.string,
-    users            : React.PropTypes.array,
-    userSearchFocused: React.PropTypes.bool
+    awardForGrant    : PropTypes.object,
+    awardGrantValid  : PropTypes.bool,
+    awards           : PropTypes.array,
+    changeUsername   : PropTypes.func,
+    grant            : PropTypes.func,
+    grantReason      : PropTypes.string,
+    highlight        : PropTypes.func,
+    resetUsername    : PropTypes.func,
+    select           : PropTypes.func,
+    selectAward      : PropTypes.func,
+    setFocus         : PropTypes.func,
+    setReason        : PropTypes.func,
+    userHighlight    : PropTypes.object,
+    username         : PropTypes.string,
+    users            : PropTypes.array,
+    userSearchFocused: PropTypes.bool
 };
 
 export default connect(

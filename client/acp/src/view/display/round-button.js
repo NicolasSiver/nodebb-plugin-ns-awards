@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class RoundButton extends React.Component {
@@ -21,8 +22,8 @@ export default class RoundButton extends React.Component {
 }
 
 RoundButton.PropTypes = {
-    animate      : React.PropTypes.bool,
-    clickListener: React.PropTypes.string.isRequired,
-    icon         : React.PropTypes.string.isRequired,
-    role         : React.PropTypes.string.isRequired
+    animate      : PropTypes.bool,
+    clickListener: PropTypes.string.isRequired,
+    icon         : PropTypes.string.isRequired,
+    role         : PropTypes.string.isRequired
 };

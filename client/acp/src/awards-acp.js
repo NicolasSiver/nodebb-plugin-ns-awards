@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -38,6 +39,11 @@ class AwardsAcp extends React.Component {
         );
     }
 }
+
+AwardsAcp.propTypes = {
+    getAwards: PropTypes.func,
+    getConfig: PropTypes.func
+};
 
 export default connect(
     null,

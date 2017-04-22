@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import * as LoaderEvents from '../../model/loader-events';
@@ -49,9 +50,9 @@ export default class ImageManager extends React.Component {
 }
 
 ImageManager.propTypes = {
-    entityId       : React.PropTypes.string.isRequired,
-    imageWillRemove: React.PropTypes.func.isRequired,
-    imageDidSelect : React.PropTypes.func.isRequired,
-    previewUrl     : React.PropTypes.string,
-    uploadUrl      : React.PropTypes.string.isRequired
+    entityId       : PropTypes.string.isRequired,
+    imageWillRemove: PropTypes.func.isRequired,
+    imageDidSelect : PropTypes.func.isRequired,
+    previewUrl     : PropTypes.string,
+    uploadUrl      : PropTypes.string.isRequired
 };

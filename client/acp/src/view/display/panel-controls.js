@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class PanelControls extends React.Component {
@@ -32,10 +33,10 @@ PanelControls.defaultProps = {
 
 
 PanelControls.propTypes = {
-    cancelDidClick : React.PropTypes.func,
-    disableCancel  : React.PropTypes.bool,
-    labelCancel    : React.PropTypes.string,
-    labelSuccess   : React.PropTypes.string,
-    successDidClick: React.PropTypes.func,
-    valid          : React.PropTypes.bool
+    cancelDidClick : PropTypes.func,
+    disableCancel  : PropTypes.bool,
+    labelCancel    : PropTypes.string,
+    labelSuccess   : PropTypes.string,
+    successDidClick: PropTypes.func,
+    valid          : PropTypes.bool
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import AwardPickerItem from '../display/award-picker-item';
@@ -28,7 +29,7 @@ export default class AwardPicker extends React.Component {
 }
 
 AwardPicker.propTypes = {
-    awardForGrant: React.PropTypes.object,
-    awards       : React.PropTypes.array,
-    itemDidSelect: React.PropTypes.func.isRequired
+    awardForGrant: PropTypes.object,
+    awards       : PropTypes.array,
+    itemDidSelect: PropTypes.func.isRequired
 };

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class Avatar extends React.Component {
@@ -30,6 +31,6 @@ Avatar.defaultProps = {
 };
 
 Avatar.propTypes = {
-    size: React.PropTypes.string,
-    user: React.PropTypes.object.isRequired
+    size: PropTypes.string,
+    user: PropTypes.object.isRequired
 };

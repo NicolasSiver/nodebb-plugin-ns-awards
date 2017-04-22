@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -18,6 +19,11 @@ class AwardCreate extends React.Component {
         );
     }
 }
+
+AwardCreate.propTypes = {
+    activateForm  : PropTypes.func,
+    creationActive: PropTypes.bool
+};
 
 export default connect(
     (state) => {

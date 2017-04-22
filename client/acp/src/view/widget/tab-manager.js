@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -58,9 +59,9 @@ class TabManager extends React.Component {
 }
 
 TabManager.propTypes = {
-    section      : React.PropTypes.string,
-    sections     : React.PropTypes.array,
-    updateSection: React.PropTypes.func
+    section      : PropTypes.string,
+    sections     : PropTypes.array,
+    updateSection: PropTypes.func
 };
 
 export default connect(

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -35,8 +36,8 @@ class ActivityView extends React.Component {
 }
 
 ActivityView.propTypes = {
-    getGrants: React.PropTypes.func,
-    grants   : React.PropTypes.array
+    getGrants: PropTypes.func,
+    grants   : PropTypes.array
 };
 
 export default connect(

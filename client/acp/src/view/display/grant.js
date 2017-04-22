@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Avatar from './avatar';
@@ -34,5 +35,5 @@ export default class Grant extends React.Component {
 }
 
 Grant.propTypes = {
-    grant: React.PropTypes.object.isRequired
+    grant: PropTypes.object.isRequired
 };

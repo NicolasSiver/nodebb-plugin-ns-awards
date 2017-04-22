@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class PromptView extends React.Component {
@@ -18,3 +19,9 @@ export default class PromptView extends React.Component {
         );
     }
 }
+
+PromptView.propTypes = {
+    hint         : PropTypes.string,
+    label        : PropTypes.string.isRequired,
+    labelDidClick: PropTypes.func.isRequired
+};

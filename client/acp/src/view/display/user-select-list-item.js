@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Avatar from './avatar';
@@ -30,6 +31,6 @@ export default class UserSelectListItem extends React.Component {
 }
 
 UserSelectListItem.propTypes = {
-    itemWillDelete: React.PropTypes.func.isRequired,
-    user          : React.PropTypes.object.isRequired
+    itemWillDelete: PropTypes.func.isRequired,
+    user          : PropTypes.object.isRequired
 };

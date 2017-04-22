@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -55,16 +56,16 @@ class AwardsListView extends React.Component {
 }
 
 AwardsListView.propTypes = {
-    awards      : React.PropTypes.array,
-    cancel      : React.PropTypes.func,
-    delete      : React.PropTypes.func,
-    edit        : React.PropTypes.func,
-    edited      : React.PropTypes.object,
-    editStart   : React.PropTypes.func,
-    resetPreview: React.PropTypes.func,
-    save        : React.PropTypes.func,
-    setPreview  : React.PropTypes.func,
-    uploadPath  : React.PropTypes.string
+    awards      : PropTypes.array,
+    cancel      : PropTypes.func,
+    delete      : PropTypes.func,
+    edit        : PropTypes.func,
+    edited      : PropTypes.object,
+    editStart   : PropTypes.func,
+    resetPreview: PropTypes.func,
+    save        : PropTypes.func,
+    setPreview  : PropTypes.func,
+    uploadPath  : PropTypes.string
 };
 
 export default connect(

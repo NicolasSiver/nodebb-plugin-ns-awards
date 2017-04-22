@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -75,6 +76,19 @@ class NewAwardForm extends React.Component {
         );
     }
 }
+
+NewAwardForm.propTypes = {
+    cancel        : PropTypes.func,
+    createAward   : PropTypes.func,
+    description   : PropTypes.string,
+    name          : PropTypes.string,
+    preview       : PropTypes.string,
+    resetPreview  : PropTypes.func,
+    setName       : PropTypes.func,
+    setDescription: PropTypes.func,
+    setPreview    : PropTypes.func,
+    uploadPath    : PropTypes.string
+};
 
 export default connect(
     state => {

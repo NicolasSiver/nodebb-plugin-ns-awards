@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class AwardPickerItem extends React.Component {
@@ -33,7 +34,7 @@ export default class AwardPickerItem extends React.Component {
 }
 
 AwardPickerItem.propTypes = {
-    award        : React.PropTypes.object.isRequired,
-    clickListener: React.PropTypes.func.isRequired,
-    selected     : React.PropTypes.bool
+    award        : PropTypes.object.isRequired,
+    clickListener: PropTypes.func.isRequired,
+    selected     : PropTypes.bool
 };

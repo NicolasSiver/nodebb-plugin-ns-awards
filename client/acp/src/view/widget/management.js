@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -59,16 +60,16 @@ class Management extends React.Component {
 }
 
 Management.propTypes = {
-    changeUsername   : React.PropTypes.func,
-    highlight        : React.PropTypes.func,
-    resetUsername    : React.PropTypes.func,
-    select           : React.PropTypes.func,
-    setFocus         : React.PropTypes.func,
-    userHighlight    : React.PropTypes.object,
-    userInspect      : React.PropTypes.object,
-    username         : React.PropTypes.string,
-    users            : React.PropTypes.array,
-    userSearchFocused: React.PropTypes.bool
+    changeUsername   : PropTypes.func,
+    highlight        : PropTypes.func,
+    resetUsername    : PropTypes.func,
+    select           : PropTypes.func,
+    setFocus         : PropTypes.func,
+    userHighlight    : PropTypes.object,
+    userInspect      : PropTypes.object,
+    username         : PropTypes.string,
+    users            : PropTypes.array,
+    userSearchFocused: PropTypes.bool
 };
 
 export default connect(

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import ImageManager from './image-manager';
@@ -103,14 +104,14 @@ export default class AwardsListItemView extends React.Component {
 }
 
 AwardsListItemView.propTypes = {
-    award             : React.PropTypes.object.isRequired,
-    edit              : React.PropTypes.bool.isRequired,
-    itemDidEdit       : React.PropTypes.func.isRequired,
-    itemImageDidChange: React.PropTypes.func.isRequired,
-    itemImageDidReset : React.PropTypes.func.isRequired,
-    itemWillCancel    : React.PropTypes.func.isRequired,
-    itemWillDelete    : React.PropTypes.func.isRequired,
-    itemWillEdit      : React.PropTypes.func.isRequired,
-    itemWillSave      : React.PropTypes.func.isRequired,
-    uploadPath        : React.PropTypes.string.isRequired
+    award             : PropTypes.object.isRequired,
+    edit              : PropTypes.bool.isRequired,
+    itemDidEdit       : PropTypes.func.isRequired,
+    itemImageDidChange: PropTypes.func.isRequired,
+    itemImageDidReset : PropTypes.func.isRequired,
+    itemWillCancel    : PropTypes.func.isRequired,
+    itemWillDelete    : PropTypes.func.isRequired,
+    itemWillEdit      : PropTypes.func.isRequired,
+    itemWillSave      : PropTypes.func.isRequired,
+    uploadPath        : PropTypes.string.isRequired
 };

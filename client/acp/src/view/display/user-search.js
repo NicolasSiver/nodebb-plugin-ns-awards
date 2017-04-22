@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Avatar from './avatar';
@@ -68,14 +69,14 @@ export default class UserSearch extends React.Component {
 }
 
 UserSearch.propTypes = {
-    focus              : React.PropTypes.bool,
-    focusDidChange     : React.PropTypes.func.isRequired,
-    highlight          : React.PropTypes.object,
-    optionDidSelect    : React.PropTypes.func.isRequired,
-    options            : React.PropTypes.array,
-    placeholder        : React.PropTypes.string,
-    selectionWillChange: React.PropTypes.func.isRequired,
-    value              : React.PropTypes.string,
-    valueDidChange     : React.PropTypes.func.isRequired,
-    valueWillReset     : React.PropTypes.func.isRequired
+    focus              : PropTypes.bool,
+    focusDidChange     : PropTypes.func.isRequired,
+    highlight          : PropTypes.object,
+    optionDidSelect    : PropTypes.func.isRequired,
+    options            : PropTypes.array,
+    placeholder        : PropTypes.string,
+    selectionWillChange: PropTypes.func.isRequired,
+    value              : PropTypes.string,
+    valueDidChange     : PropTypes.func.isRequired,
+    valueWillReset     : PropTypes.func.isRequired
 };

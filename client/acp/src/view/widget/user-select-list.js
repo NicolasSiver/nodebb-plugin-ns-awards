@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
@@ -31,8 +32,8 @@ class UserSelectList extends React.Component {
 }
 
 UserSelectList.propTypes = {
-    deleteUser   : React.PropTypes.func,
-    usersForGrant: React.PropTypes.array
+    deleteUser   : PropTypes.func,
+    usersForGrant: PropTypes.array
 };
 
 export default connect(
