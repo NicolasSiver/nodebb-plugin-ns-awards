@@ -237,6 +237,13 @@
       width: 48px; }
   .manage-awards .tab-content {
     margin-top: 16px; }
+  .manage-awards .user-details__item {
+    font-size: 0.8em;
+    line-height: 1.2em; }
+  .manage-awards .user-details__name {
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 2em; }
   .manage-awards .user-search {
     position: relative;
     display: inline-block;

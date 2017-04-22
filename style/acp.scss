@@ -358,6 +358,19 @@
     margin-top: $nsa-padding;
   }
 
+  .user-details {
+    &__item {
+      font-size: 0.8em;
+      line-height: 1.2em;
+    }
+
+    &__name {
+      font-size: 1.2em;
+      font-weight: 300;
+      line-height: 2em;
+    }
+  }
+
   .user-search {
     position: relative;
     display: inline-block;
