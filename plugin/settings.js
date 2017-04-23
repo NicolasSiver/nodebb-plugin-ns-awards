@@ -25,6 +25,16 @@
         });
     };
 
+    Settings.filterKnownProperties = function (data, done) {
+        var result = {};
+        for (var knownProperty in settingsCache) {
+            if (data.hasOwnProperty(knownProperty)) {
+                result[knownProperty] = data[knownProperty];
+            }
+        }
+        done(null, result);
+    };
+
     Settings.get = function (done) {
         return done(null, settingsCache);
     };
@@ -40,7 +50,15 @@
     };
 
     Settings.validate = function (insecureData, done) {
-        done(null, insecureData);
+        var corrections = {};
+
+        if (!insecureData.activityLimit) {
+            corrections.activityLimit = defaults.activityLimit;
+        } else if (isNaN(insecureData.activityLimit) || insecureData.activityLimit <= 0) {
+            return done(new Error('Activity Limit is incorrect.'));
+        }
+
+        done(null, Object.assign({}, insecureData, corrections));
     };
 
 })(module.exports);

@@ -4,8 +4,9 @@
 
 - Add an edit mode for multiple awards
 - Add support for plugin driven image upload
-- Add Rewards section to ACP
+- Add rewards section to ACP
 - Add protection for an image upload service
+- Add activity limit setting
 - Change UX for the creation of awards
 - Change UX for Overview section
 - Change award URL to use an absolute path

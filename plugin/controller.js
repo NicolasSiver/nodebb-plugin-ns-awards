@@ -360,29 +360,21 @@
         ], done);
     };
 
-    Controller.saveValidSettings = function (data, done) {
-        settings.get(function (error, values) {
-            if (error) {
-                return done(error);
+    Controller.saveSettings = function (data, done) {
+        async.waterfall([
+            async.apply(settings.filterKnownProperties, data),
+            function (validFields, callback) {
+                settings.validate(validFields, callback);
+            },
+            function (validData, callback) {
+                settings.save(validData, callback);
             }
-            settings.save(getValidFields(values, data), done);
-        });
-
+        ], done);
     };
 
     // FIXME Deprecate/Remove
     function getImagePath(image) {
         return path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
-    }
-
-    function getValidFields(fields, object) {
-        var shallowCopy = {};
-        for (var field in fields) {
-            if (field in object) {
-                shallowCopy[field] = object[field];
-            }
-        }
-        return shallowCopy;
     }
 
 })(module.exports);

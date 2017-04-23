@@ -98,7 +98,7 @@
     };
 
     Sockets.saveSettings = function (socket, payload, callback) {
-        controller.saveValidSettings(payload.settings, callback);
+        controller.saveSettings(payload.settings, callback);
     };
 
     Sockets.searchUser = function (socket, payload, callback) {
