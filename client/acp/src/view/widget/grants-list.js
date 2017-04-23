@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {} from '../../action/actions';
+import {deleteUserGrant} from '../../action/actions';
 import Grant from '../display/grant';
 import RoundButton from '../display/round-button';
 import {getUserInspectGrants} from '../../model/selector/selectors';
@@ -24,10 +24,10 @@ class GrantsList extends React.Component {
                         <Grant
                             controlViews={[
                                 <RoundButton
-                                    icon="fa-trash"
+                                    icon="fa-undo"
                                     animate={true}
                                     role="danger"
-                                    clickListener={() => undefined}/>
+                                    clickListener={() => this.props.deleteGrant(grant)}/>
                             ]}
                             grant={grant}/>
                     </div>
@@ -44,6 +44,7 @@ class GrantsList extends React.Component {
 }
 
 GrantsList.propTypes = {
+    deleteGrant      : PropTypes.func,
     userInspectGrants: PropTypes.array
 };
 
@@ -54,6 +55,8 @@ export default connect(
         };
     },
     dispatch => {
-        return {};
+        return {
+            deleteGrant: grant => dispatch(deleteUserGrant(grant))
+        };
     }
 )(GrantsList);

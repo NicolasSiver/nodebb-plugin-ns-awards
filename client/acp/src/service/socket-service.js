@@ -44,6 +44,19 @@ export default class SocketService {
         });
     }
 
+    static deleteGrant(id){
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.DELETE_GRANT, {
+                id
+            }, error => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve();
+            });
+        });
+    }
+
     static editAward(id, name, description) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.EDIT_AWARD, {

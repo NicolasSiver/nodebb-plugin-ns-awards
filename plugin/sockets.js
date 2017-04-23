@@ -88,7 +88,7 @@
     };
 
     Sockets.deleteGrant = function (socket, payload, callback) {
-        controller.deleteGrantById(payload.id, callback);
+        controller.deleteGrantById(parseInt(payload.id), callback);
     };
 
     Sockets.editAward = function (socket, payload, callback) {

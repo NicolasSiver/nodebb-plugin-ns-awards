@@ -5,6 +5,7 @@ import {
     getEditAwards,
     getGrantReason,
     getUserHighlight,
+    getUserInspect,
     getUsername,
     getUsers,
     getUsersForGrant
@@ -90,6 +91,35 @@ export function deleteAward(aid) {
                         })
                         .then(() => {
                             window.app.alertSuccess('Award is deleted.');
+                        })
+                        .catch(error => {
+                            window.app.alertError('Error did occur: ' + JSON.stringify(error));
+                        });
+                }
+            }
+        });
+    };
+}
+
+export function deleteUserGrant(grant) {
+    return (dispatch, getState) => {
+        window.bootbox.confirm({
+            size    : 'small',
+            title   : 'Take Away Award?',
+            message : 'You are going to take away an award from the user.',
+            buttons : {
+                confirm: {
+                    label: 'Take Away'
+                }
+            },
+            callback: result => {
+                if (result === true) {
+                    SocketService.deleteGrant(grant.gid)
+                        .then(() => {
+                            dispatch(getUserGrants(getUserInspect(getState())));
+                        })
+                        .then(() => {
+                            window.app.alertSuccess('The award is taken away.');
                         })
                         .catch(error => {
                             window.app.alertError('Error did occur: ' + JSON.stringify(error));
