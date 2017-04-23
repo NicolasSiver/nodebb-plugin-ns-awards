@@ -18,6 +18,8 @@ export const getSection = state => state.section;
 
 export const getSections = state => state.sections;
 
+export const getSettings = state => state.settings;
+
 export const getUploadPath = state => state.uploadPath;
 
 export const getUserHighlight = state => state.userHighlight;

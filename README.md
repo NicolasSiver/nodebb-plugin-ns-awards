@@ -1,6 +1,6 @@
 # NodeBB Awards
 
-System for rewarding forum users. It allows admin to define set of awards that could be granted to users for special accomplishments. 
+A system for rewarding forum users. The plugin allows admin to define set of awards that could be granted to users for special accomplishments.
 
 ![Version](https://img.shields.io/npm/v/nodebb-plugin-ns-awards.svg)
 ![Dependencies](https://david-dm.org/NicolasSiver/nodebb-plugin-ns-awards.svg)

@@ -12,6 +12,7 @@ import {
     newAwardDescription,
     newAwardPreview,
     section,
+    settings,
     userHighlight,
     userInspect,
     userInspectGrants,
@@ -37,6 +38,7 @@ export function createReduxStore(state) {
             newAwardPreview    : newAwardPreview(state.newAwardPreview, action),
             section            : section(state.section, action),
             sections           : state.sections,
+            settings           : settings(state.settings, action),
             userHighlight      : userHighlight(state.userHighlight, action),
             userInspect        : userInspect(state.userInspect, action),
             userInspectGrants  : userInspectGrants(state.userInspectGrants, action),
@@ -72,6 +74,8 @@ export function getInitialState() {
             {label: 'Rewards', id: Sections.SECTION_REWARDS},
             {label: 'Settings', id: Sections.SECTION_SETTINGS}
         ],
+
+        settings: null,
 
         userHighlight    : null,
         userInspect      : null,

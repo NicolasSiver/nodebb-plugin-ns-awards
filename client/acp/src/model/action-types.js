@@ -30,6 +30,8 @@ export const SEARCH_USERS_DID_CHANGE = 'searchUsersDidChange';
 
 export const SECTION_DID_UPDATE = 'sectionDidUpdate';
 
+export const SETTINGS_DID_UPDATE = 'settingsDidUpdate';
+
 export const USERNAME_DID_CHANGE = 'usernameDidChange';
 
 export const USER_FOR_GRANT_DID_ADD = 'userForGrantDidAdd';

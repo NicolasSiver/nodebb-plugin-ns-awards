@@ -14,6 +14,8 @@ export const GET_CONFIG = 'plugins.ns-awards.getConfig';
 
 export const GET_GRANTS = 'plugins.ns-awards.getGrants';
 
+export const GET_SETTINGS = 'plugins.ns-awards.getSettings';
+
 export const GET_USER_GRANTS = 'plugins.ns-awards.getUserGrants';
 
 export const SEARCH_USER = 'plugins.ns-awards.searchUser';

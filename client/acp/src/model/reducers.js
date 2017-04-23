@@ -113,6 +113,15 @@ export function section(state, action) {
     }
 }
 
+export function settings(state, action) {
+    switch (action.type) {
+        case ActionTypes.SETTINGS_DID_UPDATE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function userHighlight(state, action) {
     switch (action.type) {
         case ActionTypes.USER_HIGHLIGHT_DID_CHANGE:

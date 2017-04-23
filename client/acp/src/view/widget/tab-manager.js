@@ -10,6 +10,7 @@ import Management from './management';
 import Rewards from './rewards';
 import * as Sections from '../../model/sections';
 import {getSection, getSections} from '../../model/selector/selectors';
+import Settings from './settings';
 
 class TabManager extends React.Component {
     createTabContent(section) {
@@ -23,7 +24,7 @@ class TabManager extends React.Component {
             case Sections.SECTION_MANAGEMENT:
                 return <Management/>;
             case Sections.SECTION_SETTINGS:
-                return;
+                return <Settings/>;
         }
     }
 

@@ -105,6 +105,17 @@ export default class SocketService {
         });
     }
 
+    static getSettings() {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.GET_SETTINGS, (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(result);
+            });
+        });
+    }
+
     static getUserGrants(id) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.GET_USER_GRANTS, {

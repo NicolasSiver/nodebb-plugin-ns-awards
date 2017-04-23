@@ -15,6 +15,7 @@
 - Change notifications
 - Update plugin dependencies
 - Update ACP library dependencies
+- Update library dependencies
 
 ## v3.0.0 - 03/16/2016
 

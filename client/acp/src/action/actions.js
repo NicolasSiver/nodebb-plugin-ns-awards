@@ -161,6 +161,14 @@ export function getConfig() {
     };
 }
 
+export function getSettings() {
+    return dispatch => {
+        SocketService.getSettings().then(settings => {
+            dispatch(setSettings(settings));
+        });
+    };
+}
+
 export function getUserGrants({uid}) {
     return dispatch => {
         SocketService.getUserGrants(uid).then(grants => {
@@ -372,6 +380,13 @@ export function setSection(sectionName) {
     return {
         type   : ActionTypes.SECTION_DID_UPDATE,
         payload: sectionName
+    };
+}
+
+export function setSettings(settings) {
+    return {
+        type   : ActionTypes.SETTINGS_DID_UPDATE,
+        payload: settings
     };
 }
 
