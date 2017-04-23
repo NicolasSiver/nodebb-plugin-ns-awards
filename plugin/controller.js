@@ -284,7 +284,10 @@
 
     Controller.getGrants = function (done) {
         async.waterfall([
-            async.apply(database.getGrants, true),
+            async.apply(settings.get),
+            function (settings, callback) {
+                database.getGrants(true, settings.activityLimit, callback);
+            },
             function (grants, callback) {
                 async.map(grants, function (grant, next) {
                     Controller.augmentGrant(grant, next);
@@ -367,6 +370,7 @@
 
     };
 
+    // FIXME Deprecate/Remove
     function getImagePath(image) {
         return path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
     }

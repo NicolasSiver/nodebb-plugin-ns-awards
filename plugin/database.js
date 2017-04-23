@@ -154,9 +154,9 @@
         db.getObject(namespace + ':grant:' + gid, done);
     };
 
-    Database.getGrants = function (reverse, done) {
+    Database.getGrants = function (reverse, limit, done) {
         async.waterfall([
-            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, 80),
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, limit),
             function (gids, next) {
                 if (gids.length === 0) {
                     return next(null, []);
