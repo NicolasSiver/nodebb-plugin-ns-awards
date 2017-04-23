@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {saveSettings} from '../../action/actions';
+import PanelControls from '../display/panel-controls';
 import SectionLoading from '../display/section-loading';
 import {getSettings} from '../../model/selector/selectors';
 
@@ -14,6 +16,30 @@ class Settings extends React.Component {
 
         return (
             <div className="settings">
+                <div className="row">
+
+                    <div className="col-md-6">
+
+                    </div>
+                    <div className="col-md-6">
+                        <div className="form-group">
+                            <label htmlFor="activityLimit">Activity Limit</label>
+                            <input
+                                className="form-control"
+                                type="text"
+                                id="activityLimit"
+                                onChange={e => undefined}
+                                value={this.props.settings.activityLimit}/>
+                            <p className="help-block">A number of records to process in the Rewards section.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <PanelControls
+                    disableCancel={true}
+                    labelSuccess="Save"
+                    valid={true}
+                    successDidClick={() => this.props.save()}/>
             </div>
         );
     }
@@ -21,6 +47,7 @@ class Settings extends React.Component {
 }
 
 Settings.propTypes = {
+    save    : PropTypes.func,
     settings: PropTypes.object
 };
 
@@ -31,6 +58,8 @@ export default connect(
         };
     },
     dispatch => {
-        return {};
+        return {
+            save: () => dispatch(saveSettings())
+        };
     }
 )(Settings);

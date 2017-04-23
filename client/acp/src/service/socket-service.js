@@ -142,4 +142,17 @@ export default class SocketService {
         });
     }
 
+    static saveSettings(settings) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.SAVE_SETTINGS, {
+                settings
+            }, (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(result);
+            });
+        });
+    }
+
 }

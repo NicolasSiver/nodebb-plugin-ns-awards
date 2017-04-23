@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+// FIXME Replace with Panel Controls
 export default class PromptView extends React.Component {
 
     render() {

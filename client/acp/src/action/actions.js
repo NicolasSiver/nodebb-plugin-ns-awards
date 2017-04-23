@@ -4,6 +4,7 @@ import {
     getAwardForGrant,
     getEditAwards,
     getGrantReason,
+    getSettings,
     getUserHighlight,
     getUserInspect,
     getUsername,
@@ -161,14 +162,6 @@ export function getConfig() {
     };
 }
 
-export function getSettings() {
-    return dispatch => {
-        SocketService.getSettings().then(settings => {
-            dispatch(setSettings(settings));
-        });
-    };
-}
-
 export function getUserGrants({uid}) {
     return dispatch => {
         SocketService.getUserGrants(uid).then(grants => {
@@ -195,6 +188,14 @@ export function highlightUser(direction) {
 
             dispatch(setUserHighlight(users[position]));
         }
+    };
+}
+
+export function loadSettings() {
+    return dispatch => {
+        SocketService.getSettings().then(settings => {
+            dispatch(setSettings(settings));
+        });
     };
 }
 
@@ -287,6 +288,22 @@ export function saveAward(aid) {
             })
             .then(() => {
                 window.app.alertSuccess(`Award "${name}" is successfully updated.`);
+            })
+            .catch(error => {
+                window.app.alertError('Error did occur: ' + error);
+            });
+    };
+}
+
+export function saveSettings() {
+    return (dispatch, getState) => {
+        let settings = getSettings(getState());
+        SocketService.saveSettings(settings)
+            .then(() => {
+                dispatch(loadSettings());
+            })
+            .then(() => {
+                window.app.alertSuccess('Settings are successfully saved.');
             })
             .catch(error => {
                 window.app.alertError('Error did occur: ' + error);

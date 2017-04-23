@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {getAwardsAll, getConfig, getSettings} from './action/actions';
+import {getAwardsAll, getConfig, loadSettings} from './action/actions';
 import AwardCreate from './view/widget/award-create';
 import Donate from './view/display/donate';
 import TabManager from './view/widget/tab-manager';
@@ -53,7 +53,7 @@ export default connect(
         return {
             getAwards  : () => dispatch(getAwardsAll()),
             getConfig  : () => dispatch(getConfig()),
-            getSettings: () => dispatch(getSettings())
+            getSettings: () => dispatch(loadSettings())
         };
     }
 )(AwardsAcp);
