@@ -200,15 +200,18 @@
     display: none; }
   .manage-awards .donate__paypal {
     margin-top: 16px; }
+  .manage-awards .management__avatar {
+    align-self: center;
+    margin: 8px 0; }
   .manage-awards .management__details {
     background-color: #fafafa;
+    display: flex;
     flex: 0 1 auto;
+    flex-flow: column nowrap;
     padding: 8px;
     min-width: 160px; }
   .manage-awards .management__grants {
-    border-left: 4px solid #bbdefb;
-    margin-left: 16px;
-    padding-left: 16px; }
+    margin-left: 28px; }
   .manage-awards .management__user {
     display: flex;
     margin-top: 16px; }

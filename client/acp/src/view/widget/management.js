@@ -55,7 +55,9 @@ class Management extends React.Component {
         return (
             <div className="management__user">
                 <div className="management__details">
-                    <Avatar size="big" user={user}/>
+                    <div className="management__avatar">
+                        <Avatar size="big" user={user}/>
+                    </div>
                     <UserDetails user={user}/>
                 </div>
                 <div className="management__grants">

@@ -292,17 +292,22 @@
   }
 
   .management {
+    &__avatar {
+      align-self: center;
+      margin: $nsa-padding-xs 0;
+    }
+
     &__details {
       background-color: material-color('grey', '50');
+      display: flex;
       flex: 0 1 auto;
+      flex-flow: column nowrap;
       padding: $nsa-padding-xs;
       min-width: $nsa-user-column;
     }
 
     &__grants {
-      border-left: $nsa-padding-xxs solid material-color('blue', '100');;
-      margin-left: $nsa-padding;
-      padding-left: $nsa-padding;
+      margin-left: $nsa-padding-xxl;
     }
 
     &__user {
