@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {saveSettings} from '../../action/actions';
+import {changeSettingField, saveSettings} from '../../action/actions';
 import PanelControls from '../display/panel-controls';
 import SectionLoading from '../display/section-loading';
 import {getSettings} from '../../model/selector/selectors';
+import * as SettingFields from '../../model/setting-fields';
 
 class Settings extends React.Component {
 
@@ -28,8 +29,8 @@ class Settings extends React.Component {
                                 className="form-control"
                                 type="text"
                                 id="activityLimit"
-                                onChange={e => undefined}
-                                value={this.props.settings.activityLimit}/>
+                                onChange={e => this.props.changeField(SettingFields.ACTIVITY_LIMIT, e.target.value)}
+                                value={this.props.settings[SettingFields.ACTIVITY_LIMIT]}/>
                             <p className="help-block">A number of records to process in the Rewards section.</p>
                         </div>
                     </div>
@@ -47,8 +48,9 @@ class Settings extends React.Component {
 }
 
 Settings.propTypes = {
-    save    : PropTypes.func,
-    settings: PropTypes.object
+    changeField: PropTypes.func,
+    save       : PropTypes.func,
+    settings   : PropTypes.object
 };
 
 export default connect(
@@ -59,7 +61,8 @@ export default connect(
     },
     dispatch => {
         return {
-            save: () => dispatch(saveSettings())
+            changeField: (field, value) => dispatch(changeSettingField(field, value)),
+            save       : () => dispatch(saveSettings())
         };
     }
 )(Settings);

@@ -47,6 +47,13 @@ export function cancelAwardEdit(aid) {
     };
 }
 
+export function changeSettingField(field, value) {
+    return (dispatch, getState) => {
+        let settings = getSettings(getState());
+        dispatch(setSettings(Object.assign({}, settings, {[field]: value})));
+    };
+}
+
 export function changeUserForInspect(user) {
     return (dispatch, getState) => {
         let userInspect = user ? user : getUserHighlight(getState());
@@ -68,7 +75,7 @@ export function createAward(name, description) {
                 window.app.alertSuccess(`Award "${name}" is successfully created.`);
             })
             .catch(error => {
-                window.app.alertError('Error did occur: ' + error);
+                window.app.alertError('Error did occur: ' + JSON.stringify(error));
             });
     };
 }
@@ -290,7 +297,7 @@ export function saveAward(aid) {
                 window.app.alertSuccess(`Award "${name}" is successfully updated.`);
             })
             .catch(error => {
-                window.app.alertError('Error did occur: ' + error);
+                window.app.alertError('Error did occur: ' + JSON.stringify(error));
             });
     };
 }
@@ -306,7 +313,7 @@ export function saveSettings() {
                 window.app.alertSuccess('Settings are successfully saved.');
             })
             .catch(error => {
-                window.app.alertError('Error did occur: ' + error);
+                window.app.alertError('Error did occur: ' + JSON.stringify(error));
             });
     };
 }
@@ -322,7 +329,7 @@ export function searchUser() {
                 dispatch(setUsers(users.slice(0, 6)));
                 dispatch(setUserHighlight(users[0]));
             }).catch(error => {
-                window.app.alertError('Error did occur: ' + error);
+                window.app.alertError('Error did occur: ' + JSON.stringify(error));
             });
         } else {
             dispatch(setUsers([]));
