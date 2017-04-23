@@ -1,16 +1,15 @@
 (function (Uploads) {
     'use strict';
 
-    var async      = require('async'),
-        fse        = require('fs-extra'),
-        multer     = require('multer'),
-        path       = require('path'),
-        uuidv4     = require('uuid/v4'),
+    var async  = require('async'),
+        fse    = require('fs-extra'),
+        multer = require('multer'),
+        path   = require('path'),
+        uuidv4 = require('uuid/v4');
 
-        constants  = require('./constants'),
+    var constants  = require('./constants'),
         controller = require('./controller'),
         nodebb     = require('./nodebb');
-
 
     var files   = {},
         nconf   = nodebb.nconf,
@@ -69,7 +68,7 @@
     }
 
     function createTemporalStorage(done) {
-        let storage = multer.diskStorage({
+        var storage = multer.diskStorage({
             destination: function (req, file, next) {
                 next(null, path.resolve(__dirname, '../public/uploads/'));
             },
@@ -83,6 +82,22 @@
         });
         done(null, storage);
     }
+
+    Uploads.deleteImage = function (imageUri, done) {
+        if (imageUri.indexOf('http') === 0) {
+            // Image is remote.
+            // Remote API is required to delete a file.
+            done(null);
+        } else {
+            fse.remove(Uploads.getUploadPath(imageUri), function (error) {
+                if (error) {
+                    // Fail silently
+                    console.warn('[NS Awards, Uploads]: can not delete file ' + imageUri + ', error: ' + error);
+                }
+                done(null);
+            });
+        }
+    };
 
     Uploads.getFileById = function (id, done) {
         done(null, files[id]);
@@ -115,20 +130,8 @@
 
     Uploads.replaceFile = function (previousImageUri, fileId, file, done) {
         async.waterfall([
-            // Delete local file if needed
-            function (callback) {
-                if (previousImageUri.indexOf('http') === 0) {
-                    callback(null);
-                } else {
-                    fse.remove(Uploads.getUploadPath(previousImageUri), function (error) {
-                        if (error) {
-                            // Fail silently
-                            console.warn('[NS Awards, Uploads]: can not delete previous file ' + previousImageUri + ', error: ' + error);
-                        }
-                        callback(null);
-                    });
-                }
-            },
+            // Delete local file if possible
+            async.apply(Uploads.deleteImage, previousImageUri),
             // Delete upload from the memory
             function (callback) {
                 if (!files.hasOwnProperty(fileId)) {

@@ -1,19 +1,13 @@
 (function (Sockets) {
     'use strict';
 
-    var async      = require('async'),
-        fse        = require('fs-extra'),
-        path       = require('path'),
-
-        nodebb     = require('./nodebb'),
-        sockets    = nodebb.pluginSockets,
-        nconf      = nodebb.nconf,
-        user       = nodebb.user,
+    var constants  = require('./constants'),
         controller = require('./controller'),
-        settings   = require('./settings'),
-        database   = require('./database'),
-        constants  = require('./constants'),
-        uploads    = require('./uploads');
+        nodebb     = require('./nodebb'),
+        settings   = require('./settings');
+
+    var sockets = nodebb.pluginSockets,
+        user    = nodebb.user;
 
     Sockets.init = function (callback) {
         sockets[constants.SOCKETS] = {};
@@ -64,27 +58,7 @@
     };
 
     Sockets.deleteAward = function (socket, payload, callback) {
-        async.waterfall([
-            async.apply(database.getAward, payload.id),
-            function (award, next) {
-                if (!award) {
-                    return callback(new Error('Award with id - ' + payload.id + ' can not be found'));
-                }
-
-                async.parallel([
-                    async.apply(fse.remove, getUploadImagePath(award.image)),
-                    async.apply(database.deleteAward, award.aid),
-                    function (next) {
-                        //Delete Grants associated with this award
-                        database.getGrantIdsByAward(award.aid, function (error, grantIds) {
-                            async.each(grantIds, function (gid, next) {
-                                database.deleteGrant(gid, next);
-                            }, next);
-                        });
-                    }
-                ], next);
-            }
-        ], callback);
+        controller.deleteAwardById(parseInt(payload.id), callback);
     };
 
     Sockets.deleteGrant = function (socket, payload, callback) {
@@ -120,7 +94,7 @@
     };
 
     Sockets.getUserGrants = function (socket, payload, callback) {
-      controller.getUserGrants(payload.id, -1, callback);
+        controller.getUserGrants(payload.id, -1, callback);
     };
 
     Sockets.saveSettings = function (socket, payload, callback) {
@@ -134,9 +108,5 @@
             startsWith: false
         }, callback);
     };
-
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
-    }
 
 })(module.exports);

@@ -73,6 +73,37 @@
         ], done);
     };
 
+    Controller.deleteAwardById = function (aid, done) {
+        async.waterfall([
+            async.apply(database.getAward, aid),
+            function (award, next) {
+                if (!award) {
+                    return done(new Error('Award with id - ' + aid + ' can not be found.'));
+                }
+
+                async.parallel([
+                    async.apply(uploads.deleteImage, award.image),
+                    async.apply(database.deleteAward, award.aid),
+                    async.apply(Controller.deleteAwardGrants, award.aid)
+                ], next);
+            }
+        ], done);
+    };
+
+    /**
+     * Delete Grants/Rewards associated with an award
+     *
+     * @param {number} aid award identifier
+     * @param {function} done
+     */
+    Controller.deleteAwardGrants = function (aid, done) {
+        database.getGrantIdsByAward(aid, function (error, grantIds) {
+            async.each(grantIds, function (gid, next) {
+                database.deleteGrant(gid, next);
+            }, done);
+        });
+    };
+
     Controller.deleteGrantById = function (gid, done) {
         database.deleteGrant(gid, done);
     };
