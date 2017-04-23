@@ -11,16 +11,14 @@
      * @param {object} params payload {userData: userData, uid: callerUID}
      * @param {function} callback
      */
-    Filter.account = function (params, callback) {
-        //Load all awards
-        controller.getUserAwards(params.userData.uid, -1, function (error, awards) {
+    Filter.account = function (paylaod, callback) {
+        controller.getAccountWithRewards(paylaod.userData, function (error, account) {
             if (error) {
                 return callback(error);
             }
-
-            params.userData.awards = awards;
-            callback(null, params);
-        })
+            paylaod.userData = account;
+            callback(null, paylaod);
+        });
     };
 
     Filter.menuAdmin = function (header, callback) {

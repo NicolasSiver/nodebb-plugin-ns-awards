@@ -160,6 +160,25 @@
         database.editGrant(gid, {reason: reason}, done);
     };
 
+    Controller.getAccountWithRewards = function (account, done) {
+        async.waterfall([
+            async.apply(settings.get),
+            function (settings, callback) {
+                // Feature is disabled, Skip it.
+                if (settings.maxRewardsPerAccount === 0) {
+                    callback(null, account);
+                } else {
+                    Controller.getUserGrants(account.uid, settings.maxRewardsPerAccount, function (error, grants) {
+                        if (error) {
+                            return callback(error);
+                        }
+                        callback(null, Object.assign(account, {nsRewards: grants}));
+                    });
+                }
+            }
+        ], done);
+    };
+
     Controller.getAward = function (aid, done) {
         async.waterfall([
             async.apply(database.getAward, aid),
@@ -296,6 +315,7 @@
         user.getUserFields(uid, ['uid', 'picture', 'username', 'userslug'], done);
     };
 
+    // FIXME Remove method
     Controller.getUserAwards = function (uid, limit, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid, limit),

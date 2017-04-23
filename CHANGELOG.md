@@ -14,6 +14,7 @@
 - Change NodeBB compatibility to v1.4.x and higher
 - Change notifications
 - Change max rewards per post setting
+- Change max rewards per account setting
 - Update plugin dependencies
 - Update ACP library dependencies
 - Update library dependencies

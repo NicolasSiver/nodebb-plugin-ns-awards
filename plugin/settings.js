@@ -12,7 +12,7 @@
         defaults      = {
             activityLimit       : 80,
             maxRewardsPerPost   : 3,
-            maxRewardsPerProfile: -1
+            maxRewardsPerAccount: -1
         };
 
     Settings.init = function (done) {
@@ -82,6 +82,12 @@
             insecureData.maxRewardsPerPost = defaults.maxRewardsPerPost;
         } else if (isNaN(insecureData.maxRewardsPerPost)) {
             return done(new Error('Max Rewards Per Post is incorrect.'));
+        }
+
+        if (!insecureData.hasOwnProperty('maxRewardsPerAccount')) {
+            insecureData.maxRewardsPerAccount = defaults.maxRewardsPerAccount;
+        } else if (isNaN(insecureData.maxRewardsPerAccount)) {
+            return done(new Error('Max Rewards Per Account is incorrect.'));
         }
 
         done(null, Object.assign({}, insecureData, corrections));
