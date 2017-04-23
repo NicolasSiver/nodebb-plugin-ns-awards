@@ -24,6 +24,7 @@ class GrantsList extends React.Component {
                         <Grant
                             controlViews={[
                                 <RoundButton
+                                    key="undo"
                                     icon="fa-undo"
                                     animate={true}
                                     role="danger"
