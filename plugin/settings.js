@@ -10,9 +10,9 @@
         settingsCache = null,
 
         defaults      = {
-            activityLimit : 80,
-            renderTopic   : true,
-            maxAwardsTopic: 3
+            activityLimit       : 80,
+            maxRewardsPerPost   : 3,
+            maxRewardsPerProfile: -1
         };
 
     Settings.init = function (done) {
@@ -72,10 +72,16 @@
     Settings.validate = function (insecureData, done) {
         var corrections = {};
 
-        if (!insecureData.activityLimit) {
+        if (!insecureData.hasOwnProperty('activityLimit')) {
             corrections.activityLimit = defaults.activityLimit;
         } else if (isNaN(insecureData.activityLimit) || insecureData.activityLimit <= 0) {
             return done(new Error('Activity Limit is incorrect.'));
+        }
+
+        if (!insecureData.hasOwnProperty('maxRewardsPerPost')) {
+            insecureData.maxRewardsPerPost = defaults.maxRewardsPerPost;
+        } else if (isNaN(insecureData.maxRewardsPerPost)) {
+            return done(new Error('Max Rewards Per Post is incorrect.'));
         }
 
         done(null, Object.assign({}, insecureData, corrections));

@@ -239,37 +239,6 @@
         ], done);
     };
 
-    Controller.getAwardsTopic = function (payload, done) {
-        async.waterfall([
-            async.apply(settings.get),
-            function (settings, postsDidProcess) {
-                if (settings.renderTopic) {
-
-                    async.map(payload.posts, function (post, next) {
-
-                        Controller.getUserAwards(post.uid, settings.maxAwardsTopic, function (error, grants) {
-                            if (error) {
-                                return next(error);
-                            }
-                            post.grants = grants;
-                            next(null, post);
-                        });
-                    }, function (error, postsWithGrants) {
-                        if (error) {
-                            return postsDidProcess(error);
-                        }
-                        payload.posts = postsWithGrants;
-                        postsDidProcess(null, payload);
-                    });
-
-                } else {
-                    //Skip render
-                    postsDidProcess(null, payload);
-                }
-            }
-        ], done);
-    };
-
     Controller.getConfig = function (done) {
         var uploadPath = path.join(
             nconf.get('relative_path'),
@@ -298,6 +267,27 @@
 
                     callback(null, {grants: result});
                 });
+            }
+        ], done);
+    };
+
+    Controller.getPostsWithRewards = function (posts, done) {
+        async.waterfall([
+            async.apply(settings.get),
+            function (settings, callback) {
+                // Feature is disabled, Skip it.
+                if (settings.maxRewardsPerPost === 0) {
+                    callback(null, posts);
+                } else {
+                    async.map(posts, function (post, next) {
+                        Controller.getUserGrants(post.uid, settings.maxRewardsPerPost, function (error, grants) {
+                            if (error) {
+                                return next(error);
+                            }
+                            next(null, Object.assign(post, {nsRewards: grants}));
+                        });
+                    }, callback);
+                }
             }
         ], done);
     };

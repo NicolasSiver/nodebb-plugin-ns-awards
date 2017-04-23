@@ -13,6 +13,7 @@
 - Change award upload
 - Change NodeBB compatibility to v1.4.x and higher
 - Change notifications
+- Change max rewards per post setting
 - Update plugin dependencies
 - Update ACP library dependencies
 - Update library dependencies

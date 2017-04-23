@@ -155,6 +155,7 @@
     };
 
     Database.getGrants = function (reverse, limit, done) {
+        // Note: NodeBB internal API always has a limit +1, i.e. if limit is 2, it will be 3.
         async.waterfall([
             async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, limit),
             function (gids, next) {

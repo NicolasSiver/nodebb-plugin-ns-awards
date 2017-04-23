@@ -20,7 +20,17 @@ class Settings extends React.Component {
                 <div className="row">
 
                     <div className="col-md-6">
-
+                        <div className="form-group">
+                            <label htmlFor="maxRewardsPerPost">Max Rewards Per Post</label>
+                            <input
+                                className="form-control"
+                                type="text"
+                                id="maxRewardsPerPost"
+                                onChange={e => this.props.changeField(SettingFields.MAX_REWARDS_PER_POST, e.target.value)}
+                                value={this.props.settings[SettingFields.MAX_REWARDS_PER_POST]}/>
+                            <p className="help-block">A number of rewards to inject in a post. Specify -1 to remove a
+                                limit, or 0 to disable a feature.</p>
+                        </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
