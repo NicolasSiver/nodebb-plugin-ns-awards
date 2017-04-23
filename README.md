@@ -16,6 +16,7 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 - [Themes](#themes)
   - [Profile template](#profile-template)
   - [Topic template](#topic-template)
+- [Filters](#filters)
 - [TODO](#todo)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -56,6 +57,14 @@ Use topic partial to show awards for every post. Award's metadata is the same as
 Example Persona Theme, edit `node_modules/nodebb-theme-persona/templates/partials/topic/post.tpl`:
 
     <!-- IMPORT partials/awards_topic.tpl -->
+
+## Filters
+
+The plugin injects rewards to the several places. It could be useful for theme enthusiasts. 
+It's possible to configure a limit or disable a feature in the settings.
+
+- Posts. Every post will have a new property `nsRewards` with a list of rewards.
+- Account. Every account will have a new property `nsRewards` with a list of rewards.
 
 ## TODO
 
