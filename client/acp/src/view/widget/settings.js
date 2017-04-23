@@ -48,8 +48,6 @@ class Settings extends React.Component {
 
                 <div className="row">
                     <div className="col-md-6">
-                    </div>
-                    <div className="col-md-6">
                         <div className="form-group">
                             <label htmlFor="activityLimit">Activity Limit</label>
                             <input
@@ -60,6 +58,8 @@ class Settings extends React.Component {
                                 value={this.props.settings[SettingFields.ACTIVITY_LIMIT]}/>
                             <p className="help-block">A number of records to process in the Rewards section.</p>
                         </div>
+                    </div>
+                    <div className="col-md-6">
                     </div>
                 </div>
 
