@@ -27,11 +27,31 @@
 
     Settings.filterKnownProperties = function (data, done) {
         var result = {};
-        for (var knownProperty in settingsCache) {
-            if (data.hasOwnProperty(knownProperty)) {
-                result[knownProperty] = data[knownProperty];
+        var value;
+
+        for (var knownProperty in defaults) {
+            if (defaults.hasOwnProperty(knownProperty) && data.hasOwnProperty(knownProperty)) {
+
+                switch (typeof defaults[knownProperty]) {
+                    case 'number':
+                        value = parseInt(data[knownProperty]);
+                        break;
+                    case 'string':
+                        value = String(data[knownProperty]);
+                        break;
+                    case 'boolean':
+                        if (typeof data[knownProperty] === 'string') {
+                            value = data[knownProperty] === 'true';
+                        } else {
+                            value = !!data[knownProperty];
+                        }
+                        break;
+                }
+
+                result[knownProperty] = value;
             }
         }
+
         done(null, result);
     };
 
