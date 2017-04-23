@@ -7,7 +7,7 @@ import Grant from '../display/grant';
 import SectionLoading from '../display/section-loading';
 import {getGrants} from '../../model/selector/selectors';
 
-class ActivityView extends React.Component {
+class Rewards extends React.Component {
     componentDidMount() {
         this.props.getGrants();
     }
@@ -26,7 +26,7 @@ class ActivityView extends React.Component {
         }
 
         return (
-            <div className="activity-view">
+            <div className="rewards">
                 {this.props.grants.map(grant => {
                     return <Grant key={grant.gid} grant={grant}/>;
                 })}
@@ -35,7 +35,7 @@ class ActivityView extends React.Component {
     }
 }
 
-ActivityView.propTypes = {
+Rewards.propTypes = {
     getGrants: PropTypes.func,
     grants   : PropTypes.array
 };
@@ -51,4 +51,4 @@ export default connect(
             getGrants: () => dispatch(getAwardGrants())
         };
     }
-)(ActivityView);
+)(Rewards);

@@ -24,8 +24,6 @@
  */
 .manage-awards {
   font-size: 14px; }
-  .manage-awards .activity-view .grant + .grant {
-    margin-top: 16px; }
   .manage-awards .award-form__image {
     height: 88px;
     width: 100%; }
@@ -225,6 +223,8 @@
     margin-top: 16px; }
   .manage-awards .panel-controls .btn + .btn {
     margin-left: 8px; }
+  .manage-awards .rewards .grant + .grant {
+    margin-top: 16px; }
   .manage-awards .round-button {
     cursor: pointer; }
     .manage-awards .round-button__background {

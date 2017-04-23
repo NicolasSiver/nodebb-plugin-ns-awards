@@ -5,12 +5,6 @@
 .manage-awards {
   font-size: $nsa-base-font-size;
 
-  .activity-view {
-    .grant + .grant {
-      margin-top: $nsa-padding;
-    }
-  }
-
   .award-form {
     &__image {
       height: $nsa-preview;
@@ -338,6 +332,12 @@
   .panel-controls {
     .btn + .btn {
       margin-left: $nsa-padding-xs;
+    }
+  }
+
+  .rewards {
+    .grant + .grant {
+      margin-top: $nsa-padding;
     }
   }
 
