@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 import {setSection} from '../../action/actions';
 import AwardsListView from './awards-list-view';
-import GrantingView from './granting-view';
+import Rewarding from './rewarding';
 import Management from './management';
 import Rewards from './rewards';
 import * as Sections from '../../model/sections';
@@ -16,8 +16,8 @@ class TabManager extends React.Component {
         switch (section) {
             case Sections.SECTION_AWARDS:
                 return <AwardsListView />;
-            case Sections.SECTION_GRANTING:
-                return <GrantingView/>;
+            case Sections.SECTION_REWARDING:
+                return <Rewarding/>;
             case Sections.SECTION_REWARDS:
                 return <Rewards/>;
             case Sections.SECTION_MANAGEMENT:

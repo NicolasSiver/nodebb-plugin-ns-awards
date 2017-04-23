@@ -200,15 +200,6 @@
     display: none; }
   .manage-awards .donate__paypal {
     margin-top: 16px; }
-  .manage-awards .granting {
-    display: flex; }
-    .manage-awards .granting__awards {
-      flex: 1 1 60%;
-      padding-right: 16px; }
-    .manage-awards .granting__details {
-      flex: 1 1 40%; }
-    .manage-awards .granting__reason {
-      margin-top: 16px; }
   .manage-awards .management__details {
     background-color: #fafafa;
     flex: 0 1 auto;
@@ -223,6 +214,15 @@
     margin-top: 16px; }
   .manage-awards .panel-controls .btn + .btn {
     margin-left: 8px; }
+  .manage-awards .rewarding {
+    display: flex; }
+    .manage-awards .rewarding__awards {
+      flex: 1 1 60%;
+      padding-right: 16px; }
+    .manage-awards .rewarding__details {
+      flex: 1 1 40%; }
+    .manage-awards .rewarding__reason {
+      margin-top: 16px; }
   .manage-awards .rewards .grant + .grant {
     margin-top: 16px; }
   .manage-awards .round-button {

@@ -32,22 +32,22 @@ import UserSearch from '../display/user-search';
 import SectionLoading from '../display/section-loading';
 import UserSelectList from './user-select-list';
 
-class GrantingView extends React.Component {
+class Rewarding extends React.Component {
     render() {
         if (this.props.awards === null) {
             return <SectionLoading/>;
         }
 
         return (
-            <div className="granting">
-                <div className="granting__awards">
+            <div className="rewarding">
+                <div className="rewarding__awards">
                     <h5>Pick Award:</h5>
                     <AwardPicker
                         awardForGrant={this.props.awardForGrant}
                         awards={this.props.awards}
                         itemDidSelect={award => this.props.selectAward(award)}/>
                 </div>
-                <div className="granting__details">
+                <div className="rewarding__details">
                     <h5>Select Users:</h5>
                     <UserSearch
                         focus={this.props.userSearchFocused}
@@ -61,7 +61,7 @@ class GrantingView extends React.Component {
                         valueDidChange={text => this.props.changeUsername(text)}
                         valueWillReset={() => this.props.resetUsername()}/>
                     <UserSelectList/>
-                    <div className="form-group granting__reason">
+                    <div className="form-group rewarding__reason">
                         <label htmlFor="grantReason">Reason</label>
                         <textarea
                             className="form-control"
@@ -73,7 +73,7 @@ class GrantingView extends React.Component {
                     </div>
                     <PanelControls
                         disableCancel={true}
-                        labelSuccess="Grant"
+                        labelSuccess="Reward"
                         valid={this.props.awardGrantValid}
                         successDidClick={() => this.props.grant()}/>
                 </div>
@@ -82,7 +82,7 @@ class GrantingView extends React.Component {
     }
 }
 
-GrantingView.propTypes = {
+Rewarding.propTypes = {
     awardForGrant    : PropTypes.object,
     awardGrantValid  : PropTypes.bool,
     awards           : PropTypes.array,
@@ -133,4 +133,4 @@ export default connect(
             setReason     : value => dispatch(setGrantReason(value))
         };
     }
-)(GrantingView);
+)(Rewarding);

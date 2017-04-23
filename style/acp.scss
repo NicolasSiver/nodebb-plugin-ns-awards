@@ -291,23 +291,6 @@
     }
   }
 
-  .granting {
-    display: flex;
-
-    &__awards {
-      flex: 1 1 60%;
-      padding-right: $nsa-padding;
-    }
-
-    &__details {
-      flex: 1 1 40%;
-    }
-
-    &__reason {
-      margin-top: $nsa-padding;
-    }
-  }
-
   .management {
     &__details {
       background-color: material-color('grey', '50');
@@ -332,6 +315,23 @@
   .panel-controls {
     .btn + .btn {
       margin-left: $nsa-padding-xs;
+    }
+  }
+
+  .rewarding {
+    display: flex;
+
+    &__awards {
+      flex: 1 1 60%;
+      padding-right: $nsa-padding;
+    }
+
+    &__details {
+      flex: 1 1 40%;
+    }
+
+    &__reason {
+      margin-top: $nsa-padding;
     }
   }
 

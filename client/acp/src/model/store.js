@@ -67,7 +67,7 @@ export function getInitialState() {
 
         sections: [
             {label: 'Awards', icon: 'fa-trophy', id: Sections.SECTION_AWARDS},
-            {label: 'Granting', id: Sections.SECTION_GRANTING},
+            {label: 'Rewarding', id: Sections.SECTION_REWARDING},
             {label: 'Management', id: Sections.SECTION_MANAGEMENT},
             {label: 'Rewards', id: Sections.SECTION_REWARDS},
             {label: 'Settings', id: Sections.SECTION_SETTINGS}
