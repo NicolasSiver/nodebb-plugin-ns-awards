@@ -131,6 +131,15 @@ export function userInspect(state, action) {
     }
 }
 
+export function userInspectGrants(state, action) {
+    switch (action.type) {
+        case ActionTypes.USER_FOR_INSPECT_GRANTS_DID_CHANGE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function username(state, action) {
     switch (action.type) {
         case ActionTypes.USERNAME_DID_CHANGE:

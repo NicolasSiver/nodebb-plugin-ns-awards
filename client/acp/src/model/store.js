@@ -14,6 +14,7 @@ import {
     section,
     userHighlight,
     userInspect,
+    userInspectGrants,
     username,
     users,
     userSearchFocus,
@@ -38,6 +39,7 @@ export function createReduxStore(state) {
             sections           : state.sections,
             userHighlight      : userHighlight(state.userHighlight, action),
             userInspect        : userInspect(state.userInspect, action),
+            userInspectGrants  : userInspectGrants(state.userInspectGrants, action),
             username           : username(state.username, action),
             users              : users(state.users, action),
             userSearchFocus    : userSearchFocus(state.userSearchFocus, action),
@@ -71,12 +73,13 @@ export function getInitialState() {
             {label: 'Settings', id: Sections.SECTION_SETTINGS}
         ],
 
-        userHighlight  : null,
-        userInspect    : null,
-        username       : null,
-        users          : [],
-        userSearchFocus: null,
-        usersForGrant  : [],
+        userHighlight    : null,
+        userInspect      : null,
+        userInspectGrants: null,
+        username         : null,
+        users            : [],
+        userSearchFocus  : null,
+        usersForGrant    : [],
 
         uploadPath: null
     };

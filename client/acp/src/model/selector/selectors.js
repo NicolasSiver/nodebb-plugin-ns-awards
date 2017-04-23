@@ -24,6 +24,8 @@ export const getUserHighlight = state => state.userHighlight;
 
 export const getUserInspect = state => state.userInspect;
 
+export const getUserInspectGrants = state => state.userInspectGrants;
+
 export const getUsername = state => state.username;
 
 export const getUsers = state => state.users;

@@ -109,6 +109,10 @@
       margin-top: 16px; }
   .manage-awards .grant__arrow {
     margin: 0 8px; }
+  .manage-awards .grant__controls {
+    align-self: center;
+    flex: 0 0 auto;
+    margin-left: 16px; }
   .manage-awards .grant__header {
     display: flex;
     line-height: 1.8em; }
@@ -139,6 +143,8 @@
     display: flex;
     flex: 0 0 auto;
     flex-flow: row nowrap; }
+  .manage-awards .grants-list .grants-list__item + .grants-list__item {
+    margin-top: 16px; }
   .manage-awards .image-manager {
     background-color: #fafafa;
     border: 1px solid #f5f5f5;
@@ -205,6 +211,18 @@
       flex: 1 1 40%; }
     .manage-awards .granting__reason {
       margin-top: 16px; }
+  .manage-awards .management__details {
+    background-color: #fafafa;
+    flex: 0 1 auto;
+    padding: 8px;
+    min-width: 160px; }
+  .manage-awards .management__grants {
+    border-left: 4px solid #bbdefb;
+    margin-left: 16px;
+    padding-left: 16px; }
+  .manage-awards .management__user {
+    display: flex;
+    margin-top: 16px; }
   .manage-awards .panel-controls .btn + .btn {
     margin-left: 8px; }
   .manage-awards .round-button {

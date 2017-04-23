@@ -4,7 +4,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import * as Constants from '../../model/constants';
-
 import {
     changeUserForInspect,
     highlightUser,
@@ -17,6 +16,7 @@ import {
     setUserSearchFocus
 } from '../../action/actions';
 import Avatar from '../display/avatar';
+import GrantsList from './grants-list';
 import {
     getUserHighlight,
     getUserInspect,
@@ -24,6 +24,7 @@ import {
     getUsers,
     isUserSearchFocused
 } from '../../model/selector/selectors';
+import UserDetails from '../display/user-details';
 import UserSearch from '../display/user-search';
 
 class Management extends React.Component {
@@ -45,15 +46,21 @@ class Management extends React.Component {
                     value={this.props.username}
                     valueDidChange={text => this.props.changeUsername(text)}
                     valueWillReset={() => this.props.resetUsername()}/>
-                {this.props.userInspect !== null ? this.renderUser(this.props.userInspect) : null}
+                {this.props.userInspect !== null ? this.renderSearchResult(this.props.userInspect) : null}
             </div>
         );
     }
 
-    renderUser(user) {
+    renderSearchResult(user) {
         return (
             <div className="management__user">
-                <Avatar size="big" user={user}/>
+                <div className="management__details">
+                    <Avatar size="big" user={user}/>
+                    <UserDetails user={user}/>
+                </div>
+                <div className="management__grants">
+                    <GrantsList/>
+                </div>
             </div>
         );
     }

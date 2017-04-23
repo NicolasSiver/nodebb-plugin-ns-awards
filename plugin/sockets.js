@@ -120,7 +120,7 @@
     };
 
     Sockets.getUserGrants = function (socket, payload, callback) {
-      controller.getUserGrants(payload.uid, -1, callback);
+      controller.getUserGrants(payload.id, -1, callback);
     };
 
     Sockets.saveSettings = function (socket, payload, callback) {

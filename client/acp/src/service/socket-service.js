@@ -92,6 +92,19 @@ export default class SocketService {
         });
     }
 
+    static getUserGrants(id) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.GET_USER_GRANTS, {
+                id
+            }, (error, result) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(result);
+            });
+        });
+    }
+
     static searchUser(username) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.SEARCH_USER, {

@@ -50,6 +50,7 @@ export function changeUserForInspect(user) {
         let userInspect = user ? user : getUserHighlight(getState());
         dispatch(resetUsername());
         dispatch(setUserForInspect(userInspect));
+        dispatch(getUserGrants(userInspect));
     };
 }
 
@@ -126,6 +127,14 @@ export function getConfig() {
     return dispatch => {
         SocketService.getConfig().then(config => {
             dispatch(setConfig(config));
+        });
+    };
+}
+
+export function getUserGrants({uid}) {
+    return dispatch => {
+        SocketService.getUserGrants(uid).then(grants => {
+            dispatch(setUserForInspectGrants(grants));
         });
     };
 }
@@ -347,6 +356,13 @@ export function setUserForInspect(user) {
     return {
         type   : ActionTypes.USER_FOR_INSPECT_DID_CHANGE,
         payload: user
+    };
+}
+
+export function setUserForInspectGrants(grants) {
+    return {
+        type   : ActionTypes.USER_FOR_INSPECT_GRANTS_DID_CHANGE,
+        payload: grants
     };
 }
 

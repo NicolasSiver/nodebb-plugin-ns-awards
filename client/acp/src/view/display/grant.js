@@ -23,6 +23,10 @@ export default class Grant extends React.Component {
                         <Avatar size="small" user={grantee}/>
                         <div className="grant__username">{grantee.username}</div>
                     </div>
+                    {this.props.controlViews && this.props.controlViews.length > 0 ? (
+                        <div className="grant__controls">
+                            {this.props.controlViews}
+                        </div>) : null}
                 </div>
                 <div className="grant__reason">
                     {reason}
@@ -35,5 +39,6 @@ export default class Grant extends React.Component {
 }
 
 Grant.propTypes = {
-    grant: PropTypes.object.isRequired
+    controlViews: PropTypes.array,
+    grant       : PropTypes.object.isRequired
 };

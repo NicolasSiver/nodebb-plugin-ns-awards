@@ -144,6 +144,12 @@
       margin: 0 $nsa-padding-xs;
     }
 
+    &__controls {
+      align-self: center;
+      flex: 0 0 auto;
+      margin-left: $nsa-padding;
+    }
+
     &__header {
       display: flex;
       line-height: 1.8em;
@@ -187,6 +193,14 @@
       flex: 0 0 auto;
       flex-flow: row nowrap;
     }
+  }
+
+  .grants-list {
+
+    .grants-list__item + .grants-list__item {
+      margin-top: $nsa-padding;
+    }
+
   }
 
   .image-manager {
@@ -298,6 +312,27 @@
     &__reason {
       margin-top: $nsa-padding;
     }
+  }
+
+  .management {
+    &__details {
+      background-color: material-color('grey', '50');
+      flex: 0 1 auto;
+      padding: $nsa-padding-xs;
+      min-width: $nsa-user-column;
+    }
+
+    &__grants {
+      border-left: $nsa-padding-xxs solid material-color('blue', '100');;
+      margin-left: $nsa-padding;
+      padding-left: $nsa-padding;
+    }
+
+    &__user {
+      display: flex;
+      margin-top: $nsa-padding;
+    }
+
   }
 
   .panel-controls {
