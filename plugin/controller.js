@@ -39,10 +39,21 @@
                     database.createGrant(uid, awardId, reasonText, fromUid, next);
                 }, callback);
             },
-            async.apply(database.getAward, awardId),
-            function (award, callback) {
+            function (callback) {
+                async.parallel({
+                    award   : async.apply(database.getAward, awardId),
+                    settings: async.apply(settings.get),
+                }, callback);
+            },
+            function (meta, callback) {
+                var notificationText = meta.settings.notificationText
+                    .replace(/%AWARD_NAME%/g, meta.award.name);
+
+                callback(null, notificationText)
+            },
+            function (text, callback) {
                 notifications.create({
-                    bodyShort: util.format('Congratulations! You have been awarded <strong>"%s"</strong> award.', award.name),
+                    bodyShort: text,
                     nid      : 'aid:' + awardId + ':uids:' + toUids.join('-'),
                     aid      : awardId,
                     from     : fromUid,

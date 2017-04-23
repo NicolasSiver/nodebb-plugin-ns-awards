@@ -7,6 +7,7 @@
 - Add rewards section to ACP
 - Add protection for an image upload service
 - Add activity limit setting
+- Add configuration for notification text
 - Change UX for the creation of awards
 - Change UX for Overview section
 - Change award URL to use an absolute path
@@ -16,8 +17,7 @@
 - Change max rewards per post setting
 - Change max rewards per account setting
 - Update plugin dependencies
-- Update ACP library dependencies
-- Update library dependencies
+- Update ACP dependencies
 
 ## v3.0.0 - 03/16/2016
 

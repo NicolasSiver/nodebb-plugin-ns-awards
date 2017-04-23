@@ -63,6 +63,23 @@ class Settings extends React.Component {
                     </div>
                 </div>
 
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="form-group">
+                            <label htmlFor="notificationText">Notification Text</label>
+                            <textarea
+                                className="form-control"
+                                rows="2"
+                                type="text"
+                                id="notificationText"
+                                onChange={e => this.props.changeField(SettingFields.NOTIFICATION_TEXT, e.target.value)}
+                                value={this.props.settings[SettingFields.NOTIFICATION_TEXT]}/>
+                            <p className="help-block">A text for notification when a user is rewarded. Text supports
+                                replacement tokens: %AWARD_NAME% - name of the award;</p>
+                        </div>
+                    </div>
+                </div>
+
                 <PanelControls
                     disableCancel={true}
                     labelSuccess="Save"

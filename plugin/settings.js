@@ -12,7 +12,8 @@
         defaults      = {
             activityLimit       : 80,
             maxRewardsPerPost   : 3,
-            maxRewardsPerAccount: -1
+            maxRewardsPerAccount: -1,
+            notificationText    : 'Congratulations! You have been awarded <strong>"%AWARD_NAME%"</strong> award.'
         };
 
     Settings.init = function (done) {
