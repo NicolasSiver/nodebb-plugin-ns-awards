@@ -7,9 +7,12 @@
     var constants  = require('./constants'),
         controller = require('./controller'),
         filters    = require('./filters'),
+        nodebb     = require('./nodebb'),
         settings   = require('./settings'),
         sockets    = require('./sockets'),
         uploads    = require('./uploads');
+
+    var helpers = nodebb.helpers;
 
     //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
     Plugin.hooks = {
@@ -29,7 +32,12 @@
                         if (error) {
                             return res.status(500).json(error);
                         }
-                        res.render('client/awards/overview', {awards: awards});
+
+                        res.render('client/awards/overview', {
+                            awards     : awards,
+                            breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}]),
+                            title      : 'Awards'
+                        });
                     });
                 };
 
