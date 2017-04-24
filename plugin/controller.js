@@ -244,12 +244,22 @@
             async.apply(Controller.getAwards),
             function (awards, callback) {
                 async.map(awards, function (award, next) {
-                    Controller.getAwardGrantees(award.aid, function (error, users) {
-                        if (error) {
-                            return next(error);
+                    async.waterfall([
+                        async.apply(Controller.getAwardGrantees, award.aid),
+                        function (users, callback) {
+                            Controller.uniqueUsers(users, function (error, unique) {
+                                if (error) {
+                                    return callback(error);
+                                }
+                                callback(null, users, unique);
+                            });
+                        }, function (users, usersUnique, callback) {
+                            callback(null, Object.assign(award, {
+                                grantees      : users,
+                                granteesUnique: usersUnique
+                            }));
                         }
-                        next(null, Object.assign(award, {grantees: users}));
-                    });
+                    ], next);
                 }, callback);
             }
         ], done);
@@ -377,6 +387,40 @@
                 settings.save(validData, callback);
             }
         ], done);
+    };
+
+    Controller.uniqueUsers = function (users, done) {
+        var i, user;
+        var sorted = users.slice();
+        var len = users.length, result = [], currentUid = null, uniqueUser = null;
+
+        function incrementCount(user, field) {
+            var count = user[field];
+            if (count === undefined) {
+                user[field] = 1;
+            } else {
+                user[field] = ++count;
+            }
+        }
+
+        sorted.sort(function (userA, userB) {
+            return userB.uid - userA.uid;
+        });
+
+        for (i = 0; i < len; ++i) {
+            user = sorted[i];
+
+            if (currentUid !== user.uid) {
+                uniqueUser = Object.assign({}, user);
+                currentUid = uniqueUser.uid;
+                incrementCount(uniqueUser, 'duplicateCount');
+                result.push(uniqueUser);
+            } else {
+                incrementCount(uniqueUser, 'duplicateCount');
+            }
+        }
+
+        done(null, result);
     };
 
     // FIXME Deprecate/Remove
