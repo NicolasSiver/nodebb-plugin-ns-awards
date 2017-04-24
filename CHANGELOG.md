@@ -16,6 +16,7 @@
 - Change notifications
 - Change max rewards per post setting
 - Change max rewards per account setting
+- Change overview page styles to use Flexbox
 - Update plugin dependencies
 - Update ACP dependencies
 
