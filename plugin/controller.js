@@ -204,6 +204,25 @@
         ], done);
     };
 
+    Controller.getAwardGrantees = function (aid, done) {
+        async.waterfall([
+            async.apply(database.getGrantIdsByAward, aid),
+            function (grantIds, callback) {
+                database.getGrantsByIds(grantIds, callback);
+            },
+            function (grants, callback) {
+                async.map(grants, function (grant, next) {
+                    Controller.getUser(grant.uid, function (error, user) {
+                        if (error) {
+                            return next(error);
+                        }
+                        next(null, user);
+                    });
+                }, callback);
+            }
+        ], done);
+    };
+
     Controller.getAwards = function (done) {
         async.waterfall([
             async.apply(database.getAwards, true),
@@ -215,56 +234,23 @@
                         }
                         next(null, Object.assign(award, {url: url}));
                     });
-                }, function (error, awards) {
-                    if (error) {
-                        return callback(error);
-                    }
-
-                    callback(null, {awards: awards});
-                });
+                }, callback);
             }
         ], done);
     };
 
-    Controller.getAwardsWithGrants = function (done) {
+    Controller.getAwardsWithGrantees = function (done) {
         async.waterfall([
             async.apply(Controller.getAwards),
             function (awards, callback) {
                 async.map(awards, function (award, next) {
-                    Controller.getAwardRecipients(award.aid, function (error, grants) {
+                    Controller.getAwardGrantees(award.aid, function (error, users) {
                         if (error) {
                             return next(error);
                         }
-                        next(null, Object.assign(award, {grants: grants}));
+                        next(null, Object.assign(award, {grantees: users}));
                     });
-                }, function (error, awards) {
-                    if (error) {
-                        return callback(error);
-                    }
-
-                    callback(null, {awards: awards});
-                });
-            }
-        ], done);
-    };
-
-    Controller.getAwardRecipients = function (aid, done) {
-        async.waterfall([
-            async.apply(database.getGrantIdsByAward, aid),
-            function (grantIds, next) {
-                grantIds = grantIds || [];
-                database.getGrantsByIds(grantIds, next);
-            },
-            function (grants, next) {
-                async.map(grants, function (grant, next) {
-                    user.getUserFields(grant.uid, ['username', 'userslug'], function (error, user) {
-                        if (error) {
-                            return next(error);
-                        }
-                        grant.user = user;
-                        next(null, grant);
-                    });
-                }, next);
+                }, callback);
             }
         ], done);
     };

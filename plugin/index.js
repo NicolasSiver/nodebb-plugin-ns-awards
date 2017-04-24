@@ -16,35 +16,29 @@
         filters: filters,
         statics: {
             load: function (params, callback) {
-                var router       = params.router,
-                    middleware   = params.middleware,
-                    controllers  = params.controllers,
-                    pluginUri    = '/admin/plugins/awards',
-                    apiUri       = '/api' + pluginUri,
+                var router      = params.router,
+                    middleware  = params.middleware,
+                    controllers = params.controllers;
 
-                    renderAdmin  = function (req, res, next) {
-                        res.render(
-                            'admin/plugins/awards', {}
-                        );
-                    },
+                var renderAdmin = function (req, res, next) {
+                    res.render('admin/plugins/awards', {});
+                };
 
-                    renderClient = function (req, res, next) {
-                        controller.getAllAwards(function (error, result) {
-                            if (error) {
-                                return res.status(500).json(error);
-                            }
-                            res.render(
-                                'client/all_awards', result
-                            );
-                        });
-                    };
+                var renderAwardsPage = function (req, res, next) {
+                    controller.getAwardsWithGrantees(function (error, awards) {
+                        if (error) {
+                            return res.status(500).json(error);
+                        }
+                        res.render('client/awards', {awards: awards});
+                    });
+                };
 
-                router.get(pluginUri, middleware.admin.buildHeader, renderAdmin);
-                router.get(apiUri, renderAdmin);
+                router.get(constants.PLUGIN_PATH, middleware.admin.buildHeader, renderAdmin);
+                router.get(path.join(constants.API_PATH, constants.PLUGIN_PATH), renderAdmin);
 
                 // Client Awards page
-                router.get(constants.CLIENT_PAGE_PATH, middleware.buildHeader, renderClient);
-                router.get(path.join(constants.API_PATH, constants.CLIENT_PAGE_PATH), renderClient);
+                router.get(constants.CLIENT_PAGE_PATH, middleware.buildHeader, renderAwardsPage);
+                router.get(path.join(constants.API_PATH, constants.CLIENT_PAGE_PATH), renderAwardsPage);
 
                 async.series([
                     async.apply(uploads.init, router, middleware),

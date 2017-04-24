@@ -74,7 +74,12 @@
     };
 
     Sockets.getAwards = function (socket, callback) {
-        controller.getAwards(callback);
+        controller.getAwards(function (error, awards) {
+            if (error) {
+                return callback(error);
+            }
+            callback(null, {awards: awards});
+        });
     };
 
     Sockets.getGrants = function (socket, payload, callback) {
