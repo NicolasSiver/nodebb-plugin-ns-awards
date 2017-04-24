@@ -5,7 +5,7 @@
     <div class="row awards-overview">
 
         <div class="col-md-1">
-            <img src="{awards.picture}" class="img-responsive"/>
+            <img src="{awards.url}" class="img-responsive"/>
         </div>
         <div class="col-md-6 award-summary">
             <span class="award-title">{awards.name}</span>

@@ -29,7 +29,7 @@
                         if (error) {
                             return res.status(500).json(error);
                         }
-                        res.render('client/awards', {awards: awards});
+                        res.render('client/awards/overview', {awards: awards});
                     });
                 };
 
