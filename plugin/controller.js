@@ -68,6 +68,10 @@
         ], done);
     };
 
+    Controller.createApiToken = function (name, done) {
+        database.createApiToken(name, done);
+    };
+
     Controller.createAward = function (awardMeta, done) {
         async.waterfall([
             async.apply(uploads.getFileById, constants.NEW_AWARD_ID),

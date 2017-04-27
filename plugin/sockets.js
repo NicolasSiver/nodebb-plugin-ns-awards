@@ -11,12 +11,16 @@
 
     Sockets.init = function (callback) {
         sockets[constants.SOCKETS] = {};
+
         //Acknowledgements
         sockets[constants.SOCKETS].awardUsers = Sockets.awardUsers;
+        sockets[constants.SOCKETS].createApiToken = Sockets.createApiToken;
         sockets[constants.SOCKETS].createAward = Sockets.createAward;
+        sockets[constants.SOCKETS].deleteApiToken = Sockets.deleteApiToken;
         sockets[constants.SOCKETS].deleteAward = Sockets.deleteAward;
         sockets[constants.SOCKETS].deleteGrant = Sockets.deleteGrant;
         sockets[constants.SOCKETS].editAward = Sockets.editAward;
+        sockets[constants.SOCKETS].getApiTokens = Sockets.getApiTokens;
         sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
         sockets[constants.SOCKETS].getConfig = Sockets.getConfig;
         sockets[constants.SOCKETS].getGrants = Sockets.getGrants;
@@ -44,6 +48,10 @@
         controller.awardUsers(awardId, socket.uid, userIds, payload.reason, callback);
     };
 
+    Sockets.createApiToken = function (socket, payload, callback) {
+        controller.createApiToken(payload.name, callback);
+    };
+
     /**
      * Create a new Award
      *
@@ -53,6 +61,10 @@
      */
     Sockets.createAward = function (socket, payload, callback) {
         controller.createAward(payload, callback);
+    };
+
+    Sockets.deleteApiToken = function (socket, payload, callback) {
+        // FIXME Implement API token deletion
     };
 
     Sockets.deleteAward = function (socket, payload, callback) {
@@ -65,6 +77,10 @@
 
     Sockets.editAward = function (socket, payload, callback) {
         controller.editAward(parseInt(payload.id), payload.name, payload.description, callback);
+    };
+
+    Sockets.getApiTokens = function (socket, payload, callback) {
+        // FIXME Implement getter for all API tokens
     };
 
     Sockets.getAwards = function (socket, callback) {

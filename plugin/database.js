@@ -1,15 +1,36 @@
 (function (Database) {
     'use strict';
 
-    var async     = require('async'),
+    var async  = require('async'),
+        uuidV4 = require('uuid/v4');
 
-        constants = require('./constants'),
+    var constants = require('./constants'),
         nodebb    = require('./nodebb');
 
-    var db          = nodebb.db,
-        namespace   = constants.NAMESPACE,
-        nextAwardId = constants.GLOBAL_AWARD_COUNTER,
-        nextGrantId = constants.GLOBAL_GRANT_COUNTER;
+    var db             = nodebb.db,
+        namespace      = constants.NAMESPACE,
+        nextApiTokenId = constants.GLOBAL_API_TOKEN_COUNTER,
+        nextAwardId    = constants.GLOBAL_AWARD_COUNTER,
+        nextGrantId    = constants.GLOBAL_GRANT_COUNTER;
+
+    Database.createApiToken = function (name, done) {
+        async.waterfall([
+            async.apply(db.incrObjectField, 'global', nextApiTokenId),
+            function (id, callback) {
+                var createTime = Date.now();
+                var tokenData = {
+                    createtime: createTime,
+                    id        : id,
+                    name      : name,
+                    token     : uuidV4()
+                };
+                async.parallel({
+                    token : async.apply(db.setObject, namespace + ':apiToken:' + id, tokenData),
+                    sorted: async.apply(db.sortedSetAdd, namespace + ':apiTokens', createTime, id)
+                }, callback);
+            }
+        ], done);
+    };
 
     Database.createAward = function (name, description, image, done) {
         async.waterfall([
