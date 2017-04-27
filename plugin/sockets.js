@@ -80,7 +80,7 @@
     };
 
     Sockets.getApiTokens = function (socket, payload, callback) {
-        // FIXME Implement getter for all API tokens
+        controller.getApiTokens(callback);
     };
 
     Sockets.getAwards = function (socket, callback) {

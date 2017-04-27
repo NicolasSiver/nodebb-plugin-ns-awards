@@ -223,6 +223,10 @@
         ], done);
     };
 
+    Controller.getApiTokens = function (done) {
+        database.getApiTokens(true, -1, done);
+    };
+
     Controller.getAwards = function (done) {
         async.waterfall([
             async.apply(database.getAwards, true),

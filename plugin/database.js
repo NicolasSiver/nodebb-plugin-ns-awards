@@ -157,6 +157,21 @@
         db.getObject(namespace + ':' + aid, done);
     };
 
+    Database.getApiTokens = function (reverse, limit, done) {
+        async.waterfall([
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':apiTokens', 0, limit),
+            function (ids, next) {
+                if (ids.length === 0) {
+                    return next(null, []);
+                }
+
+                db.getObjects(ids.map(function (id) {
+                    return namespace + ':apiToken:' + id;
+                }), next);
+            }
+        ], done);
+    };
+
     Database.getAwards = function (reverse, done) {
         async.waterfall([
             async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace, 0, -1),
