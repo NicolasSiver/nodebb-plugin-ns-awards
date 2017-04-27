@@ -44,6 +44,19 @@ export default class SocketService {
         });
     }
 
+    static deleteApiToken(id) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.DELETE_API_TOKEN, {
+                id
+            }, error => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve();
+            });
+        });
+    }
+
     static deleteAward(id) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.DELETE_AWARD, {

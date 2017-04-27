@@ -108,6 +108,35 @@ export function createAward(name, description) {
     };
 }
 
+export function deleteApiToken(id) {
+    return dispatch => {
+        window.bootbox.confirm({
+            size    : 'small',
+            title   : 'Delete API Token?',
+            message : 'You are going to delete an API token. Any external plugin which relies on this token will stop to work. This operation cannot be reverted.',
+            buttons : {
+                confirm: {
+                    label: 'Delete'
+                }
+            },
+            callback: result => {
+                if (result === true) {
+                    SocketService.deleteApiToken(id)
+                        .then(() => {
+                            dispatch(getApiTokens());
+                        })
+                        .then(() => {
+                            window.app.alertSuccess('API Token is deleted.');
+                        })
+                        .catch(error => {
+                            window.app.alertError('Error did occur: ' + JSON.stringify(error));
+                        });
+                }
+            }
+        });
+    };
+}
+
 export function deleteAward(aid) {
     return dispatch => {
         window.bootbox.confirm({

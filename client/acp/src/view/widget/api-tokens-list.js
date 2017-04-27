@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {createApiTokenWithPrompt} from '../../action/actions';
+import {createApiTokenWithPrompt, deleteApiToken} from '../../action/actions';
 import RoundButton from '../display/round-button';
 import {getApiTokens} from '../../model/selector/selectors';
 
@@ -35,7 +35,7 @@ class ApiTokensList extends React.Component {
                                         icon="fa-trash"
                                         animate={true}
                                         role="danger"
-                                        clickListener={() => undefined}/>
+                                        clickListener={() => this.props.deleteToken(tokenData.id)}/>
                                 </div>
                             </div>
                         );
@@ -48,7 +48,8 @@ class ApiTokensList extends React.Component {
 
 ApiTokensList.propTypes = {
     apiTokens  : PropTypes.array,
-    createToken: PropTypes.func
+    createToken: PropTypes.func,
+    deleteToken: PropTypes.func
 };
 
 export default connect(
@@ -59,7 +60,8 @@ export default connect(
     },
     dispatch => {
         return {
-            createToken: () => dispatch(createApiTokenWithPrompt())
+            createToken: () => dispatch(createApiTokenWithPrompt()),
+            deleteToken: id => dispatch(deleteApiToken(id))
         };
     }
 )(ApiTokensList);

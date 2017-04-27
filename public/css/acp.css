@@ -40,7 +40,8 @@
         font-size: 1.2em;
         font-weight: 300; }
       .manage-awards .api-tokens-list__item-value {
-        flex: 1 1 auto; }
+        flex: 1 1 auto;
+        padding: 0 8px; }
   .manage-awards .award-form__image {
     height: 88px;
     width: 100%; }

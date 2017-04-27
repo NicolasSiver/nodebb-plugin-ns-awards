@@ -162,6 +162,10 @@
         ], done);
     };
 
+    Database.getApiToken = function (id, done) {
+        db.getObject(namespace + ':apiToken:' + id, done);
+    };
+
     Database.getAward = function (aid, done) {
         db.getObject(namespace + ':' + aid, done);
     };
