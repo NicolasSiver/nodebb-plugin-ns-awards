@@ -25,8 +25,9 @@
                     token     : uuidV4()
                 };
                 async.parallel({
-                    token : async.apply(db.setObject, namespace + ':apiToken:' + id, tokenData),
-                    sorted: async.apply(db.sortedSetAdd, namespace + ':apiTokens', createTime, id)
+                    token      : async.apply(db.setObject, namespace + ':apiToken:' + id, tokenData),
+                    sortedId   : async.apply(db.sortedSetAdd, namespace + ':apiTokens', createTime, id),
+                    sortedValue: async.apply(db.sortedSetAdd, namespace + ':apiTokenValues', id, tokenData.token),
                 }, callback);
             }
         ], done);
