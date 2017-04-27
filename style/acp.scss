@@ -5,6 +5,36 @@
 .manage-awards {
   font-size: $nsa-base-font-size;
 
+  .api-tokens-list {
+    margin-top: $nsa-padding-xxl;
+
+    &__body {
+      margin-top: $nsa-padding-xs;
+    }
+
+    &__item {
+      align-items: baseline;
+      display: flex;
+      flex-flow: row nowrap;
+      padding: $nsa-padding 0;
+
+      &-controls {
+        flex: 0 0 auto;
+      }
+
+      &-name {
+        flex: 0 0 30%;
+        font-size: 1.2em;
+        font-weight: 300;
+      }
+
+      &-value {
+        flex: 1 1 auto;
+      }
+    }
+
+  }
+
   .award-form {
     &__image {
       height: $nsa-preview;

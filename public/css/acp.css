@@ -24,6 +24,23 @@
  */
 .manage-awards {
   font-size: 14px; }
+  .manage-awards .api-tokens-list {
+    margin-top: 28px; }
+    .manage-awards .api-tokens-list__body {
+      margin-top: 8px; }
+    .manage-awards .api-tokens-list__item {
+      align-items: baseline;
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 16px 0; }
+      .manage-awards .api-tokens-list__item-controls {
+        flex: 0 0 auto; }
+      .manage-awards .api-tokens-list__item-name {
+        flex: 0 0 30%;
+        font-size: 1.2em;
+        font-weight: 300; }
+      .manage-awards .api-tokens-list__item-value {
+        flex: 1 1 auto; }
   .manage-awards .award-form__image {
     height: 88px;
     width: 100%; }

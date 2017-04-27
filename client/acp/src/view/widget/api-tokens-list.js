@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 
 import {createApiTokenWithPrompt} from '../../action/actions';
 import RoundButton from '../display/round-button';
+import {getApiTokens} from '../../model/selector/selectors';
 
 class ApiTokensList extends React.Component {
     render() {
@@ -19,18 +20,42 @@ class ApiTokensList extends React.Component {
                         role="active"
                         clickListener={() => this.props.createToken()}/> Create API Token...
                 </div>
+                <div className="api-tokens-list__body">
+                    {this.props.apiTokens !== null && this.props.apiTokens.map(tokenData => {
+                        return (
+                            <div className="api-tokens-list__item" key={tokenData.id}>
+                                <div className="api-tokens-list__item-name">
+                                    {tokenData.name}
+                                </div>
+                                <div className="api-tokens-list__item-value">
+                                    {tokenData.token}
+                                </div>
+                                <div className="api-tokens-list__item-controls">
+                                    <RoundButton
+                                        icon="fa-trash"
+                                        animate={true}
+                                        role="danger"
+                                        clickListener={() => undefined}/>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         );
     }
 }
 
 ApiTokensList.propTypes = {
+    apiTokens  : PropTypes.array,
     createToken: PropTypes.func
 };
 
 export default connect(
     state => {
-        return {};
+        return {
+            apiTokens: getApiTokens(state)
+        };
     },
     dispatch => {
         return {

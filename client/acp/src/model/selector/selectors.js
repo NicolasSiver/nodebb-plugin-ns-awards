@@ -1,3 +1,5 @@
+export const getApiTokens = state => state.apiTokens;
+
 export const getAwardForGrant = state => state.awardForGrant;
 
 export const getAwards = state => state.awards;
