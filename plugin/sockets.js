@@ -17,11 +17,9 @@
         sockets[constants.SOCKETS].deleteAward = Sockets.deleteAward;
         sockets[constants.SOCKETS].deleteGrant = Sockets.deleteGrant;
         sockets[constants.SOCKETS].editAward = Sockets.editAward;
-        sockets[constants.SOCKETS].editGrant = Sockets.editGrant;
         sockets[constants.SOCKETS].getAwards = Sockets.getAwards;
-        sockets[constants.SOCKETS].getGrants = Sockets.getGrants;
-        sockets[constants.SOCKETS].getGrantsWithAwards = Sockets.getGrantsWithAwards;
         sockets[constants.SOCKETS].getConfig = Sockets.getConfig;
+        sockets[constants.SOCKETS].getGrants = Sockets.getGrants;
         sockets[constants.SOCKETS].getSettings = Sockets.getSettings;
         sockets[constants.SOCKETS].getUserGrants = Sockets.getUserGrants;
         sockets[constants.SOCKETS].saveSettings = Sockets.saveSettings;
@@ -69,10 +67,6 @@
         controller.editAward(parseInt(payload.id), payload.name, payload.description, callback);
     };
 
-    Sockets.editGrant = function (socket, payload, callback) {
-        controller.editGrant(payload.gid, payload.reason, callback);
-    };
-
     Sockets.getAwards = function (socket, callback) {
         controller.getAwards(function (error, awards) {
             if (error) {
@@ -84,10 +78,6 @@
 
     Sockets.getGrants = function (socket, payload, callback) {
         controller.getGrants(callback);
-    };
-
-    Sockets.getGrantsWithAwards = function (socket, payload, callback) {
-        controller.getUserAwards(payload.uid, -1, callback);
     };
 
     Sockets.getConfig = function (socket, payload, callback) {

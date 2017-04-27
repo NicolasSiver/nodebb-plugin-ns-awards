@@ -167,10 +167,6 @@
         ], done);
     };
 
-    Controller.editGrant = function (gid, reason, done) {
-        database.editGrant(gid, {reason: reason}, done);
-    };
-
     Controller.getAccountWithRewards = function (account, done) {
         async.waterfall([
             async.apply(settings.get),
@@ -322,43 +318,6 @@
         user.getUserFields(uid, ['uid', 'picture', 'username', 'userslug'], done);
     };
 
-    // FIXME Remove method
-    Controller.getUserAwards = function (uid, limit, done) {
-        async.waterfall([
-            async.apply(database.getGrantIdsByUser, uid, limit),
-            function (grantIds, next) {
-                if (!grantIds) {
-                    return next(null, []);
-                }
-
-                database.getGrantsByIds(grantIds, next);
-            },
-            function (grants, next) {
-                async.map(grants, function (grant, next) {
-
-                    grant.createtimeiso = utils.toISOString(grant.createtime);
-
-                    async.parallel({
-                        award: async.apply(database.getAward, grant.aid),
-                        user : async.apply(user.getUserFields, grant.fromuid, ['username', 'userslug'])
-                    }, function (error, result) {
-                        if (error) {
-                            return next(error);
-                        }
-
-                        var award = result.award, user = result.user;
-
-                        award.picture = getImagePath(award.image);
-
-                        grant.award = award;
-                        grant.fromuser = user;
-                        next(null, grant);
-                    });
-                }, next);
-            }
-        ], done);
-    };
-
     Controller.getUserGrants = function (uid, limit, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid, limit),
@@ -422,10 +381,5 @@
 
         done(null, result);
     };
-
-    // FIXME Deprecate/Remove
-    function getImagePath(image) {
-        return path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
-    }
 
 })(module.exports);

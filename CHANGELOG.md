@@ -8,6 +8,7 @@
 - Add protection for an image upload service
 - Add activity limit setting
 - Add configuration for notification text
+- Add reward multiplier for overview page
 - Change UX for the creation of awards
 - Change UX for Overview section
 - Change award URL to use an absolute path

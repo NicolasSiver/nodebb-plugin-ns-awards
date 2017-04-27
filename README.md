@@ -80,13 +80,11 @@ Key CSS Classes:
 
 ## TODO
 
-- Add Plugin API: grant award. Introduce tokens.
 - Add support for SVG
 - Add Sections to categorise awards, like: Forum, One time event, etc.
 - Manage: ability to change order of awards
 - ACP: Add Awarded Users statistics
 - Add Achievements section, where rules can be specified, and same Awards could be granted automatically (auto-awards with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc)
 - Add Tests (Mocha/Tape)
-- Handle multiple awards of the same type (Exapmle: `medal x 8`)
 - Topic View: use Bootstrap tooltips
 - Settings for CSS classes in topic view
