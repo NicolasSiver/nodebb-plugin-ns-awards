@@ -88,6 +88,19 @@
         ], done);
     };
 
+    Controller.deleteApiTokenById = function (id, done) {
+        async.waterfall([
+            async.apply(database.getApiToken, id),
+            function (tokenData, callback) {
+                if (!tokenData) {
+                    return done(new Error('API Token with id - ' + id + ' can not be found.'));
+                }
+
+                database.deleteApiToken(tokenData, callback);
+            }
+        ], done);
+    };
+
     Controller.deleteAwardById = function (aid, done) {
         async.waterfall([
             async.apply(database.getAward, aid),

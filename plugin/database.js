@@ -27,7 +27,7 @@
                 async.parallel({
                     token      : async.apply(db.setObject, namespace + ':apiToken:' + id, tokenData),
                     sortedId   : async.apply(db.sortedSetAdd, namespace + ':apiTokens', createTime, id),
-                    sortedValue: async.apply(db.sortedSetAdd, namespace + ':apiTokenValues', id, tokenData.token),
+                    sortedValue: async.apply(db.sortedSetAdd, namespace + ':apiTokenValues', id, tokenData.token)
                 }, callback);
             }
         ], done);
@@ -92,11 +92,36 @@
         ], done);
     };
 
+    Database.deleteApiToken = function (tokenData, done) {
+        async.parallel([
+            async.apply(db.delete, namespace + ':apiToken:' + tokenData.id),
+            async.apply(db.sortedSetRemove, namespace + ':apiTokens', tokenData.id),
+            async.apply(db.sortedSetRemove, namespace + ':apiTokenValues', tokenData.token)
+        ], done);
+    };
+
     Database.deleteAward = function (id, done) {
         async.parallel([
             async.apply(db.delete, namespace + ':' + id),
             async.apply(db.sortedSetRemove, namespace, id)
         ], done);
+    };
+
+    Database.deleteGrant = function (gid, done) {
+        db.getObject(namespace + ':grant:' + gid, function (error, grant) {
+            if (error) {
+                return done(error);
+            } else if (!grant) {
+                return done(new Error('Grant Object can not be found'));
+            }
+
+            async.parallel([
+                async.apply(db.delete, namespace + ':grant:' + grant.gid),
+                async.apply(db.sortedSetRemove, namespace + ':award:' + grant.aid, gid),
+                async.apply(db.sortedSetRemove, namespace + ':user:' + grant.uid, gid),
+                async.apply(db.sortedSetRemove, namespace + ':grants', gid)
+            ], done);
+        });
     };
 
     Database.editAward = function (id, update, done) {
@@ -135,23 +160,6 @@
                 });
             }
         ], done);
-    };
-
-    Database.deleteGrant = function (gid, done) {
-        db.getObject(namespace + ':grant:' + gid, function (error, grant) {
-            if (error) {
-                return done(error);
-            } else if (!grant) {
-                return done(new Error('Grant Object can not be found'));
-            }
-
-            async.parallel([
-                async.apply(db.delete, namespace + ':grant:' + grant.gid),
-                async.apply(db.sortedSetRemove, namespace + ':award:' + grant.aid, gid),
-                async.apply(db.sortedSetRemove, namespace + ':user:' + grant.uid, gid),
-                async.apply(db.sortedSetRemove, namespace + ':grants', gid)
-            ], done);
-        });
     };
 
     Database.getAward = function (aid, done) {

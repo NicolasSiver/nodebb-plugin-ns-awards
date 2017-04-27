@@ -64,7 +64,7 @@
     };
 
     Sockets.deleteApiToken = function (socket, payload, callback) {
-        // FIXME Implement API token deletion
+        controller.deleteApiTokenById(parseInt(payload.id), callback);
     };
 
     Sockets.deleteAward = function (socket, payload, callback) {
