@@ -17,6 +17,19 @@ export default class SocketService {
         });
     }
 
+    static createApiToken(name) {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.CREATE_API_TOKEN, {
+                name
+            }, (error, token) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(token);
+            });
+        });
+    }
+
     static createAward(name, description) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.CREATE_AWARD, {
@@ -44,7 +57,7 @@ export default class SocketService {
         });
     }
 
-    static deleteGrant(id){
+    static deleteGrant(id) {
         return new Promise((resolve, reject) => {
             window.socket.emit(SocketActions.DELETE_GRANT, {
                 id
@@ -68,6 +81,17 @@ export default class SocketService {
                     return reject(error);
                 }
                 resolve(award);
+            });
+        });
+    }
+
+    static getApiTokens() {
+        return new Promise((resolve, reject) => {
+            window.socket.emit(SocketActions.GET_API_TOKENS, (error, tokens) => {
+                if (error) {
+                    return reject(error);
+                }
+                resolve(tokens);
             });
         });
     }

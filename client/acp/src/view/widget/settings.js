@@ -3,6 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import {changeSettingField, saveSettings} from '../../action/actions';
+import ApiTokensList from './api-tokens-list';
 import PanelControls from '../display/panel-controls';
 import SectionLoading from '../display/section-loading';
 import {getSettings} from '../../model/selector/selectors';
@@ -85,6 +86,13 @@ class Settings extends React.Component {
                     labelSuccess="Save"
                     valid={true}
                     successDidClick={() => this.props.save()}/>
+
+                <div className="row">
+                    <div className="col-md-12">
+                        <ApiTokensList/>
+                    </div>
+                </div>
+
             </div>
         );
     }

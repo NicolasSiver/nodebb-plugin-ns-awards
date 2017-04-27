@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {getAwardsAll, getConfig, loadSettings} from './action/actions';
+import {getApiTokens, getAwardsAll, getConfig, loadSettings} from './action/actions';
 import AwardCreate from './view/widget/award-create';
 import Donate from './view/display/donate';
 import TabManager from './view/widget/tab-manager';
@@ -11,6 +11,7 @@ class AwardsAcp extends React.Component {
     componentDidMount() {
         this.props.getConfig();
         this.props.getSettings();
+        this.props.getApiTokens();
         this.props.getAwards();
     }
 
@@ -42,18 +43,20 @@ class AwardsAcp extends React.Component {
 }
 
 AwardsAcp.propTypes = {
-    getAwards  : PropTypes.func,
-    getConfig  : PropTypes.func,
-    getSettings: PropTypes.func
+    getApiTokens: PropTypes.func,
+    getAwards   : PropTypes.func,
+    getConfig   : PropTypes.func,
+    getSettings : PropTypes.func
 };
 
 export default connect(
     null,
     dispatch => {
         return {
-            getAwards  : () => dispatch(getAwardsAll()),
-            getConfig  : () => dispatch(getConfig()),
-            getSettings: () => dispatch(loadSettings())
+            getApiTokens: () => dispatch(getApiTokens()),
+            getAwards   : () => dispatch(getAwardsAll()),
+            getConfig   : () => dispatch(getConfig()),
+            getSettings : () => dispatch(loadSettings())
         };
     }
 )(AwardsAcp);

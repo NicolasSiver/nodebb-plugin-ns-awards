@@ -85,6 +85,5 @@ Key CSS Classes:
 - Manage: ability to change order of awards
 - ACP: Add Awarded Users statistics
 - Add Achievements section, where rules can be specified, and same Awards could be granted automatically (auto-awards with progress, Ex: `First 1000 posts -> Core Heart`, `Every 20 likes -> Lover`, etc)
-- Add Tests (Mocha/Tape)
 - Topic View: use Bootstrap tooltips
 - Settings for CSS classes in topic view

@@ -1,6 +1,15 @@
 import * as ActionTypes from './action-types';
 import {compareUsers, getItemIndex} from '../util/utils';
 
+export function apiTokens(state, action) {
+    switch (action.type) {
+        case ActionTypes.API_TOKENS_DID_UPDATE:
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export function awardForGrant(state, action) {
     switch (action.type) {
         case ActionTypes.AWARD_FOR_GRANT_DID_CHANGE:

@@ -1,12 +1,18 @@
 export const AWARD_USERS = 'plugins.ns-awards.awardUsers';
 
+export const CREATE_API_TOKEN = 'plugins.ns-awards.createApiToken';
+
 export const CREATE_AWARD = 'plugins.ns-awards.createAward';
+
+export const DELETE_API_TOKEN = 'plugins.ns-awards.deleteApiToken';
 
 export const DELETE_AWARD = 'plugins.ns-awards.deleteAward';
 
 export const DELETE_GRANT = 'plugins.ns-awards.deleteGrant';
 
 export const EDIT_AWARD = 'plugins.ns-awards.editAward';
+
+export const GET_API_TOKENS = 'plugins.ns-awards.getApiTokens';
 
 export const GET_AWARDS = 'plugins.ns-awards.getAwards';
 

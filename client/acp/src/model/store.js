@@ -2,6 +2,7 @@ import {applyMiddleware, createStore} from 'redux';
 import ReduxThunk from 'redux-thunk';
 
 import {
+    apiTokens,
     awardForGrant,
     awards,
     creationActive,
@@ -27,6 +28,7 @@ import * as Sections from './sections';
 export function createReduxStore(state) {
     return createStore((state, action) => {
         return {
+            apiTokens          : apiTokens(state.apiTokens, action),
             awardForGrant      : awardForGrant(state.awardForGrant, action),
             awards             : awards(state.awards, action),
             creationActive     : creationActive(state.creationActive, action),
@@ -53,6 +55,8 @@ export function createReduxStore(state) {
 
 export function getInitialState() {
     return {
+        apiTokens: null,
+
         awardForGrant: null,
         awards       : null,
 

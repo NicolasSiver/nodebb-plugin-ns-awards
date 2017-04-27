@@ -63,6 +63,34 @@ export function changeUserForInspect(user) {
     };
 }
 
+export function createApiTokenWithPrompt() {
+    return dispatch => {
+        window.bootbox.prompt({
+            size    : 'small',
+            title   : 'What is the name of new API token?',
+            buttons : {
+                confirm: {
+                    label: 'Create'
+                }
+            },
+            callback: name => {
+                if (name && name.length > 0) {
+                    SocketService.createApiToken(name)
+                        .then(() => {
+                            dispatch(getApiTokens());
+                        })
+                        .then(() => {
+                            window.app.alertSuccess(`API Token "${name}" is successfully created.`);
+                        })
+                        .catch(error => {
+                            window.app.alertError('Error did occur: ' + JSON.stringify(error));
+                        });
+                }
+            }
+        });
+    };
+}
+
 export function createAward(name, description) {
     return dispatch => {
         UploadService.sharedInstance().start(Constants.NEW_AWARD_ID)
@@ -142,6 +170,14 @@ export function editAward(aid, award) {
     return {
         type   : ActionTypes.AWARD_DID_EDIT,
         payload: {aid, award}
+    };
+}
+
+export function getApiTokens() {
+    return dispatch => {
+        SocketService.getApiTokens().then(tokens => {
+            dispatch(setApiTokens(tokens));
+        });
     };
 }
 
@@ -334,6 +370,13 @@ export function searchUser() {
         } else {
             dispatch(setUsers([]));
         }
+    };
+}
+
+export function setApiTokens(tokens) {
+    return {
+        type   : ActionTypes.API_TOKENS_DID_UPDATE,
+        payload: tokens
     };
 }
 

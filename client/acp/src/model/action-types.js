@@ -1,3 +1,5 @@
+export const API_TOKENS_DID_UPDATE = 'apiTokensDidUpdate';
+
 export const AWARD_CREATION_STATE_DID_UPDATE = 'awardCreationStateDidUpdate';
 
 export const AWARD_DID_EDIT = 'awardDidEdit';
