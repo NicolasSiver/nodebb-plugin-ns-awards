@@ -28,15 +28,24 @@
     {
       "hook": "static:app.load",
       "method": "hooks.statics.load"
+    },
+    {
+      "hook": "static:ns.awards.rewardUser",
+      "method": "hooks.api.rewardUser"
+    },
+    {
+      "hook": "static:ns.awards.getAwards",
+      "method": "hooks.api.getAwards"
+    },
+    {
+      "hook": "static:ns.awards.getUserAwards",
+      "method": "hooks.api.getUserAwards"
     }
   ],
   "less": [
     "style/profile.less",
     "style/topic.less",
     "style/overview.less"
-  ],
-  "acpScripts": [
-    "public/js/acp.js"
   ],
   "scripts": [],
   "staticDirs": {

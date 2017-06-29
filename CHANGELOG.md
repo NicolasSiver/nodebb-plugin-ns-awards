@@ -13,7 +13,7 @@
 - Change UX for Overview section
 - Change award URL to use an absolute path
 - Change award upload
-- Change NodeBB compatibility to v1.4.x and higher
+- Change NodeBB compatibility to v1.5.x and higher
 - Change notifications
 - Change max rewards per post setting
 - Change max rewards per account setting
