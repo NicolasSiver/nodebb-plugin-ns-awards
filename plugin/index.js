@@ -4,7 +4,8 @@
     var async = require('async'),
         path  = require('path');
 
-    var constants  = require('./constants'),
+    var api        = require('./api'),
+        constants  = require('./constants'),
         controller = require('./controller'),
         filters    = require('./filters'),
         nodebb     = require('./nodebb'),
@@ -16,6 +17,7 @@
 
     //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
     Plugin.hooks = {
+        api    : api,
         filters: filters,
         statics: {
             load: function (params, callback) {

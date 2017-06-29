@@ -12,12 +12,16 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
  
 
 - [How does it work?](#how-does-it-work)
-- [ACP Look](#acp-look)
+- [Screenshots](#screenshots)
 - [Themes](#themes)
   - [Profile template](#profile-template)
   - [Topic template](#topic-template)
 - [Filters](#filters)
 - [Styling](#styling)
+- [API](#api)
+  - [`static:ns.awards.getAwards`](#staticnsawardsgetawards)
+  - [`static:ns.awards.getUserAwards`](#staticnsawardsgetuserawards)
+  - [`static:ns.awards.rewardUser`](#staticnsawardsrewarduser)
 - [TODO](#todo)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -31,7 +35,7 @@ Plugin introduces new entity for your board: Award. It could be anything: ribbon
 3. Give awards to the users.
 4. If you want to list users' awards, you can augment Profile page template - `profile.tpl`
 
-## ACP Look
+## Screenshots
 
 ![Admin Panel View](screenshot.png)
 
@@ -77,6 +81,42 @@ Key CSS Classes:
 - `ns-awards-overview__item`, container for the list item
 - `ns-awards-overview__image`, since award image is responsive, it's possible to adjust a width of image container
 - `ns-awards-overview__users`, list of the awarded users
+
+## API
+
+The plugin provides external API via hooks.
+All API methods accept single object as a parameter.
+Every API request should be authenticated with a token. Tokens could be generated in the ACP.
+
+Example of the request to get all available awards:
+
+```
+{
+    auth: {
+        token: '50bfa42d-31e2-434e-9634-505b973ee40e'
+    }
+}
+```
+
+### `static:ns.awards.getAwards`
+
+Get all available awards.
+
+Parameters:
+
+- `{Object} payload`
+- `{Object} payload.auth` - Authentication 
+- `{String} payload.auth.token` - Authentication String
+
+Returns:
+
+- `{Object} result`
+- `{Array} result.awards`, returns the list of Award objects
+
+
+### `static:ns.awards.getUserAwards`
+
+### `static:ns.awards.rewardUser`
 
 ## TODO
 
