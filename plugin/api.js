@@ -37,7 +37,15 @@
      * @param {function} callback
      */
     Api.getAwards = function (payload, callback) {
-
+        async.waterfall([
+            async.apply(authenticate, payload.auth),
+            function (tokenEntity, next) {
+                controller.getAwards(next);
+            },
+            function (awards, next) {
+                next(null, {awards: awards});
+            }
+        ], callback);
     };
 
     Api.getUserAwards = function (payload, callback) {
