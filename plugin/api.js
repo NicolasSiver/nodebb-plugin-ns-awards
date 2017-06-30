@@ -13,6 +13,8 @@
                     next(new Error('Auth Object is not provided.'));
                 } else if (!auth.token || auth.token === '') {
                     next(new Error('Token is not provided or empty.'));
+                } else {
+                    next(null);
                 }
             },
             async.apply(controller.getApiTokens),
