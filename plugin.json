@@ -36,10 +36,6 @@
     {
       "hook": "filter:ns.awards.getAwards",
       "method": "hooks.api.getAwards"
-    },
-    {
-      "hook": "static:ns.awards.getUserAwards",
-      "method": "hooks.api.getUserAwards"
     }
   ],
   "less": [

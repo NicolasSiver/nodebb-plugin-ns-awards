@@ -20,7 +20,6 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 - [Styling](#styling)
 - [API](#api)
   - [`filter:ns.awards.getAwards`](#filternsawardsgetawards)
-  - [`filter:ns.awards.getUserAwards`](#filternsawardsgetuserawards)
   - [`static:ns.awards.rewardUser`](#staticnsawardsrewarduser)
 - [TODO](#todo)
 
@@ -113,10 +112,19 @@ Returns:
 - `{Object} result`
 - `{Array} result.awards`, returns the list of Award objects
 
-
-### `filter:ns.awards.getUserAwards`
-
 ### `static:ns.awards.rewardUser`
+
+Give an award to the user. It's important to specify who will grant the award.
+
+Parameters:
+
+- `{Object} payload`
+- `{Number} awardId` - Award Id
+- `{Number} fromUserId` - User Id who is giving the award
+- `{Number} toUserId` - User Id who is receiving the award
+- `{String} reason` - The message to explain why award was given
+- `{Object} payload.auth` - Authentication 
+- `{String} payload.auth.token` - Authentication String
 
 ## TODO
 

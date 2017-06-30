@@ -3,8 +3,7 @@
 
     var async = require('async');
 
-    var constants  = require('./constants'),
-        controller = require('./controller');
+    var controller = require('./controller');
 
     function authenticate(auth, done) {
         async.waterfall([
@@ -50,12 +49,29 @@
         ], callback);
     };
 
-    Api.getUserAwards = function (payload, callback) {
-
-    };
-
+    /**
+     * Reward user with an award.
+     *
+     * @param {object} payload
+     * @param {number} payload.awardId
+     * @param {number} payload.fromUserId
+     * @param {number} payload.toUserId
+     * @param {string} payload.reason
+     * @param {function} callback
+     */
     Api.rewardUser = function (payload, callback) {
-
+        async.waterfall([
+            async.apply(authenticate, payload.auth),
+            function (tokenEntity, next) {
+                controller.awardUsers(
+                    payload.awardId,
+                    payload.fromUserId,
+                    [payload.toUserId],
+                    payload.reason,
+                    next
+                );
+            }
+        ], callback);
     };
 
 })(module.exports);
