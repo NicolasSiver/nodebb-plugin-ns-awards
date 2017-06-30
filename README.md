@@ -19,8 +19,8 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 - [Filters](#filters)
 - [Styling](#styling)
 - [API](#api)
-  - [`static:ns.awards.getAwards`](#staticnsawardsgetawards)
-  - [`static:ns.awards.getUserAwards`](#staticnsawardsgetuserawards)
+  - [`filter:ns.awards.getAwards`](#filternsawardsgetawards)
+  - [`filter:ns.awards.getUserAwards`](#filternsawardsgetuserawards)
   - [`static:ns.awards.rewardUser`](#staticnsawardsrewarduser)
 - [TODO](#todo)
 
@@ -98,7 +98,7 @@ Example of the request to get all available awards:
 }
 ```
 
-### `static:ns.awards.getAwards`
+### `filter:ns.awards.getAwards`
 
 Get all available awards.
 
@@ -114,7 +114,7 @@ Returns:
 - `{Array} result.awards`, returns the list of Award objects
 
 
-### `static:ns.awards.getUserAwards`
+### `filter:ns.awards.getUserAwards`
 
 ### `static:ns.awards.rewardUser`
 

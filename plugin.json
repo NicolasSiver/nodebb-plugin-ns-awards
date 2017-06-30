@@ -34,7 +34,7 @@
       "method": "hooks.api.rewardUser"
     },
     {
-      "hook": "static:ns.awards.getAwards",
+      "hook": "filter:ns.awards.getAwards",
       "method": "hooks.api.getAwards"
     },
     {
