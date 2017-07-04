@@ -45,7 +45,7 @@
             userIds = payload.userIds.map(function (uid) {
                 return parseInt(uid);
             });
-        controller.awardUsers(awardId, socket.uid, userIds, payload.reason, callback);
+        controller.awardUsers(awardId, socket.uid, userIds, payload.reason, undefined, callback);
     };
 
     Sockets.createApiToken = function (socket, payload, callback) {

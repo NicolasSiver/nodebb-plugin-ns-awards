@@ -68,6 +68,7 @@
                     payload.fromUserId,
                     [payload.toUserId],
                     payload.reason,
+                    tokenEntity.token,
                     next
                 );
             }

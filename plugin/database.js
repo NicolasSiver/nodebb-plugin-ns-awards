@@ -62,7 +62,7 @@
         ], done);
     };
 
-    Database.createGrant = function (uid, aid, reason, initiatorUid, done) {
+    Database.createGrant = function (uid, aid, reason, initiatorUid, token, done) {
         async.waterfall([
             async.apply(db.incrObjectField, 'global', nextGrantId),
             function (gid, next) {
@@ -74,7 +74,8 @@
                     aid       : aid,
                     gid       : gid,
                     createtime: createTime,
-                    reason    : reason
+                    reason    : reason,
+                    token     : token
                 };
 
                 async.parallel([

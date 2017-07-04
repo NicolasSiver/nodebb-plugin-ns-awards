@@ -32,11 +32,11 @@
         });
     };
 
-    Controller.awardUsers = function (awardId, fromUid, toUids, reasonText, done) {
+    Controller.awardUsers = function (awardId, fromUid, toUids, reasonText, token, done) {
         async.waterfall([
             function (callback) {
                 async.each(toUids, function (uid, next) {
-                    database.createGrant(uid, awardId, reasonText, fromUid, next);
+                    database.createGrant(uid, awardId, reasonText, fromUid, token, next);
                 }, callback);
             },
             function (callback) {
