@@ -152,6 +152,14 @@
     font-weight: 300;
     line-height: 1.8em;
     margin: 0; }
+  .manage-awards .grant__token {
+    margin: 4px 16px; }
+  .manage-awards .grant__token-value {
+    background-color: #eeeeee;
+    border-radius: 2px;
+    color: #212121;
+    font-size: 0.75em;
+    padding: 4px; }
   .manage-awards .grant__username {
     margin-left: 4px; }
   .manage-awards .grant__users {

@@ -208,6 +208,18 @@
       margin: 0;
     }
 
+    &__token {
+      margin: $nsa-padding-xxs $nsa-padding;
+    }
+
+    &__token-value {
+      background-color: material-color('grey', '200');
+      border-radius: 2px;
+      color: material-color('grey', '900');
+      font-size: 0.75em;
+      padding: $nsa-padding-xxs;
+    }
+
     &__username {
       margin-left: $nsa-padding-xxs;
     }

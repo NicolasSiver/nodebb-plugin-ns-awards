@@ -6,7 +6,7 @@ import Avatar from './avatar';
 export default class Grant extends React.Component {
 
     render() {
-        let {award, createtime, granter, grantee, reason} = this.props.grant;
+        let {award, createtime, granter, grantee, reason, token} = this.props.grant;
         let {timeago} = window.$;
 
         return (
@@ -28,12 +28,23 @@ export default class Grant extends React.Component {
                             {this.props.controlViews}
                         </div>) : null}
                 </div>
+                {this.renderToken(token)}
                 <div className="grant__reason">
                     {reason}
                     <span className="grant__time">{timeago(createtime)}</span>
                 </div>
             </div>
         );
+    }
+
+    renderToken(token) {
+        return token ? (
+            <div className="grant__token">
+                    <span className="grant__token-value">
+                        API: {token}
+                    </span>
+            </div>
+        ) : null;
     }
 
 }
