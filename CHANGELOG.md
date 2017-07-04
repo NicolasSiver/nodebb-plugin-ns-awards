@@ -9,6 +9,7 @@
 - Add activity limit setting
 - Add configuration for notification text
 - Add reward multiplier for overview page
+- Add external Plugin API
 - Change UX for the creation of awards
 - Change UX for Overview section
 - Change award URL to use an absolute path
