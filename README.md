@@ -18,6 +18,8 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
   - [Topic template](#topic-template)
 - [Filters](#filters)
 - [Styling](#styling)
+  - [Overview Page](#overview-page)
+  - [Topic View](#topic-view)
 - [API](#api)
   - [`filter:ns.awards.getAwards`](#filternsawardsgetawards)
   - [`static:ns.awards.rewardUser`](#staticnsawardsrewarduser)
@@ -72,6 +74,8 @@ It's possible to configure a limit or disable a feature in the settings.
 
 ## Styling
 
+### Overview Page
+
 The overview page is based on Flexbox with simple CSS class name set. 
 Also, all layout is based on em values.
 
@@ -80,6 +84,10 @@ Key CSS Classes:
 - `ns-awards-overview__item`, container for the list item
 - `ns-awards-overview__image`, since award image is responsive, it's possible to adjust a width of image container
 - `ns-awards-overview__users`, list of the awarded users
+
+### Topic View
+
+...
 
 ## API
 
