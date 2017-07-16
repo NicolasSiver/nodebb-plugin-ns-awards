@@ -6,7 +6,7 @@
   "scripts": {
     "build": "./node_modules/.bin/rollup -c",
     "build:style": "node-sass ../../style/acp.scss -o ../../public/css",
-    "build:style-pages": "node-sass ../../style/topic.scss -o ../../public/css && node-sass ../../style/profile.scss -o ../../public/css",
+    "build:style-pages": "node-sass ../../style/overview.scss -o ../../public/css && node-sass ../../style/topic.scss -o ../../public/css && node-sass ../../style/profile.scss -o ../../public/css",
     "watch": "webpack --colors --progress --watch",
     "watch:style": "npm run build:style && npm run build:style -- -w",
     "test": "echo \"Error: no test specified\" && exit 1"

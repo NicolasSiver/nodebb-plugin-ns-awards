@@ -38,10 +38,8 @@
       "method": "hooks.api.getAwards"
     }
   ],
-  "less": [
-    "style/overview.less"
-  ],
   "css": [
+    "public/css/overview.css",
     "public/css/profile.css",
     "public/css/topic.css"
   ],

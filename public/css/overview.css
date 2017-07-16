@@ -1,50 +1,39 @@
 .ns-awards-overview__desc {
   font-size: 0.8em;
-  line-height: 1em;
-}
+  line-height: 1em; }
 
 .ns-awards-overview__details {
   flex: 1 1 70%;
-  margin: 0 1em;
-}
+  margin: 0 1em; }
 
 .ns-awards-overview__image {
-  flex: 0 0 100px;
-}
+  flex: 0 0 100px; }
 
 .ns-awards-overview__item {
   display: flex;
-  flex-flow: row nowrap;
-}
+  flex-flow: row nowrap; }
 
 .ns-awards-overview__item + .ns-awards-overview__item {
-  margin-top: 1.5em;
-}
+  margin-top: 1.5em; }
 
 .ns-awards-overview__title {
   display: block;
   font-weight: 300;
   font-size: 1.4em;
-  line-height: 1.6em;
-}
+  line-height: 1.6em; }
 
 .ns-awards-overview__user {
   background-color: #FAFAFA;
   border-radius: 0.125em;
   flex: 0 0 auto;
-  padding: 0.25em;
-}
+  padding: 0.25em; }
 
 .ns-awards-overview__user + .ns-awards-overview__user {
-  margin-left: 0.5em;
-}
+  margin-left: 0.5em; }
 
 .ns-awards-overview__users {
   align-items: flex-start;
   display: flex;
   flex: 0 0 30%;
   flex-flow: row wrap;
-  padding: 0.5em;
-}
-
-
+  padding: 0.5em; }
