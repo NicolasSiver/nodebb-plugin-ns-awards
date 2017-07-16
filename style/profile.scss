@@ -1,0 +1,15 @@
+@import "vars";
+@import "../node_modules/sass-material-colors/sass/sass-material-colors";
+
+.ns-awards-profile {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.ns-awards-profile__image {
+  align-self: center;
+  flex: 0 1 auto;
+  margin: $nsa-padding-xs;
+  width: $nsa-profile-award-size;
+}
