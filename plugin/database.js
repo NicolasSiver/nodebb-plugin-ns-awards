@@ -173,7 +173,7 @@
 
     Database.getApiTokens = function (reverse, limit, done) {
         async.waterfall([
-            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':apiTokens', 0, limit),
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':apiTokens', 0, limit - 1),
             function (ids, next) {
                 if (ids.length === 0) {
                     return next(null, []);
@@ -207,7 +207,7 @@
     Database.getGrants = function (reverse, limit, done) {
         // Note: NodeBB internal API always has a limit +1, i.e. if limit is 2, it will be 3.
         async.waterfall([
-            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, limit),
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, limit - 1),
             function (gids, next) {
                 if (gids.length === 0) {
                     return next(null, []);
@@ -225,7 +225,7 @@
     };
 
     Database.getGrantIdsByUser = function (uid, limit, done) {
-        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, limit, done);
+        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, limit - 1, done);
     };
 
     Database.getGrantsByIds = function (ids, done) {
