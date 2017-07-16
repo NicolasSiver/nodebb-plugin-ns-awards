@@ -39,10 +39,10 @@
     }
   ],
   "less": [
-    "style/profile.less",
     "style/overview.less"
   ],
   "css": [
+    "public/css/profile.css",
     "public/css/topic.css"
   ],
   "scripts": [],
