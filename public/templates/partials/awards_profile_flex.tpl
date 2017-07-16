@@ -1,13 +1,13 @@
-<!-- IF awards.length -->
+<!-- IF nsRewards.length -->
 <div class="awards-flex">
 
         <div class="awards-container">
-            <!-- BEGIN awards -->
+            <!-- BEGIN nsRewards -->
                     <div class="award-image">
-                        <img title class="teaser-pic img-responsive" src="{awards.award.picture}" data-original-title="{awards.award.name}"/>
+                        <img title class="teaser-pic img-responsive" src="{nsRewards.award.url}" data-original-title="{nsRewards.award.name}"/>
                     </div>
-            <!-- END awards -->
+            <!-- END nsRewards -->
         </div>
 
 </div>
-<!-- ENDIF awards.length -->
+<!-- ENDIF nsRewards.length -->
