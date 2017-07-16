@@ -9,25 +9,17 @@
  *                                          '200', 'a100')
  */
 .ns-awards-topic {
+  display: flex;
+  flex-flow: row wrap;
   margin: 8px 0; }
-  .ns-awards-topic:after {
-    content: "";
-    display: table;
-    clear: both; }
 
 .ns-awards-topic__item {
-  float: left;
+  flex: 0 0 auto;
   height: 32px;
   margin: 4px;
-  position: relative;
   width: 32px; }
 
 .ns-awards-topic__image {
-  bottom: 0;
   height: auto;
-  left: 0;
   margin: auto;
-  max-width: 100%;
-  position: absolute;
-  right: 0;
-  top: 0; }
+  max-width: 100%; }

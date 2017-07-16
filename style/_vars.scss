@@ -18,11 +18,3 @@ $nsa-padding-xl: $nsa-base * 6;
 $nsa-padding-xxl: $nsa-base * 7;
 $nsa-preview: $nsa-base * 22;
 $nsa-user-column: $nsa-base * 40;
-
-@mixin clearFix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}
