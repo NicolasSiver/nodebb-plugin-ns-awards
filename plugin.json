@@ -40,8 +40,10 @@
   ],
   "less": [
     "style/profile.less",
-    "style/topic.less",
     "style/overview.less"
+  ],
+  "css": [
+    "public/css/topic.css"
   ],
   "scripts": [],
   "staticDirs": {

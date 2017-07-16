@@ -1,0 +1,26 @@
+@import "vars";
+@import "../node_modules/sass-material-colors/sass/sass-material-colors";
+
+.ns-awards-topic {
+  @include clearFix;
+  margin: $nsa-padding-xs 0;
+}
+
+.ns-awards-topic__item {
+  float: left;
+  height: $nsa-topic-award-size;
+  margin: $nsa-padding-xxs;
+  position: relative;
+  width: $nsa-topic-award-size;
+}
+
+.ns-awards-topic__image {
+  bottom: 0;
+  height: auto;
+  left: 0;
+  margin: auto;
+  max-width: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
