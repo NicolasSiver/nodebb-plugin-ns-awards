@@ -49,12 +49,6 @@ Use flex template - `awards_profile_flex.tpl` for Persona v4. Place it wherever 
 ```html
 <!-- IMPORT partials/awards_profile_flex.tpl -->
 ```
-
-Use profile partial, it will add small panel with awards as list. Every award item will include: picture, name, reason and date.
-
-Example Vanilla Theme, edit `node_modules/nodebb-theme-vanilla/templates/account/profile.tpl`:
-
-    <!-- IMPORT partials/awards_profile.tpl -->
     
 ### Topic template
 
@@ -140,5 +134,4 @@ Parameters:
 - Add Sections to categorise awards, like: Forum, One time event, etc.
 - Manage: ability to change order of awards
 - ACP: Add Awarded Users statistics
-- Topic View: use Bootstrap tooltips
 - Settings for CSS classes in topic view
