@@ -11,6 +11,7 @@
 - Add reward multiplier for overview page
 - Add external Plugin API
 - Add tooltips to a topic view
+- Add support for SVG
 - Change UX for the creation of awards
 - Change UX for Overview section
 - Change award URL to use an absolute path
