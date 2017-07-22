@@ -13,6 +13,12 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 
 - [How does it work?](#how-does-it-work)
 - [Screenshots](#screenshots)
+  - [Awards Overview](#awards-overview)
+  - [Create New Award](#create-new-award)
+  - [Give an Award](#give-an-award)
+  - [User's Rewards Overview](#users-rewards-overview)
+  - [Logging](#logging)
+  - [Settings](#settings)
 - [Themes](#themes)
   - [Profile template](#profile-template)
   - [Topic template](#topic-template)
@@ -24,7 +30,6 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 - [API](#api)
   - [`filter:ns.awards.getAwards`](#filternsawardsgetawards)
   - [`static:ns.awards.rewardUser`](#staticnsawardsrewarduser)
-- [TODO](#todo)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -39,7 +44,33 @@ Plugin introduces new entity for your board: Award. It could be anything: ribbon
 
 ## Screenshots
 
+### Awards Overview
+
 ![Admin Panel View](screenshot.png)
+
+### Create New Award
+
+![Create Award View](screenshot2.png)
+
+### Give an Award
+
+You can give reward to the multiple users simultaneously.
+
+![Create Award View](screenshot3.png)
+
+### User's Rewards Overview
+
+![User's Rewards](screenshot4.png)
+
+### Logging
+
+![Last N Rewards](screenshot5.png)
+
+### Settings
+
+If you will scroll further, you can find API Token settings.
+
+![Settings](screenshot6.png)
 
 ## Themes
 
