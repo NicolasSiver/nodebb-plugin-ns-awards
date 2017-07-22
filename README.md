@@ -35,12 +35,12 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 
 ## How does it work?
 
-Plugin introduces new entity for your board: Award. It could be anything: ribbon, medal, special rank, etc.
+Plugin introduces a new entity for your board: `Award`. It could be anything: ribbon, medal, special rank, etc.
 
-1. Visit Awards control panel in ACP
+1. Visit `Awards` control panel in Admin Control Panel
 2. Create several awards, don't forget images.
-3. Give awards to the users.
-4. If you want to list users' awards, you can augment Profile page template - `profile.tpl`
+3. Reward users.
+4. If you want to list users' awards, you can augment `Account` or `Post` page templates.
 
 ## Screenshots
 
