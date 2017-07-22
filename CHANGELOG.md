@@ -1,6 +1,6 @@
 # Changelog
 
-## v4.0.0 - TBD
+## v4.0.0 - 07/22/2017
 
 - Add an edit mode for multiple awards
 - Add support for plugin driven image upload
