@@ -1,0 +1,15 @@
+@import "vars";
+@import "../node_modules/sass-material-colors/sass/sass-material-colors";
+
+.ns-awards-topic {
+  display: flex;
+  flex-flow: row wrap;
+  margin: $nsa-padding-xs 0;
+}
+
+.ns-awards-topic__item {
+  flex: 0 0 auto;
+  height: $nsa-topic-award-size;
+  margin: $nsa-padding-xxs;
+  width: $nsa-topic-award-size;
+}

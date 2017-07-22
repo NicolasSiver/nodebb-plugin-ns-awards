@@ -1,0 +1,520 @@
+@import "animation";
+@import "vars";
+@import "../node_modules/sass-material-colors/sass/sass-material-colors";
+
+.manage-awards {
+  font-size: $nsa-base-font-size;
+
+  .api-tokens-list {
+    margin-top: $nsa-padding-xxl;
+
+    &__body {
+      margin-top: $nsa-padding-xs;
+    }
+
+    &__item {
+      align-items: baseline;
+      display: flex;
+      flex-flow: row nowrap;
+      padding: $nsa-padding 0;
+
+      &-controls {
+        flex: 0 0 auto;
+      }
+
+      &-name {
+        flex: 0 0 30%;
+        font-size: 1.2em;
+        font-weight: 300;
+      }
+
+      &-value {
+        flex: 1 1 auto;
+        padding: 0 $nsa-padding-xs;
+      }
+    }
+
+  }
+
+  .award-form {
+    &__image {
+      height: $nsa-preview;
+      width: 100%;
+    }
+  }
+
+  .award-picker {
+    .award-picker-item + .award-picker-item {
+      margin-top: $nsa-padding-xxs;
+    }
+  }
+
+  .award-picker-item {
+    cursor: pointer;
+    display: flex;
+    height: $nsa-award-picker-item-height;
+    overflow: hidden;
+
+    &__body {
+      border-bottom: 1px solid transparent;
+      border-left: $nsa-padding-xxs solid transparent;
+      border-right: 1px solid transparent;
+      border-top: 1px solid transparent;
+      display: flex;
+      flex: 1 1 auto;
+      flex-flow: row nowrap;
+      transition: background-color 0.25s $nsa-ease-in-out;
+
+      &--selected {
+        background-color: material-color('blue', '50');
+        border-bottom: 1px solid material-color('blue', '200');
+        border-left: $nsa-padding-xxs solid material-color('blue', '200');
+        border-right: 1px solid material-color('blue', '200');
+        border-top: 1px solid material-color('blue', '200');
+      }
+    }
+
+    &__details {
+      flex: 1 1 auto;
+      padding-left: $nsa-padding-xs;
+    }
+
+    &__description {
+      line-height: $nsa-award-picker-item-height / 2 - 1;
+      font-size: 0.8em;
+    }
+
+    &__pin {
+      fill: material-color('blue', '200');
+      flex: 0 0 auto;
+      width: $nsa-padding-xs;
+    }
+
+    &__preview {
+      flex: 0 0 auto;
+      height: 100%;
+      padding: $nsa-padding-xxs;
+      width: $nsa-award-picker-item-height - 2;
+    }
+
+    &__title {
+      line-height: $nsa-award-picker-item-height / 2 - 1;
+    }
+  }
+
+  .awards-about {
+    &__details {
+      color: material-color('grey', '600');
+    }
+
+    &__header {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
+    &__icon {
+      flex: 0 0 auto;
+    }
+
+    &__title {
+      color: material-color('grey', '800');
+      flex: 1 1 auto;
+      font-size: 1.5em;
+      font-weight: 300;
+      line-height: normal;
+      margin-bottom: $nsa-padding;
+    }
+  }
+
+  .awards-item {
+    display: flex;
+    flex-flow: row nowrap;
+
+    &__info {
+      flex: 1 1 auto;
+      margin: 0 16px;
+    }
+
+    &__image {
+      padding: $nsa-padding-xxs;
+      max-width: 100%;
+      height: auto;
+    }
+
+    &__preview {
+      align-items: center;
+      background-color: material-color('grey', '50');
+      border: 1px solid material-color('grey', '100');
+      display: flex;
+      flex: 0 0 auto;
+      justify-content: center;
+      height: $nsa-preview;
+      width: $nsa-preview;
+    }
+  }
+
+  .awards-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li + li {
+      margin-top: $nsa-padding;
+    }
+  }
+
+  .grant {
+
+    &__arrow {
+      margin: 0 $nsa-padding-xs;
+    }
+
+    &__controls {
+      align-self: center;
+      flex: 0 0 auto;
+      margin-left: $nsa-padding;
+    }
+
+    &__header {
+      display: flex;
+      line-height: 1.8em;
+    }
+
+    &__preview {
+      align-self: center;
+      margin-right: $nsa-padding-xs;
+      width: 1.8em;
+    }
+
+    &__reason {
+      border-left: $nsa-padding-xxs solid material-color('grey', '200');
+      margin-bottom: $nsa-padding-xs;
+      margin-left: $nsa-padding;
+      margin-top: $nsa-padding-xs;
+      padding-left: $nsa-padding-s;
+    }
+
+    &__time {
+      display: block;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    &__title {
+      flex: 1 1 auto;
+      font-size: 1.5em;
+      font-weight: 300;
+      line-height: 1.8em;
+      margin: 0;
+    }
+
+    &__token {
+      margin: $nsa-padding-xxs $nsa-padding;
+    }
+
+    &__token-value {
+      background-color: material-color('grey', '200');
+      border-radius: 2px;
+      color: material-color('grey', '900');
+      font-size: 0.75em;
+      padding: $nsa-padding-xxs;
+    }
+
+    &__username {
+      margin-left: $nsa-padding-xxs;
+    }
+
+    &__users {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      flex-flow: row nowrap;
+    }
+  }
+
+  .grants-list {
+
+    .grants-list__item + .grants-list__item {
+      margin-top: $nsa-padding;
+    }
+
+  }
+
+  .image-manager {
+    background-color: material-color('grey', '50');
+    border: 1px solid material-color('grey', '100');
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    &__content {
+      align-items: center;
+      display: flex;
+      flex-flow: column nowrap;
+      height: 100%;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &__icon {
+      color: material-color('grey', '400');
+      cursor: pointer;
+      transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+
+    &__icon:hover {
+      color: material-color('blue', '300');
+    }
+
+    &__preview {
+      padding: $nsa-padding-xxs;
+      max-height: 100%;
+      width: auto;
+    }
+
+    &__remove {
+      position: absolute;
+      right: $nsa-padding-xxs;
+      top: $nsa-padding-xxs;
+    }
+  }
+
+  .aws-avatar {
+
+    &--big {
+      height: $nsa-avatar-big-size;
+      width: $nsa-avatar-big-size;
+    }
+
+    &__icon {
+      border-radius: 50%;
+      color: material-color('grey', '200');
+      height: 100%;
+      text-align: center;
+      width: 100%;
+
+      &--big {
+        font-size: 4rem;
+        line-height: $nsa-avatar-big-size;
+      }
+
+      &--normal {
+        font-size: 3rem;
+        line-height: $nsa-avatar-normal-size;
+      }
+
+      &--small {
+        font-size: 1.5em;
+        line-height: $nsa-avatar-small-size;
+      }
+    }
+
+    &__image {
+      border-radius: 50%;
+    }
+
+    &--normal {
+      height: $nsa-avatar-normal-size;
+      width: $nsa-avatar-normal-size;
+    }
+
+    &--small {
+      height: $nsa-avatar-small-size;
+      width: $nsa-avatar-small-size;
+    }
+  }
+
+  .aws-hidden {
+    display: none;
+  }
+
+  .donate {
+    &__paypal {
+      margin-top: $nsa-padding;
+    }
+  }
+
+  .management {
+    &__avatar {
+      align-self: center;
+      margin: $nsa-padding-xs 0;
+    }
+
+    &__details {
+      background-color: material-color('grey', '50');
+      display: flex;
+      flex: 0 1 auto;
+      flex-flow: column nowrap;
+      padding: $nsa-padding-xs;
+      min-width: $nsa-user-column;
+    }
+
+    &__grants {
+      margin-left: $nsa-padding-xxl;
+    }
+
+    &__user {
+      display: flex;
+      margin-top: $nsa-padding;
+    }
+
+  }
+
+  .panel-controls {
+    .btn + .btn {
+      margin-left: $nsa-padding-xs;
+    }
+  }
+
+  .rewarding {
+    display: flex;
+
+    &__awards {
+      flex: 1 1 60%;
+      padding-right: $nsa-padding;
+    }
+
+    &__details {
+      flex: 1 1 40%;
+    }
+
+    &__reason {
+      margin-top: $nsa-padding;
+    }
+  }
+
+  .rewards {
+    .grant + .grant {
+      margin-top: $nsa-padding;
+    }
+  }
+
+  .round-button {
+    cursor: pointer;
+
+    &__background {
+      color: material-color('grey', '400');
+      transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+
+    &__background:hover {
+      color: material-color('blue', '300');
+    }
+
+    &__background--active {
+      color: material-color('blue', '500');
+    }
+
+    &__background--danger:hover {
+      color: material-color('red', '500');
+    }
+
+    &__background--success:hover {
+      color: material-color('green', '500');
+    }
+
+    &__icon {
+      pointer-events: none;
+    }
+
+    &--animate {
+      animation: slideIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+  }
+
+  .section-loading {
+    align-items: center;
+    display: flex;
+    height: $nsa-loader-section-height;
+    justify-content: center;
+    stroke: material-color('grey', '400');
+    width: 100%;
+
+    &__animation {
+      flex: 0 0 auto;
+      height: $nsa-loader-normal-size;
+      width: $nsa-loader-normal-size;
+    }
+  }
+
+  .tab-content {
+    margin-top: $nsa-padding;
+  }
+
+  .user-details {
+    &__item {
+      font-size: 0.8em;
+      line-height: 1.2em;
+    }
+
+    &__name {
+      font-size: 1.2em;
+      font-weight: 300;
+      line-height: 2em;
+    }
+  }
+
+  .user-search {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    &__image {
+      flex: 0 0 auto;
+    }
+
+    &__item {
+      align-items: center;
+      border-left: $nsa-padding-xxs solid transparent;
+      cursor: pointer;
+      display: flex;
+      flex-flow: row nowrap;
+      padding: $nsa-padding-xs;
+
+      &--highlight {
+        background-color: material-color('blue', '50');
+        border-left: $nsa-padding-xxs solid material-color('blue', '100');
+      }
+    }
+
+    &__menu {
+      width: 100%;
+    }
+
+    &__name {
+      color: material-color('grey', '800');
+      flex: 1 1 auto;
+      font-size: 1.5em;
+      font-weight: 300;
+      line-height: normal;
+      padding-left: $nsa-padding;
+    }
+  }
+
+  .user-select-list {
+    margin: $nsa-padding 0;
+
+    .user-select-list-item + .user-select-list-item {
+      margin-top: $nsa-padding-xs;
+    }
+  }
+
+  .user-select-list-item {
+    animation: fadeIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    background-color: material-color('green', '50');
+    border-left: $nsa-padding-xxs solid material-color('green', '100');;
+    display: flex;
+    padding: $nsa-padding-xs;
+
+    &__details {
+      flex: 1 1 auto;
+      padding-left: $nsa-padding-xs;
+    }
+
+    &__info {
+      font-size: 0.8em;
+      line-height: 1.2em;
+    }
+  }
+
+}

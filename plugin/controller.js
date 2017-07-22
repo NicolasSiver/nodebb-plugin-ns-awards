@@ -1,55 +1,135 @@
 (function (Controller) {
     'use strict';
 
-    var async         = require('async'),
-        fse           = require('fs-extra'),
-        path          = require('path'),
-        util          = require('util'),
+    var async = require('async'),
+        path  = require('path'),
+        util  = require('util');
 
-        database      = require('./database'),
-        settings      = require('./settings'),
-        controller    = require('./controller'),
-        constants     = require('./constants'),
-        uploads       = require('./uploads'),
+    var constants  = require('./constants'),
+        controller = require('./controller'),
+        database   = require('./database'),
+        nodebb     = require('./nodebb'),
+        settings   = require('./settings'),
+        uploads    = require('./uploads');
 
-        nodebb        = require('./nodebb'),
-        utils         = nodebb.utils,
-        helpers       = nodebb.helpers,
+
+    var nconf         = nodebb.nconf,
+        notifications = nodebb.notifications,
         user          = nodebb.user,
-        nconf         = nodebb.nconf,
-        notifications = nodebb.notifications;
+        utils         = nodebb.utils;
 
-    Controller.awardUsers = function (payload, fromUid, done) {
-        var recipients = [],
-            awardId    = parseInt(payload.award, 10);
+    Controller.augmentGrant = function (grant, done) {
+        async.parallel({
+            award  : async.apply(Controller.getAward, grant.aid),
+            granter: async.apply(Controller.getUser, grant.fromuid),
+            grantee: async.apply(Controller.getUser, grant.uid)
+        }, function (error, results) {
+            if (error) {
+                return done(error);
+            }
 
+            done(null, Object.assign(grant, results));
+        });
+    };
+
+    Controller.awardUsers = function (awardId, fromUid, toUids, reasonText, token, done) {
         async.waterfall([
             function (callback) {
-                async.each(payload.users, function (user, next) {
-                    async.series([
-                        async.apply(database.createGrant, user.uid, awardId, payload.reason, fromUid),
-                        function (pushed) {
-                            recipients.push(user.uid);
-                            pushed();
-                        }
-                    ], next);
+                async.each(toUids, function (uid, next) {
+                    database.createGrant(uid, awardId, reasonText, fromUid, token, next);
                 }, callback);
             },
-            async.apply(database.getAward, awardId),
-            function (award, callback) {
+            function (callback) {
+                async.parallel({
+                    award   : async.apply(database.getAward, awardId),
+                    settings: async.apply(settings.get),
+                }, callback);
+            },
+            function (meta, callback) {
+                var notificationText = meta.settings.notificationText
+                    .replace(/%AWARD_NAME%/g, meta.award.name);
+
+                callback(null, notificationText)
+            },
+            function (text, callback) {
                 notifications.create({
-                    bodyShort: util.format('Congratulations! You have received "%s" award.', award.name),
-                    nid      : 'aid:' + awardId + ':uids:' + recipients.join('-'),
+                    bodyShort: text,
+                    nid      : 'aid:' + awardId + ':uids:' + toUids.join('-'),
                     aid      : awardId,
-                    from     : fromUid
+                    from     : fromUid,
+                    path     : constants.CLIENT_PAGE_PATH
                 }, callback);
             },
             function (notification, callback) {
                 if (notification) {
-                    notifications.push(notification, recipients, callback);
+                    notifications.push(notification, toUids, callback);
                 }
             }
         ], done);
+    };
+
+    Controller.createApiToken = function (name, done) {
+        database.createApiToken(name, done);
+    };
+
+    Controller.createAward = function (awardMeta, done) {
+        async.waterfall([
+            async.apply(uploads.getFileById, constants.NEW_AWARD_ID),
+            async.apply(uploads.getFinalDestination),
+            function (awardUri, next) {
+                database.createAward(
+                    awardMeta.name,
+                    awardMeta.description,
+                    // Local storage - filename
+                    // Cloud storage - fully qualified URL
+                    awardUri,
+                    next);
+            }
+        ], done);
+    };
+
+    Controller.deleteApiTokenById = function (id, done) {
+        async.waterfall([
+            async.apply(database.getApiToken, id),
+            function (tokenData, callback) {
+                if (!tokenData) {
+                    return done(new Error('API Token with id - ' + id + ' can not be found.'));
+                }
+
+                database.deleteApiToken(tokenData, callback);
+            }
+        ], done);
+    };
+
+    Controller.deleteAwardById = function (aid, done) {
+        async.waterfall([
+            async.apply(database.getAward, aid),
+            function (award, next) {
+                if (!award) {
+                    return done(new Error('Award with id - ' + aid + ' can not be found.'));
+                }
+
+                async.parallel([
+                    async.apply(uploads.deleteImage, award.image),
+                    async.apply(database.deleteAward, award.aid),
+                    async.apply(Controller.deleteAwardGrants, award.aid)
+                ], next);
+            }
+        ], done);
+    };
+
+    /**
+     * Delete Grants/Rewards associated with an award
+     *
+     * @param {number} aid award identifier
+     * @param {function} done
+     */
+    Controller.deleteAwardGrants = function (aid, done) {
+        database.getGrantIdsByAward(aid, function (error, grantIds) {
+            async.each(grantIds, function (gid, next) {
+                database.deleteGrant(gid, next);
+            }, done);
+        });
     };
 
     Controller.deleteGrantById = function (gid, done) {
@@ -70,209 +150,257 @@
     /**
      * Edit award.
      *
-     * @param aid - award identifier
-     * @param name - award name
-     * @param description - award description
-     * @param upload - optional file descriptor, to get filename, 'uploads' module should be used
-     * @param done {function}
+     * @param {number} id award identifier
+     * @param {string} name award name
+     * @param {string} description - award description
+     * @param {function} done
      */
-    Controller.editAward = function (aid, name, description, upload, done) {
-        var update = {
-            name: name,
-            desc: description
-        };
-
-        upload = upload || {};
-
+    Controller.editAward = function (id, name, description, done) {
+        var fileId = constants.FILE_PREFIX + ':' + id;
         async.waterfall([
-            async.apply(uploads.getFileById, upload.id),
-            function (file, next) {
-                if (file) {
-                    Controller.editImage(aid, file, function (error, imageName) {
-                        if (error) {
-                            return next(error);
-                        }
-                        update.image = imageName;
-                        next(null);
-                    });
-                } else {
-                    next(null);
-                }
-            },
-            async.apply(database.editAward, aid, update)
-        ], done);
-    };
-
-    Controller.editGrant = function (gid, reason, done) {
-        database.editGrant(gid, {reason: reason}, done);
-    };
-
-    /**
-     * Update image. Delete old one if any.
-     *
-     * @param aid {number} award identifier
-     * @param file {object} file descriptor from 'uploads' module
-     * @param done {function} returns image name if operation was successful
-     */
-    Controller.editImage = function (aid, file, done) {
-        async.waterfall([
-            async.apply(database.getAward, aid),
-            function (award, next) {
-                if (!award) {
-                    return next(new Error('Award can not be found'));
-                }
-
-                //Remove old image
-                fse.remove(getUploadImagePath(award.image), next);
-            },
-            async.apply(fse.copy, file.path, getUploadImagePath(file.filename)),
             function (next) {
-                next(null, file.filename);
+                async.parallel({
+                    award: async.apply(database.getAward, id),
+                    file : async.apply(uploads.getFileById, fileId)
+                }, function (error, results) {
+                    if (error) {
+                        return next(error);
+                    } else if (!results.award) {
+                        return next(new Error(util.format('Award "%d" can not be found', id)));
+                    } else if (!results.file) {
+                        return next(null, null);
+                    } else {
+                        return uploads.replaceFile(results.award.image, fileId, results.file, next);
+                    }
+                });
+            },
+            function (awardUri, next) {
+                var awardData = {name: name, desc: description};
+                if (awardUri) {
+                    awardData.image = awardUri;
+                }
+                database.editAward(id, awardData, next);
             }
         ], done);
     };
 
-    Controller.getAllAwards = function (done) {
+    Controller.getAccountWithRewards = function (account, done) {
         async.waterfall([
-            async.apply(database.getAllAwards),
-            function (awards, next) {
-                async.map(awards, function (award, next) {
-
-                    award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
-
-                    Controller.getAwardRecipients(award.aid, function (error, grants) {
+            async.apply(settings.get),
+            function (settings, callback) {
+                // Feature is disabled, Skip it.
+                if (settings.maxRewardsPerAccount === 0) {
+                    callback(null, account);
+                } else {
+                    Controller.getUserGrants(account.uid, settings.maxRewardsPerAccount, function (error, grants) {
                         if (error) {
-                            return next(error);
+                            return callback(error);
                         }
-
-                        award.grants = grants;
-                        next(null, award);
+                        callback(null, Object.assign(account, {nsRewards: grants}));
                     });
-                }, function (error, awards) {
+                }
+            }
+        ], done);
+    };
+
+    Controller.getAward = function (aid, done) {
+        async.waterfall([
+            async.apply(database.getAward, aid),
+            function (award, callback) {
+                uploads.getImageUrl(award.image, function (error, url) {
                     if (error) {
-                        return next(error);
+                        return callback(error);
                     }
-
-                    next(null, {
-                        awards     : awards,
-                        breadcrumbs: helpers.buildBreadcrumbs([{text: 'Awards'}])
-                    });
+                    callback(null, Object.assign(award, {url: url}));
                 });
             }
         ], done);
     };
 
-    Controller.getAwardRecipients = function (aid, done) {
+    Controller.getAwardGrantees = function (aid, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByAward, aid),
-            function (grantIds, next) {
-                grantIds = grantIds || [];
-                database.getGrantsByIds(grantIds, next);
+            function (grantIds, callback) {
+                database.getGrantsByIds(grantIds, callback);
             },
-            function (grants, next) {
+            function (grants, callback) {
                 async.map(grants, function (grant, next) {
-                    user.getUserFields(grant.uid, ['username', 'userslug'], function (error, user) {
+                    Controller.getUser(grant.uid, function (error, user) {
                         if (error) {
                             return next(error);
                         }
-                        grant.user = user;
-                        next(null, grant);
+                        next(null, user);
                     });
-                }, next);
+                }, callback);
             }
         ], done);
     };
 
-    Controller.getAwardsTopic = function (payload, done) {
+    Controller.getApiTokens = function (done) {
+        database.getApiTokens(true, -1, done);
+    };
+
+    Controller.getAwards = function (done) {
+        async.waterfall([
+            async.apply(database.getAwards, true),
+            function (awards, callback) {
+                async.map(awards, function (award, next) {
+                    uploads.getImageUrl(award.image, function (error, url) {
+                        if (error) {
+                            return next(error);
+                        }
+                        next(null, Object.assign(award, {url: url}));
+                    });
+                }, callback);
+            }
+        ], done);
+    };
+
+    Controller.getAwardsWithGrantees = function (done) {
+        async.waterfall([
+            async.apply(Controller.getAwards),
+            function (awards, callback) {
+                async.map(awards, function (award, next) {
+                    async.waterfall([
+                        async.apply(Controller.getAwardGrantees, award.aid),
+                        function (users, callback) {
+                            Controller.uniqueUsers(users, function (error, unique) {
+                                if (error) {
+                                    return callback(error);
+                                }
+                                callback(null, users, unique);
+                            });
+                        }, function (users, usersUnique, callback) {
+                            callback(null, Object.assign(award, {
+                                grantees      : users,
+                                granteesUnique: usersUnique
+                            }));
+                        }
+                    ], next);
+                }, callback);
+            }
+        ], done);
+    };
+
+    Controller.getConfig = function (done) {
+        var uploadPath = path.join(
+            nconf.get('relative_path'),
+            constants.API_PATH,
+            constants.PLUGIN_PATH,
+            constants.IMAGE_SERVICE_PATH
+        );
+        done(null, {
+            uploadPath: uploadPath
+        });
+    };
+
+    Controller.getGrants = function (done) {
         async.waterfall([
             async.apply(settings.get),
-            function (settings, postsDidProcess) {
-                if (settings.renderTopic) {
+            function (settings, callback) {
+                database.getGrants(true, settings.activityLimit, callback);
+            },
+            function (grants, callback) {
+                async.map(grants, function (grant, next) {
+                    Controller.augmentGrant(grant, next);
+                }, function (error, result) {
+                    if (error) {
+                        return callback(error);
+                    }
 
-                    async.map(payload.posts, function (post, next) {
+                    callback(null, {grants: result});
+                });
+            }
+        ], done);
+    };
 
-                        Controller.getUserAwards(post.uid, settings.maxAwardsTopic, function (error, grants) {
+    Controller.getPostsWithRewards = function (posts, done) {
+        async.waterfall([
+            async.apply(settings.get),
+            function (settings, callback) {
+                // Feature is disabled, Skip it.
+                if (settings.maxRewardsPerPost === 0) {
+                    callback(null, posts);
+                } else {
+                    async.map(posts, function (post, next) {
+                        Controller.getUserGrants(post.uid, settings.maxRewardsPerPost, function (error, grants) {
                             if (error) {
                                 return next(error);
                             }
-                            post.grants = grants;
-                            next(null, post);
+                            next(null, Object.assign(post, {nsRewards: grants}));
                         });
-                    }, function (error, postsWithGrants) {
-                        if (error) {
-                            return postsDidProcess(error);
-                        }
-                        payload.posts = postsWithGrants;
-                        postsDidProcess(null, payload);
-                    });
-
-                } else {
-                    //Skip render
-                    postsDidProcess(null, payload);
+                    }, callback);
                 }
             }
         ], done);
     };
 
-    Controller.getUserAwards = function (uid, limit, done) {
+    Controller.getUser = function (uid, done) {
+        user.getUserFields(uid, ['uid', 'picture', 'username', 'userslug'], done);
+    };
+
+    Controller.getUserGrants = function (uid, limit, done) {
         async.waterfall([
             async.apply(database.getGrantIdsByUser, uid, limit),
-            function (grantIds, next) {
+            function (grantIds, callback) {
                 if (!grantIds) {
-                    return next(null, []);
+                    return callback(null, []);
                 }
 
-                database.getGrantsByIds(grantIds, next);
+                database.getGrantsByIds(grantIds, callback);
             },
-            function (grants, next) {
+            function (grants, callback) {
                 async.map(grants, function (grant, next) {
-
-                    grant.createtimeiso = utils.toISOString(grant.createtime);
-
-                    async.parallel({
-                        award: async.apply(database.getAward, grant.aid),
-                        user : async.apply(user.getUserFields, grant.fromuid, ['username', 'userslug'])
-                    }, function (error, result) {
-                        if (error) {
-                            return next(error);
-                        }
-
-                        var award = result.award, user = result.user;
-
-                        award.picture = nconf.get('upload_url') + constants.UPLOAD_DIR + '/' + award.image;
-
-                        grant.award = award;
-                        grant.fromuser = user;
-                        next(null, grant);
-                    });
-                }, next);
+                    Controller.augmentGrant(grant, next);
+                }, callback);
             }
         ], done);
     };
 
-    Controller.saveValidSettings = function (data, done) {
-        settings.get(function (error, values) {
-            if (error) {
-                return done(error);
+    Controller.saveSettings = function (data, done) {
+        async.waterfall([
+            async.apply(settings.filterKnownProperties, data),
+            function (validFields, callback) {
+                settings.validate(validFields, callback);
+            },
+            function (validData, callback) {
+                settings.save(validData, callback);
             }
-            var newSettings = getValidFields(values, data);
-            settings.save(newSettings, done);
-        });
-
+        ], done);
     };
 
-    function getValidFields(fields, object) {
-        var shallowCopy = {};
-        for (var field in fields) {
-            if (field in object) {
-                shallowCopy[field] = object[field];
+    Controller.uniqueUsers = function (users, done) {
+        var i, user;
+        var sorted = users.slice();
+        var len = users.length, result = [], currentUid = null, uniqueUser = null;
+
+        function incrementCount(user, field) {
+            var count = user[field];
+            if (count === undefined) {
+                user[field] = 1;
+            } else {
+                user[field] = ++count;
             }
         }
-        return shallowCopy;
-    }
 
-    function getUploadImagePath(fileName) {
-        return path.join(nconf.get('base_dir'), nconf.get('upload_path'), constants.UPLOAD_DIR, fileName);
-    }
+        sorted.sort(function (userA, userB) {
+            return userB.uid - userA.uid;
+        });
+
+        for (i = 0; i < len; ++i) {
+            user = sorted[i];
+
+            if (currentUid !== user.uid) {
+                uniqueUser = Object.assign({}, user);
+                currentUid = uniqueUser.uid;
+                incrementCount(uniqueUser, 'duplicateCount');
+                result.push(uniqueUser);
+            } else {
+                incrementCount(uniqueUser, 'duplicateCount');
+            }
+        }
+
+        done(null, result);
+    };
 
 })(module.exports);

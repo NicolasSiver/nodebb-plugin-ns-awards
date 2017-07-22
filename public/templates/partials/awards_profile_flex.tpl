@@ -1,13 +1,11 @@
-<!-- IF awards.length -->
-<div class="awards-flex">
+<!-- IF nsRewards.length -->
+<div class="ns-awards-profile">
 
-        <div class="awards-container">
-            <!-- BEGIN awards -->
-                    <div class="award-image">
-                        <img title class="teaser-pic img-responsive" src="{awards.award.picture}" data-original-title="{awards.award.name}"/>
-                    </div>
-            <!-- END awards -->
-        </div>
+    <!-- BEGIN nsRewards -->
+            <div class="ns-awards-profile__image">
+                <img title class="teaser-pic img-responsive" src="{nsRewards.award.url}" data-original-title="{nsRewards.award.name}"/>
+            </div>
+    <!-- END nsRewards -->
 
 </div>
-<!-- ENDIF awards.length -->
+<!-- ENDIF nsRewards.length -->

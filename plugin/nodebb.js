@@ -7,6 +7,7 @@
         emitter      : NodeBB.require('./src/emitter'),
         meta         : NodeBB.require('./src/meta'),
         notifications: NodeBB.require('./src/notifications'),
+        plugins      : NodeBB.require('./src/plugins'),
         pluginSockets: NodeBB.require('./src/socket.io/plugins'),
         postTools    : NodeBB.require('./src/posts/tools'),
         settings     : NodeBB.require('./src/settings'),
@@ -27,7 +28,7 @@
          * url: 'http://localhost:4567',
          * core_templates_path: '/path/to/NodeBB/src/views',
          * base_templates_path: '/path/to/NodeBB/node_modules/nodebb-theme-vanilla/templates',
-         * upload_path: '/public/uploads',
+         * upload_path: '/public/uploads', v1.4.4+ It's an absolute path to upload dir
          * relative_path: '',
          * port: '4567',
          * upload_url: '/uploads/',

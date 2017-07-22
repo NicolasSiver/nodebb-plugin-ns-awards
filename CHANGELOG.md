@@ -1,5 +1,30 @@
 # Changelog
 
+## v4.0.0 - 07/22/2017
+
+- Add an edit mode for multiple awards
+- Add support for plugin driven image upload
+- Add rewards section to ACP
+- Add protection for an image upload service
+- Add activity limit setting
+- Add configuration for notification text
+- Add reward multiplier for overview page
+- Add external Plugin API
+- Add tooltips to a topic view
+- Add support for SVG
+- Change UX for the creation of awards
+- Change UX for Overview section
+- Change award URL to use an absolute path
+- Change award upload
+- Change NodeBB compatibility to v1.5.x and higher
+- Change notifications
+- Change max rewards per post setting
+- Change max rewards per account setting
+- Change overview page styles to use Flexbox
+- Update plugin dependencies
+- Update ACP dependencies
+- Remove extended profile template
+
 ## v3.0.0 - 03/16/2016
 
 - Compatibility with NodeBB v1.x

@@ -1,179 +1,334 @@
-/*---------------------------------------------------
-    LESS Elements 0.9
-  ---------------------------------------------------
-    A set of useful LESS mixins
-    More info at: http://lesselements.com
-  ---------------------------------------------------*/
-.manage-awards .tab-content {
-  margin-top: 16px;
-}
-.manage-awards .awards-granted {
-  display: flex;
-  flex-flow: row wrap;
-}
-.manage-awards .awards-granted .award-badge {
-  width: 24px;
-  height: 24px;
-  margin: 4px;
-  cursor: pointer;
-}
-.manage-awards .users-list .no-users {
-  padding: 16px 0;
-}
-.manage-awards .users-list .user {
-  position: relative;
-  display: flex;
-  flex-flow: row nowrap;
-  padding: 16px 0;
-}
-.manage-awards .users-list .user .avatar-overlay {
-  position: relative;
-}
-.manage-awards .users-list .user .award-overlay {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  top: 16px;
-  left: 16px;
-}
-.manage-awards .users-list .user .overlay-active .aw-avatar {
-  opacity: 0.1;
-}
-.manage-awards .users-list .user .aw-avatar {
-  width: 64px;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.6, 1);
-}
-.manage-awards .users-list .user .aw-avatar .aw-icon {
-  width: 100%;
-  height: 64px;
-  line-height: 64px;
-  font-size: 4rem;
-  color: #eeeeee;
-  text-align: center;
-}
-.manage-awards .users-list .user .details {
-  display: flex;
-  flex-flow: column;
-  flex: 1 1 auto;
-  margin-left: 16px;
-}
-.manage-awards .users-list .user .details h5 {
-  font-size: 1.2em;
-  margin-top: 0;
-}
-.manage-awards .users-list .user .details .stats {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-}
-.manage-awards .users-list .user .details p {
-  margin: 0;
-}
-.manage-awards .users-list .user .user-close {
-  position: absolute;
-  top: 16px;
-  right: 0;
-}
-.awards-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.awards-list .awards-item .award-edit {
-  margin-bottom: 16px;
-}
-.awards-list .awards-item .award-edit input {
-  margin-bottom: 8px;
-}
-.awards-list .awards-item .item-controls i + i {
-  margin-left: 8px;
-}
-.panel-controls {
-  margin-top: 16px;
-}
-.panel-controls .btn + .btn {
-  margin-left: 4px;
-}
-.award-preview {
-  width: 48px;
-  height: 48px;
-}
-.award-image-edit {
-  position: relative;
-  width: 48px;
-  height: 48px;
-}
-.award-image-edit img {
-  position: absolute;
-  opacity: 0.8;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-.award-image-edit i {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-.award-upload-icon {
-  font-size: 48px;
-  cursor: pointer;
-  color: #e0e0e0;
-}
-.grant-award-form .auto-complete {
-  margin-bottom: 16px;
-}
-.grant-award-form .selected-users {
-  margin: 8px 0;
-}
-.grant-award-form .selected-users .row {
-  background-color: #fafafa;
-}
-.grant-award-form .selected-users .row + .row {
-  margin-top: 8px;
-}
-.grant-award-form .selected-users .media .media-left img {
-  display: block;
-  max-width: 48px;
-  height: auto;
-}
-.grant-award-form .selected-users .media dl {
-  margin-bottom: 0;
-}
-.grant-award-form .selected-users .fa {
-  margin: 8px 8px 0 0;
-}
-.auto-complete {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-.auto-complete .ac-menu {
-  width: 100%;
-}
-.auto-complete .ac-selected {
-  background-color: #e1f5fe;
-}
-.auto-complete .hover-item {
-  background-color: #c8e6c9;
-}
-.icon-control {
-  font-size: 1.5em;
-  cursor: pointer;
-  color: #757575;
-}
-.icon-danger {
-  color: #ef5350;
-}
-.icon-ok {
-  color: #66bb6a;
-}
-.icon-disabled {
-  color: #eeeeee;
-  cursor: auto;
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes slideIn {
+  from {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0; }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1; } }
+
+/**
+ * Retrieves a color value from the $material-colors Sass map
+ * Inspired by https://github.com/nilskaspersson/Google-Material-UI-Color-Palette/
+ *
+ * @function
+ * @param {string} color-name             - quoted, lower-case, dasherized color
+ *                                          name (e.g. 'pink', 'amber')
+ * @param {string} [color-variant='500']  - quoted, lowercase color variant (e.g.
+ *                                          '200', 'a100')
+ */
+.manage-awards {
+  font-size: 14px; }
+  .manage-awards .api-tokens-list {
+    margin-top: 28px; }
+    .manage-awards .api-tokens-list__body {
+      margin-top: 8px; }
+    .manage-awards .api-tokens-list__item {
+      align-items: baseline;
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 16px 0; }
+      .manage-awards .api-tokens-list__item-controls {
+        flex: 0 0 auto; }
+      .manage-awards .api-tokens-list__item-name {
+        flex: 0 0 30%;
+        font-size: 1.2em;
+        font-weight: 300; }
+      .manage-awards .api-tokens-list__item-value {
+        flex: 1 1 auto;
+        padding: 0 8px; }
+  .manage-awards .award-form__image {
+    height: 88px;
+    width: 100%; }
+  .manage-awards .award-picker .award-picker-item + .award-picker-item {
+    margin-top: 4px; }
+  .manage-awards .award-picker-item {
+    cursor: pointer;
+    display: flex;
+    height: 48px;
+    overflow: hidden; }
+    .manage-awards .award-picker-item__body {
+      border-bottom: 1px solid transparent;
+      border-left: 4px solid transparent;
+      border-right: 1px solid transparent;
+      border-top: 1px solid transparent;
+      display: flex;
+      flex: 1 1 auto;
+      flex-flow: row nowrap;
+      transition: background-color 0.25s cubic-bezier(0.42, 0, 0.58, 1); }
+      .manage-awards .award-picker-item__body--selected {
+        background-color: #e3f2fd;
+        border-bottom: 1px solid #90caf9;
+        border-left: 4px solid #90caf9;
+        border-right: 1px solid #90caf9;
+        border-top: 1px solid #90caf9; }
+    .manage-awards .award-picker-item__details {
+      flex: 1 1 auto;
+      padding-left: 8px; }
+    .manage-awards .award-picker-item__description {
+      line-height: 23px;
+      font-size: 0.8em; }
+    .manage-awards .award-picker-item__pin {
+      fill: #90caf9;
+      flex: 0 0 auto;
+      width: 8px; }
+    .manage-awards .award-picker-item__preview {
+      flex: 0 0 auto;
+      height: 100%;
+      padding: 4px;
+      width: 46px; }
+    .manage-awards .award-picker-item__title {
+      line-height: 23px; }
+  .manage-awards .awards-about__details {
+    color: #757575; }
+  .manage-awards .awards-about__header {
+    display: flex;
+    flex-flow: row nowrap; }
+  .manage-awards .awards-about__icon {
+    flex: 0 0 auto; }
+  .manage-awards .awards-about__title {
+    color: #424242;
+    flex: 1 1 auto;
+    font-size: 1.5em;
+    font-weight: 300;
+    line-height: normal;
+    margin-bottom: 16px; }
+  .manage-awards .awards-item {
+    display: flex;
+    flex-flow: row nowrap; }
+    .manage-awards .awards-item__info {
+      flex: 1 1 auto;
+      margin: 0 16px; }
+    .manage-awards .awards-item__image {
+      padding: 4px;
+      max-width: 100%;
+      height: auto; }
+    .manage-awards .awards-item__preview {
+      align-items: center;
+      background-color: #fafafa;
+      border: 1px solid #f5f5f5;
+      display: flex;
+      flex: 0 0 auto;
+      justify-content: center;
+      height: 88px;
+      width: 88px; }
+  .manage-awards .awards-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0; }
+    .manage-awards .awards-list li + li {
+      margin-top: 16px; }
+  .manage-awards .grant__arrow {
+    margin: 0 8px; }
+  .manage-awards .grant__controls {
+    align-self: center;
+    flex: 0 0 auto;
+    margin-left: 16px; }
+  .manage-awards .grant__header {
+    display: flex;
+    line-height: 1.8em; }
+  .manage-awards .grant__preview {
+    align-self: center;
+    margin-right: 8px;
+    width: 1.8em; }
+  .manage-awards .grant__reason {
+    border-left: 4px solid #eeeeee;
+    margin-bottom: 8px;
+    margin-left: 16px;
+    margin-top: 8px;
+    padding-left: 12px; }
+  .manage-awards .grant__time {
+    display: block;
+    font-size: 0.9em;
+    opacity: 0.8; }
+  .manage-awards .grant__title {
+    flex: 1 1 auto;
+    font-size: 1.5em;
+    font-weight: 300;
+    line-height: 1.8em;
+    margin: 0; }
+  .manage-awards .grant__token {
+    margin: 4px 16px; }
+  .manage-awards .grant__token-value {
+    background-color: #eeeeee;
+    border-radius: 2px;
+    color: #212121;
+    font-size: 0.75em;
+    padding: 4px; }
+  .manage-awards .grant__username {
+    margin-left: 4px; }
+  .manage-awards .grant__users {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    flex-flow: row nowrap; }
+  .manage-awards .grants-list .grants-list__item + .grants-list__item {
+    margin-top: 16px; }
+  .manage-awards .image-manager {
+    background-color: #fafafa;
+    border: 1px solid #f5f5f5;
+    height: 100%;
+    position: relative;
+    width: 100%; }
+    .manage-awards .image-manager__content {
+      align-items: center;
+      display: flex;
+      flex-flow: column nowrap;
+      height: 100%;
+      justify-content: center;
+      width: 100%; }
+    .manage-awards .image-manager__icon {
+      color: #bdbdbd;
+      cursor: pointer;
+      transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+    .manage-awards .image-manager__icon:hover {
+      color: #64b5f6; }
+    .manage-awards .image-manager__preview {
+      padding: 4px;
+      max-height: 100%;
+      width: auto; }
+    .manage-awards .image-manager__remove {
+      position: absolute;
+      right: 4px;
+      top: 4px; }
+  .manage-awards .aws-avatar--big {
+    height: 80px;
+    width: 80px; }
+  .manage-awards .aws-avatar__icon {
+    border-radius: 50%;
+    color: #eeeeee;
+    height: 100%;
+    text-align: center;
+    width: 100%; }
+    .manage-awards .aws-avatar__icon--big {
+      font-size: 4rem;
+      line-height: 80px; }
+    .manage-awards .aws-avatar__icon--normal {
+      font-size: 3rem;
+      line-height: 48px; }
+    .manage-awards .aws-avatar__icon--small {
+      font-size: 1.5em;
+      line-height: 24px; }
+  .manage-awards .aws-avatar__image {
+    border-radius: 50%; }
+  .manage-awards .aws-avatar--normal {
+    height: 48px;
+    width: 48px; }
+  .manage-awards .aws-avatar--small {
+    height: 24px;
+    width: 24px; }
+  .manage-awards .aws-hidden {
+    display: none; }
+  .manage-awards .donate__paypal {
+    margin-top: 16px; }
+  .manage-awards .management__avatar {
+    align-self: center;
+    margin: 8px 0; }
+  .manage-awards .management__details {
+    background-color: #fafafa;
+    display: flex;
+    flex: 0 1 auto;
+    flex-flow: column nowrap;
+    padding: 8px;
+    min-width: 160px; }
+  .manage-awards .management__grants {
+    margin-left: 28px; }
+  .manage-awards .management__user {
+    display: flex;
+    margin-top: 16px; }
+  .manage-awards .panel-controls .btn + .btn {
+    margin-left: 8px; }
+  .manage-awards .rewarding {
+    display: flex; }
+    .manage-awards .rewarding__awards {
+      flex: 1 1 60%;
+      padding-right: 16px; }
+    .manage-awards .rewarding__details {
+      flex: 1 1 40%; }
+    .manage-awards .rewarding__reason {
+      margin-top: 16px; }
+  .manage-awards .rewards .grant + .grant {
+    margin-top: 16px; }
+  .manage-awards .round-button {
+    cursor: pointer; }
+    .manage-awards .round-button__background {
+      color: #bdbdbd;
+      transition: color 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+    .manage-awards .round-button__background:hover {
+      color: #64b5f6; }
+    .manage-awards .round-button__background--active {
+      color: #2196f3; }
+    .manage-awards .round-button__background--danger:hover {
+      color: #f44336; }
+    .manage-awards .round-button__background--success:hover {
+      color: #4caf50; }
+    .manage-awards .round-button__icon {
+      pointer-events: none; }
+    .manage-awards .round-button--animate {
+      animation: slideIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  .manage-awards .section-loading {
+    align-items: center;
+    display: flex;
+    height: 272px;
+    justify-content: center;
+    stroke: #bdbdbd;
+    width: 100%; }
+    .manage-awards .section-loading__animation {
+      flex: 0 0 auto;
+      height: 48px;
+      width: 48px; }
+  .manage-awards .tab-content {
+    margin-top: 16px; }
+  .manage-awards .user-details__item {
+    font-size: 0.8em;
+    line-height: 1.2em; }
+  .manage-awards .user-details__name {
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 2em; }
+  .manage-awards .user-search {
+    position: relative;
+    display: inline-block;
+    width: 100%; }
+    .manage-awards .user-search__image {
+      flex: 0 0 auto; }
+    .manage-awards .user-search__item {
+      align-items: center;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 8px; }
+      .manage-awards .user-search__item--highlight {
+        background-color: #e3f2fd;
+        border-left: 4px solid #bbdefb; }
+    .manage-awards .user-search__menu {
+      width: 100%; }
+    .manage-awards .user-search__name {
+      color: #424242;
+      flex: 1 1 auto;
+      font-size: 1.5em;
+      font-weight: 300;
+      line-height: normal;
+      padding-left: 16px; }
+  .manage-awards .user-select-list {
+    margin: 16px 0; }
+    .manage-awards .user-select-list .user-select-list-item + .user-select-list-item {
+      margin-top: 8px; }
+  .manage-awards .user-select-list-item {
+    animation: fadeIn 0.3s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    background-color: #e8f5e9;
+    border-left: 4px solid #c8e6c9;
+    display: flex;
+    padding: 8px; }
+    .manage-awards .user-select-list-item__details {
+      flex: 1 1 auto;
+      padding-left: 8px; }
+    .manage-awards .user-select-list-item__info {
+      font-size: 0.8em;
+      line-height: 1.2em; }
