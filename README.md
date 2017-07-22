@@ -19,6 +19,7 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 - [Filters](#filters)
 - [Styling](#styling)
   - [Overview Page](#overview-page)
+  - [Profile View](#profile-view)
   - [Topic View](#topic-view)
 - [API](#api)
   - [`filter:ns.awards.getAwards`](#filternsawardsgetawards)
@@ -79,9 +80,24 @@ Key CSS Classes:
 - `ns-awards-overview__image`, since award image is responsive, it's possible to adjust a width of image container
 - `ns-awards-overview__users`, list of the awarded users
 
+### Profile View
+
+Account/Profile page can include awards. 
+
+Key CSS Classes:
+
+- `ns-awards-profile`, container, uses Flexbox
+- `ns-awards-profile__image`, image representation of the award
+
 ### Topic View
 
-...
+Every post in the topic view can include awards.
+
+Key CSS Classes:
+
+- `ns-awards-topic`, container, uses Flexbox
+- `ns-awards-topic__item`, holder for the award
+- `ns-awards-topic__image`, image representation of the award
 
 ## API
 
