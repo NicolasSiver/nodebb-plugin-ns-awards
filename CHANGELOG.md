@@ -1,5 +1,9 @@
 # Changelog
 
+## v5.0.1 - 11/29/2018
+
+- Changed NodeBB compatibility to enforce version compatibility to v1.11.0 only
+
 ## v5.0.0 - 11/29/2018
 
 - Changed to be compatible with NodeBB v1.11.0
