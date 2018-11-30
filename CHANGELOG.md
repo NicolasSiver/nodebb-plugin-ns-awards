@@ -1,5 +1,10 @@
 # Changelog
 
+## v5.0.0 - 11/29/2018
+
+- Changed to be compatible with NodeBB v1.11.0
+- Removed NodeBB Core Emitter dependency
+
 ## v4.0.0 - 07/22/2017
 
 - Add an edit mode for multiple awards
