@@ -4,7 +4,6 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 
 ![Version](https://img.shields.io/npm/v/nodebb-plugin-ns-awards.svg)
 ![Dependencies](https://david-dm.org/NicolasSiver/nodebb-plugin-ns-awards.svg)
-[![bitHound Score](https://www.bithound.io/github/NicolasSiver/nodebb-plugin-ns-awards/badges/score.svg?)](https://www.bithound.io/github/NicolasSiver/nodebb-plugin-ns-awards)
 ![Code Climate](https://img.shields.io/codeclimate/github/NicolasSiver/nodebb-plugin-ns-awards.svg)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
