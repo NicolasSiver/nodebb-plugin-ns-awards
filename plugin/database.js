@@ -225,7 +225,7 @@
     };
 
     Database.getGrantIdsByUser = function (uid, limit, done) {
-        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, limit - 1, done);
+        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, Math.max(limit - 1, -1), done);
     };
 
     Database.getGrantsByIds = function (ids, done) {
