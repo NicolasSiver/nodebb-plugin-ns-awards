@@ -1,5 +1,11 @@
 # Changelog
 
+## v5.1.0 - 12/24/2018
+
+- Changed all core dependencies to use the latest secure versions
+- Changed ACP Management layout to take all available width
+- Fixed NodeBB database requests without a limit (kudos to Marek Dorda) 
+
 ## v5.0.1 - 11/29/2018
 
 - Changed NodeBB compatibility to enforce version compatibility to v1.11.0 only
