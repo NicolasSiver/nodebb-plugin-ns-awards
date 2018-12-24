@@ -173,7 +173,7 @@
 
     Database.getApiTokens = function (reverse, limit, done) {
         async.waterfall([
-            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':apiTokens', 0, limit - 1),
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':apiTokens', 0, Database.getLimit(limit)),
             function (ids, next) {
                 if (ids.length === 0) {
                     return next(null, []);
@@ -205,9 +205,8 @@
     };
 
     Database.getGrants = function (reverse, limit, done) {
-        // Note: NodeBB internal API always has a limit +1, i.e. if limit is 2, it will be 3.
         async.waterfall([
-            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, limit - 1),
+            async.apply((reverse ? db.getSortedSetRevRange : db.getSortedSetRange), namespace + ':grants', 0, Database.getLimit(limit)),
             function (gids, next) {
                 if (gids.length === 0) {
                     return next(null, []);
@@ -225,13 +224,27 @@
     };
 
     Database.getGrantIdsByUser = function (uid, limit, done) {
-        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, limit - 1, done);
+        db.getSortedSetRevRange(namespace + ':user:' + uid, 0, Database.getLimit(limit), done);
     };
 
     Database.getGrantsByIds = function (ids, done) {
         db.getObjects(ids.map(function (gid, index) {
             return namespace + ':grant:' + gid;
         }), done);
+    };
+
+    Database.getLimit = function (limit) {
+        var result;
+
+        if (limit === -1) {
+            // Prevent limit to be less than -1, otherwise NodeBB will try to reverse the collection with the negative limit
+            result = limit;
+        } else {
+            // NodeBB internal API always has a limit +1, i.e. if limit is 2, it will be 3.
+            result = limit - 1;
+        }
+
+        return result;
     };
 
 })(module.exports);
