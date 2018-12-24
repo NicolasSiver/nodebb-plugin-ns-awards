@@ -1,21 +1,26 @@
 # Changelog
 
-## v5.1.0 - 12/24/2018
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [5.1.0] - 2018-12-24
 
 - Changed all core dependencies to use the latest secure versions
 - Changed ACP Management layout to take all available width
 - Fixed NodeBB database requests without a limit (kudos to Marek Dorda) 
 
-## v5.0.1 - 11/29/2018
+## [5.0.1] - 2018-11-29
 
 - Changed NodeBB compatibility to enforce version compatibility to v1.11.0 only
 
-## v5.0.0 - 11/29/2018
+## [5.0.0] - 2018-11-29
 
 - Changed to be compatible with NodeBB v1.11.0
 - Removed NodeBB Core Emitter dependency
 
-## v4.0.0 - 07/22/2017
+## [4.0.0] - 2017-07-22
 
 - Add an edit mode for multiple awards
 - Add support for plugin driven image upload
@@ -40,56 +45,56 @@
 - Update ACP dependencies
 - Remove extended profile template
 
-## v3.0.0 - 03/16/2016
+## [3.0.0] - 2016-03-16
 
 - Compatibility with NodeBB v1.x
 - Use of relative path for award uploading
 - Show error messages for new awards uploads
 
-## v2.1.0 - 01/2/2016
+## [2.1.0] - 2016-01-02
 
-- Update user delete hook to `static:user.delete`
-- Fix #6 issue with limit when user is deleted
-- Improve Autocomplete component: clear search result
-- Introduce Manage section: ability to reward multiple users; manage user's awards;
-- Updated libraries for ACP
+- Added ACP Manage section with an ability to reward multiple users and manage user's awards
+- Changed user delete hook to `static:user.delete`
+- Changed autocomplete component to clear search results
+- Changed ACP dependencies
+- Fixed an issue with a limit when user is deleted
 
-## v2.0.1 - 12/15/2015
+## [2.0.1] - 2015-12-15
 
-- User search now works with only 2 characters
+- Changed user search to work with only 2 characters
 
-## v2.0.0 - 12/9/2015
+## [2.0.0] - 2015-12-09
 
-- Compatibility with NodeBB 0.9.x
-- Fresh look for the ACP
-- Updated awards upload component
-- Introduced new flex template for Profile Import
+- Added new flex template for the profile import
+- Changed compatibility with NodeBB v0.9.x
+- Changed ACP UI completely
+- Changed image upload component
 
-## v1.3.1 - 09/21/2015
+## [1.3.1] - 2015-09-21
 
 - Changed upload script
 
-## v1.3.0 - 09/20/2015
+## [1.3.0] - 2015-09-20
 
-- Improved Autocomplete widget, selection should be easier
-- Small UI adaptation for NodeBB v0.8: colors, layout
-- Added notifications, when award is granted
+- Added notifications for the granted awards
+- Changed autocomplete widget to make selection easier
+- Changed ACP UI to adapt for NodeBB v0.8.x colors and layout
 
-## v1.2.0 - 05/12/2015
+## [1.2.0] - 2015-05-12
 
-- Added Settings
-- Settings: Topic render flag, max awards in topic
-- Awards now available in Topic View
+- Added ACP Settings page
+- Added rendering hooks for awards to be available in topic view
+- Added new settings fields for topic rendering and max awards per topic
 
-## v1.1.0 - 05/10/2015
+## [1.1.0] - 2015-05-10
 
-- Remove debug script from admin panel
 - Added ability to edit award image
+- Removed debug script from admin panel
 
-## v1.0.1 - 05/08/2015
+## [1.0.1] - 2015-05-08
 
-- Use RequireJS for admin script
+- Changed ACP to use RequireJS
 
-## v1.0.0 - 05/06/2015
+## [1.0.0] - 2015-05-06
 
-- Very first release
+- Added the very first release
