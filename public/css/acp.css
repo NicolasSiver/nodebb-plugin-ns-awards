@@ -237,6 +237,7 @@
     padding: 8px;
     min-width: 160px; }
   .manage-awards .management__grants {
+    flex: 1 1 auto;
     margin-left: 28px; }
   .manage-awards .management__user {
     display: flex;
