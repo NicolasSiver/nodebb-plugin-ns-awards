@@ -5,18 +5,16 @@
         path  = require('path'),
         util  = require('util');
 
-    var constants  = require('./constants'),
-        controller = require('./controller'),
-        database   = require('./database'),
-        nodebb     = require('./nodebb'),
-        settings   = require('./settings'),
-        uploads    = require('./uploads');
+    var constants = require('./constants'),
+        database  = require('./database'),
+        nodebb    = require('./nodebb'),
+        settings  = require('./settings'),
+        uploads   = require('./uploads');
 
 
     var nconf         = nodebb.nconf,
         notifications = nodebb.notifications,
-        user          = nodebb.user,
-        utils         = nodebb.utils;
+        user          = nodebb.user;
 
     Controller.augmentGrant = function (grant, done) {
         async.parallel({

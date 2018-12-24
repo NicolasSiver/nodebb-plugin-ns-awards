@@ -7,9 +7,8 @@
         path   = require('path'),
         uuidv4 = require('uuid/v4');
 
-    var constants  = require('./constants'),
-        controller = require('./controller'),
-        nodebb     = require('./nodebb');
+    var constants = require('./constants'),
+        nodebb    = require('./nodebb');
 
     var files   = {},
         nconf   = nodebb.nconf,
