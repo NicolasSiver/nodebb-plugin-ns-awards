@@ -13,43 +13,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.0.1] - 2018-11-29
 
-- Changed NodeBB compatibility to enforce version compatibility to v1.11.0 only
+- Changed compatibility with NodeBB to enforce version compatibility to v1.11.0 only
 
 ## [5.0.0] - 2018-11-29
 
-- Changed to be compatible with NodeBB v1.11.0
-- Removed NodeBB Core Emitter dependency
+- Changed compatibility with NodeBB v1.11.x
+- Removed NodeBB Core emitter dependency
 
 ## [4.0.0] - 2017-07-22
 
-- Add an edit mode for multiple awards
-- Add support for plugin driven image upload
-- Add rewards section to ACP
-- Add protection for an image upload service
-- Add activity limit setting
-- Add configuration for notification text
-- Add reward multiplier for overview page
-- Add external Plugin API
-- Add tooltips to a topic view
-- Add support for SVG
-- Change UX for the creation of awards
-- Change UX for Overview section
-- Change award URL to use an absolute path
-- Change award upload
-- Change NodeBB compatibility to v1.5.x and higher
-- Change notifications
-- Change max rewards per post setting
-- Change max rewards per account setting
-- Change overview page styles to use Flexbox
-- Update plugin dependencies
-- Update ACP dependencies
-- Remove extended profile template
+- Added an edit mode for multiple awards
+- Added support for plugin driven image upload
+- Added ACP Rewards page
+- Added protection for an image upload service
+- Added activity limit setting
+- Added configuration for notification text
+- Added reward multiplier for overview page
+- Added external Plugin API
+- Added tooltips to a topic view
+- Added support for SVG
+- Changed user experience for the creation of awards
+- Changed user experience for ACP Overview page
+- Changed award URL to use an absolute path
+- Changed award upload
+- Changed compatibility with NodeBB v1.5.x
+- Changed notifications
+- Changed max rewards per post setting
+- Changed max rewards per account setting
+- Changed ACP Overview page styles to use Flexbox
+- Changed code dependencies
+- Changed ACP dependencies
+- Removed extended profile template
 
 ## [3.0.0] - 2016-03-16
 
-- Compatibility with NodeBB v1.x
-- Use of relative path for award uploading
-- Show error messages for new awards uploads
+- Added error messages for new awards uploads
+- Changed compatibility with NodeBB v1.x.x
+- Changed award uploading to use relative path
 
 ## [2.1.0] - 2016-01-02
 
