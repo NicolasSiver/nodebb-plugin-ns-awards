@@ -1,6 +1,6 @@
 {
   "name": "awards-admin-panel",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Client code for ACP",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "4.11.0",
     "sass-material-colors": "^0.0.5",
     "webpack": "^1.13.2"
   }
