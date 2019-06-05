@@ -1,23 +1,23 @@
 (function (Filter) {
     'use strict';
 
-    var constants  = require('./constants'),
+    let constants  = require('./constants'),
         controller = require('./controller');
 
     /**
      * Hook to render a user profile.
      * 'userData' will be used as payload in hook handler.
      *
-     * @param {object} params payload {userData: userData, uid: callerUID}
+     * @param {object} payload structure {userData: userData, uid: callerUID}
      * @param {function} callback
      */
-    Filter.account = function (paylaod, callback) {
-        controller.getAccountWithRewards(paylaod.userData, function (error, account) {
+    Filter.account = function (payload, callback) {
+        controller.getAccountWithRewards(payload.userData, function (error, account) {
             if (error) {
                 return callback(error);
             }
-            paylaod.userData = account;
-            callback(null, paylaod);
+            payload.userData = account;
+            callback(null, payload);
         });
     };
 
@@ -49,7 +49,10 @@
      * @param {function} callback
      */
     Filter.getPosts = function (payload, callback) {
-        controller.getPostsWithRewards(payload.posts, function (error, posts) {
+        // Remove purged posts
+        let posts = payload.posts.filter(post => post !== null);
+
+        controller.getPostsWithRewards(posts, function (error, posts) {
             if (error) {
                 return callback(error);
             }
