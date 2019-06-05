@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0] - 2019-06-04
+
+- Added restriction to work with Node v6 and higher
+- Changed version compatibility with NodeBB v1.12.0
+- Fixed handling of purged posts
+- Security updated to ACP dependencies to prevent critical vulnerabilities 
+
 ## [5.1.0] - 2018-12-24
 
 - Changed all core dependencies to use the latest secure versions
