@@ -33,6 +33,9 @@
   "nbbpm": {
     "compatibility": "~1.11.0"
   },
+  "engines": {
+    "node": ">=6"
+  },
   "devDependencies": {
     "sass-material-colors": "^0.0.5"
   }
