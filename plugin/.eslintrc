@@ -1,8 +1,12 @@
 {
   "env": {
+    "es6": true,
     "node": true
   },
   "rules": {
+    "no-multi-spaces": 0,
+    "no-use-before-define": 0,
+    "key-spacing": 0,
     "quotes": [
       2,
       "single"
