@@ -31,10 +31,10 @@
     "winston": "^2.3.1"
   },
   "nbbpm": {
-    "compatibility": "~1.12.0"
+    "compatibility": "~1.13.x"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "devDependencies": {
     "sass-material-colors": "^0.0.5"
