@@ -11,6 +11,6 @@ module.exports = Object.freeze({
     'NAMESPACE'               : 'ns:awards',
     'NEW_AWARD_ID'            : 'newAwardId',
     'PLUGIN_PATH'             : '/admin/plugins/awards',
-    'SOCKETS'                 : 'ns-awards',
+    'SOCKET_NAMESPACE'        : 'ns-awards',
     'UPLOAD_DIR'              : 'awards'
 });
