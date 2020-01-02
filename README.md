@@ -42,13 +42,9 @@ Plugin introduces a new entity for your board: `Award`. It could be anything: ri
 
 ## Screenshots
 
-### Awards Overview
-
-![Admin Panel View](screenshot.png)
-
-### Create New Award
-
-![Create Award View](screenshot2.png)
+| Awards Overview  | Create New Award |
+| --- | --- |
+| ![Admin Panel View](screenshot.png)  | ![Create Award View](screenshot2.png) |
 
 ### Give an Award
 
