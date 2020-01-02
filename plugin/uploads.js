@@ -1,19 +1,18 @@
+const async  = require('async'),
+      fs     = require('fs'),
+      multer = require('multer'),
+      path   = require('path'),
+      uuidv4 = require('uuid/v4');
+
+const constants = require('./constants'),
+      nodebb    = require('./nodebb');
+
+const nconf   = nodebb.nconf,
+      plugins = nodebb.plugins;
+
+let files = {};
+
 (function (Uploads) {
-    'use strict';
-
-    var async  = require('async'),
-        fse    = require('fs-extra'),
-        multer = require('multer'),
-        path   = require('path'),
-        uuidv4 = require('uuid/v4');
-
-    var constants = require('./constants'),
-        nodebb    = require('./nodebb');
-
-    var files   = {},
-        nconf   = nodebb.nconf,
-        plugins = nodebb.plugins;
-
     // Multer File Object - https://github.com/expressjs/multer#multer-file-object
 
     Uploads.init = function (router, middleware, done) {
@@ -26,24 +25,24 @@
     };
 
     function addRoute(storage, router, middleware, done) {
-        var route = path.join(
+        let route = path.join(
             constants.API_PATH,
             constants.PLUGIN_PATH,
             constants.IMAGE_SERVICE_PATH
         );
-        var fileMiddleware = multer({storage: storage}).single('award');
+        let fileMiddleware = multer({storage: storage}).single('award');
 
         router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticate], function (req, res, next) {
-            var saveDidComplete = function (error, file) {
-                var entityId = req.headers['x-ns-award-entity-id'];
+            let saveDidComplete = (error, file) => {
+                let entityId = req.headers['x-ns-award-entity-id'];
 
                 if (error) {
                     return res.status(500).json(error);
                 }
 
-                fse.remove(file.path, function (err) {
-                    if (err) {
-                        return res.status(500).json(err);
+                fs.unlink(file.path, function (error) {
+                    if (error) {
+                        return res.status(500).json(error);
                     }
 
                     files[entityId] = file;
@@ -67,19 +66,18 @@
     }
 
     function createTemporalStorage(done) {
-        var storage = multer.diskStorage({
+        done(null, multer.diskStorage({
             destination: function (req, file, next) {
                 next(null, path.resolve(__dirname, '../public/uploads/'));
             },
             filename   : function (req, file, next) {
-                var name = 'award-';
+                let name = 'award-';
                 name += uuidv4();
                 // Append image extension
                 name += path.extname(file.originalname);
                 next(null, name);
             }
-        });
-        done(null, storage);
+        }));
     }
 
     Uploads.deleteImage = function (imageUri, done) {
@@ -88,7 +86,7 @@
             // Remote API is required to delete a file.
             done(null);
         } else {
-            fse.remove(Uploads.getUploadPath(imageUri), function (error) {
+            fs.unlink(Uploads.getUploadPath(imageUri), function (error) {
                 if (error) {
                     // Fail silently
                     console.warn('[NS Awards, Uploads]: can not delete file ' + imageUri + ', error: ' + error);
@@ -103,7 +101,7 @@
     };
 
     Uploads.getFinalDestination = function (file, done) {
-        var destination = null;
+        let destination = null;
 
         if (Uploads.isLocalFile(file)) {
             destination = file.filename;
@@ -115,7 +113,8 @@
     };
 
     Uploads.getImageUrl = function (image, done) {
-        var url = image.indexOf('http') === 0 ? image : path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
+        let url = image.indexOf('http') === 0 ? image : path.join(nconf.get('relative_path'), nconf.get('upload_url'), constants.UPLOAD_DIR, image);
+
         done(null, url);
     };
 
@@ -145,7 +144,8 @@
     };
 
     function storeCloud(file, user, done) {
-        var imageFile = Object.assign({}, file, {name: file.originalname});
+        let imageFile = Object.assign({}, file, {name: file.originalname});
+
         plugins.fireHook('filter:uploadImage', {
             image: imageFile,
             uid  : user.uid
@@ -162,12 +162,13 @@
     }
 
     function storeLocal(file, done) {
-        var uploadPath = Uploads.getUploadPath(file.filename);
+        const uploadPath = Uploads.getUploadPath(file.filename);
 
-        fse.copy(file.path, uploadPath, function (error) {
+        fs.copyFile(file.path, uploadPath, error => {
             if (error) {
                 return done(error);
             }
+
             done(null, Object.assign({}, file, {localPath: uploadPath}));
         });
     }

@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "classnames": "^2.2.6",
-    "dropzone": "^4.3.0",
+    "dropzone": "^5.5.1",
     "lodash.debounce": "^4.0.8",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
