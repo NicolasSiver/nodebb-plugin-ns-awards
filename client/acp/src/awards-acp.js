@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 
 import {getApiTokens, getAwardsAll, getConfig, loadSettings} from './action/actions';
 import AwardCreate from './view/widget/award-create';
-import Donate from './view/display/donate';
 import TabManager from './view/widget/tab-manager';
 
 class AwardsAcp extends React.Component {
@@ -29,11 +28,6 @@ class AwardsAcp extends React.Component {
                     <div className="panel panel-default">
                         <div className="panel-body">
                             <AwardCreate />
-                        </div>
-                    </div>
-                    <div className="panel panel-default">
-                        <div className="panel-body">
-                            <Donate />
                         </div>
                     </div>
                 </div>

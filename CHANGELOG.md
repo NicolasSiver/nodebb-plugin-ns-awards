@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [6.0.0] - 2020-01-02
 
 - Changed version compatibility with NodeBB v1.13.x
+- Changed main ACP dependencies to use latest client libraries
+- Changed file library dependencies to use native File System module
 
 ## [5.2.0] - 2019-06-04
 
