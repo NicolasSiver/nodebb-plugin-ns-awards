@@ -11,12 +11,6 @@ A system for rewarding forum users. The plugin allows admin to define set of awa
 
 - [How does it work?](#how-does-it-work)
 - [Screenshots](#screenshots)
-  - [Awards Overview](#awards-overview)
-  - [Create New Award](#create-new-award)
-  - [Give an Award](#give-an-award)
-  - [User's Rewards Overview](#users-rewards-overview)
-  - [Logging](#logging)
-  - [Settings](#settings)
 - [Themes](#themes)
   - [Profile template](#profile-template)
   - [Topic template](#topic-template)
@@ -42,33 +36,17 @@ Plugin introduces a new entity for your board: `Award`. It could be anything: ri
 
 ## Screenshots
 
-### Awards Overview
+| Awards Overview  | Create New Award |
+| --- | --- |
+| ![Admin Panel View](screenshot.png)  | ![Create Award View](screenshot2.png) |
 
-![Admin Panel View](screenshot.png)
+| Give an Award  | User's Rewards Overview |
+| --- | --- |
+| ![Create Award View](screenshot3.png)  | ![User's Rewards](screenshot4.png) |
 
-### Create New Award
-
-![Create Award View](screenshot2.png)
-
-### Give an Award
-
-You can give reward to the multiple users simultaneously.
-
-![Create Award View](screenshot3.png)
-
-### User's Rewards Overview
-
-![User's Rewards](screenshot4.png)
-
-### Logging
-
-![Last N Rewards](screenshot5.png)
-
-### Settings
-
-If you will scroll further, you can find API Token settings.
-
-![Settings](screenshot6.png)
+| Rewards Logs  | Settings |
+| --- | --- |
+| ![Logging](screenshot5.png)  | ![Settings](screenshot6.png) |
 
 ## Themes
 

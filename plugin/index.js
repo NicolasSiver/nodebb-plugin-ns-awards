@@ -1,35 +1,33 @@
+const async = require('async'),
+      path  = require('path');
+
+const api        = require('./api'),
+      constants  = require('./constants'),
+      controller = require('./controller'),
+      filters    = require('./filters'),
+      nodebb     = require('./nodebb'),
+      settings   = require('./settings'),
+      sockets    = require('./sockets'),
+      uploads    = require('./uploads');
+
+const helpers = nodebb.helpers;
+
 (function (Plugin) {
-    'use strict';
-
-    var async = require('async'),
-        path  = require('path');
-
-    var api        = require('./api'),
-        constants  = require('./constants'),
-        controller = require('./controller'),
-        filters    = require('./filters'),
-        nodebb     = require('./nodebb'),
-        settings   = require('./settings'),
-        sockets    = require('./sockets'),
-        uploads    = require('./uploads');
-
-    var helpers = nodebb.helpers;
-
-    //NodeBB list of Hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
+    // NodeBB list of hooks: https://github.com/NodeBB/NodeBB/wiki/Hooks
     Plugin.hooks = {
         api    : api,
         filters: filters,
         statics: {
             load: function (params, callback) {
-                var router      = params.router,
+                let router      = params.router,
                     middleware  = params.middleware,
                     controllers = params.controllers;
 
-                var renderAdmin = function (req, res, next) {
+                let renderAdmin = function (req, res, next) {
                     res.render('admin/plugins/awards', {});
                 };
 
-                var renderAwardsPage = function (req, res, next) {
+                let renderAwardsPage = function (req, res, next) {
                     controller.getAwardsWithGrantees(function (error, awards) {
                         if (error) {
                             return res.status(500).json(error);

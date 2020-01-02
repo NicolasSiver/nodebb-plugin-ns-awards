@@ -1,6 +1,6 @@
 {
   "name": "awards-admin-panel",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Client code for ACP",
   "main": "index.js",
   "scripts": {
@@ -18,16 +18,16 @@
   "author": "Nicolas Siver",
   "license": "MIT",
   "dependencies": {
-    "classnames": "^2.2.5",
-    "dropzone": "^4.3.0",
+    "classnames": "^2.2.6",
+    "dropzone": "^5.5.1",
     "lodash.debounce": "^4.0.8",
-    "prop-types": "^15.5.8",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-redux": "^5.0.4",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.0"
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
