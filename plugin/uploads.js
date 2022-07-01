@@ -32,7 +32,7 @@ let files = {};
         );
         let fileMiddleware = multer({storage: storage}).single('award');
 
-        router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticate], function (req, res, next) {
+        router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticateRequest, middleware.ensureLoggedIn], function (req, res, next) {
             let saveDidComplete = (error, file) => {
                 let entityId = req.headers['x-ns-award-entity-id'];
 
