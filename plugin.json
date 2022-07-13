@@ -14,7 +14,7 @@
       "method": "hooks.filters.navigation"
     },
     {
-      "hook": "filter:user.account",
+      "hook": "filter:account/profile.build",
       "method": "hooks.filters.account"
     },
     {
