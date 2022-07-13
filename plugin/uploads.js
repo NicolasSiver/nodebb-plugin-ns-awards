@@ -32,7 +32,7 @@ let files = {};
         );
         let fileMiddleware = multer({storage: storage}).single('award');
 
-        router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticate], function (req, res, next) {
+        router.post(route, [fileMiddleware, middleware.applyCSRF, middleware.authenticateRequest, middleware.ensureLoggedIn], function (req, res, next) {
             let saveDidComplete = (error, file) => {
                 let entityId = req.headers['x-ns-award-entity-id'];
 
@@ -55,7 +55,7 @@ let files = {};
                 });
             };
 
-            if (plugins.hasListeners('filter:uploadImage')) {
+            if (plugins.hooks.hasListeners('filter:uploadImage')) {
                 storeCloud(req.file, req.user, saveDidComplete);
             } else {
                 storeLocal(req.file, saveDidComplete);
@@ -146,7 +146,7 @@ let files = {};
     function storeCloud(file, user, done) {
         let imageFile = Object.assign({}, file, {name: file.originalname});
 
-        plugins.fireHook('filter:uploadImage', {
+        plugins.hooks.fire('filter:uploadImage', {
             image: imageFile,
             uid  : user.uid
         }, function (error, image) {

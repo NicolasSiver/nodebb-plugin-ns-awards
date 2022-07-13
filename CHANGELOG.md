@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0] - 2022-07-12
+
+- Changed compatibility with NodeBB v2.2.x (kudos to Julian Lam)
+- Changed ACP to use modules 
+
 ## [6.0.0] - 2020-01-02
 
 - Changed version compatibility with NodeBB v1.13.x
