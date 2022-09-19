@@ -6,17 +6,17 @@
 
     /**
      * Hook to render a user profile.
-     * 'userData' will be used as payload in hook handler.
+     * 'templateData' will be used as payload in hook handler.
      *
-     * @param {object} payload structure {userData: userData, uid: callerUID}
+     * @param {object} payload structure { req: req, res: res, templateData: userData}
      * @param {function} callback
      */
     Filter.account = function (payload, callback) {
-        controller.getAccountWithRewards(payload.userData, function (error, account) {
+        controller.getAccountWithRewards(payload.templateData, function (error, templateData) {
             if (error) {
                 return callback(error);
             }
-            payload.userData = account;
+            payload.templateData = templateData;
             callback(null, payload);
         });
     };
